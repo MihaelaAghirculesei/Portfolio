@@ -1,0 +1,63 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1440px;
+    height: 109px; // Höhe muss mit Pixeln angegeben werden
+    padding: 37px 100px;
+    background-color: #141D2F; // Hintergrundfarbe des Headers
+    padding: 37px 100px;
+  
+    // Linke Seite mit Logo
+    .left {
+      .logo {
+        width: 250px;
+      }
+    }
+  
+    // Rechte Seite mit Menü und Sprachbuttons
+    .header-menu {
+      display: flex; // Flexbox aktivieren
+      align-items: center; // Vertikal zentrieren
+      width: 340px;
+      height: 32px;
+      gap: 29px; // Abstand zwischen den Buttons
+  
+      .menu {
+        display: flex;
+        gap: 10px; // Abstand zwischen den Buttons
+        width: auto; // Breite dynamisch anpassen
+        height: auto; // Höhe wird hug behandelt
+  
+        button {
+          padding: 5px 8px;
+          background-color: transparent; // Hintergrundfarbe auf transparent setzen
+         
+          color: white; // Textfarbe auf weiß setzen
+  
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.1); // Leichter Hover-Effekt
+          }
+        }
+      }
+  
+      .language-buttons {
+        display: flex;
+        gap: 5px;
+  
+        button {
+          height: auto; // Höhe wird hug behandelt
+          border-radius: 10px;
+          padding: 5px 8px;
+          background-color: transparent; // Hintergrundfarbe auf transparent setzen
+          border: 1px solid white; // Optional: Rahmen für Sichtbarkeit
+          color: white; // Textfarbe auf weiß setzen
+  
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.1); // Leichter Hover-Effekt
+          }
+        }
+      }
+    }
+  }
