@@ -1,6 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-    background-color: #141D2F;
-    color: white; // Setzt die Textfarbe auf weiß, um Kontrast zu bieten
-    margin: 0; // Entfernt Standard-Margins
+$gradientStart: #1c1c1c; 
+$gradientEnd: #08463b; 
+$mainColor: #3dcfb6;
+
+@mixin dFlex($jc, $ai){
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
   }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  color: $mainColor;
+}
+
+button {
+  width: 172px;
+  height: 48px;
+  border-radius: 100px;
+  border: 1px solid white;
+  gap: 10px;
+  background-color: transparent;
+  color: white;
+  font-family: Karla;
+
+  &:hover {
+    border: 2px solid $mainColor;
+    color: $mainColor;
+  }
+}
+
+
+/* fira-code-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Fira Code';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/fira-code-v22-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+} 
+/* karla-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Karla';
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/karla-v31-latin-regular.woff2") format("woff2") format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1C1C1C;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #08463B 0%, #1C1C1C 100%);
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background: linear-gradient(180deg, #1C1C1C 0%, #08463B 100%);
+  }
+}
+
+* {
+  scrollbar-color: #08463B #1C1C1C;
+  scrollbar-width: thin;
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
     selector: 'app-header',
@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
     styleUrls: ['./header.component.scss']
   })
   export class HeaderComponent {
-    // Ihre Logik hier
+    @ViewChild('langBtnDe') langBtnDe!: ElementRef<HTMLParagraphElement>;
+    @ViewChild('langBtnEn') langBtnEn!: ElementRef<HTMLParagraphElement>;
+    
+    toggleLanguageColor() {
+    this.langBtnDe.nativeElement.classList.toggle('active');
+    this.langBtnEn.nativeElement.classList.toggle('active');
+    }
   }

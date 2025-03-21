@@ -1,18 +1,17 @@
-<section class="header">
-    <div class="left">
-      <img src="./assets/img/1_header/1. Logo Mihaela_Melania.png" alt="Mein Logo" class="logo" />
+<header>
+  <div class="navBarWrapper">
+    <div class="navbar">
+      <button
+        id="lang-btn"
+        class="language-toggle"
+        (click)="toggleLanguageColor()">
+        <span #langBtnDe class="de">DE</span>
+        <span #langBtnEn class="en active">EN</span>
+      </button>
+      <a href="">About me </a>
+      <a href="">Skills </a>
+      <a href="">Projects </a>
     </div>
-  
-    <div class="header-menu">
-      <div class="menu">
-        <button>About Me</button>
-        <button>Skills</button>
-        <button>Portfolio</button>
-      </div>
-  
-      <div class="language-buttons">
-        <button>DE</button>
-        <button>EN</button>
-      </div>
-    </div>
-  </section>
+    <img class="logo" src="./../../assets/img/1_header/1. Logo Mihaela_Melania.png" alt="" />
+  </div>
+</header>
