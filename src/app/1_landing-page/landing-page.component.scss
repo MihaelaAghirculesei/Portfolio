@@ -1,0 +1,153 @@
+@import "./../../styles.scss";
+
+.headLine {
+  background: linear-gradient(68deg, $gradientStart 23%, $gradientEnd 100%);
+  height: calc(100vh - 98px);
+  @include dFlex(center, center);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.contentWrapper {
+  @include dFlex(center, center);
+  flex-direction: column;
+  flex: 1;
+  max-width: 1440px;
+}
+
+h1,
+h2 {
+  color: white;
+}
+
+h1 {
+  font-size: 128px;
+  font-family: Karla;
+}
+
+h2 {
+  font-size: 40px;
+  font-family: Fira Code;
+}
+
+.buttonDiv {
+  @include dFlex(space-between, center);
+
+  button {
+    margin: 40px 30px;
+  }
+}
+
+.edgeLine-left {
+  @include dFlex(center, center);
+  flex-direction: column;
+  gap: 30px;
+  position: absolute;
+  bottom: 0;
+  left: 8%;
+  .arrowDown {
+    @include dFlex(center, center);
+    transform: rotate(90deg);
+    width: 48px;
+    height: 30px;
+    border-color: $mainColor;
+    .arrowDownImg {
+      transform: rotate(270deg);
+    }
+  }
+  .greenLineDown {
+    width: 1px;
+    height: 300px;
+    background-color: $mainColor;
+  }
+}
+
+.edgeLine-right {
+  @include dFlex(center, center);
+  flex-direction: column;
+  gap: 25px;
+  position: absolute;
+  bottom: 0;
+  right: 8%;
+  .emailLandingpage {
+    color: white;
+    font-family: Karla;
+  }
+  .whiteLineDown {
+    height: 220px;
+    background-color: white;
+    width: 1px;
+  }
+  .emailLandingpage {
+    transform: rotate(-90deg);
+    margin-bottom: 40px;
+    font-size: 18px;
+  }
+  img {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+.bannerSection {
+  display: flex;
+  padding-bottom: 45px;
+  white-space: nowrap;
+}
+
+.bannerWrapper {
+  width: 100%;
+  transform: rotate(-4deg);
+  background: #ffffff1f;
+  filter: blur(5.3);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+
+p {
+  color: $mainColor;
+  font-family: Karla;
+  font-size: 32px;
+  line-height: 1.5;
+  display: inline-block;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  width: max-content;
+}
+
+.staticText {
+  @include dFlex(center, center);
+  gap: 56px;
+  color: $mainColor;
+  animation: scrollText 20s linear infinite;
+}
+
+.scrollText {
+  @include dFlex(center, center);
+  gap: 56px;
+  color: $mainColor;
+  animation: scroll2ndText 20s linear infinite;
+}
+
+@keyframes scrollText {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes scroll2ndText {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
