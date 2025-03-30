@@ -93,12 +93,13 @@ h2 {
   display: flex;
   padding-bottom: 45px;
   white-space: nowrap;
+ 
 }
 
 .bannerWrapper {
   width: 100%;
   transform: rotate(-4deg);
-  background: #ffffff1f;
+  background-color: 383838 !important;
   filter: blur(5.3);
   overflow: hidden;
   white-space: nowrap;
