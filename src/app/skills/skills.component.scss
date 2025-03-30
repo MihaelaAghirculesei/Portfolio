@@ -1,13 +1,13 @@
 @import "./../../styles.scss";
 
 .skillSection{
-
-
-
-    $gradientEnd: 0%;
-    $gradientStart: 25%;
+height: 100vh;
+background: radial-gradient(
+circle at 0% 60%,
+$gradientEnd 0%,
+$gradientStart 25%
+);
 }
-
 .contentWrapper {
   height: 100%;
   max-width: 1440px;
@@ -51,17 +51,95 @@
 
       span {
         color: $mainColor;
+        font-family: 'Fira Code';
+        font-size: 24px;
+        color: white;
+      }
+      .skillIntroduction{
+        font-size: 18px;
       }
     }
   }
 }
 
+.skillButtons {
+    flex-wrap: wrap;
+    width: 632px;
+    gap: 72px;
+    @include dFlex(space-between, center);
+    flex: 1;
+  
+    .skillDiv {
+      width: 108px;
+      height: 144px;
+      @include dFlex(0, center);
+      flex-direction: column;
+      text-align: center;
+      @include text('Fira Code', 18px, white, 400);
+      position: relative;
+  
+      > p {
+        white-space: normal;
+      }
+  
+      img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+  
+        &:hover {
+          scale: 1.1;
+        }
+      }
+  
+      .tooltip {
+        @include dFlex(center, center);
+        flex-direction: column;
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        color: black;
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease-in-out, transform 0.25s;
+  
+        > span {
+          color: $mainColor;
+        }
+  
+        > div {
+          padding-top: 10px;
+          color: $mainColor;
+          @include dFlex(center, center);
+        }
+  
 
-
-
-
-
-
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -6px; 
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 6px;
+          border-style: solid;
+          border-color: white transparent transparent transparent; 
+        }
+      }
+  
+      &:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(-10px); 
+      }
+    }
+  }
 
 
 
