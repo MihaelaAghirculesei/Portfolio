@@ -1,1 +1,45 @@
-
+<section class="skillsSection">
+    <div class="contentWrapper">
+      <div class="skillset">
+        <h3 class="overContent">Technologies</h3>
+        <div class="textDiv">
+          <h2>Skill Set</h2>
+          <span class="skillIntroduction">Hier sind einige meiner Fähigkeiten:</span>
+          <h3>Benötigen Sie <span>eine weitere Fähigkeit?</span></h3>
+          <span>Fühlen Sie sich frei, mich zu kontaktieren!</span>
+        </div>
+        <button>Let's talk</button>
+      </div>
+      <div class="skillButtons">
+        @for (item of imgURLS; track $index) {
+        <div class="skillDiv">
+          <img src="{{ item.url }}" alt="{{ item.name }}" />
+          <p>{{ item.name }}</p>
+          @if ($index == imgURLS.length - 1) {  <!-- Gleichheitsoperator sollte '==' sein -->
+            <div class="tooltip">
+              <span>Ich habe besondere<br>Interessen, um Folgendes zu lernen:</span>
+              <div>
+                <div class="skillItem">
+                  <img src="../../assets/img/skills/react.svg" alt="React Logo" />
+                  <p>React</p>
+                </div>
+                <div class="skillItem">
+                  <img src="../../assets/img/skills/vuejs.svg" alt="Vue.js Logo" />
+                  <p>Vue.js</p>
+                </div>
+                <div class="skillItem">
+                  <img src="../../assets/img/skills/angular.svg" alt="Angular Logo" />
+                  <p>Angular</p>
+                </div>
+                <div class="skillItem">
+                  <img src="../../assets/img/skills/nodejs.svg" alt="Node.js Logo" />
+                  <p>Node.js</p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </section>

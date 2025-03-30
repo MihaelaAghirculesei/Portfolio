@@ -5,13 +5,14 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MainContentComponent } from './main-content/main-content.component';
 import { LandingpageComponent } from './1_landing-page/landing-page.component';
 import { AboutmeComponent } from './aboutme/aboutme.component';
+import { SkillsComponent } from './skills/skills.component';
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, TranslateModule, MainContentComponent, LandingpageComponent, AboutmeComponent],
+  imports: [RouterOutlet, HeaderComponent, TranslateModule, MainContentComponent, LandingpageComponent, AboutmeComponent, SkillsComponent],
   providers: [TranslateService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
