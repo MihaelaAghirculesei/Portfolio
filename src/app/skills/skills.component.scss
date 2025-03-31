@@ -1,17 +1,25 @@
 @import "./../../styles.scss";
 
-.skillsSection{
+.skillsSection {
   @incliude dFlex(center, center)
-height: 700px;
-width: 100%;
-background: radial-gradient(
-circle at 0% 60%,
-$gradientEnd 0%,
-$gradientStart 25%
-);
+  height: 700px;
+  width: 100%;
+  background: radial-gradient(
+    circle at 0% 50%,
+    $gradientEnd 0%,
+    $gradientStart 25%
+  );
 
+  @media (max-width: 900px) {
+    height: auto;
+    padding: 40px 0;
+  }
 
+  @media (max-width: 350px) {
+    padding-bottom: 40px;
+  }
 }
+
 .contentWrapper {
   height: 100%;
   width: 100%;
@@ -20,8 +28,14 @@ $gradientStart 25%
   margin: 0 40px;
   gap: 96px;
 
+  @media (max-width: 1050px) {
+    flex-direction: column;
+}
 
-
+@media (max-width: 600px) {
+    margin: 0;
+    padding: 0 10px;
+}
 }
 
 .skillSet {
@@ -31,253 +45,180 @@ $gradientStart 25%
   border: 1px solid $mainColor;
   padding: 40px;
 
+  @media (max-width: 900px) {
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    text-align: center;
+    padding: 20px;
+}
+
   .overContent {
     position: relative;
     top: -40px;
-  @include text ('karla', 24px, $mainColor, 700);
-  text-align: left;
+    @include text("karla", 24px, $mainColor, 700);
+    text-align: left;
   }
 
+  @media (max-width: 600px) {
+    top: -20px;
+}
+
   button {
-    margin:20px 0 20px 40px;
+    margin: 20px 0 20px 40px;
+    @media (max-width: 600px) {
+      margin: 20px auto;
+      display: block;
+    }
   }
 
   .textDiv {
     padding-left: 40px;
+    @media (max-width: 600px) {
+      padding: 0 10px;
+    }
 
     h2 {
-      font-family: 'Fira Code';
-      font-size: 64px;
-      font-weight: 700;
+      @include text('Fira Code', 64px, $mainColor, 700);
+
+      @media (max-width: 600px) {
+        font-size: 56px;
+      }
+  
+      @media (max-width: 410px) {
+        font-size: 36px;
+      }
     }
 
     h3 {
-      font-family: 'Fira Code';
-      font-size: 24px;
-      font-weight: 700;
-      color: white;
+      @include text('Fira Code', 24px, white, 700);
+      margin: 12px 0;
+  
+      @media (max-width: 600px) {
+        font-size: 18px;
+      }
+      span {
+        @include text('Fira Code', 24px, $mainColor, 700);
+    
+        @media (max-width: 600px) {
+          font-size: 16px;
+        }
+      }
+    }
 
       span {
-        color: $mainColor !important;
-        font-family: 'Fira Code';
-        font-size: 24px;
-        color: white;
+        @include text('Karla', 16px, white, 400);
       }
-      .skillIntroduction{
+    
+      .skillIntroduction {
         font-size: 18px;
       }
     }
   }
+
+
+.skillButtons {
+  flex-wrap: wrap;
+  width: 632px;
+  gap: 72px;
+  @include dFlex(space-between, center);
+  flex: 1;
+
+  @media (max-width: 1488px) {
+    gap: 8px;
+    width: 90%;
+  }
+
+  @media (max-width: 900px) {
+    // Weitere Anpassungen
+  }
+
+  .skillDiv {
+    width: 108px;
+    height: 144px;
+    @include dFlex(0, center);
+    flex-direction: column;
+    text-align: center;
+    @include text("Fira Code", 18px, white, 400);
+    position: relative;
+
+    @media (max-width: 600px) {
+      width: 30%;
+      height: 80px;
+    }
+  
+    @media (max-width: 450px) {
+      width: 40%;
+      height: 60px;
+    }
+
+    > p {
+      white-space: normal;
+    }
+    @media (max-width: 600px) {
+      margin: 4px 2px;
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+
+      &:hover {
+        scale: 1.1;
+      }
+
+      @media (max-width: 800px) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .tooltip {
+      @include dFlex(center, center);
+      flex-direction: column;
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      color: black;
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease-in-out, transform 0.25s;
+
+      > span {
+        color: $mainColor;
+      }
+
+      > div {
+        padding-top: 10px;
+        color: $mainColor;
+        @include dFlex(center, center);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 9px;
+        border-style: solid;
+        border-color: white transparent transparent transparent;
+      }
+    }
+
+    &:last-of-type:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
 }
-
-.skillButtons {
-    flex-wrap: wrap;
-    width: 632px;
-    gap: 72px;
-    @include dFlex(space-between, center);
-    flex: 1;
-  
-    .skillDiv {
-      width: 108px;
-      height: 144px;
-      @include dFlex(0, center);
-      flex-direction: column;
-      text-align: center;
-      @include text('Fira Code', 18px, white, 400);
-      position: relative;
-  
-      > p {
-        white-space: normal;
-      }
-  
-      img {
-        width: 60px;
-        height: 60px;
-        object-fit: contain;
-  
-        &:hover {
-          scale: 1.1;
-        }
-      }
-  
-      .tooltip {
-        @include dFlex(center, center);
-        flex-direction: column;
-        position: absolute;
-        bottom: 110%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: white;
-        color: black;
-        padding: 8px 12px;
-        font-size: 12px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.25s ease-in-out, transform 0.25s;
-  
-        >span{
-          color: $mainColor;
-        }
-  
-        >div{
-          padding-top: 10px;
-          color: $mainColor;
-          @include dFlex(center, center);
-        }
-  
-
-        &::after {
-          content: "";
-          position: absolute;
-          top:100%;
-          left: 50%;
-          transform: translateX(-50%);
-          border-width: 9px;
-          border-style: solid;
-          border-color: white transparent transparent transparent; 
-        }
-      }
-  
-      &:last-of-type:hover .tooltip {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(-5px); 
-      }
-    }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.skillButtons {
-    flex-wrap: wrap;
-    width: 632px;
-    gap: 72px;
-    @include dFlex(space-between, center);
-    flex: 1;
-  
-    .skillDiv {
-      width: 108px;
-      height: 144px;
-      @include dFlex(0, center);
-      flex-direction: column;
-      text-align: center;
-      @include text('Fira Code', 18px, white, 400);
-      position: relative;
-  
-      > p {
-        white-space: normal;
-      }
-  
-      img {
-        width: 60px;
-        height: 60px;
-        object-fit: contain;
-  
-        &:hover {
-          scale: 1.1;
-        }
-      }
-  
-      .tooltip {
-        @include dFlex(center, center);
-        flex-direction: column;
-        position: absolute;
-        bottom: 110%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: white;
-        color: black;
-        padding: 8px 12px;
-        font-size: 12px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.25s ease-in-out, transform 0.25s;
-  
-        > span {
-          color: $mainColor;
-        }
-  
-        > div {
-          padding-top: 10px;
-          color: $mainColor;
-          @include dFlex(center, center);
-        }
-  
-        // The small triangle below.
-        &::after {
-          content: '';
-          position: absolute;
-          bottom: -6px; /* Position the triangle just below the tooltip */
-          left: 50%;
-          transform: translateX(-50%);
-          border-width: 6px;
-          border-style: solid;
-          border-color: white transparent transparent transparent; /* Creates the triangle */
-        }
-      }
-  
-      &:hover .tooltip {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(-10px); /* Optional: Adds a slight upward movement */
-      }
-    }
-  }
-  
