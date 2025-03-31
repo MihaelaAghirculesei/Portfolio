@@ -2,6 +2,8 @@ $gradientStart: #1c1c1c;
 $gradientEnd: #08463b; 
 $mainColor: #3dcfb6;
 
+
+
 @mixin dFlex($jc, $ai){
   display: flex;
   justify-content: $jc;
@@ -13,14 +15,16 @@ $mainColor: #3dcfb6;
     color: $color;
     font-weight: $font-weight;
   }
-
 * {
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   scroll-behavior: smooth;
+}
+body.menu-open {
+  overflow: hidden !important;
+  height: 100vh;
 }
 
 h1, h2, h3 {
@@ -43,7 +47,6 @@ button {
     color: $mainColor;
   }
 }
-
 
 /* fira-code-regular - latin */
 @font-face {
