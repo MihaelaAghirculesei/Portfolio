@@ -23,6 +23,3 @@ export class OverlayComponent {
     this.close.emit();
   }
 }
-
-// TO DO:
-// import { Projects } from '../../interfaces/projects'
