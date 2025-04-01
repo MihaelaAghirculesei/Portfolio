@@ -1,0 +1,30 @@
+<div class="overlay">
+    <div class="contentWrapper" (click)="$event.stopPropagation()">
+        <div class="contentLeft">
+            <h1>0{{ index + 1}}</h1>
+            <h2>{{ singleProject.name }}</h2>
+            <h3>What is this project about?</h3>
+            <span>{{ singleProject.description }}</span>
+            <div class="techDiv">
+                @for (skill of singleProject.technologies; track $index) {
+                    <p>
+                        <img src="../../../assets/img/portfolio/{{ skill }}.svg" alt=""/>
+                        {{ skill }}
+                    </p>
+                }
+            </div>
+            <div class="buttonDiv">
+                <a href="#"><button>GitHub </button></a>
+                <a href="#"><button>Live Test</button></a>
+            </div>
+        </div>
+        <div class="contentRight">
+            <p (click)="closeOverlay()">X</p>
+            <img src="../{{ singleProject.previewImg }}" alt="" />
+            <button (click)="next.emit()">
+                Next Project
+                <img src="../../../assets/img/portfolio/arrow_right.svg" alt=""/>
+            </button>
+        </div>
+    </div>
+</div>

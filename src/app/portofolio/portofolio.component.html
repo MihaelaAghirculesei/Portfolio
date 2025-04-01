@@ -1,1 +1,56 @@
-<p>portofolio works!</p>
+<section>
+  <div class="contentWrapper">
+    <div class="text">
+      <h3>Portfolio</h3>
+      <h2>Featured Projects</h2>
+      <p>
+        Explore a selection of my work here. Interact with projects to see my
+        skills in action.
+      </p>
+    </div>
+
+    <div class="projectWrapper">
+      <div class="projects">
+        @for (project of projects; track $index) {
+        <div
+          class="project"
+          (click)="openProjectOverlay(project, $index)"
+          (mouseenter)="onHover($event, project)"
+          (mouseleave)="onLeave()"
+        >
+          <h3>{{ project.name }}</h3>
+
+          <div class="technologies">
+            @for (technologie of project.technologies; track $index) {
+            <span>{{ technologie }}</span>
+            @if($index < project.technologies.length - 1) {
+            <div class="borderRight"></div>
+            } }
+          </div>
+        </div>
+        }
+      </div>
+
+      @if (activePreview) {
+      <div
+        class="preview"
+        [style.top]="previewPosition.top"
+        [style.right]="previewPosition.right"
+      >
+        <img [src]="activePreview" alt="Project Preview" />
+        <div class="lineDiv"></div>
+      </div>
+      }
+    </div>
+  </div>
+
+  @if (selectedProject) {
+  <app-overlay
+    [singleProject]="selectedProject"
+    [index]="selectedIndex"
+    (close)="closeOverlay()"
+    (next)="nextProject()"
+  >
+  </app-overlay>
+  }
+</section>
