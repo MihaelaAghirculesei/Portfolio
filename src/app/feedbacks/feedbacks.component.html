@@ -1,1 +1,27 @@
-<p>feedbacks works!</p>
+<section>
+  <h2>{{ "References" | translate }}</h2>
+  <div class="slider-container">
+    <div class="feedback-wrapper">
+      @for (comment of feedbacks; track $index) {
+      <div
+        [ngClass]="getCardClass($index)"
+        [class.active]="$index === middleIndex"
+      >
+        <p>{{ comment.feedback }}</p>
+        <div class="feedbackBottom">
+          <div class="lineDiv"></div>
+          <span>{{ comment.name }} {{ comment.ref }}</span>
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="dots">
+      <button class="nav-btn left-btn" (click)="slideRight()">&#10094;</button>
+      @for (comment of feedbacks; track $index) {
+      <span [class.active]="$index === middleIndex"></span>
+      }
+      <button class="nav-btn right-btn" (click)="slideLeft()">&#10095;</button>
+    </div>
+  </div>
+</section>

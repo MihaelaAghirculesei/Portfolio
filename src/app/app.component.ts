@@ -7,13 +7,14 @@ import { LandingpageComponent } from './1_landing-page/landing-page.component';
 import { AboutmeComponent } from './aboutme/aboutme.component';
 import { SkillsComponent } from './skills/skills.component';
 import { PortofolioComponent } from './portofolio/portofolio.component';
+import { FeedbacksComponent } from './feedbacks/feedbacks.component';
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, TranslateModule, MainContentComponent, LandingpageComponent, AboutmeComponent, SkillsComponent, PortofolioComponent],
+  imports: [RouterOutlet, HeaderComponent, TranslateModule, MainContentComponent, LandingpageComponent, AboutmeComponent, SkillsComponent, PortofolioComponent, FeedbacksComponent],
   providers: [TranslateService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
