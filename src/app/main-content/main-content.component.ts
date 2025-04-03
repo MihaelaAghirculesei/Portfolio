@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LandingpageComponent } from '../1_landing-page/landing-page.component';
+import { LandingpageComponent } from '../landing-page/landing-page.component';
 
 @Component({
   selector: 'app-main-content',
