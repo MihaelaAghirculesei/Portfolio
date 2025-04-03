@@ -1,0 +1,34 @@
+{
+    "app-header":{
+        "hello": "hello {{value}}",
+        "title": "Translation"
+    },
+    "app-landingpage":{
+        "hello": "hello {{value}}",
+        "title": "Translation"
+    },
+    "app-aboutme":{
+        "hello": "hello {{value}}",
+        "title": "Translation"
+    },
+    "app-skills":{
+        "hello": "hello {{value}}",
+        "title": "Translation"
+    },
+    "app-portofolio":{
+        "hello": "hello {{value}}",
+        "title": "Translation"
+    },
+    "app-feedbacks":{
+        "hello": "hello {{value}}",
+        "title": "Translation"
+    },
+    "app-contact":{
+        "hello": "hello {{value}}",
+        "title": "Translation"
+    },
+    "app-footer":{
+        "hello": "hello {{value}}",
+        "title": "Translation"
+    }
+}

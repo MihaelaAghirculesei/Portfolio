@@ -1,1 +1,70 @@
-<p>contact works!</p>
+<section>
+    <div class="contentWrapper">
+        <div class="contactDiv">
+            <h3>{{ 'Contact me' | translate }}</h3>
+            <span>{{ 'Let´s Work toghether' | translate }}</span>
+            <span>{{ 'app-contact.spanNeedMe' | translate }}</span>
+            <p>{{ 'app-contact.pTalk' | translate }}</p>
+        </div>
+
+        <div class="formDiv">
+            <form #contactForm="ngForm" (ngSubmit)="validateForm()">
+                <div class="inputText">
+                    <label for="name">{{ 'app-contact.formLabelName' | translate }}</label>
+                    <input 
+                        #name="ngModel"
+                        name="name"
+                        required
+                        minlength="3"
+                        [(ngModel)]="contactData.name"
+                        type="text"
+                        id="name"
+                        [class.invalid]="invalidFields.includes('name')"
+                        [attr.placeholder]="invalidFields.includes('name') ? 'Please enter at least 3 letters' : 'Your Name'"
+                    />
+                </div>
+
+                <div class="inputText">
+                    <label for="email">{{ 'app-contact.formLabelMail' | translate }}</label>
+                    <input 
+                        #email="ngModel"
+                        name="email"
+                        required
+                        [(ngModel)]="contactData.email"
+                        type="email"
+                        id="email"
+                        [class.invalid]="invalidFields.includes('email')"
+                        [attr.placeholder]="invalidFields.includes('email') ? 'Enter a valid email address' : 'Your Email'"
+                    />
+                </div>
+
+                <div class="inputText">
+                    <label for="message">{{ 'app-contact.formLabelMessage' | translate }}</label>
+                    <textarea 
+                        #message="ngModel"
+                        name="message"
+                        required
+                        minlength="10"
+                        [(ngModel)]="contactData.message"
+                        id="message"
+                        [class.invalid]="invalidFields.includes('message')"
+                        [attr.placeholder]="invalidFields.includes('message') ? 'Please enter at least 10 characters' : 'Hello'"
+                    ></textarea>
+                </div>
+
+                <div class="checkboxDiv">
+                    <input 
+                        [(ngModel)]="contactData.privacyPolicy"
+                        type="checkbox" 
+                        name="privacyPolicy"
+                        id="checkbox"
+                        [class.invalid]="invalidFields.includes('checkBox')"
+                    />
+                    <p>I've read the <a href="#">privacy policy</a> and agree to the processing of my data as outlined.</p>
+                </div>
+
+                <button type="submit">{{ 'app-contact.formBtn' | translate }}</button>
+            </form>
+        </div>
+    </div>
+</section>

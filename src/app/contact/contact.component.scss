@@ -1,0 +1,89 @@
+@import "./../../styles.scss";
+
+section {
+  padding-top: 40px;
+  background-color: $gradientStart;
+}
+
+h2 {
+  @include text("Fira Code", 64px, $mainColor, 700);
+  margin: 25px 0;
+}
+
+h3 {
+  @include text("Karla", 24px, $mainColor, 500);
+}
+
+.contactDiv {
+  padding-left: 20px;
+  flex: 1;
+  height: 100%;
+  > span {
+    @include text("Karla", 16px, white, 700);
+    > p {
+      color: $mainColor;
+    }
+  }
+}
+
+.contentWrapper {
+  @include dFlex(center, stretch);
+  max-width: 1440px;
+}
+
+.formDiv {
+  @include dFlex(start, center);
+  flex: 1;
+  max-height: 100%;
+
+  form {
+    @include dFlex(center, flex-start);
+    flex-direction: column;
+    gap: 40px;
+    height: 60%;
+
+    > div {
+      border-top: 1px solid $mainColor;
+      width: 100%;
+      padding: 32px;
+    }
+
+    .InputText {
+      @include dFlex(center, start);
+      flex-direction: column;
+
+      > input {
+        background-color: $gradientStart;
+        border: none;
+        width: 250px;
+
+        &::placeholder {
+          @include text("Karla", 18px, white, 400);
+        }
+      }
+
+      > textarea {
+        background-color: $gradientStart;
+        border: none;
+        width: 250px;
+        height: 64px;
+
+        textarea::placeholder {
+          @include text("Karla", 18px, white, 400);
+        }
+        label {
+          @include text("Fira Code", 24px, $mainColor, 500);
+        }
+      }
+
+      .checkBox {
+        @include dFlex(center, center);
+        flex-direction: column;
+
+        .InputCheckbox {
+          @include dFlex(center, center);
+        }
+      }
+    }
+  }
+}

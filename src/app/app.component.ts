@@ -8,23 +8,33 @@ import { AboutmeComponent } from './aboutme/aboutme.component';
 import { SkillsComponent } from './skills/skills.component';
 import { PortofolioComponent } from './portofolio/portofolio.component';
 import { FeedbacksComponent } from './feedbacks/feedbacks.component';
-
-
+import { ContactComponent } from './contact/contact.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, TranslateModule, MainContentComponent, LandingpageComponent, AboutmeComponent, SkillsComponent, PortofolioComponent, FeedbacksComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    TranslateModule,
+    MainContentComponent,
+    LandingpageComponent,
+    AboutmeComponent,
+    SkillsComponent,
+    PortofolioComponent,
+    FeedbacksComponent,
+    ContactComponent,
+  ],
   providers: [TranslateService],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'angular-portofolio';
 
   // constructor(private translate: TranslateService) {
   //   this.translate.addLangs(['de', 'en']);
-  //   this.translate.setDefaultLang('en');
+  //   // this.translate.setDefaultLang('en');
   //   this.translate.use('en');
   // }
 }
