@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormsModule, NgForm, NgModel } from '@angular/forms';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact',
@@ -11,6 +12,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
   styleUrl: './contact.component.scss',
 })
 export class ContactComponent {
+  http = inject(HttpClient);
   contactData = {
     name: '',
     email: '',
@@ -18,13 +20,26 @@ export class ContactComponent {
     privacyPolicy: false,
   };
 
+  post = {
+    endPoint: 'https://mihaela-melania-aghirculesei.com/sendMail.php',
+    body: (payload: any) => JSON.stringify(payload),
+    options: {
+      headers: {
+        'Content-Type': 'text/plain',
+        responseType: 'text',
+      },
+    },
+  };
+
   invalidFields: string[] = [];
+  showOverlay = false;
 
   validateForm() {
     this.invalidFields = [];
 
     if (!this.contactData.name || this.contactData.name.length < 3) {
       this.invalidFields.push('name');
+      this.contactData.name = '';
     }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -35,32 +50,36 @@ export class ContactComponent {
 
     if (!this.contactData.message || this.contactData.message.length < 10) {
       this.invalidFields.push('message');
+      this.contactData.message = '';
     }
 
     if (!this.contactData.privacyPolicy) {
       this.invalidFields.push('checkBox');
     }
+  }
 
-    if (this.invalidFields.length === 0) {
-      console.log('Form submitted successfully!', this.contactData);
-    } else {
-      console.log('Validation errors:', this.invalidFields);
+  onSubmit(ngForm: NgForm) {
+    this.validateForm();
+
+    if (ngForm.submitted && this.invalidFields.length === 0) {
+      this.http
+        .post(this.post.endPoint, this.post.body(this.contactData))
+        .subscribe({
+          next: (response) => {
+            this.showOverlay = true;
+            ngForm.resetForm();
+          },
+          error: (error) => {
+            console.log(error);
+          },
+          complete: () => console.info(this.contactData),
+        });
+    } else if (ngForm.submitted && ngForm.form.valid) {
+      ngForm.resetForm();
     }
   }
 
-  // sendMail(ngForm: NgForm) {
-  //   if (ngForm.submitted && this.invalidFields.length === 0) {
-  //     this.http
-  //       .post(this.post.endPoint, this.post.body(this.contactData))
-  //       .subscribe({
-  //         next: (response) => {
-  //           ngForm.resetForm();
-  //         },
-  //         error: (error) => {},
-  //         complete: () => console.info('send post complete'),
-  //       });
-  //   } else if (ngForm.submitted && ngForm.form.valid) {
-  //     ngForm.resetForm();
-  //   }
-  // }
+  closeOverlay() {
+    this.showOverlay = false;
+  }
 }

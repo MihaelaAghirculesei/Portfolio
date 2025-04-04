@@ -1,33 +1,38 @@
-$gradientStart: #1c1c1c; 
-$gradientEnd: #08463b; 
+$gradientStart: #1c1c1c;
+$gradientEnd: #08463b;
 $mainColor: #3dcfb6;
 
-
-
-@mixin dFlex($jc, $ai){
+@mixin dFlex($jc, $ai) {
   display: flex;
   justify-content: $jc;
   align-items: $ai;
-  }
-  @mixin text($font-family, $font-size, $color, $font-weight) {
-    font-family: $font-family;
-    font-size: $font-size;
-    color: $color;
-    font-weight: $font-weight;
-  }
+}
+
+@mixin text($font-family, $font-size, $color, $font-weight) {
+  font-family: $font-family;
+  font-size: $font-size;
+  color: $color;
+  font-weight: $font-weight;
+}
+
 * {
   box-sizing: border-box;
-}
-body {
-  margin: 0;
   scroll-behavior: smooth;
 }
+
+body {
+  margin: 0;
+  gap: 50px;
+}
+
 body.menu-open {
   overflow: hidden !important;
   height: 100vh;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0;
   color: $mainColor;
 }
@@ -45,24 +50,26 @@ button {
   &:hover {
     border: 2px solid $mainColor;
     color: $mainColor;
+    cursor: pointer;
   }
 }
 
 /* fira-code-regular - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Fira Code';
+  font-family: "Fira Code";
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/fira-code-v22-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-} 
+  src: url("./assets/fonts/fira-code-v22-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
 /* karla-regular - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Karla';
+  font-family: "Karla";
   font-style: normal;
   font-weight: 400;
-  src: url("/fonts/karla-v31-latin-regular.woff2") format("woff2") format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("/fonts/karla-v31-latin-regular.woff2") format("woff2")
+    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 ::-webkit-scrollbar {
@@ -70,21 +77,21 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1C1C1C;
+  background: #1c1c1c;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #08463B 0%, #1C1C1C 100%);
+  background: linear-gradient(180deg, #08463b 0%, #1c1c1c 100%);
   border-radius: 10px;
   transition: background 0.3s ease-in-out;
 
   &:hover {
-    background: linear-gradient(180deg, #1C1C1C 0%, #08463B 100%);
+    background: linear-gradient(180deg, #1c1c1c 0%, #08463b 100%);
   }
 }
 
 * {
-  scrollbar-color: #08463B #1C1C1C;
+  scrollbar-color: #08463b #1c1c1c;
   scrollbar-width: thin;
 }
