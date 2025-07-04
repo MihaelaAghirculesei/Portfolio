@@ -1,71 +1,53 @@
-<header>
-  <div class="navBarWrapper">
-    <div class="navBar">
-      <button
-        id="lang-btn"
-        class="language-toggle"
-        (click)="toggleLanguageColor()"
-        (click)="changeLanguage()"
-      >
-        <span
-          #langBtnDe
-          [ngClass]="['de', activeLanguage === 'de' ? 'active' : '']"
-          >DE</span
-        >
-        <span
-          #langBtnEn
-          [ngClass]="['en', activeLanguage === 'en' ? 'active' : '']"
-          >EN</span
-        >
-      </button>
-      <a href="#aboutMe">{{ "app-header.menuBtnAboutMe" | translate }} </a>
-      <a href="#skills">{{ "app-header.menuBtnSkills" | translate }} </a>
-      <a href="#projects">{{ "app-header.menuBtnProjects" | translate }} </a>
-    </div>
+<header [ngClass]="{'scrolled': isScrolled}">
+  <div class="content-width">
+    <nav class="desktop-nav">
+      <ul>
+        <li class="switch">
+          <input id="language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox"
+                 [checked]="isEnglish"
+                 (click)="toggleLanguage()">
+          <label for="language-toggle"></label>
+          <span class="on">EN</span>
+          <span class="off">DE</span>
+        </li>
+        <li><a (click)="scrollToSection('aboutMe')" class="link-hover-dot-bottom">About me</a></li>
+        <li><a (click)="scrollToSection('skills')" class="link-hover-dot-bottom">Skills</a></li>
+        <li><a (click)="scrollToSection('projects')" class="link-hover-dot-bottom">Projects</a></li>
+      </ul>
+    </nav>
 
-    <a [routerLink]="''"
-      ><img class="logo" src="../../../assets/img/navBar/logo.svg" alt=""
-    /></a>
-  </div>
-
-  <div class="burgerMenu" (click)="toggleMobileMenu()">
-    <div class="burgerBar"></div>
-    <div class="burgerBar"></div>
-    <div class="burgerBar"></div>
-  </div>
-
-  @if(screenWidth <= 900){
-  <div [ngClass]="['overlayBackground', mobileMenuActive ? 'active' : '']">
-    <div class="menuOverlay">
-      <div class="navBarMobile">
-        <button
-          id="lang-btn"
-          class="language-toggle"
-          (click)="toggleLanguageColor()"
-          (click)="changeLanguage()"
-        >
-          <span
-            #langBtnDeMobile
-            [ngClass]="['de', activeLanguage === 'de' ? 'active' : '']"
-            >DE</span
-          >
-          <span
-            #langBtnEnMobile
-            [ngClass]="['en', activeLanguage === 'en' ? 'active' : '']"
-            >EN</span
-          >
-        </button>
-        <a href="#aboutMe" (click)="toggleMobileMenu()"
-          >{{ "app-header.menuBtnAboutMe" | translate }}
-        </a>
-        <a href="#skills" (click)="toggleMobileMenu()"
-          >{{ "app-header.menuBtnSkills" | translate }}
-        </a>
-        <a href="#projects" (click)="toggleMobileMenu()"
-          >{{ "app-header.menuBtnProjects" | translate }}
-        </a>
+    <div class="menu-toggle" (click)="toggleMenu()">
+      <div class="hamburger" [ngClass]="{'active': isMenuOpen}">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </div>
+
+    <img (click)="scrollToSection('aboutMe')"
+         [src]="(isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png')" 
+         (mouseenter)="isHovered = true" 
+         (mouseleave)="isHovered = false" 
+         alt="logo" 
+         id="logo" 
+         class="logo">
   </div>
-  }
+
+  <div class="mobile-dropdown" [ngClass]="{'open': isMenuOpen}">
+    <div class="dropdown-content">
+      <ul>
+        <li><a (click)="scrollToSection('aboutMe'); closeMenuIfMobile()" class="link-hover-dot-bottom">About me</a></li>
+        <li><a (click)="scrollToSection('skills'); closeMenuIfMobile()" class="link-hover-dot-bottom">Skills</a></li>
+        <li><a (click)="scrollToSection('projects'); closeMenuIfMobile()" class="link-hover-dot-bottom">Projects</a></li>
+        <li class="switch">
+          <input id="mobile-language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox"
+                 [checked]="isEnglish"
+                 (click)="toggleLanguage()">
+          <label for="mobile-language-toggle"></label>
+          <span class="on">EN</span>
+          <span class="off">DE</span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </header>

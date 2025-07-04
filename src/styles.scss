@@ -15,14 +15,26 @@ $mainColor: #3dcfb6;
   font-weight: $font-weight;
 }
 
+// ✅ Reset CSS migliorato
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
   scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: hidden; // ✅ Nasconde scroll orizzontale
 }
 
 body {
   margin: 0;
-  gap: 50px;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; // ✅ Previene la striscia orizzontale
+  min-height: 100vh;
+  // ❌ Rimosso gap: 50px che causava problemi
 }
 
 body.menu-open {
@@ -30,9 +42,7 @@ body.menu-open {
   height: 100vh;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   margin: 0;
   color: $mainColor;
 }
@@ -46,7 +56,7 @@ button {
   background-color: transparent;
   color: white;
   font-family: Karla;
-
+  
   &:hover {
     border: 2px solid $mainColor;
     color: $mainColor;
@@ -56,22 +66,23 @@ button {
 
 /* fira-code-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: "Fira Code";
   font-style: normal;
   font-weight: 400;
-  src: url("./assets/fonts/fira-code-v22-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./assets/fonts/fira-code-v22-latin-regular.woff2") format("woff2");
 }
+
 /* karla-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: "Karla";
   font-style: normal;
   font-weight: 400;
-  src: url("/fonts/karla-v31-latin-regular.woff2") format("woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./assets/fonts/karla-v31-latin-regular.woff2") format("woff2");
 }
 
+// ✅ Scrollbar personalizzata
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -85,7 +96,7 @@ button {
   background: linear-gradient(180deg, #08463b 0%, #1c1c1c 100%);
   border-radius: 10px;
   transition: background 0.3s ease-in-out;
-
+  
   &:hover {
     background: linear-gradient(180deg, #1c1c1c 0%, #08463b 100%);
   }

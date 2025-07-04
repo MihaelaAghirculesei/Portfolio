@@ -1,66 +1,62 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  Renderer2,
-  HostListener,
-} from '@angular/core';
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
-import { AppComponent } from '../app.component';
-import { RouterLink } from '@angular/router';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    CommonModule,
-    TranslatePipe,
-    RouterLink,
-  ],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  constructor(
-    private renderer: Renderer2
-  ) {
-    this.screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
-    this.activeLanguage = 'en'; // Valore fisso per ora
+  isHovered: boolean = false;
+  isScrolled: boolean = false;
+  isEnglish: boolean = false;
+  isMenuOpen: boolean = false;
+
+  ngOnInit() {
+    this.checkScroll();
   }
-  
-  screenWidth: number;
-  mobileMenuActive: boolean = false;
-  activeLanguage: string = 'en';
-  
-  @ViewChild('langBtnDe') langBtnDe!: ElementRef<HTMLParagraphElement>;
-  @ViewChild('langBtnEn') langBtnEn!: ElementRef<HTMLParagraphElement>;
-  @ViewChild('langBtnDeMobile')
-  langBtnDeMobile!: ElementRef<HTMLParagraphElement>;
-  @ViewChild('langBtnEnMobile')
-  langBtnEnMobile!: ElementRef<HTMLParagraphElement>;
-  
-  toggleLanguageColor() {
-    this.langBtnDe.nativeElement.classList.toggle('active');
-    this.langBtnEn.nativeElement.classList.toggle('active');
-  }
-  
-  changeLanguage() {
-    // Logica semplificata per ora
-    this.activeLanguage = this.activeLanguage === 'en' ? 'de' : 'en';
-  }
-  
-  toggleMobileMenu() {
-    this.mobileMenuActive = !this.mobileMenuActive;
-    if (this.mobileMenuActive) {
-      this.renderer.addClass(document.body, 'menu-open');
-    } else {
-      this.renderer.removeClass(document.body, 'menu-open');
+
+  @HostListener('window:scroll', [])
+  checkScroll() {
+    if (typeof window !== 'undefined') {
+      this.isScrolled = window.scrollY > 100;
     }
   }
-  
+
+  toggleLanguage() {
+    this.isEnglish = !this.isEnglish;
+   // TODO: Implement translation logic
+    console.log('Language toggled to:', this.isEnglish ? 'DE' : 'EN');
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenuIfMobile() {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      this.isMenuOpen = false;
+    }
+  }
+
+  scrollToSection(sectionId: string) {
+    if (typeof window !== 'undefined') {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }
+    }
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
+    if (typeof window !== 'undefined' && event.target.innerWidth > 768) {
+      this.isMenuOpen = false;
+    }
   }
 }
