@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-impressum',
+  selector: 'app-legal-notice',
   standalone: true,
   imports: [TranslatePipe],
-  templateUrl: './impressum.component.html',
-  styleUrl: './impressum.component.scss'
+  templateUrl: './legal-notice.component.html',
+  styleUrl: './legal-notice.component.scss'
 })
 export class ImpressumComponent {
   ngOnInit(): void {

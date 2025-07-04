@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './shared/header.component';
+import { HeaderComponent } from './shared/header/header.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MainContentComponent } from './main-content/main-content.component';
-import { LandingpageComponent } from './1_landing-page/landing-page.component';
-import { AboutmeComponent } from './aboutme/aboutme.component';
-import { SkillsComponent } from './skills/skills.component';
-import { PortofolioComponent } from './portofolio/portofolio.component';
-import { FeedbacksComponent } from './feedbacks/feedbacks.component';
-import { ContactComponent } from './contact/contact.component';
+import { LandingpageComponent } from './main-content/landing-page/landing-page.component';
+import { AboutmeComponent } from './main-content/about-me/about-me.component';
+import { SkillsComponent } from './main-content/skills/skills.component';
+import { PortofolioComponent } from './main-content/portofolio/portofolio.component';
+import { FeedbacksComponent } from './main-content/feedback/feedback.component';
+import { ContactComponent } from './main-content/contact/contact.component';
 
 @Component({
   selector: 'app-root',

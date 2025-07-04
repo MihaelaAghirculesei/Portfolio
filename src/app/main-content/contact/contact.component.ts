@@ -12,7 +12,6 @@ import { RouterLink } from '@angular/router';
     FormsModule,
     CommonModule,
     TranslatePipe,
-    TranslateDirective,
     RouterLink,
   ],
   templateUrl: './contact.component.html',

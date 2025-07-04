@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImpressumComponent } from './impressum.component';
+import { ImpressumComponent } from './legal-notice.component';
 
 describe('ImpressumComponent', () => {
   let component: ImpressumComponent;

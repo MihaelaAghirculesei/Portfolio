@@ -5,9 +5,9 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-feedbacks',
   standalone: true,
-  imports: [CommonModule, TranslatePipe, TranslateDirective],
-  templateUrl: './feedbacks.component.html',
-  styleUrl: './feedbacks.component.scss',
+  imports: [CommonModule, TranslatePipe],
+  templateUrl: './feedback.component.html',
+  styleUrl: './feedback.component.scss',
 })
 export class FeedbacksComponent {
   feedbacks = [
