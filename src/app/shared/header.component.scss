@@ -8,22 +8,13 @@ header {
 }
 
 .logo {
-  height: 130px;
-  width: 170px;
-  text-decoration: none;
-  color: #fff;
-  background: transparent;
-  border: none;
-  cursor: pointer
+  height: auto;
+  width: 256px;
 }
 .navBarWrapper {
   max-width: 1440px;
   @include dFlex(space-between, center);
   flex: 1;
-
-  img {
-    padding-right: 50px;
-  }
 
   .navBar {
     padding-left: 50px;
@@ -39,79 +30,176 @@ a {
   font-size: 18px;
   color: white;
   position: relative;
+  cursor: pointer;
 
   &::after {
-    content: "";
+    content: "•";
     position: absolute;
     left: 50%;
-    bottom: 25px;
+    bottom: -25px;
     transform: translateX(-50%) scale(0);
     font-size: 28px;
     color: $mainColor;
-    transform:transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
   }
 
   &:hover {
     color: $mainColor;
-  
+
     &::after {
       transform: translateX(-50%) scale(1);
     }
   }
 }
-  
-  .language-toggle {
-    position: relative;
-    width: 84px;
-    height: 28px;
-    font-size: 16px;
-    font-weight: bold;
-    border: 1px solid $mainColor;
-    background: none;
-    cursor: pointer;
-    overflow: hidden;
-    transition: border 0.3s ease-in-out, background 0.3s ease-in-out;
-  
-    &:hover {
-      border: 1px solid white;
-    }
-  
-    span {
-      position: absolute;
-      width: 50%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      top: 0;
-      transition: background 0.3s ease-in-out;
-    }
-  
-    .de {
-      left: 0;
-      background: transparent;
-      border-radius: 100px;
-      color: rgba($mainColor, 0.5);
-      border: none;
-    
-      &.active {
-        background: $mainColor;
-        color: white;
-      }
-    }
-    
-    .en {
-      right: 0;
-      margin-right: -2px;
-      background: transparent;
-      border-radius: 100px;
-      border: none;
-      border-collapse: collapse;
-      color: rgba($mainColor, 0.5);
-    
-      &.active {
-        background: $mainColor;
-        color: white;
-      }
+
+.language-toggle {
+  position: relative;
+  width: 84px;
+  height: 28px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid $mainColor;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border 0.3s ease-in-out, background 0.3s ease-in-out;
+
+  &:hover {
+    border: 1px solid white;
+  }
+
+  span {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    transition: background 0.3s ease-in-out;
+  }
+
+  .de {
+    left: 0;
+    background: transparent;
+    border-radius: 100px;
+    color: rgba($mainColor, 0.5);
+    border: none;
+
+    &.active {
+      background: $mainColor;
+      color: white;
     }
   }
+
+  .en {
+    right: 0;
+    margin-right: -2px;
+    background: transparent;
+    border-radius: 100px;
+    border: none;
+    border-collapse: collapse;
+    color: rgba($mainColor, 0.5);
+
+    &.active {
+      background: $mainColor;
+      color: white;
+    }
+  }
+}
+.burgerMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 40px;
+  position: relative;
+  z-index: 100;
+  cursor: pointer;
+
+  .burgerBar {
+    background-color: $mainColor;
+    height: 3px;
+    width: 40px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+}
+.burgerMenu {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 40px;
+  position: relative;
+  z-index: 100;
+  cursor: pointer;
+  @media (max-width: 350px) {
+    padding-right: 10px;
+  }
+  .burgerBar {
+    background-color: $mainColor;
+    height: 3px;
+    width: 40px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+}
+
+.overlayBackground {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 99;
+
+  &.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.menuOverlay {
+  background: linear-gradient(to top right, $gradientStart, $gradientEnd);
+  border: 1px solid $mainColor;
+  border-radius: 30px;
+  height: 252px;
+  width: 252px;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  z-index: 100;
+  position: absolute;
+  top: 80px;
+  right: 80px;
+  @media (max-width: 350px) {
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .navBarMobile {
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+    gap: 24px;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .burgerMenu {
+    @include dFlex(center, center);
+
+    flex-direction: column;
+    height: auto;
+    width: auto;
+  }
+
+  .navBar {
+    display: none !important;
+  }
+}

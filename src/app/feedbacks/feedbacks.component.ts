@@ -29,10 +29,10 @@ export class FeedbacksComponent {
       ref: 'Gemeinsame Arbeit an einem herausfordernden Projekt',
     },
   ];
-
+  
   currentOffset = 0;
   middleIndex = 2;
-
+  
   slideLeft() {
     if (this.middleIndex < this.feedbacks.length - 1) {
       this.middleIndex++;
@@ -41,7 +41,7 @@ export class FeedbacksComponent {
     }
     this.shiftCards('right');
   }
-
+  
   slideRight() {
     if (this.middleIndex != 0) {
       this.middleIndex--;
@@ -50,30 +50,33 @@ export class FeedbacksComponent {
     }
     this.shiftCards('left');
   }
-
+  
   shiftCards(direction: string) {
-    const feedbackCards = document.querySelectorAll('.feedback-card');
-    if (direction === 'left') {
-      this.currentOffset += 105;
-    } else if (direction === 'right') {
-      this.currentOffset -= 105;
+    if (typeof document !== 'undefined') {
+      const feedbackCards = document.querySelectorAll('.feedback-card');
+      
+      if (direction === 'left') {
+        this.currentOffset += 105;
+      } else if (direction === 'right') {
+        this.currentOffset -= 105;
+      }
+      
+      if (this.currentOffset > 210) {
+        this.currentOffset = 210;
+      }
+      if (this.currentOffset < -210) {
+        this.currentOffset = -210;
+      }
+      
+      feedbackCards.forEach((card: any, index: number) => {
+        let isActive: boolean = index === this.middleIndex;
+        card.style.transform = `translateX(${this.currentOffset}%) scale(${
+          isActive ? 1.1 : 0.8
+        })`;
+      });
     }
-
-    if (this.currentOffset > 210) {
-      this.currentOffset = 210;
-    }
-    if (this.currentOffset < -210) {
-      this.currentOffset = -210;
-    }
-
-    feedbackCards.forEach((card: any, index: number) => {
-      let isActive: boolean = index === this.middleIndex;
-      card.style.transform = `translateX(${this.currentOffset}%) scale(${
-        isActive ? 1.1 : 0.8
-      })`;
-    });
   }
-
+  
   getCardClass(index: number): string {
     if (index < this.middleIndex) return 'left feedback-card';
     if (index > this.middleIndex) return 'right feedback-card';

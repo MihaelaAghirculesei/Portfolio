@@ -1,0 +1,86 @@
+@import "./../../../styles.scss";
+
+section {
+  @include dFlex(center, center);
+  background-color: $gradientStart;
+  padding: 20px 0;
+
+  .footerWrapper {
+    max-width: 1440px;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    margin-top: 40px;
+    @include dFlex(space-between, center);
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+  }
+}
+
+.logoDiv {
+  @include dFlex(center, center);
+  flex-direction: column;
+  text-align: center;
+  > a {
+    > img {
+      width: 120px;
+      height: auto;
+      transition: transform 0.2s ease-in-out;
+
+      &:hover {
+        transform: scale(1.1);
+        filter: invert(0.6);
+      }
+    }
+  }
+
+  > span {
+    @include text("Karla", 14px, white, 400);
+  }
+}
+
+.copyright {
+  @include text("Fira Code", 16px, $mainColor, 400);
+  text-align: center;
+}
+
+.linkDiv {
+  @include dFlex(center, center);
+  flex-direction: row;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  > a {
+    @include text("Karla", 14px, white, 400);
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+
+    &::after {
+      content: "•";
+      position: absolute;
+      left: -10px;
+      bottom: -30%;
+      transform: translateX(-50%) scale(0);
+      font-size: 24px;
+      color: $mainColor;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    &:hover {
+      color: $mainColor;
+
+      &::after {
+        transform: translateX(-50%) scale(1);
+      }
+    }
+  }
+}

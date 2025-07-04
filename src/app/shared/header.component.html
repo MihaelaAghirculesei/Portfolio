@@ -1,17 +1,71 @@
 <header>
   <div class="navBarWrapper">
-    <div class="navbar">
+    <div class="navBar">
       <button
         id="lang-btn"
         class="language-toggle"
-        (click)="toggleLanguageColor()">
-        <span #langBtnDe class="de">DE</span>
-        <span #langBtnEn class="en active">EN</span>
+        (click)="toggleLanguageColor()"
+        (click)="changeLanguage()"
+      >
+        <span
+          #langBtnDe
+          [ngClass]="['de', activeLanguage === 'de' ? 'active' : '']"
+          >DE</span
+        >
+        <span
+          #langBtnEn
+          [ngClass]="['en', activeLanguage === 'en' ? 'active' : '']"
+          >EN</span
+        >
       </button>
-      <a href="">About me </a>
-      <a href="">Skills </a>
-      <a href="">Projects </a>
+      <a href="#aboutMe">{{ "app-header.menuBtnAboutMe" | translate }} </a>
+      <a href="#skills">{{ "app-header.menuBtnSkills" | translate }} </a>
+      <a href="#projects">{{ "app-header.menuBtnProjects" | translate }} </a>
     </div>
-    <img class="logo" src="./../../assets/img/1. Logo Mihaela_Melania.png" alt="" />
+
+    <a [routerLink]="''"
+      ><img class="logo" src="../../../assets/img/navBar/logo.svg" alt=""
+    /></a>
   </div>
+
+  <div class="burgerMenu" (click)="toggleMobileMenu()">
+    <div class="burgerBar"></div>
+    <div class="burgerBar"></div>
+    <div class="burgerBar"></div>
+  </div>
+
+  @if(screenWidth <= 900){
+  <div [ngClass]="['overlayBackground', mobileMenuActive ? 'active' : '']">
+    <div class="menuOverlay">
+      <div class="navBarMobile">
+        <button
+          id="lang-btn"
+          class="language-toggle"
+          (click)="toggleLanguageColor()"
+          (click)="changeLanguage()"
+        >
+          <span
+            #langBtnDeMobile
+            [ngClass]="['de', activeLanguage === 'de' ? 'active' : '']"
+            >DE</span
+          >
+          <span
+            #langBtnEnMobile
+            [ngClass]="['en', activeLanguage === 'en' ? 'active' : '']"
+            >EN</span
+          >
+        </button>
+        <a href="#aboutMe" (click)="toggleMobileMenu()"
+          >{{ "app-header.menuBtnAboutMe" | translate }}
+        </a>
+        <a href="#skills" (click)="toggleMobileMenu()"
+          >{{ "app-header.menuBtnSkills" | translate }}
+        </a>
+        <a href="#projects" (click)="toggleMobileMenu()"
+          >{{ "app-header.menuBtnProjects" | translate }}
+        </a>
+      </div>
+    </div>
+  </div>
+  }
 </header>

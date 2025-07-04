@@ -9,7 +9,6 @@ import {
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { AppComponent } from '../app.component';
 import { RouterLink } from '@angular/router';
-import { TranslationService } from './../services/translationservice.service';
 
 @Component({
   selector: 'app-header',
@@ -17,8 +16,6 @@ import { TranslationService } from './../services/translationservice.service';
   imports: [
     CommonModule,
     TranslatePipe,
-    TranslateDirective,
-    AppComponent,
     RouterLink,
   ],
   templateUrl: './header.component.html',
@@ -26,47 +23,44 @@ import { TranslationService } from './../services/translationservice.service';
 })
 export class HeaderComponent {
   constructor(
-    private renderer: Renderer2,
-    private translationService: TranslationService
+    private renderer: Renderer2
   ) {
-    this.screenWidth = window.innerWidth;
-    this.activeLanguage = this.translationService.getCurrentLanguage();
+    this.screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
+    this.activeLanguage = 'en'; // Valore fisso per ora
   }
-
+  
   screenWidth: number;
   mobileMenuActive: boolean = false;
   activeLanguage: string = 'en';
-
+  
   @ViewChild('langBtnDe') langBtnDe!: ElementRef<HTMLParagraphElement>;
   @ViewChild('langBtnEn') langBtnEn!: ElementRef<HTMLParagraphElement>;
   @ViewChild('langBtnDeMobile')
   langBtnDeMobile!: ElementRef<HTMLParagraphElement>;
   @ViewChild('langBtnEnMobile')
   langBtnEnMobile!: ElementRef<HTMLParagraphElement>;
-
+  
   toggleLanguageColor() {
     this.langBtnDe.nativeElement.classList.toggle('active');
     this.langBtnEn.nativeElement.classList.toggle('active');
   }
-
+  
   changeLanguage() {
-    const newLang =
-      this.translationService.getCurrentLanguage() === 'en' ? 'de' : 'en';
-    this.translationService.switchLanguage(newLang);
-    this.activeLanguage = newLang;
+    // Logica semplificata per ora
+    this.activeLanguage = this.activeLanguage === 'en' ? 'de' : 'en';
   }
-
+  
   toggleMobileMenu() {
     this.mobileMenuActive = !this.mobileMenuActive;
-
     if (this.mobileMenuActive) {
       this.renderer.addClass(document.body, 'menu-open');
     } else {
       this.renderer.removeClass(document.body, 'menu-open');
     }
   }
+  
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.screenWidth = window.innerWidth;
+    this.screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
   }
 }
