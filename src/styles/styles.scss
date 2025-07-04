@@ -2,6 +2,8 @@ $gradientStart: #1c1c1c;
 $gradientEnd: #08463b;
 $mainColor: #3dcfb6;
 
+@import './buttons.scss';
+
 @mixin dFlex($jc, $ai) {
   display: flex;
   justify-content: $jc;
@@ -15,7 +17,6 @@ $mainColor: #3dcfb6;
   font-weight: $font-weight;
 }
 
-// ✅ Reset CSS migliorato
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,16 +26,15 @@ $mainColor: #3dcfb6;
 html {
   scroll-behavior: smooth;
   width: 100%;
-  overflow-x: hidden; // ✅ Nasconde scroll orizzontale
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-x: hidden; // ✅ Previene la striscia orizzontale
+  overflow-x: hidden;
   min-height: 100vh;
-  // ❌ Rimosso gap: 50px che causava problemi
 }
 
 body.menu-open {
@@ -59,7 +59,6 @@ button {
   
   &:hover {
     border: 2px solid $mainColor;
-    color: $mainColor;
     cursor: pointer;
   }
 }
@@ -70,7 +69,7 @@ button {
   font-family: "Fira Code";
   font-style: normal;
   font-weight: 400;
-  src: url("./assets/fonts/fira-code-v22-latin-regular.woff2") format("woff2");
+  src: url("../assets/fonts/fira-code-v22-latin-regular.woff2") format("woff2");
 }
 
 /* karla-regular - latin */
@@ -79,10 +78,9 @@ button {
   font-family: "Karla";
   font-style: normal;
   font-weight: 400;
-  src: url("./assets/fonts/karla-v31-latin-regular.woff2") format("woff2");
+  src: url("../assets/fonts/karla-v31-latin-regular.woff2") format("woff2");
 }
 
-// ✅ Scrollbar personalizzata
 ::-webkit-scrollbar {
   width: 8px;
 }

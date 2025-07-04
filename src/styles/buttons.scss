@@ -1,0 +1,73 @@
+.link-button {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  padding: 16px 24px;
+  border-radius: 32px;
+  color: white;
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    border-color: $mainColor;
+    color: $mainColor;
+  }
+
+  &.animated {
+    min-width: 120px;
+
+    span {
+      position: relative;
+      z-index: 1;
+      transition: opacity 0.2s;
+    }
+
+    &:hover span {
+      opacity: 0;
+    }
+
+    &::before,
+    &::after {
+      content: attr(data-text);
+      position: absolute;
+      white-space: nowrap;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      color: $mainColor;
+    }
+
+    &:hover::before,
+    &:hover::after {
+      opacity: 1;
+    }
+
+    &::before {
+      animation: moveText1 2s linear infinite;
+    }
+
+    &::after {
+      animation: moveText2 2s linear infinite;
+    }
+  }
+}
+
+@keyframes moveText1 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes moveText2 {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}

@@ -1,4 +1,4 @@
-@import "./../../styles.scss";
+@import "./../../styles/styles.scss";
 
 .headLine {
   background: linear-gradient(68deg, $gradientStart 23%, $gradientEnd 100%);
@@ -31,11 +31,9 @@ h2 {
 }
 
 .buttonDiv {
-  @include dFlex(space-between, center);
-
-  button {
-    margin: 40px 30px;
-  }
+  @include dFlex(center, center);
+  gap: 48px;
+  margin: 40px 0;
 }
 
 .edgeLine-left {
@@ -93,7 +91,6 @@ h2 {
   display: flex;
   padding-bottom: 45px;
   white-space: nowrap;
- 
 }
 
 .bannerWrapper {
@@ -144,6 +141,7 @@ p {
     transform: translateX(-50%);
   }
 }
+
 @keyframes scroll2ndText {
   from {
     transform: translateX(0);
