@@ -5,8 +5,18 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss'] 
+  styleUrl: './landing-page.component.scss'
 })
 export class LandingpageComponent {
 
+  scrollToAboutMe(): void {
+    const aboutMeSection = document.getElementById('aboutMe');
+    
+    if (aboutMeSection) {
+      aboutMeSection.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  }
 }

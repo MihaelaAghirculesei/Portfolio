@@ -43,16 +43,26 @@ h2 {
   position: absolute;
   bottom: 0;
   left: 8%;
+  
   .arrowDown {
     @include dFlex(center, center);
     transform: rotate(90deg);
     width: 48px;
     height: 30px;
-    border-color: $mainColor;
+    border: 1px solid $mainColor;
+    background: transparent;
+    cursor: pointer;
+    transition: all 300ms ease;
+    
+    &:hover {
+      transform: rotate(90deg) scale(1.1);
+    }
+    
     .arrowDownImg {
       transform: rotate(270deg);
     }
   }
+  
   .greenLineDown {
     width: 1px;
     height: 300px;
@@ -67,20 +77,24 @@ h2 {
   position: absolute;
   bottom: 0;
   right: 8%;
+  
   .emailLandingpage {
     color: white;
     font-family: Karla;
   }
+  
   .whiteLineDown {
     height: 220px;
     background-color: white;
     width: 1px;
   }
+  
   .emailLandingpage {
     transform: rotate(-90deg);
     margin-bottom: 40px;
     font-size: 18px;
   }
+  
   img {
     height: 32px;
     width: 32px;
