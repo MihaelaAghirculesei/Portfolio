@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { BannerSectionComponent } from './banner-section/banner-section.component';
 
 @Component({
   selector: 'app-landingpage',
   standalone: true,
-  imports: [],
+  imports: [BannerSectionComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
 })

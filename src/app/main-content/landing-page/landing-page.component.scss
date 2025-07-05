@@ -8,6 +8,7 @@
   flex-direction: column;
   background: linear-gradient(68deg, $gradientStart 23%, $gradientEnd 100%);
   overflow: hidden;
+  position: relative;
 
   .contentWrapper {
     position: relative;
@@ -144,61 +145,14 @@
   }
 }
 
-.bannerSection {
-  display: flex;
-  padding-bottom: 45px;
-  white-space: nowrap;
-}
-
-.bannerWrapper {
+// Banner section positioning (same structure as your friend's infinite-banner)
+app-banner-section {
+  z-index: 99;
   width: 100%;
-  transform: rotate(-4deg);
-  background-color: 383838 !important;
-  filter: blur(5.3);
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-  backdrop-filter: blur(5px);
-}
-
-.banner {
-  display: flex;
-  align-items: center;
-  gap: 56px;
-  width: max-content;
-  
-  p {
-    color: $mainColor;
-    font-family: Karla;
-    font-size: 32px;
-    line-height: 1.5;
-    display: inline-block;
-    margin: 0;
-  }
-}
-
-.staticText {
-  @include dFlex(center, center);
-  gap: 56px;
-  color: $mainColor;
-  animation: scrollText 20s linear infinite;
-}
-
-.scrollText {
-  @include dFlex(center, center);
-  gap: 56px;
-  color: $mainColor;
-  animation: scroll2ndText 20s linear infinite;
-}
-
-@keyframes scrollText {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@keyframes scroll2ndText {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 @media (max-width: 1440px) {
