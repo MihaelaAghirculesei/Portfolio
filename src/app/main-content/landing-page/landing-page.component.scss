@@ -13,6 +13,10 @@
   flex-direction: column;
   flex: 1;
   max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  position: relative;
 }
 
 h1,
@@ -39,10 +43,11 @@ h2 {
 .edgeLine-left {
   @include dFlex(center, center);
   flex-direction: column;
-  gap: 30px;
+  gap: 24px;
   position: absolute;
   bottom: 0;
-  left: 8%;
+  left: 0;
+  z-index: 97;
   
   .arrowDown {
     @include dFlex(center, center);
@@ -53,9 +58,11 @@ h2 {
     background: transparent;
     cursor: pointer;
     transition: all 300ms ease;
+    margin-bottom: 8px;
     
     &:hover {
       transform: rotate(90deg) scale(1.1);
+      margin-bottom: 0;
     }
     
     .arrowDownImg {
@@ -67,37 +74,76 @@ h2 {
     width: 1px;
     height: 300px;
     background-color: $mainColor;
+    display: block;
   }
 }
 
 .edgeLine-right {
   @include dFlex(center, center);
   flex-direction: column;
-  gap: 25px;
+  gap: 24px;
   position: absolute;
   bottom: 0;
-  right: 8%;
+  right: 16px;
+  z-index: 97;
   
-  .emailLandingpage {
+  .vertical-text {
+    writing-mode: vertical-rl;
+    transform: scale(-1);
+  }
+  
+  .email-link {
+    position: relative;
     color: white;
+    text-decoration: none;
     font-family: Karla;
-  }
-  
-  .whiteLineDown {
-    height: 220px;
-    background-color: white;
-    width: 1px;
-  }
-  
-  .emailLandingpage {
-    transform: rotate(-90deg);
-    margin-bottom: 40px;
     font-size: 18px;
+    transition: all 300ms ease;
+    
+    &:hover {
+      color: $mainColor;
+    }
+    
+    .email-text {
+      color: white;
+      font-family: Karla;
+      font-size: 18px;
+      transition: all 300ms ease;
+    }
+    
+    &:hover .email-text {
+      color: $mainColor;
+    }
+    
+    .email-icon {
+      display: none;
+    }
   }
   
-  img {
-    height: 32px;
-    width: 32px;
+  a {
+    transition: all 300ms ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+    
+    img {
+      height: 32px;
+      width: 32px;
+      transition: all 300ms ease;
+      
+      &:hover {
+        filter: brightness(0) invert(1);
+        transform: scale(1.1);
+      }
+    }
+  }
+  
+  .hero-right-line {
+    width: 1px;
+    height: 300px;
+    background-color: $mainColor;
+    display: block;
   }
 }
 
@@ -162,5 +208,78 @@ p {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 1440px) {
+  .contentWrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .headLine {
+    .contentWrapper {
+      h1 {
+        font-size: 80px;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+      
+      .buttonDiv {
+        gap: 16px;
+      }
+    }
+  }
+  
+  .edgeLine-left {
+    .greenLineDown {
+      height: 150px;
+    }
+  }
+  
+  .edgeLine-right {
+    .email-link {
+      .email-text {
+        display: none;
+      }
+      
+      .email-icon {
+        display: block;
+        transform: scale(-1);
+        width: 24px;
+        height: 24px;
+      }
+    }
+    
+    .hero-right-line {
+      height: 150px;
+    }
+    
+    a img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .headLine {
+    .contentWrapper {
+      h1 {
+        font-size: 64px;
+      }
+      
+      h2 {
+        font-size: 18px;
+      }
+      
+      .buttonDiv {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
   }
 }
