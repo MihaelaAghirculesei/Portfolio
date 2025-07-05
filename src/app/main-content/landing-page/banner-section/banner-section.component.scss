@@ -17,7 +17,7 @@
   .banner-track {
     display: flex;
     align-items: center;
-    animation: scroll-left 25s linear infinite;
+    animation: scroll-left 60s linear infinite;
     white-space: nowrap;
     gap: 0;
     flex-shrink: 0;
@@ -91,7 +91,6 @@
   }
 }
 
-// Nest Hub specific - remove absolute positioning
 @media screen and (width: 1024px) and (height: 600px),
        screen and (width: 1280px) and (height: 800px) {
   .banner-container {
