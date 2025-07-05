@@ -1,149 +1,146 @@
 @import "./../../../styles/styles.scss";
 
 .headLine {
+  font-family: 'Fira Code', 'Karla', Arial, sans-serif;
+  padding: 98px 16px 0 16px;
+  height: 100vh;
+  @include dFlex(center, center);
+  flex-direction: column;
   background: linear-gradient(68deg, $gradientStart 23%, $gradientEnd 100%);
-  height: calc(100vh - 98px);
-  @include dFlex(center, center);
-  flex-direction: column;
   overflow: hidden;
-}
 
-.contentWrapper {
-  @include dFlex(center, center);
-  flex-direction: column;
-  flex: 1;
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 16px;
-  position: relative;
-}
-
-h1,
-h2 {
-  color: white;
-}
-
-h1 {
-  font-size: 128px;
-  font-family: Karla;
-}
-
-h2 {
-  font-size: 40px;
-  font-family: Fira Code;
-}
-
-.buttonDiv {
-  @include dFlex(center, center);
-  gap: 48px;
-  margin: 40px 0;
-}
-
-.edgeLine-left {
-  @include dFlex(center, center);
-  flex-direction: column;
-  gap: 24px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 97;
-  
-  .arrowDown {
-    @include dFlex(center, center);
-    transform: rotate(90deg);
-    width: 48px;
-    height: 30px;
-    border: 1px solid $mainColor;
-    background: transparent;
-    cursor: pointer;
-    transition: all 300ms ease;
-    margin-bottom: 8px;
-    
-    &:hover {
-      transform: rotate(90deg) scale(1.1);
-      margin-bottom: 0;
-    }
-    
-    .arrowDownImg {
-      transform: rotate(270deg);
-    }
-  }
-  
-  .greenLineDown {
-    width: 1px;
-    height: 300px;
-    background-color: $mainColor;
-    display: block;
-  }
-}
-
-.edgeLine-right {
-  @include dFlex(center, center);
-  flex-direction: column;
-  gap: 24px;
-  position: absolute;
-  bottom: 0;
-  right: 16px;
-  z-index: 97;
-  
-  .vertical-text {
-    writing-mode: vertical-rl;
-    transform: scale(-1);
-  }
-  
-  .email-link {
+  .contentWrapper {
     position: relative;
-    color: white;
-    text-decoration: none;
-    font-family: Karla;
-    font-size: 18px;
-    transition: all 300ms ease;
+    height: calc(100vh - 98px);
+    @include dFlex(center, center);
+    flex-direction: column;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+    text-align: center;
+    gap: 0;
     
-    &:hover {
-      color: $mainColor;
-    }
-    
-    .email-text {
+    h2 {
+      font-size: 40px;
+      font-family: Fira Code;
       color: white;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 90px;
       font-family: Karla;
-      font-size: 18px;
-      transition: all 300ms ease;
+      word-spacing: -0.1em;
+      color: white;
+      margin: 0;
+      line-height: 1.0;
     }
-    
-    &:hover .email-text {
-      color: $mainColor;
+
+    .buttonDiv {
+      @include dFlex(center, center);
+      gap: 48px;
+      margin: 40px 0;
     }
-    
-    .email-icon {
-      display: none;
-    }
-  }
-  
-  a {
-    transition: all 300ms ease;
-    
-    &:hover {
-      transform: scale(1.05);
-    }
-    
-    img {
-      height: 32px;
-      width: 32px;
-      transition: all 300ms ease;
+
+    .edgeLine-left {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      @include dFlex(center, center);
+      flex-direction: column;
+      gap: 24px;
+      z-index: 97;
       
-      &:hover {
-        filter: brightness(0) invert(1);
-        transform: scale(1.1);
+      .arrowDown {
+        @include dFlex(center, center);
+        transform: rotate(90deg);
+        width: 48px;
+        height: 30px;
+        border: 1px solid $mainColor;
+        background: transparent;
+        cursor: pointer;
+        transition: all 300ms ease;
+        margin-bottom: 8px;
+        
+        &:hover {
+          transform: rotate(90deg) scale(1.1);
+          margin-bottom: 0;
+        }
+        
+        .arrowDownImg {
+          transform: rotate(270deg);
+        }
+      }
+      
+      .greenLineDown {
+        width: 1px;
+        height: 300px;
+        background-color: $mainColor;
+        display: block;
       }
     }
-  }
-  
-  .hero-right-line {
-    width: 1px;
-    height: 300px;
-    background-color: $mainColor;
-    display: block;
+
+    .edgeLine-right {
+      position: absolute;
+      right: 2px;
+      bottom: 0;
+      @include dFlex(center, center);
+      flex-direction: column;
+      gap: 24px;
+      z-index: 97;
+      
+      .vertical-text {
+        writing-mode: vertical-rl;
+        transform: scale(-1);
+      }
+
+      .email-link {
+        position: relative;
+        color: white;
+        text-decoration: none;
+        font-family: Karla;
+        font-size: 18px;
+        transition: all 300ms ease;
+        
+        &:hover {
+          color: $mainColor;
+        }
+        
+        .email-text {
+          color: white;
+          transition: all 300ms ease;
+        }
+        
+        &:hover .email-text {
+          color: $mainColor;
+        }
+
+        .email-icon {
+          display: none;
+        }
+      }
+
+      a {
+        img {
+          height: 32px;
+          width: 32px;
+          transition: all 300ms ease;
+          
+          &:hover {
+            filter: brightness(0) invert(1);
+            transform: scale(1.1);
+          }
+        }
+      }
+
+      .hero-right-line {
+        width: 1px;
+        height: 300px;
+        background-color: $mainColor;
+        display: block;
+      }
+    }
   }
 }
 
@@ -164,19 +161,20 @@ h2 {
   backdrop-filter: blur(5px);
 }
 
-p {
-  color: $mainColor;
-  font-family: Karla;
-  font-size: 32px;
-  line-height: 1.5;
-  display: inline-block;
-}
-
 .banner {
   display: flex;
   align-items: center;
   gap: 56px;
   width: max-content;
+  
+  p {
+    color: $mainColor;
+    font-family: Karla;
+    font-size: 32px;
+    line-height: 1.5;
+    display: inline-block;
+    margin: 0;
+  }
 }
 
 .staticText {
@@ -194,21 +192,13 @@ p {
 }
 
 @keyframes scrollText {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 @keyframes scroll2ndText {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 @media (max-width: 1440px) {
@@ -217,37 +207,15 @@ p {
   }
 }
 
-@media (max-width: 768px) {
-  .headLine {
-    .contentWrapper {
-      h1 {
-        font-size: 80px;
-      }
-      
-      h2 {
-        font-size: 24px;
-      }
-      
-      .buttonDiv {
-        gap: 16px;
-      }
-    }
-  }
-  
-  .edgeLine-left {
-    .greenLineDown {
-      height: 150px;
-    }
-  }
-  
+@media (max-height: 918px) {
   .edgeLine-right {
     .email-link {
       .email-text {
-        display: none;
+        display: none !important;
       }
       
       .email-icon {
-        display: block;
+        display: block !important;
         transform: scale(-1);
         width: 24px;
         height: 24px;
@@ -265,20 +233,78 @@ p {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 768px) {
   .headLine {
     .contentWrapper {
-      h1 {
-        font-size: 64px;
+      h2 {
+        font-size: 24px;
       }
       
+      h1 {
+        font-size: 44px;
+        word-spacing: -0.1em;
+        line-height: 0.9;
+      }
+      
+      .buttonDiv {
+        gap: 16px;
+        flex-direction: column;
+      }
+
+      .edgeLine-left {
+        .greenLineDown {
+          height: 150px;
+        }
+      }
+
+      .edgeLine-right {
+        .email-link {
+          .email-text {
+            display: none;
+          }
+
+          .email-icon {
+            display: block;
+            transform: scale(-1);
+            width: 24px;
+            height: 24px;
+          }
+        }
+        
+        .hero-right-line {
+          height: 150px;
+        }
+        
+        a img {
+          height: 24px;
+          width: 24px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .headLine {
+    .contentWrapper {
       h2 {
-        font-size: 18px;
+        font-size: 16px;
+      }
+      
+      h1 {
+        font-size: 35px;
+        line-height: 0.8;
       }
       
       .buttonDiv {
         flex-direction: column;
-        gap: 16px;
+        gap: 12px;
+        margin-top: 20px;
+        
+        .link-button {
+          font-size: 14px;
+          padding: 8px 16px;
+        }
       }
     }
   }
