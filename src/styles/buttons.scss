@@ -1,3 +1,4 @@
+// Assicurati che variables.scss sia importato prima di usare questo file
 .link-button {
   position: relative;
   display: inline-flex;
@@ -13,8 +14,8 @@
   transition: border-color 0.3s ease, color 0.3s ease;
 
   &:hover {
-    border-color: $mainColor;
-    color: $mainColor;
+    border-color: $main-color;
+    color: $main-color;
   }
 
   &.animated {
@@ -44,7 +45,7 @@
       justify-content: center;
       opacity: 0;
       transition: opacity 0.2s;
-      color: $mainColor;
+      color: $main-color;
     }
 
     &:hover::before,

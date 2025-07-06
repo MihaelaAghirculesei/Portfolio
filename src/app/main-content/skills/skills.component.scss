@@ -1,18 +1,11 @@
-@import "../../../styles/styles.scss";
+@import '../../../styles/styles.scss';
 
-// === VARIABILI ===
-$section-padding: 60px;
-$border-radius-base: 20px;
-$transition-base: 0.3s ease;
-
-// === STILI BASE ===
+// === SKILLS SECTION ===
 .skillsSection {
-  background: radial-gradient(circle at 0% 50%, $gradientEnd 0%, $gradientStart 25%);
+  background: radial-gradient(circle at 0% 50%, $gradient-end 0%, $gradient-start 25%);
   min-height: 900px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include dFlex(center, center);
   padding: $section-padding 0;
   overflow: hidden;
 }
@@ -23,9 +16,7 @@ $transition-base: 0.3s ease;
   gap: 60px;
   margin: 0 40px;
   color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include dFlex(space-between, center);
   position: relative;
   z-index: 1;
 }
@@ -41,28 +32,19 @@ $transition-base: 0.3s ease;
     font-size: 24px;
     font-weight: 500;
     opacity: 0.9;
-    color: $mainColor;
+    color: $main-color;
     text-align: left;
   }
 
   .textDiv {
-    border: 1px solid #3dcfb6;
-    border-radius: #{$border-radius-base * 2};
-    background: rgba($gradientEnd, 0.9);
-    padding: 40px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transition: transform $transition-base;
+    @include textBox(40px, #{$border-radius-base * 2});
     width: 100%;
-    box-sizing: border-box;
     min-width: 580px;
-
-    &:hover { transform: translateY(-2px); }
 
     h2 {
       font-family: "Fira-Code", monospace;
       font-size: 64px;
-      color: $mainColor;
+      color: $main-color;
       font-weight: 400;
       padding-left: 20px;
       margin-bottom: 15px;
@@ -75,11 +57,10 @@ $transition-base: 0.3s ease;
       font-weight: 700;
       padding-left: 20px;
       margin: 16px 0 12px 0;
-      span { color: $mainColor; }
+      span { color: $main-color; }
     }
 
-    .skillIntroduction,
-    > span:last-of-type {
+    .skillIntroduction, > span:last-of-type {
       font-family: "Karla", sans-serif;
       font-size: 18px;
       color: white;
@@ -92,18 +73,12 @@ $transition-base: 0.3s ease;
     }
 
     .link-button {
-      margin-top: 16px;
-      margin-left: 20px;
+      margin: 16px 0 0 20px;
     }
   }
 }
 
-.skillButtons {
-  max-width: 500px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(104px, 100%), 1fr));
-  gap: 20px;
-}
+.skillButtons { @include skillsGrid(500px, 20px); }
 
 .skillDiv {
   height: 108px;
@@ -137,17 +112,14 @@ $transition-base: 0.3s ease;
     line-height: 1.2;
   }
 
-  &:last-child {
-    &:hover .tooltip { display: block; transform: translateY(-10px); opacity: 1; }
-    &:hover p { color: $mainColor; }
+  &:last-child:hover {
+    .tooltip { display: block; transform: translateY(-10px); opacity: 1; }
+    p { color: $main-color; }
   }
 }
 
 .tooltip {
-  font-family: "Karla", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  position: absolute;
+  @include tooltip();
   right: -30px;
   top: -165px;
   @include dFlex(center, center);
@@ -155,18 +127,9 @@ $transition-base: 0.3s ease;
   gap: 12px;
   width: 224px;
   height: 150px;
-  background: #fff;
-  border-radius: 24px;
-  padding: 24px;
-  text-align: center;
-  color: #000;
-  display: none;
-  opacity: 0;
-  transition: transform $transition-base, opacity 1s ease-in-out;
-  z-index: 10;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
-  > span { color: $mainColor; line-height: 1.4; }
+  > span { color: $main-color; line-height: 1.4; }
+  
   &::after {
     content: "";
     position: absolute;
@@ -178,10 +141,7 @@ $transition-base: 0.3s ease;
   }
 }
 
-.future-skills {
-  @include dFlex(center, center);
-  gap: 20px;
-}
+.future-skills { @include dFlex(center, center); gap: 20px; }
 
 .skillItem {
   @include dFlex(center, center);
@@ -201,13 +161,13 @@ $transition-base: 0.3s ease;
   p {
     font-family: "Fira Code", monospace;
     font-size: 14px;
-    color: $mainColor;
+    color: $main-color;
     font-weight: 400;
     margin: 0;
   }
 }
 
-// RESPONSIVE (dal più grande al più piccolo)
+// === RESPONSIVE ===
 @media (min-width: 2000px) {
   .contentWrapper { gap: 100px; max-width: 1800px; }
   .textWrapper .textDiv { min-width: 720px; }
@@ -222,19 +182,13 @@ $transition-base: 0.3s ease;
 
 @media (max-width: 1200px) {
   .contentWrapper { gap: 40px; margin: 0 40px; }
-  .textWrapper .textDiv { min-width: 460px; }
-  .textWrapper .textDiv h2 { font-size: 56px; }
+  .textWrapper .textDiv { min-width: 460px; h2 { font-size: 56px; } }
   .skillButtons { max-width: 400px; gap: 18px; }
 }
 
-// Surface Pro e Tablet Landscape
 @media (max-width: 1024px) {
   .contentWrapper { gap: 35px; margin: 0 35px; }
-  .textWrapper .textDiv { 
-    min-width: 420px; 
-    padding: 35px;
-  }
-  .textWrapper .textDiv h2 { font-size: 54px; }
+  .textWrapper .textDiv { min-width: 420px; padding: 35px; h2 { font-size: 54px; } }
   .skillButtons { max-width: 380px; gap: 16px; }
 }
 
@@ -242,122 +196,59 @@ $transition-base: 0.3s ease;
   .contentWrapper { gap: 40px; }
   .textWrapper .textDiv { min-width: 400px; }
   .skillButtons { max-width: 450px; gap: 15px; }
-  .skillDiv > img { width: 40px; height: 40px; }
-  .skillDiv > p { font-size: 14px; }
+  .skillDiv { > img { width: 40px; height: 40px; } > p { font-size: 14px; } }
 }
 
-// TABLET PORTRAIT
 @media (max-width: 900px) and (orientation: portrait) {
   .skillsSection { min-height: auto; }
-  .contentWrapper { 
-    flex-direction: column; 
-    gap: 30px; 
-    margin: 0 30px; 
-    text-align: center; 
-  }
-  .textWrapper { text-align: center; }
-  .textWrapper .overContent { text-align: center; font-size: 22px; }
+  .contentWrapper { flex-direction: column; gap: 30px; margin: 0 30px; text-align: center; }
+  .textWrapper { text-align: center; .overContent { text-align: center; font-size: 22px; } }
   .textWrapper .textDiv {
-    min-width: auto; 
-    max-width: 100%;
-    padding: 35px; 
-    border-radius: 35px;
-  }
-  .textWrapper .textDiv h2 { 
-    padding-left: 0; 
-    text-align: center; 
-    font-size: 52px; 
-  }
-  .textWrapper .textDiv h3 { 
-    padding-left: 0; 
-    text-align: center; 
-    font-size: 22px; 
-  }
-  .textWrapper .textDiv .skillIntroduction,
-  .textWrapper .textDiv > span:last-of-type { 
-    padding-left: 0; 
-    max-width: 100%; 
-    text-align: center; 
-    font-size: 17px; 
-  }
-  .textWrapper .textDiv .link-button { 
-    margin-left: 0; 
-    align-self: center; 
+    min-width: auto; max-width: 100%; padding: 35px; border-radius: 35px;
+    
+    h2 { padding-left: 0; text-align: center; font-size: 52px; }
+    h3 { padding-left: 0; text-align: center; font-size: 22px; }
+    .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: center; font-size: 17px; }
+    .link-button { margin-left: 0; align-self: center; }
   }
   .skillButtons { max-width: 380px; gap: 15px; }
 }
 
-// TABLET E MOBILE GENERALE
 @media (max-width: 768px) {
   .skillsSection { min-height: auto; }
-  .contentWrapper { 
-    flex-direction: column; 
-    gap: 40px; 
-    margin: 0 25px; 
-    text-align: center; 
-  }
-  .textWrapper { text-align: center; }
-  .textWrapper .overContent { text-align: center; font-size: 20px; }
+  .contentWrapper { flex-direction: column; gap: 40px; margin: 0 25px; text-align: center; }
+  .textWrapper { text-align: center; .overContent { text-align: center; font-size: 20px; } }
   .textWrapper .textDiv {
-    min-width: auto;
-    max-width: 100%;
-    padding: 30px; 
-    border-radius: 30px; 
-    text-align: center;
-  }
-  .textWrapper .textDiv h2 { 
-    padding-left: 0; 
-    font-size: 48px; 
-  }
-  .textWrapper .textDiv h3 { 
-    padding-left: 0; 
-    font-size: 20px; 
-  }
-  .textWrapper .textDiv .skillIntroduction,
-  .textWrapper .textDiv > span:last-of-type { 
-    padding-left: 0; 
-    max-width: 100%; 
-    text-align: center; 
-    font-size: 16px; 
-  }
-  .textWrapper .textDiv .link-button { 
-    margin-left: 0; 
-    align-self: center; 
+    min-width: auto; max-width: 100%; padding: 30px; border-radius: 30px; text-align: center;
+    
+    h2 { padding-left: 0; font-size: 48px; }
+    h3 { padding-left: 0; font-size: 20px; }
+    .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: center; font-size: 16px; }
+    .link-button { margin-left: 0; align-self: center; }
   }
   .skillButtons { max-width: 350px; gap: 15px; }
-  .skillDiv > img { width: 45px; height: 45px; }
-  .skillDiv > p { font-size: 14px; }
+  .skillDiv { > img { width: 45px; height: 45px; } > p { font-size: 14px; } }
 }
 
-@media (max-width: 600px) {
-  .skillDiv { height: 90px; }
-}
+@media (max-width: 600px) { .skillDiv { height: 90px; } }
 
-// MOBILE
 @media (max-width: 480px) {
   .contentWrapper { margin: 0 20px; }
   .textWrapper .textDiv {
-    padding: 20px;
-    border-radius: $border-radius-base;
-    max-width: 100%;
+    padding: 20px; border-radius: $border-radius-base; max-width: 100%;
+    h2 { font-size: 36px; }
+    .skillIntroduction, > span:last-of-type { font-size: 15px; }
   }
-  .textWrapper .textDiv h2 { font-size: 36px; }
-  .textWrapper .textDiv .skillIntroduction,
-  .textWrapper .textDiv > span:last-of-type { font-size: 15px; }
   .skillButtons { max-width: 300px; gap: 10px; }
-  .skillDiv { height: 80px; }
-  .skillDiv > img { width: 40px; height: 40px; }
-  .skillDiv > p { font-size: 13px; }
+  .skillDiv { height: 80px; > img { width: 40px; height: 40px; } > p { font-size: 13px; } }
 }
 
 @media (max-width: 420px) {
   .skillButtons { max-width: 280px; }
-  .tooltip { left: 40px; right: auto; }
-  .tooltip::after { left: 32px; transform: none; }
+  .tooltip { left: 40px; right: auto; &::after { left: 32px; transform: none; } }
 }
 
 @media (max-width: 340px) {
   .skillButtons { max-width: 250px; gap: 15px; }
-  .tooltip { left: 10px; }
-  .tooltip::after { left: 100px; }
+  .tooltip { left: 10px; &::after { left: 100px; } }
 }

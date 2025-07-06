@@ -1,0 +1,51 @@
+// === LAYOUT MIXINS ===
+@mixin displayFlex($direction: row, $justify: center, $align: center, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin dFlex($jc, $ai) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+}
+
+// === COMPONENT MIXINS ===
+@mixin skillsGrid($max-width: 500px, $gap: 20px) {
+  max-width: $max-width;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(104px, 100%), 1fr));
+  gap: $gap;
+}
+
+@mixin textBox($padding: 40px, $border-radius: 40px) {
+  border: 1px solid $main-color;
+  border-radius: $border-radius;
+  background: rgba($gradient-end, 0.9);
+  padding: $padding;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform $transition-base;
+  
+  &:hover { transform: translateY(-2px); }
+}
+
+@mixin tooltip() {
+  font-family: "Karla", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  position: absolute;
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+  color: #000;
+  display: none;
+  opacity: 0;
+  transition: transform $transition-base, opacity 1s ease-in-out;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}

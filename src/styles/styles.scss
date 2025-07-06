@@ -1,9 +1,9 @@
-$gradientStart: #1c1c1c;
-$gradientEnd: #08463b;
-$mainColor: #3dcfb6;
-
+// === IMPORTAZIONI ===
+@import './variables.scss';
+@import './mixins.scss';
 @import './buttons.scss';
 
+// === MIXINS (mantieni per compatibilità) ===
 @mixin dFlex($jc, $ai) {
   display: flex;
   justify-content: $jc;
@@ -17,6 +17,7 @@ $mainColor: #3dcfb6;
   font-weight: $font-weight;
 }
 
+// === RESET GLOBALE ===
 * {
   box-sizing: border-box;
   margin: 0;
@@ -42,9 +43,10 @@ body.menu-open {
   height: 100vh;
 }
 
+// === ELEMENTI BASE ===
 h1, h2, h3 {
   margin: 0;
-  color: $mainColor;
+  color: $main-color;
 }
 
 button {
@@ -58,12 +60,12 @@ button {
   font-family: Karla;
   
   &:hover {
-    border: 2px solid $mainColor;
+    border: 2px solid $main-color;
     cursor: pointer;
   }
 }
 
-/* fira-code-regular - latin */
+// === FONTS ===
 @font-face {
   font-display: swap;
   font-family: "Fira Code";
@@ -72,7 +74,6 @@ button {
   src: url("../assets/fonts/fira-code-v22-latin-regular.woff2") format("woff2");
 }
 
-/* karla-regular - latin */
 @font-face {
   font-display: swap;
   font-family: "Karla";
@@ -81,6 +82,7 @@ button {
   src: url("../assets/fonts/karla-v31-latin-regular.woff2") format("woff2");
 }
 
+// === SCROLLBAR ===
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -103,4 +105,29 @@ button {
 * {
   scrollbar-color: #08463b #1c1c1c;
   scrollbar-width: thin;
+}
+
+.section-base {
+  min-height: 900px;
+  width: 100%;
+  @include dFlex(center, center);
+  padding: $section-padding 0;
+  overflow: hidden;
+}
+
+.content-wrapper-base {
+  max-width: 1440px;
+  width: 100%;
+  gap: 60px;
+  margin: 0 40px;
+  color: white;
+  @include dFlex(space-between, center);
+  position: relative;
+  z-index: 1;
+}
+
+.text-wrapper-base {
+  flex: 1;
+  @include dFlex(flex-start, flex-start);
+  flex-direction: column;
 }
