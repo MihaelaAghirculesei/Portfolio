@@ -103,3 +103,89 @@
     transform: scale(1.1);
   }
 }
+
+// === ABOUT ME MIXINS ===
+@mixin imageContainer($size: 580px, $border-radius: 30px) {
+  height: $size;
+  width: $size;
+  flex: 0 0 $size;
+  position: relative;
+  transform: translateY(-15px);
+  transition: transform $transition-base;
+  
+  &:hover { transform: translateY(-20px); }
+  
+  .imageContainer {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    border-radius: $border-radius;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    transition: box-shadow $transition-base;
+    
+    &:hover { box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
+    
+    img, picture {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: transform $transition-base;
+      filter: brightness(1.05) contrast(1.02);
+      
+      &:hover { transform: scale(1.02); }
+    }
+  }
+}
+
+@mixin decorativeLine($top: 48px, $left: -20px) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(135deg, $main-color 0px, $main-color 2px, transparent 2px, transparent 20px);
+  border-radius: 30px;
+  opacity: 0.8;
+}
+
+@mixin featureItem($gap: 20px) {
+  @include dFlex(flex-start, center);
+  font-family: "Karla", sans-serif;
+  font-size: 18px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 400;
+  gap: $gap;
+  padding-left: 20px;
+  margin-bottom: 25px;
+  transition: transform $transition-base;
+  
+  &:hover { transform: translateX(5px); }
+  
+  .iconWrapper {
+    flex-shrink: 0;
+    padding: 8px;
+    border-radius: 12px;
+    background: rgba($main-color, 0.1);
+    transition: transform $transition-base;
+    
+    &:hover { transform: rotate(5deg); }
+    
+    img {
+      height: 32px;
+      width: 32px;
+      filter: brightness(1.2);
+    }
+  }
+  
+  p {
+    margin: 0;
+    line-height: 1.6;
+    
+    strong {
+      color: $main-color;
+      font-weight: 600;
+    }
+  }
+}

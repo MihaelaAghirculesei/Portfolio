@@ -19,6 +19,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scrollbar-color: #08463b #1c1c1c;
+  scrollbar-width: thin;
 }
 
 html {
@@ -33,11 +35,11 @@ body {
   width: 100%;
   overflow-x: hidden;
   min-height: 100vh;
-}
-
-body.menu-open {
-  overflow: hidden !important;
-  height: 100vh;
+  
+  &.menu-open {
+    overflow: hidden !important;
+    height: 100vh;
+  }
 }
 
 h1, h2, h3 {
@@ -89,16 +91,11 @@ button {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #08463b 0%, #1c1c1c 100%);
   border-radius: 10px;
-  transition: background 0.3s ease-in-out;
+  transition: background 0.3s ease;
   
   &:hover {
     background: linear-gradient(180deg, #1c1c1c 0%, #08463b 100%);
   }
-}
-
-* {
-  scrollbar-color: #08463b #1c1c1c;
-  scrollbar-width: thin;
 }
 
 .section-base {

@@ -1,13 +1,11 @@
-@import "./../../../styles/styles.scss";
+@import '../../../styles/styles.scss';
 
 .aboutMeSection {
-  background: $gradientStart !important;
+  background: $gradient-start !important;
   min-height: 900px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 60px 0;
+  @include dFlex(center, center);
+  padding: $section-padding 0;
   overflow: hidden;
 }
 
@@ -17,231 +15,127 @@
   gap: 60px;
   margin: 0 40px;
   color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include dFlex(space-between, center);
   position: relative;
   z-index: 1;
 }
 
 .imgDiv {
+  @include imageContainer();
   padding-left: 40px;
-  position: relative;
-  height: 580px;
-  width: 580px;
-  flex: 0 0 580px;
-  transform: translateY(-15px);
-  transition: transform 0.3s ease;
-}
 
-.imgDiv:hover {
-  transform: translateY(-20px);
-}
-
-.imageContainer {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  z-index: 2;
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-  transition: box-shadow 0.3s ease;
-}
-
-.imageContainer:hover {
-  box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-}
-
-.imageContainer img,
-.imageContainer picture {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-  filter: brightness(1.05) contrast(1.02);
-}
-
-.imageContainer img:hover,
-.imageContainer picture:hover {
-  transform: scale(1.02);
-}
-
-.lineDiv {
-  position: absolute;
-  top: 48px;
-  left: -20px;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(135deg, #3dcfb6 0px, #3dcfb6 2px, transparent 2px, transparent 20px);
-  border-radius: 30px;
-  opacity: 0.8;
+  .lineDiv {
+    @include decorativeLine();
+  }
 }
 
 .aboutMeWrapper {
   flex: 1;
   margin-top: 120px;
   text-align: left;
+
+  h3 {
+    font-family: "Karla", sans-serif;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .aboutMeDiv {
+    @include textBox(40px, 40px);
+
+    h2 {
+      font-family: "Fira-Code", monospace;
+      font-size: 64px;
+      color: $main-color;
+      font-weight: 400;
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    span {
+      font-family: "Karla", sans-serif;
+      font-size: 18px;
+      color: white;
+      font-weight: 400;
+      max-width: 90%;
+      padding-left: 20px;
+      margin: 10px 0 30px 0;
+      display: block;
+      line-height: 1.6;
+    }
+
+    .aboutMePs {
+      @include featureItem();
+    }
+  }
 }
 
-.aboutMeWrapper h3 {
-  font-family: "Karla";
-  margin-bottom: 10px;
-  font-size: 24px;
-  font-weight: 500;
-  opacity: 0.9;
+// Desktop
+@media (min-width: 1600px) {
+  .contentWrapper { gap: 80px; }
+  .imgDiv { @include imageContainer(620px); }
 }
 
-.aboutMeDiv {
-  border: 1px solid #3dcfb6;
-  border-radius: 40px;
-  background: rgba($gradientEnd, 0.9);
-  padding: 40px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
+@media (min-width: 2000px) {
+  .contentWrapper { gap: 100px; max-width: 1800px; }
+  .imgDiv { @include imageContainer(720px); }
 }
 
-.aboutMeDiv:hover {
-  transform: translateY(-2px);
-}
-
-.aboutMeDiv h2 {
-  font-family: "Fira-Code";
-  font-size: 64px;
-  color: $mainColor;
-  font-weight: 400;
-  padding-left: 20px;
-  margin-bottom: 15px;
-}
-
-.aboutMeDiv span {
-  font-family: "Karla";
-  font-size: 18px;
-  color: white;
-  font-weight: 400;
-  max-width: 90%;
-  padding-left: 20px;
-  margin: 10px 0 30px 0;
-  display: block;
-  line-height: 1.6;
-}
-
-.aboutMePs {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-family: "Karla";
-  font-size: 18px;
-  color: rgba(255,255,255,0.8);
-  font-weight: 400;
-  gap: 20px;
-  padding-left: 20px;
-  margin-bottom: 25px;
-  transition: transform 0.3s ease;
-}
-
-.aboutMePs:hover {
-  transform: translateX(5px);
-}
-
-.iconWrapper {
-  flex-shrink: 0;
-  padding: 8px;
-  border-radius: 12px;
-  background: rgba(61,207,182,0.1);
-  transition: transform 0.3s ease;
-}
-
-.iconWrapper:hover {
-  transform: rotate(5deg);
-}
-
-.iconWrapper img {
-  height: 32px;
-  width: 32px;
-  filter: brightness(1.2);
-}
-
-.aboutMePs p {
-  margin: 0;
-  line-height: 1.6;
-}
-
-.aboutMePs strong {
-  color: $mainColor;
-  font-weight: 600;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-  .contentWrapper { gap: 40px; margin: 0 30px; }
-  .imgDiv { height: 460px; width: 460px; padding-left: 30px; flex: 0 0 460px; }
-  .aboutMeWrapper { margin-top: 80px; }
-  .aboutMeDiv h2 { font-size: 56px; }
-}
-
-/* iPad Air e tablet portrait simili (820x1180, 853x1280) */
-@media (max-width: 900px) and (orientation: portrait) {
-  .contentWrapper { flex-direction: column; gap: 30px; margin: 0 20px; text-align: center; }
-  .imgDiv { height: 50vw; width: 50vw; max-height: 350px; max-width: 350px; padding-left: 0; margin: 0 auto; flex: 0 0 auto; }
-  .aboutMeWrapper { margin-top: 0; text-align: center; }
-  .aboutMeWrapper h3 { font-size: 22px; }
-  .aboutMeDiv { padding: 35px; border-radius: 35px; }
-  .aboutMeDiv h2 { font-size: 52px; padding-left: 0; text-align: center; }
-  .aboutMeDiv span { padding-left: 0; max-width: 100%; text-align: center; font-size: 17px; }
-  .aboutMePs { padding-left: 0; gap: 18px; }
-  .aboutMePs p { font-size: 17px; }
-  .lineDiv { top: 30px; left: -12px; }
-}
-
-/* Nest Hub Max e schermi landscape larghi */
+// Desktop Small
 @media (min-width: 1200px) and (max-height: 900px) {
   .aboutMeSection { min-height: 700px; padding: 40px 0; }
   .contentWrapper { gap: 40px; }
   .imgDiv { 
-    height: 300px; 
-    width: 300px; 
-    flex: 0 0 300px;
-    transform: translateY(-10px);
+    @include imageContainer(300px); 
     padding-left: 20px;
+    transform: translateY(-10px);
+    &:hover { transform: translateY(-15px); }
   }
-  .imgDiv:hover { transform: translateY(-15px); }
   .aboutMeWrapper { margin-top: 20px; flex: 2; }
   .aboutMeDiv h2 { font-size: 48px; }
   .lineDiv { top: 20px; left: -8px; }
 }
 
-@media (max-width: 768px) {
-  .contentWrapper { flex-direction: column; gap: 40px; margin: 0 20px; text-align: center; }
-  .imgDiv { height: 85vw; width: 85vw; max-height: 380px; max-width: 380px; padding-left: 0; margin: 0 auto; flex: 0 0 auto; }
+// Tablet
+@media (max-width: 1200px) {
+  .contentWrapper { gap: 40px; margin: 0 30px; }
+  .imgDiv { @include imageContainer(460px); padding-left: 30px; }
+  .aboutMeWrapper { margin-top: 80px; }
+  .aboutMeDiv h2 { font-size: 56px; }
+}
+
+// Mobile
+@media (max-width: 900px) {
+  .contentWrapper { flex-direction: column; gap: 30px; margin: 0 20px; text-align: center; }
+  .imgDiv { @include imageContainer(min(60vw, 350px)); padding-left: 0; margin: 0 auto; }
   .aboutMeWrapper { margin-top: 0; text-align: center; }
   .aboutMeWrapper h3 { font-size: 20px; }
-  .aboutMeDiv { padding: 30px; border-radius: 30px; }
-  .aboutMeDiv h2 { font-size: 48px; padding-left: 0; text-align: center; }
-  .aboutMeDiv span { padding-left: 0; max-width: 100%; text-align: center; font-size: 16px; }
-  .aboutMePs { padding-left: 0; gap: 15px; }
-  .aboutMePs p { font-size: 16px; }
-  .lineDiv { top: 35px; left: -15px; }
+  .aboutMeDiv { 
+    padding: 30px; 
+    border-radius: 30px;
+    h2 { font-size: 48px; padding-left: 0; text-align: center; }
+    span { padding-left: 0; max-width: 100%; text-align: center; font-size: 16px; }
+    .aboutMePs { padding-left: 0; gap: 15px; p { font-size: 16px; } }
+  }
+  .lineDiv { top: 30px; left: -12px; }
 }
 
 @media (max-width: 480px) {
-  .imgDiv { height: 80vw; width: 80vw; max-height: 280px; max-width: 280px; }
-  .aboutMeDiv { padding: 20px; border-radius: 20px; }
-  .aboutMeDiv h2 { font-size: 36px; }
-  .aboutMeDiv span { font-size: 15px; }
-  .aboutMePs { flex-direction: column; text-align: center; gap: 10px; }
-  .aboutMePs p { font-size: 15px; }
-  .iconWrapper img { height: 28px; width: 28px; }
+  .imgDiv { @include imageContainer(min(80vw, 280px)); }
+  .aboutMeDiv { 
+    padding: 20px; 
+    border-radius: 20px;
+    h2 { font-size: 36px; }
+    span { font-size: 15px; }
+    .aboutMePs { 
+      flex-direction: column; 
+      text-align: center; 
+      gap: 10px;
+      p { font-size: 15px; }
+      .iconWrapper img { height: 28px; width: 28px; }
+    }
+  }
   .lineDiv { top: 25px; left: -12px; }
-}
-
-@media (min-width: 1600px) {
-  .contentWrapper { gap: 80px; }
-  .imgDiv { height: 620px; width: 620px; flex: 0 0 620px; }
-}
-
-@media (min-width: 2000px) {
-  .contentWrapper { gap: 100px; max-width: 1800px; }
-  .imgDiv { height: 720px; width: 720px; flex: 0 0 720px; }
 }
