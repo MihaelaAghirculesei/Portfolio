@@ -1,37 +1,66 @@
 <section class="skillsSection" id="skills">
-    <div class="contentWrapper">
-      <div class="textWrapper">
-        <h3 class="overContent">Technologies</h3>
-        <div class="textDiv">
-          <h2>Skill Set</h2>
-          <span class="skillIntroduction">Hier sind einige meiner Fähigkeiten:</span>
-          <h3>Benötigen Sie <span>eine weitere Fähigkeit?</span></h3>
-          <span>Fühlen Sie sich frei, mich zu kontaktieren!</span>
-        </div>
-        <button>Let's talk</button>
+  <div class="contentWrapper">
+    
+    <div class="textWrapper">
+      <h3 class="overContent">{{ content.overContent }}</h3>
+      
+      <div class="textDiv">
+        <h2>{{ content.title }}</h2>
+        
+        <span class="skillIntroduction">
+          {{ content.introduction }}
+        </span>
+        
+        <h3>
+          {{ content.additionalSkillsTitle }} 
+          <span>{{ content.additionalSkillsHighlight }}</span>
+        </h3>
+        
+        <span>{{ content.additionalSkillsText }}</span>
+        
+        <a 
+          href="#contact" 
+          class="link-button animated" 
+          [attr.data-text]="content.ctaText"
+          (click)="handleContactClick($event)"
+          role="button"
+          aria-label="Contatta per discutere del progetto">
+          <span>{{ content.ctaText }}</span>
+        </a>
       </div>
-      <div class="skillButtons">
-        @for (item of imgURLS; track $index) {
+    </div>
+    
+    <div class="skillButtons">
+      @for (skill of skillItems; track skill.name; let i = $index) {
         <div class="skillDiv">
-          <img src="{{ item.url }}" alt="{{ item.name }}" />
-          <p>{{ item.name }}</p>
-          @if ($index == imgURLS.length - 1) {
-            <div class="tooltip">
-              <span>Ich habe besondere<br>Interessen, um Folgendes zu lernen:</span>
-              <div>
-                <div class="skillItem"> 
-                  <img src="../../assets/img/skills/react.svg" alt="React Logo" />
-                  <p>React</p>
-                </div>
-                <div>
-                  <img src="../../assets/img/skills/vuejs.svg" alt="Vue.js Logo" />
-                  <p>Vue.js</p>
-                </div>
+          <img 
+            [src]="skill.url" 
+            [alt]="skill.name + ' logo'" 
+            loading="lazy"
+            width="55"
+            height="55" />
+          <p>{{ skill.name }}</p>
+          
+          @if (isLastItem(i)) {
+            <div class="tooltip" role="tooltip">
+              <span>{{ content.tooltipText }}</span>
+              <div class="future-skills">
+                @for (futureSkill of futureSkills; track futureSkill.name) {
+                  <div class="skillItem">
+                    <img 
+                      [src]="futureSkill.url" 
+                      [alt]="futureSkill.name + ' logo'" 
+                      loading="lazy"
+                      width="40"
+                      height="40" />
+                    <p>{{ futureSkill.name }}</p>
+                  </div>
+                }
               </div>
             </div>
           }
         </div>
-        }
-      </div>
+      }
     </div>
-  </section>
+  </div>
+</section>

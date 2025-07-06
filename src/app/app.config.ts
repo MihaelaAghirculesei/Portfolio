@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     }),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     importProvidersFrom([
       TranslateModule.forRoot({
         loader: {

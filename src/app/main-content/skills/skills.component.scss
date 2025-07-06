@@ -1,223 +1,363 @@
 @import "../../../styles/styles.scss";
 
+// === VARIABILI ===
+$section-padding: 60px;
+$border-radius-base: 20px;
+$transition-base: 0.3s ease;
+
+// === STILI BASE ===
 .skillsSection {
-  // @incliude dFlex(center, center)
-  height: 700px;
+  background: radial-gradient(circle at 0% 50%, $gradientEnd 0%, $gradientStart 25%);
+  min-height: 900px;
   width: 100%;
-  background: radial-gradient(
-    circle at 0% 50%,
-    $gradientEnd 0%,
-    $gradientStart 25%
-  );
-
-  @media (max-width: 900px) {
-    height: auto;
-    padding: 40px 0;
-  }
-
-  @media (max-width: 350px) {
-    padding-bottom: 40px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $section-padding 0;
+  overflow: hidden;
 }
 
 .contentWrapper {
-  height: 100%;
-  width: 100%;
   max-width: 1440px;
-  @include dFlex(center, center);
+  width: 100%;
+  gap: 60px;
   margin: 0 40px;
-  gap: 96px;
-
-  @media (max-width: 1050px) {
-    flex-direction: column;
-  }
-
-  @media (max-width: 600px) {
-    margin: 0;
-    padding: 0 10px;
-  }
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
-.skillSet {
+.textWrapper {
   flex: 1;
-  background: rgba($gradientEnd, 0.9);
-  border-radius: 30px;
-  border: 1px solid $mainColor;
-  padding: 40px;
-
-  @media (max-width: 900px) {
-    height: auto;
-  }
-
-  @media (max-width: 600px) {
-    text-align: center;
-    padding: 20px;
-  }
+  @include dFlex(flex-start, flex-start);
+  flex-direction: column;
 
   .overContent {
-    position: relative;
-    top: -40px;
-    @include text("karla", 24px, $mainColor, 700);
+    font-family: "Karla", sans-serif;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 500;
+    opacity: 0.9;
+    color: $mainColor;
     text-align: left;
   }
 
-  @media (max-width: 600px) {
-    top: -20px;
-  }
-
-  button {
-    margin: 20px 0 20px 40px;
-    @media (max-width: 600px) {
-      margin: 20px auto;
-      display: block;
-    }
-  }
-
   .textDiv {
-    padding-left: 40px;
-    @media (max-width: 600px) {
-      padding: 0 10px;
-    }
+    border: 1px solid #3dcfb6;
+    border-radius: #{$border-radius-base * 2};
+    background: rgba($gradientEnd, 0.9);
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform $transition-base;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 580px;
+
+    &:hover { transform: translateY(-2px); }
 
     h2 {
-      @include text("Fira Code", 64px, $mainColor, 700);
-
-      @media (max-width: 600px) {
-        font-size: 56px;
-      }
-
-      @media (max-width: 410px) {
-        font-size: 36px;
-      }
+      font-family: "Fira-Code", monospace;
+      font-size: 64px;
+      color: $mainColor;
+      font-weight: 400;
+      padding-left: 20px;
+      margin-bottom: 15px;
     }
 
     h3 {
-      @include text("Fira Code", 24px, white, 700);
-      margin: 12px 0;
-
-      @media (max-width: 600px) {
-        font-size: 18px;
-      }
-      span {
-        @include text("Fira Code", 24px, $mainColor, 700);
-
-        @media (max-width: 600px) {
-          font-size: 16px;
-        }
-      }
+      font-family: "Karla", sans-serif;
+      font-size: 24px;
+      color: white;
+      font-weight: 700;
+      padding-left: 20px;
+      margin: 16px 0 12px 0;
+      span { color: $mainColor; }
     }
 
-    span {
-      @include text("Karla", 16px, white, 400);
-    }
-
-    .skillIntroduction {
+    .skillIntroduction,
+    > span:last-of-type {
+      font-family: "Karla", sans-serif;
       font-size: 18px;
+      color: white;
+      font-weight: 400;
+      max-width: 90%;
+      padding-left: 20px;
+      margin: 10px 0 30px 0;
+      display: block;
+      line-height: 1.6;
+    }
+
+    .link-button {
+      margin-top: 16px;
+      margin-left: 20px;
     }
   }
 }
 
 .skillButtons {
-  flex-wrap: wrap;
-  width: 632px;
-  gap: 72px;
-  @include dFlex(space-between, center);
-  flex: 1;
+  max-width: 500px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(104px, 100%), 1fr));
+  gap: 20px;
+}
 
-  @media (max-width: 1488px) {
-    gap: 8px;
-    width: 90%;
+.skillDiv {
+  height: 108px;
+  margin-top: 12px;
+  @include dFlex(flex-start, center);
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+  transition: transform $transition-base;
+
+  &:hover { transform: translateY(-5px); }
+
+  > img {
+    width: 55px;
+    height: 55px;
+    padding-bottom: 4px;
+    object-fit: contain;
+    transition: transform $transition-base;
+    filter: brightness(1.05) contrast(1.02);
+    &:hover { transform: scale(1.1); }
   }
 
-  @media (max-width: 900px) {
-    // Weitere Anpassungen
-  }
-
-  .skillDiv {
-    width: 108px;
-    height: 144px;
-    @include dFlex(0, center);
-    flex-direction: column;
+  > p {
+    font-family: "Fira Code", monospace;
+    font-size: 16px;
+    color: white;
+    font-weight: 400;
     text-align: center;
-    @include text("Fira Code", 18px, white, 400);
-    position: relative;
-
-    @media (max-width: 600px) {
-      width: 30%;
-      height: 80px;
-    }
-
-    @media (max-width: 450px) {
-      width: 40%;
-      height: 60px;
-    }
-
-    > p {
-      white-space: normal;
-    }
-    @media (max-width: 600px) {
-      margin: 4px 2px;
-    }
-
-    img {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-
-      &:hover {
-        scale: 1.1;
-      }
-
-      @media (max-width: 800px) {
-        width: 40px;
-        height: 40px;
-      }
-    }
-
-    .tooltip {
-      @include dFlex(center, center);
-      flex-direction: column;
-      position: absolute;
-      bottom: 110%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
-      color: black;
-      padding: 8px 12px;
-      font-size: 12px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      white-space: nowrap;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.25s ease-in-out, transform 0.25s;
-
-      > span {
-        color: $mainColor;
-      }
-
-      > div {
-        padding-top: 10px;
-        color: $mainColor;
-        @include dFlex(center, center);
-      }
-
-      &::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        border-width: 9px;
-        border-style: solid;
-        border-color: white transparent transparent transparent;
-      }
-    }
-
-    &:last-of-type:hover .tooltip {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(-50%) translateY(-5px);
-    }
+    transition: color 0.1s ease-in-out;
+    margin: 0;
+    line-height: 1.2;
   }
+
+  &:last-child {
+    &:hover .tooltip { display: block; transform: translateY(-10px); opacity: 1; }
+    &:hover p { color: $mainColor; }
+  }
+}
+
+.tooltip {
+  font-family: "Karla", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  position: absolute;
+  right: -30px;
+  top: -165px;
+  @include dFlex(center, center);
+  flex-direction: column;
+  gap: 12px;
+  width: 224px;
+  height: 150px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+  color: #000;
+  display: none;
+  opacity: 0;
+  transition: transform $transition-base, opacity 1s ease-in-out;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  > span { color: $mainColor; line-height: 1.4; }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 12px solid;
+    border-color: white transparent transparent transparent;
+  }
+}
+
+.future-skills {
+  @include dFlex(center, center);
+  gap: 20px;
+}
+
+.skillItem {
+  @include dFlex(center, center);
+  flex-direction: column;
+  gap: 8px;
+  transition: transform $transition-base;
+  &:hover { transform: scale(1.05); }
+
+  img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    transition: transform $transition-base;
+    &:hover { transform: rotate(5deg); }
+  }
+
+  p {
+    font-family: "Fira Code", monospace;
+    font-size: 14px;
+    color: $mainColor;
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+// RESPONSIVE (dal più grande al più piccolo)
+@media (min-width: 2000px) {
+  .contentWrapper { gap: 100px; max-width: 1800px; }
+  .textWrapper .textDiv { min-width: 720px; }
+  .skillButtons { max-width: 600px; gap: 30px; }
+}
+
+@media (min-width: 1600px) {
+  .contentWrapper { gap: 80px; }
+  .textWrapper .textDiv { min-width: 620px; }
+  .skillButtons { max-width: 550px; gap: 25px; }
+}
+
+@media (max-width: 1200px) {
+  .contentWrapper { gap: 40px; margin: 0 40px; }
+  .textWrapper .textDiv { min-width: 460px; }
+  .textWrapper .textDiv h2 { font-size: 56px; }
+  .skillButtons { max-width: 400px; gap: 18px; }
+}
+
+// Surface Pro e Tablet Landscape
+@media (max-width: 1024px) {
+  .contentWrapper { gap: 35px; margin: 0 35px; }
+  .textWrapper .textDiv { 
+    min-width: 420px; 
+    padding: 35px;
+  }
+  .textWrapper .textDiv h2 { font-size: 54px; }
+  .skillButtons { max-width: 380px; gap: 16px; }
+}
+
+@media (min-width: 1200px) and (max-height: 900px) {
+  .contentWrapper { gap: 40px; }
+  .textWrapper .textDiv { min-width: 400px; }
+  .skillButtons { max-width: 450px; gap: 15px; }
+  .skillDiv > img { width: 40px; height: 40px; }
+  .skillDiv > p { font-size: 14px; }
+}
+
+// TABLET PORTRAIT
+@media (max-width: 900px) and (orientation: portrait) {
+  .skillsSection { min-height: auto; }
+  .contentWrapper { 
+    flex-direction: column; 
+    gap: 30px; 
+    margin: 0 30px; 
+    text-align: center; 
+  }
+  .textWrapper { text-align: center; }
+  .textWrapper .overContent { text-align: center; font-size: 22px; }
+  .textWrapper .textDiv {
+    min-width: auto; 
+    max-width: 100%;
+    padding: 35px; 
+    border-radius: 35px;
+  }
+  .textWrapper .textDiv h2 { 
+    padding-left: 0; 
+    text-align: center; 
+    font-size: 52px; 
+  }
+  .textWrapper .textDiv h3 { 
+    padding-left: 0; 
+    text-align: center; 
+    font-size: 22px; 
+  }
+  .textWrapper .textDiv .skillIntroduction,
+  .textWrapper .textDiv > span:last-of-type { 
+    padding-left: 0; 
+    max-width: 100%; 
+    text-align: center; 
+    font-size: 17px; 
+  }
+  .textWrapper .textDiv .link-button { 
+    margin-left: 0; 
+    align-self: center; 
+  }
+  .skillButtons { max-width: 380px; gap: 15px; }
+}
+
+// TABLET E MOBILE GENERALE
+@media (max-width: 768px) {
+  .skillsSection { min-height: auto; }
+  .contentWrapper { 
+    flex-direction: column; 
+    gap: 40px; 
+    margin: 0 25px; 
+    text-align: center; 
+  }
+  .textWrapper { text-align: center; }
+  .textWrapper .overContent { text-align: center; font-size: 20px; }
+  .textWrapper .textDiv {
+    min-width: auto;
+    max-width: 100%;
+    padding: 30px; 
+    border-radius: 30px; 
+    text-align: center;
+  }
+  .textWrapper .textDiv h2 { 
+    padding-left: 0; 
+    font-size: 48px; 
+  }
+  .textWrapper .textDiv h3 { 
+    padding-left: 0; 
+    font-size: 20px; 
+  }
+  .textWrapper .textDiv .skillIntroduction,
+  .textWrapper .textDiv > span:last-of-type { 
+    padding-left: 0; 
+    max-width: 100%; 
+    text-align: center; 
+    font-size: 16px; 
+  }
+  .textWrapper .textDiv .link-button { 
+    margin-left: 0; 
+    align-self: center; 
+  }
+  .skillButtons { max-width: 350px; gap: 15px; }
+  .skillDiv > img { width: 45px; height: 45px; }
+  .skillDiv > p { font-size: 14px; }
+}
+
+@media (max-width: 600px) {
+  .skillDiv { height: 90px; }
+}
+
+// MOBILE
+@media (max-width: 480px) {
+  .contentWrapper { margin: 0 20px; }
+  .textWrapper .textDiv {
+    padding: 20px;
+    border-radius: $border-radius-base;
+    max-width: 100%;
+  }
+  .textWrapper .textDiv h2 { font-size: 36px; }
+  .textWrapper .textDiv .skillIntroduction,
+  .textWrapper .textDiv > span:last-of-type { font-size: 15px; }
+  .skillButtons { max-width: 300px; gap: 10px; }
+  .skillDiv { height: 80px; }
+  .skillDiv > img { width: 40px; height: 40px; }
+  .skillDiv > p { font-size: 13px; }
+}
+
+@media (max-width: 420px) {
+  .skillButtons { max-width: 280px; }
+  .tooltip { left: 40px; right: auto; }
+  .tooltip::after { left: 32px; transform: none; }
+}
+
+@media (max-width: 340px) {
+  .skillButtons { max-width: 250px; gap: 15px; }
+  .tooltip { left: 10px; }
+  .tooltip::after { left: 100px; }
 }
