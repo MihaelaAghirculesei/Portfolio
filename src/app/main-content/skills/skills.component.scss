@@ -1,6 +1,5 @@
 @import '../../../styles/styles.scss';
 
-// === SKILLS SECTION ===
 .skillsSection {
   background: radial-gradient(circle at 0% 50%, $gradient-end 0%, $gradient-start 25%);
   min-height: 900px;
@@ -167,7 +166,6 @@
   }
 }
 
-// === RESPONSIVE ===
 @media (min-width: 2000px) {
   .contentWrapper { gap: 100px; max-width: 1800px; }
   .textWrapper .textDiv { min-width: 720px; }

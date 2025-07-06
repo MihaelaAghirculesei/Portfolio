@@ -1,9 +1,7 @@
-// === IMPORTAZIONI ===
 @import './variables.scss';
 @import './mixins.scss';
 @import './buttons.scss';
 
-// === MIXINS (mantieni per compatibilità) ===
 @mixin dFlex($jc, $ai) {
   display: flex;
   justify-content: $jc;
@@ -17,7 +15,6 @@
   font-weight: $font-weight;
 }
 
-// === RESET GLOBALE ===
 * {
   box-sizing: border-box;
   margin: 0;
@@ -43,7 +40,6 @@ body.menu-open {
   height: 100vh;
 }
 
-// === ELEMENTI BASE ===
 h1, h2, h3 {
   margin: 0;
   color: $main-color;
@@ -65,7 +61,6 @@ button {
   }
 }
 
-// === FONTS ===
 @font-face {
   font-display: swap;
   font-family: "Fira Code";
@@ -82,7 +77,6 @@ button {
   src: url("../assets/fonts/karla-v31-latin-regular.woff2") format("woff2");
 }
 
-// === SCROLLBAR ===
 ::-webkit-scrollbar {
   width: 8px;
 }

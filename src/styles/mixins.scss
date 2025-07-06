@@ -49,3 +49,57 @@
   z-index: 10;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
+
+// === LANDING PAGE MIXINS ===
+@mixin fullScreenSection() {
+  height: 100vh;
+  @include dFlex(center, center);
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+@mixin edgeLine($position: left) {
+  position: absolute;
+  #{$position}: if($position == left, 0, 2px);
+  bottom: 0;
+  @include dFlex(center, center);
+  flex-direction: column;
+  gap: 24px;
+  z-index: 97;
+}
+
+@mixin verticalLine($height: 300px) {
+  width: 1px;
+  height: $height;
+  background-color: $main-color;
+  display: block;
+}
+
+@mixin arrowButton() {
+  @include dFlex(center, center);
+  transform: rotate(90deg);
+  width: 48px;
+  height: 30px;
+  border: 1px solid $main-color;
+  background: transparent;
+  cursor: pointer;
+  transition: all 300ms ease;
+  margin-bottom: 8px;
+  
+  &:hover {
+    transform: rotate(90deg) scale(1.1);
+    margin-bottom: 0;
+  }
+}
+
+@mixin socialIcon($size: 32px) {
+  height: $size;
+  width: $size;
+  transition: all 300ms ease;
+  
+  &:hover {
+    filter: brightness(0) invert(1);
+    transform: scale(1.1);
+  }
+}

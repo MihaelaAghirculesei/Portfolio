@@ -1,14 +1,10 @@
-@import "./../../../styles/styles.scss";
+@import '../../../styles/styles.scss';
 
 .headLine {
   font-family: 'Fira Code', 'Karla', Arial, sans-serif;
   padding: 98px 16px 0 16px;
-  height: 100vh;
-  @include dFlex(center, center);
-  flex-direction: column;
-  background: linear-gradient(68deg, $gradientStart 23%, $gradientEnd 100%);
-  overflow: hidden;
-  position: relative;
+  @include fullScreenSection();
+  background: linear-gradient(68deg, $gradient-start 23%, $gradient-end 100%);
 
   .contentWrapper {
     position: relative;
@@ -45,29 +41,10 @@
     }
 
     .edgeLine-left {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      @include dFlex(center, center);
-      flex-direction: column;
-      gap: 24px;
-      z-index: 97;
+      @include edgeLine(left);
       
       .arrowDown {
-        @include dFlex(center, center);
-        transform: rotate(90deg);
-        width: 48px;
-        height: 30px;
-        border: 1px solid $mainColor;
-        background: transparent;
-        cursor: pointer;
-        transition: all 300ms ease;
-        margin-bottom: 8px;
-        
-        &:hover {
-          transform: rotate(90deg) scale(1.1);
-          margin-bottom: 0;
-        }
+        @include arrowButton();
         
         .arrowDownImg {
           transform: rotate(270deg);
@@ -75,21 +52,12 @@
       }
       
       .greenLineDown {
-        width: 1px;
-        height: 300px;
-        background-color: $mainColor;
-        display: block;
+        @include verticalLine();
       }
     }
 
     .edgeLine-right {
-      position: absolute;
-      right: 2px;
-      bottom: 0;
-      @include dFlex(center, center);
-      flex-direction: column;
-      gap: 24px;
-      z-index: 97;
+      @include edgeLine(right);
       
       .vertical-text {
         writing-mode: vertical-rl;
@@ -105,16 +73,13 @@
         transition: all 300ms ease;
         
         &:hover {
-          color: $mainColor;
+          color: $main-color;
+          .email-text { color: $main-color; }
         }
         
         .email-text {
           color: white;
           transition: all 300ms ease;
-        }
-        
-        &:hover .email-text {
-          color: $mainColor;
         }
 
         .email-icon {
@@ -122,30 +87,17 @@
         }
       }
 
-      a {
-        img {
-          height: 32px;
-          width: 32px;
-          transition: all 300ms ease;
-          
-          &:hover {
-            filter: brightness(0) invert(1);
-            transform: scale(1.1);
-          }
-        }
+      a img {
+        @include socialIcon();
       }
 
       .hero-right-line {
-        width: 1px;
-        height: 300px;
-        background-color: $mainColor;
-        display: block;
+        @include verticalLine();
       }
     }
   }
 }
 
-// Banner section positioning (same structure as your friend's infinite-banner)
 app-banner-section {
   z-index: 99;
   width: 100%;
@@ -156,18 +108,13 @@ app-banner-section {
 }
 
 @media (max-width: 1440px) {
-  .contentWrapper {
-    width: 100%;
-  }
+  .contentWrapper { width: 100%; }
 }
 
 @media (max-height: 918px) {
   .edgeLine-right {
     .email-link {
-      .email-text {
-        display: none !important;
-      }
-      
+      .email-text { display: none !important; }
       .email-icon {
         display: block !important;
         transform: scale(-1);
@@ -175,90 +122,49 @@ app-banner-section {
         height: 24px;
       }
     }
-    
-    .hero-right-line {
-      height: 150px;
-    }
-    
-    a img {
-      height: 24px;
-      width: 24px;
-    }
+    .hero-right-line { height: 150px; }
+    a img { @include socialIcon(24px); }
   }
 }
 
 @media (max-width: 768px) {
-  .headLine {
-    .contentWrapper {
-      h2 {
-        font-size: 24px;
-      }
-      
-      h1 {
-        font-size: 44px;
-        word-spacing: -0.1em;
-        line-height: 0.9;
-      }
-      
-      .buttonDiv {
-        gap: 16px;
-        flex-direction: column;
-      }
-
-      .edgeLine-left {
-        .greenLineDown {
-          height: 150px;
-        }
-      }
-
-      .edgeLine-right {
-        .email-link {
-          .email-text {
-            display: none;
-          }
-
-          .email-icon {
-            display: block;
-            transform: scale(-1);
-            width: 24px;
-            height: 24px;
-          }
-        }
-        
-        .hero-right-line {
-          height: 150px;
-        }
-        
-        a img {
-          height: 24px;
+  .headLine .contentWrapper {
+    h2 { font-size: 24px; }
+    h1 { font-size: 44px; word-spacing: -0.1em; line-height: 0.9; }
+    
+    .buttonDiv { gap: 16px; flex-direction: column; }
+    
+    .edgeLine-left .greenLineDown { height: 150px; }
+    
+    .edgeLine-right {
+      .email-link {
+        .email-text { display: none; }
+        .email-icon {
+          display: block;
+          transform: scale(-1);
           width: 24px;
+          height: 24px;
         }
       }
+      .hero-right-line { height: 150px; }
+      a img { @include socialIcon(24px); }
     }
   }
 }
 
 @media (max-width: 360px) {
-  .headLine {
-    .contentWrapper {
-      h2 {
-        font-size: 16px;
-      }
+  .headLine .contentWrapper {
+    h2 { font-size: 16px; }
+    h1 { font-size: 35px; line-height: 0.8; }
+    
+    .buttonDiv {
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
       
-      h1 {
-        font-size: 35px;
-        line-height: 0.8;
-      }
-      
-      .buttonDiv {
-        flex-direction: column;
-        gap: 12px;
-        margin-top: 20px;
-        
-        .link-button {
-          font-size: 14px;
-          padding: 8px 16px;
-        }
+      .link-button {
+        font-size: 14px;
+        padding: 8px 16px;
       }
     }
   }
