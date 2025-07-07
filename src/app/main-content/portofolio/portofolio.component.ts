@@ -11,25 +11,26 @@ import { OverlayComponent } from '../overlay/overlay.component';
 })
 export class PortofolioComponent {
   projects: Projects[] = [
+      {
+      name: 'Join',
+      technologies: ['Firebase', 'Angular', 'TypeScript', 'HTML', 'SCSS'],
+      previewImg: 'assets/img/portofolio/join.png',
+      description:`Join Kanban Board is the project management revolution! An extraordinary application that transforms every project into a success through spectacular visual boards and real-time collaboration. With Join, you can easily organize tasks, track progress, and collaborate with your team in a dynamic and intuitive environment. Say goodbye to chaos and hello to productivity! Join Kanban Board is the perfect tool for teams of all sizes, from startups to large enterprises. Experience the future of project management with Join Kanban Board and take your projects to the next level. Your next big victory starts here.`,
+    },
     {
       name: 'El Pollo Loco',
       technologies: ['JavaScript', 'HTML', 'CSS'],
       previewImg: '/assets/img/portofolio/el_pollo_loco.png',
       description:
-        'Jump, run and throw game based on object-oriented ap-proach. Help Pepe to find coins and tabasco salsa to fight against the crazy hen. ',
+        'An exciting game where courage meets chicken chaos! Built with JavaScript, HTML and CSS, it offers smooth gameplay with keyboard and touch controls, epic Endboss challenges, immersive sound effects and responsive design for all devices.',
     },
     {
       name: 'Pokedex',
-      technologies: ['JavaScript', 'Rest-Api', 'HTML', 'CSS'],
+      technologies: ['Rest-Api', 'JavaScript', 'HTML', 'CSS'],
       previewImg: '/assets/img/portofolio/pokedex.png',
-      description: '____einfügen__________',
+      description: 'An interactive portal into the magical world of Pokemon! Designed with passion, it offers a smooth and engaging experience built with modern technologies: PokeAPI for always up-to-date data, responsive design for all devices, performant JavaScript and captivating CSS animations.',
     },
-    {
-      name: 'Join',
-      technologies: ['JavaScript', 'Rest-Api', 'HTML', 'CSS'],
-      previewImg: 'assets/img/portofolio/join.png',
-      description: '____einfügen__________',
-    },
+
   ];
 
   activePreview: string = '';
