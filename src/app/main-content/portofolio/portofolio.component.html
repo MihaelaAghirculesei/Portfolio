@@ -1,56 +1,102 @@
 <section id="projects">
   <div class="contentWrapper">
-    <div class="text">
-      <h3>Portfolio</h3>
-      <h2>Featured Projects</h2>
-      <p>
-        Explore a selection of my work here. Interact with projects to see my
-        skills in action.
-      </p>
-    </div>
+    <h3>Portfolio</h3>
+    <h2>Featured Projects</h2>
+    <p>
+      Explore a selection of my work here. Interact with projects to see my
+      skills in action.
+    </p>
 
     <div class="projectWrapper">
-      <div class="projects">
-        @for (project of projects; track $index) {
-        <div
-          class="project"
-          (click)="openProjectOverlay(project, $index)"
-          (mouseenter)="onHover($event, project)"
-          (mouseleave)="onLeave()"
-        >
-          <h3>{{ project.name }}</h3>
+      <table class="projects-table" #projectsTable>
+        <tbody>
+          @for (project of projects; track $index) {
+            <tr class="project-row"
+                [id]="'project-' + $index"
+                (mouseenter)="setActiveProject($index, $event)"
+                (mouseleave)="clearActiveProject()"
+                (click)="openProjectOverlay(project, $index)"
+                (touchstart)="handleTouchStart($event, $index)"
+                (touchend)="handleTouchEnd($event, $index)">
+              <td class="project-name">
+                {{ project.name }}
+              </td>
+              <td class="project-tech">
+                @for (tech of project.technologies; track $index; let last = $last) {
+                  {{ tech }}@if (!last) {<span class="tech-separator"> | </span>}
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
 
-          <div class="technologies">
-            @for (technologie of project.technologies; track $index) {
-            <span>{{ technologie }}</span>
-            @if($index < project.technologies.length - 1) {
-            <div class="borderRight"></div>
-            } }
-          </div>
+      @if (activePreview && !selectedProject && hoverPosition !== null) {
+        <div class="projects-hover-content" [style.top.px]="hoverPosition">
+          <figure>
+            <img [src]="activePreview" [alt]="getProjectScreenshotAlt(activeProjectId)">
+          </figure>
         </div>
-        }
-      </div>
-
-      @if (activePreview) {
-      <div
-        class="preview"
-        [style.top]="previewPosition.top"
-        [style.right]="previewPosition.right"
-      >
-        <img [src]="activePreview" alt="Project Preview" />
-        <div class="lineDiv"></div>
-      </div>
       }
     </div>
   </div>
 
   @if (selectedProject) {
-  <app-overlay
-    [singleProject]="selectedProject"
-    [index]="selectedIndex"
-    (close)="closeOverlay()"
-    (next)="nextProject()"
-  >
-  </app-overlay>
+    <div class="project-modal-overlay">
+      <div class="project-modal-backdrop" (click)="closeOverlay()"></div>
+
+      <div class="project-modal">
+        <div class="project-modal-content">
+
+          <div class="project-info">
+            <span class="project-number">{{ (selectedIndex + 1).toString().padStart(2, '0') }}</span>
+            <h2 class="project-title">{{ selectedProject.name }}</h2>
+            <p class="project-description">{{ getProjectShortDescription(selectedProject) }}</p>
+
+            <div class="project-long-description">
+              <p>{{ selectedProject.description }}</p>
+            </div>
+
+            <div class="project-technologies">
+              <div class="tech-tags">
+                @for (tech of selectedProject.technologies; track tech) {
+                  <span class="tech-tag">
+                    @if (hasTechIcon(tech)) {
+                      <img [src]="getTechIconPath(tech)" class="tech-icon" [alt]="tech + ' icon'">
+                    }
+                    {{ tech }}
+                  </span>
+                }
+              </div>
+            </div>
+
+            <div class="project-buttons">
+              <a [href]="selectedProject.githubUrl" target="_blank" rel="noopener noreferrer" class="link-button2">
+                GitHub
+              </a>
+              <a [href]="selectedProject.liveUrl" target="_blank" rel="noopener noreferrer" class="link-button2">
+                Live Test
+              </a>
+            </div>
+          </div>
+
+          <div class="project-image-container">
+            <button class="close-button" (click)="closeOverlay()">
+              <span class="close-icon"></span>
+            </button>
+
+            <div class="project-image">
+              <img [src]="selectedProject.previewImg" [alt]="getProjectScreenshotAlt(selectedIndex)">
+            </div>
+          </div>
+        </div>
+
+        <div class="project-modal-footer">
+          <button class="next-project-button" (click)="nextProject()">
+            Next Project
+          </button>
+        </div>
+      </div>
+    </div>
   }
 </section>

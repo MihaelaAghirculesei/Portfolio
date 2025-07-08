@@ -1,178 +1,802 @@
 @import "../../../styles/styles.scss";
 
-section {
+#projects {
+  padding: 120px 0;
   background-color: $gradientStart;
   @include dFlex(center, center);
-  flex-direction: column;
-}
-
-.contentWrapper {
-  @include dFlex(center, flex-start);
-  flex-direction: column;
-  max-width: 1440px;
-  flex: 1;
-  margin: 0 40px;
-  width: 100%;
-
-  .text {
+  
+  .contentWrapper {
     text-align: left;
-    border-bottom: $mainColor 1px solid;
-    width: 80%;
-    > h2 {
-      @include text("Fira Code", 64px, $mainColor, 700);
-      padding-bottom: 30px;
-      @media (max-width: 600px) {
-        font-size: 56px;
-      }
-      @media (max-width: 410px) {
-        font-size: 36px;
-      }
-    }
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 40px;
+    
     > h3 {
-      @include text("Karla", 24px, $mainColor, 400);
+      color: $mainColor;
+      font-size: 24px;
+      font-family: 'Karla', sans-serif;
       margin-bottom: 20px;
     }
+    
+    > h2 {
+      color: $mainColor;
+      font-size: 64px;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+    }
+    
     > p {
-      @include text("Karla", 18px, white, 400);
+      font-size: 18px;
+      font-family: 'Karla', sans-serif;
+      width: 30%;
+      margin: 40px 0;
       line-height: 120%;
-      margin-bottom: 30px;
-      max-width: 456px;
+      color: white;
     }
   }
 }
+
 .projectWrapper {
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   width: 100%;
+  
+  .projects-table {
+    width: 70%;
+    border-collapse: collapse;
+    
+    tbody {
+      tr.project-row {
+        border-top: 1px solid $mainColor;
+        border-bottom: 1px solid $mainColor;
+        transition: all 300ms ease;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(61, 207, 183, 0.2);
+        
+        &:hover, &:active, &.active-touch {
+          background-color: rgba($mainColor, 0.18);
+          
+          .project-name {
+            &::after {
+              content: '↗';
+              margin-left: 8px;
+              font-size: 18px;
+              color: $mainColor;
+            }
+          }
+        }
+        
+        .project-name, .project-tech {
+          padding: 40px 32px;
+        }
+        
+        .project-name {
+          font-size: 24px;
+          font-family: 'Fira Code', monospace;
+          font-weight: 700;
+          color: white;
+          
+          .arrow-icon {
+            display: inline-block;
+            margin-left: 8px;
+          }
+        }
+        
+        .project-tech {
+          text-align: right;
+          font-size: 18px;
+          font-family: 'Karla', sans-serif;
+          font-weight: 400;
+          color: white;
+          
+          .tech-separator {
+            color: $mainColor;
+            margin: 0 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.projects-hover-content {
+  display: block;
+  position: absolute;
+  right: 0;
+  transition: top 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+
+  figure {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    
+    img {
+      width: 300px;
+      height: auto;
+      border-radius: 16px;
+      transform: translate(-20px, -20px);
+      animation: fadeIn 0.3s ease-in-out;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translate(-20px, -20px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translate(-20px, -20px) scale(1); 
+  }
+}
+
+.project-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.project-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
+
+.project-modal {
+  background: linear-gradient(45deg, rgba(28,28,28,1) 40%, rgba(8,70,59,1) 100%);
+  border-radius: 24px;
   max-width: 1440px;
+  width: 90%;
+  max-height: 90vh;
+  margin: auto;
+  padding: 40px;
+  z-index: 1001;
+  overflow-y: auto;
+  animation: modalFadeIn 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
 
-  .projects {
-    flex: 1;
-    width: 60%;
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-modal-content {
+  display: flex;
+  flex-direction: row;
+  padding: 24px;
+}
+
+.project-info {
+  width: 50%;
+  padding-right: 24px;
+
+  .project-number {
+    font-size: 128px;
+    font-family: 'Karla', sans-serif;
+    color: $mainColor;
+    line-height: 1;
   }
 
-  .project {
-    border-bottom: $mainColor 1px solid;
-    @include dFlex(space-between, center);
-    padding: 40px 32px;
-    width: 80%;
-    height: 100px;
-    transition: background-color 0.2s ease-in;
+  .project-title {
+    font-size: 64px;
+    font-weight: 700;
+    font-family: 'Fira Code', monospace;
+    margin-bottom: 16px;
+    color: white;
+  }
 
-    @media (max-width: 510px) {
-      flex-direction: column;
-      align-items: start;
+  .project-description {
+    font-size: 24px;
+    margin-bottom: 16px;
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    color: $mainColor;
+  }
+
+  .project-long-description {
+    margin-bottom: 16px;
+    
+    p {
+      font-family: 'Karla', sans-serif;
+      font-size: 18px;
+      color: #ffffff;
+      height: auto;
+      max-height: 80px;
+      overflow-y: auto;
+      line-height: 1.6;
+      border: 1px solid rgba($mainColor, 0.3);
+      border-radius: 8px;
+      padding: 12px 16px 12px 12px;
+      
+      &::-webkit-scrollbar {
+        width: 12px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background: rgba($mainColor, 0.15);
+        border-radius: 10px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background: $mainColor;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        min-height: 30px;
+        
+        &:hover {
+          background: $mainColor;
+          opacity: 0.8;
+        }
+      }
     }
+  }
 
-    &:hover {
-      background-color: rgba($mainColor, 0.3);
-    }
+  .project-technologies {
+    margin-bottom: 24px;
 
-    > h3 {
-      @include text("Fire Code", 24px, white, 700);
-      line-height: 120%;
-      flex: 1;
-      position: relative;
-      transition: color 0.3s ease-in-out;
-
-      @media (max-width: 600px) {
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+      
+      .tech-tag {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #fff;
         font-size: 18px;
-      }
-
-      &::after {
-        content: "";
-        position: absolute;
-        right: 200px;
-        opacity: 0;
-        transform: translateX(50px);
-        transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-      }
-    }
-
-    &:hover > h3::after {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    > .technologies {
-      @include dFlex(end, center);
-      gap: 8px;
-      flex: 1;
-
-      > span {
-        @include text("Karla", 18px, white, 400);
-        line-height: 120%;
-      }
-
-      .borderRight {
-        background-color: $mainColor;
-        width: 2px;
-        height: 22px;
+        font-weight: 500;
+        
+        .tech-icon {
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
 
-  .preview {
-    position: absolute;
-    width: 350px;
-    height: 200px;
-    right: 0;
-    background: $gradientStart;
-    border-radius: 16px;
+  .project-buttons {
+    display: flex;
+    gap: 16px;
+  }
+}
+
+.project-image-container {
+  width: 50%;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+
+  .close-button {
+    align-self: flex-end;
+    margin-bottom: 8px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 1;
-    transform: translateX(150px);
-    transition: opacity 0.8s ease-in, transform 0.3s ease-in;
-    &::before {
-      content: "";
-      position: absolute;
-      width: 108%;
-      height: 108%;
-      top: 5px;
-      left: 5px;
-      border-radius: 16px;
-      background: repeating-linear-gradient(
-        135deg,
-        rgba($mainColor, 0.8) 0px,
-        rgba($gradientStart, 0.8) 1px,
-        transparent 4px,
-        transparent 8px
-      );
-      z-index: -1;
-    }
-    .lineDiv {
-      z-index: 0;
-      content: "";
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+
+    .close-icon {
       position: relative;
-      top: -120px;
-      background: repeating-linear-gradient(
-        135deg,
-        #3dcfb6 0px,
-        #3dcfb6 2px,
-        transparent 2px,
-        transparent 20
-      );
-      border-radius: 16px;
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 2px;
+        background-color: #ffffff;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+      }
+
+      &::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      &::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
     }
-    > img {
+  }
+
+  .project-image {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    img {
       width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      object-fit: cover;
-      z-index: 1;
+      border-radius: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border: 2px solid rgba($mainColor, 0.3);
     }
-    @if (activePreview) {
-      .preview {
-        opacity: 1;
-        transform: translateX(0);
+  }
+}
+
+.project-modal-footer {
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+
+  .next-project-button {
+    display: flex;
+    background: none;
+    border: none;
+    color: $mainColor;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 80px;
+    position: relative;
+    font-family: 'Karla', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+
+    &::after {
+      content: url("/assets/img/projects/next-arrow-icon.svg");
+      position: absolute;
+      right: -24px;
+      top: 0;
+      width: 16px;
+      height: 24px;
+      transition: all 300ms ease;
+    }
+    
+    &:hover, &:active {
+      color: #ffffff;
+      
+      &::after {
+        right: -32px;
       }
     }
   }
 }
-app-overlay {
-  width: 100%;
+
+.link-button2 {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  padding: 18px 28px;
+  border-radius: 32px;
+  color: white;
+  text-decoration: none;
+  font-family: 'Karla', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 300ms ease;
+  -webkit-tap-highlight-color: rgba(61, 207, 183, 0.2);
+
+  &::after {
+    content: '↗';
+    margin-left: 8px;
+    transition: all 300ms ease;
+    color: $mainColor;
+    font-size: 16px;
+  }
+
+  &:hover, &:active {
+    border: 1px solid $mainColor;
+
+    &::after {
+      transform: translate(4px, -4px);
+      color: $mainColor;
+    }
+  }
+}
+
+
+@media (max-width: 1440px) {
+  .project-info {
+    .project-number {
+      font-size: 64px;
+    }
+    .project-title {
+      font-size: 32px;
+    }
+    .project-description {
+      font-size: 18px;
+    }
+    .project-long-description p {
+      font-size: 16px;
+      max-height: 70px;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  #projects .contentWrapper > p {
+    width: 100%;
+  }
+  
+  .projectWrapper .projects-table {
+    width: 100%;
+  }
+  
+  .project-modal {
+    width: 100%;
+    max-height: 90vh;
+    border-radius: 16px;
+    padding: 24px;
+  }
+  
+  .project-modal-content {
+    padding: 16px;
+  }
+  
+  .project-image-container {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  .project-modal {
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  
+  .project-modal-content {
+    flex-direction: row;
+    padding: 12px;
+  }
+  
+  .project-info {
+    width: 50%;
+    
+    .project-number {
+      font-size: 48px;
+    }
+    .project-title {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .project-description {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .project-long-description p {
+      font-size: 14px;
+      max-height: 60px;
+      overflow-y: auto;
+    }
+    .project-technologies .tech-tags {
+      gap: 12px;
+      
+      .tech-tag {
+        font-size: 16px;
+        
+        .tech-icon {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+  
+  .project-image-container {
+    width: 50%;
+    
+    .project-image {
+      margin-top: 0;
+      
+      img {
+        border-radius: 20px;
+      }
+    }
+    .close-button {
+      margin-bottom: 4px;
+    }
+  }
+  
+  .project-modal-footer {
+    padding: 8px;
+  }
+  
+  .link-button2 {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .projectWrapper .projects-table tbody tr {
+    .project-name, .project-tech {
+      display: block !important;
+      text-align: left !important;
+      padding: 20px 16px;
+    }
+    .project-name {
+      padding: 16px 0 4px 0 !important;
+      font-size: 20px;
+    }
+    .project-tech {
+      padding: 4px 0 16px 0 !important;
+      text-align: left !important;
+    }
+  }
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .project-modal {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    max-height: none;
+    border-radius: 0;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  
+  .project-modal-content {
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 16px;
+  }
+  
+  .project-info {
+    width: 100%;
+    padding-right: 0;
+    margin-top: 16px;
+    
+    .project-number {
+      font-size: 40px;
+    }
+    .project-title {
+      font-size: 28px;
+    }
+    .project-description {
+      font-size: 16px;
+    }
+    .project-long-description p {
+      height: auto;
+      max-height: 80px;
+      overflow-y: auto;
+    }
+    .project-technologies .tech-tags .tech-tag {
+      font-size: 16px;
+      
+      .tech-icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+  
+  .project-image-container {
+    width: 100%;
+    padding: 8px;
+    
+    .close-button {
+      margin-bottom: 0;
+    }
+    .project-image {
+      margin-top: 0;
+      
+      img {
+        border-radius: 16px;
+      }
+    }
+  }
+  
+  .link-button2 {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .project-modal {
+    height: auto;
+    max-height: 100vh;
+    width: 100%;
+    border-radius: 0;
+    padding: 12px;
+    overflow-y: auto;
+  }
+  
+  .project-modal-content {
+    flex-direction: row;
+    padding: 8px;
+  }
+  
+  .project-info {
+    width: 50%;
+    
+    .project-number {
+      font-size: 36px;
+    }
+    .project-title {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .project-description {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .project-long-description p {
+      font-size: 13px;
+      max-height: 50px;
+      overflow-y: auto;
+    }
+    .project-technologies .tech-tags {
+      gap: 8px;
+      
+      .tech-tag {
+        font-size: 14px;
+        
+        .tech-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+  
+  .project-image-container {
+    width: 50%;
+    padding: 4px;
+    
+    .close-button {
+      margin-bottom: 4px;
+      width: 24px;
+      height: 24px;
+      
+      .close-icon {
+        width: 24px;
+        height: 24px;
+        
+        &::before, &::after {
+          width: 18px;
+        }
+      }
+    }
+    .project-image {
+      margin-top: 0;
+    }
+  }
+  
+  .project-modal-footer {
+    padding: 4px;
+    
+    .next-project-button {
+      font-size: 14px;
+      margin-right: 40px;
+    }
+  }
+  
+  .link-button2 {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 600px) {
+  #projects .contentWrapper > h2 {
+    font-size: 40px;
+  }
+  
+  .projectWrapper .projects-table tbody tr .project-name {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-modal-content {
+    margin: 8px;
+  }
+  
+  .project-info {
+    .project-number {
+      font-size: 32px;
+    }
+    .project-title {
+      font-size: 24px;
+    }
+    .project-description {
+      font-size: 16px;
+    }
+    .project-technologies .tech-tags {
+      gap: 8px;
+      
+      .tech-tag {
+        font-size: 14px;
+        
+        .tech-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+    .project-long-description p {
+      max-height: 70px;
+    }
+  }
+  
+  .project-image-container .close-button {
+    margin-bottom: 0;
+  }
+  
+  .project-modal-footer .next-project-button {
+    margin-right: 30px;
+    font-size: 14px;
+  }
+  
+  .link-button2 {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  .project-modal {
+    padding: 8px;
+  }
+  
+  .project-info {
+    .project-number {
+      font-size: 28px;
+    }
+    .project-title {
+      font-size: 20px;
+    }
+    .project-description {
+      font-size: 14px;
+    }
+    .project-long-description p {
+      max-height: 75px;
+    }
+    .project-technologies .tech-tags .tech-tag {
+      font-size: 14px;
+      
+      .tech-icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  
+  .link-button2 {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
 }
