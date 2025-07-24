@@ -3,6 +3,7 @@
 section {
   background-color: $gradientStart;
   text-align: center;
+  padding: 0 10px;
 
   > h2 {
     @include text("Fira Code", 32px, $mainColor, 700);
@@ -14,22 +15,26 @@ section {
     position: relative;
     max-width: 1440px;
     margin: auto;
+    padding: 0 20px;
 
     .feedback-wrapper {
       @include dFlex(center, center);
       width: 100%;
-      height: 290px;
+      height: 320px;
       overflow-x: hidden;
       position: relative;
+      padding: 15px 0;
 
       .feedback-card {
-        flex: 0 0 33%;
-        width: 632px;
+        flex: 0 0 auto;
+        max-width: 632px;
+        width: 90%;
+        min-width: 300px;
         height: 80%;
         padding: 20px;
         margin: 0 15px;
         background: rgba($mainColor, 0.3);
-        border-radius: 32px;
+        border-radius: 35px;
         border: 1px solid $mainColor;
         color: white;
         text-align: center;
@@ -38,6 +43,53 @@ section {
         transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
         opacity: 0.5;
         transform: scale(0.8);
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        p {
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          hyphens: auto;
+          line-height: 1.6;
+          margin: 0;
+          padding: 10px 8px 10px 0;
+          flex: 1;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          text-align: left;
+          overflow-y: auto;
+          font-family: "Karla", sans-serif;
+          font-size: 18px;
+          font-weight: 400;
+          color: white;
+
+          /* Styling per la scrollbar */
+          &::-webkit-scrollbar {
+            width: 6px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: rgba($mainColor, 0.1);
+            border-radius: 3px;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background: $mainColor;
+            border-radius: 3px;
+
+            &:hover {
+              background: lighten($mainColor, 10%);
+            }
+          }
+
+          /* Firefox scrollbar */
+          scrollbar-width: thin;
+          scrollbar-color: $mainColor rgba($mainColor, 0.1);
+        }
 
         &.right {
           mask-image: linear-gradient(
@@ -63,12 +115,6 @@ section {
             rgba(0, 0, 0, 0.4),
             rgba(0, 0, 0, 0)
           );
-        }
-
-        @media (max-width: 450px) {
-          height: 70%;
-          width: 80%;
-          padding: 0;
         }
 
         &.active {
@@ -125,6 +171,8 @@ section {
     .feedbackBottom {
       @include dFlex(center, center);
       gap: 35px;
+      margin-top: 10px;
+      flex-shrink: 0;
 
       > span {
         @include text("Karla", 18px, white, 400);
@@ -154,5 +202,143 @@ section {
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE MEDIA QUERIES
+   ======================================== */
+
+@media (max-width: 1200px) {
+  section .slider-container {
+    .feedback-wrapper .feedback-card {
+      width: 85%;
+      max-width: 500px;
+      padding: 15px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 0 15px;
+
+    .slider-container {
+      padding: 0 25px;
+
+      .feedback-wrapper .feedback-card {
+        width: 85%;
+        max-width: 400px;
+        padding: 12px;
+        margin: 0 10px;
+        min-width: 280px;
+
+        p {
+          font-size: 16px;
+          line-height: 1.5;
+          padding: 8px 8px 8px 0;
+        }
+      }
+
+      .feedbackBottom {
+        > span {
+          font-size: 16px;
+        }
+
+        .lineDiv {
+          width: 100px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  section {
+    padding: 0 8px;
+
+    .slider-container {
+      padding: 0 20px;
+
+      .feedback-wrapper {
+        height: 350px;
+        padding: 20px 0;
+
+        .feedback-card {
+          height: 75%;
+          width: 85%;
+          padding: 15px;
+          margin: 0 5px;
+          min-width: 280px;
+
+          p {
+            font-size: 15px;
+            line-height: 1.4;
+            padding: 5px 8px 5px 0;
+            text-align: left;
+          }
+        }
+      }
+
+      .feedbackBottom {
+        > span {
+          font-size: 15px;
+        }
+
+        .lineDiv {
+          width: 80px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  section .slider-container {
+    padding: 0 15px;
+
+    .feedback-wrapper {
+      height: 380px;
+      padding: 25px 0;
+
+      .feedback-card {
+        height: 70%;
+        width: 80%;
+        padding: 15px;
+        margin: 0 3px;
+        min-width: 240px;
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  section .slider-container {
+    padding: 0 12px;
+
+    .feedback-wrapper {
+      height: 400px;
+      padding: 30px 0;
+
+      .feedback-card {
+        height: 65%;
+        width: 78%;
+        padding: 12px;
+        margin: 0 2px;
+        min-width: 220px;
+
+        p {
+          font-size: 14px;
+          line-height: 1.3;
+          padding: 3px 8px 3px 0;
+        }
+      }
+    }
+
+    .feedbackBottom {
+      > span {
+        font-size: 14px;
+      }
+    }
   }
 }
