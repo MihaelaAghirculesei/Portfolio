@@ -48,6 +48,7 @@ section {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        position: relative;
 
         p {
           overflow-wrap: break-word;
@@ -67,7 +68,6 @@ section {
           font-weight: 400;
           color: white;
 
-          /* Styling per la scrollbar */
           &::-webkit-scrollbar {
             width: 6px;
           }
@@ -86,7 +86,6 @@ section {
             }
           }
 
-          /* Firefox scrollbar */
           scrollbar-width: thin;
           scrollbar-color: $mainColor rgba($mainColor, 0.1);
         }
@@ -121,16 +120,17 @@ section {
           opacity: 1;
           transform: scale(1.1);
           z-index: 2;
-
-          &::before {
-            content: "";
-            @include text("Karla", 128px, white, bold);
-            position: absolute;
-            top: -45px;
-            left: -20px;
-          }
         }
       }
+    }
+
+    .quotes-overlay {
+      position: absolute;
+      top: -16px;
+      left: 22%;
+      z-index: 10;
+      filter: brightness(0) invert(1);
+      pointer-events: none;
     }
 
     .nav-btn {
@@ -139,10 +139,19 @@ section {
       font-size: 2rem;
       color: white;
       cursor: pointer;
+      transition: all 0.3s ease;
 
       &:hover {
         color: $mainColor;
         transform: scale(1.1);
+      }
+
+      &.left-btn {
+        order: -1;
+      }
+
+      &.right-btn {
+        order: 1;
       }
     }
 
@@ -150,6 +159,11 @@ section {
       @include dFlex(center, center);
       flex-direction: row;
       margin-top: 20px;
+      gap: 10px;
+
+      .nav-btn {
+        margin: 0 15px;
+      }
 
       span {
         height: 10px;
@@ -160,10 +174,15 @@ section {
         border-radius: 50%;
         opacity: 0.5;
         cursor: pointer;
-        transition: opacity 0.3s;
+        transition: opacity 0.3s ease;
 
         &.active {
           opacity: 1;
+          background: $mainColor;
+        }
+
+        &:hover {
+          opacity: 0.8;
         }
       }
     }
@@ -182,32 +201,11 @@ section {
         background-color: white;
         height: 1px;
         width: 150px;
+        opacity: 0.7;
       }
     }
   }
 }
-
-@keyframes slideLeft {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideRight {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-/* ========================================
-   RESPONSIVE MEDIA QUERIES
-   ======================================== */
 
 @media (max-width: 1200px) {
   section .slider-container {
@@ -215,6 +213,13 @@ section {
       width: 85%;
       max-width: 500px;
       padding: 15px;
+    }
+
+    .quotes-overlay {
+      width: 70px;
+      height: 70px;
+      top: -14px;
+      left: 20%;
     }
   }
 }
@@ -240,6 +245,13 @@ section {
         }
       }
 
+      .quotes-overlay {
+        width: 60px;
+        height: 60px;
+        top: -12px;
+        left: 18%;
+      }
+
       .feedbackBottom {
         > span {
           font-size: 16px;
@@ -247,6 +259,13 @@ section {
 
         .lineDiv {
           width: 100px;
+        }
+      }
+
+      .dots {
+        .nav-btn {
+          font-size: 1.5rem;
+          margin: 0 10px;
         }
       }
     }
@@ -280,6 +299,13 @@ section {
         }
       }
 
+      .quotes-overlay {
+        width: 50px;
+        height: 50px;
+        top: -10px;
+        left: 15%;
+      }
+
       .feedbackBottom {
         > span {
           font-size: 15px;
@@ -287,6 +313,13 @@ section {
 
         .lineDiv {
           width: 80px;
+        }
+      }
+
+      .dots {
+        .nav-btn {
+          font-size: 1.3rem;
+          margin: 0 8px;
         }
       }
     }
@@ -307,6 +340,20 @@ section {
         padding: 15px;
         margin: 0 3px;
         min-width: 240px;
+      }
+    }
+
+    .quotes-overlay {
+      width: 45px;
+      height: 45px;
+      top: -8px;
+      left: 12%;
+    }
+
+    .dots {
+      .nav-btn {
+        font-size: 1.2rem;
+        margin: 0 5px;
       }
     }
   }
@@ -335,9 +382,29 @@ section {
       }
     }
 
+    .quotes-overlay {
+      width: 40px;
+      height: 40px;
+      top: -6px;
+      left: 10%;
+    }
+
     .feedbackBottom {
       > span {
         font-size: 14px;
+      }
+    }
+
+    .dots {
+      .nav-btn {
+        font-size: 1rem;
+        margin: 0 3px;
+      }
+
+      span {
+        height: 8px;
+        width: 8px;
+        margin: 0 3px;
       }
     }
   }
