@@ -1,0 +1,116 @@
+<div class="formDiv">
+  <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm" [attr.spellcheck]="false" autocomplete="off">
+    <div class="inputText">
+      <label for="name">What's your name?</label>
+      <input 
+        #name="ngModel" 
+        [(ngModel)]="contactData.name" 
+        type="text" 
+        id="name" 
+        name="name"
+        (blur)="validateForm('name')"
+        [class.invalid]="invalidFields.includes('name')"
+        [attr.placeholder]="
+          invalidFields.includes('name')
+            ? 'Please enter at least 3 letters'
+            : 'Your Name goes here'
+        "
+        required 
+        minlength="3">
+    </div>
+    
+    <hr>
+    
+    <div class="inputText">
+      <label for="email">What's your email?</label>
+      <input 
+        #email="ngModel" 
+        [(ngModel)]="contactData.email" 
+        type="email" 
+        id="email" 
+        name="email"
+        (blur)="validateForm('email')"
+        [class.invalid]="invalidFields.includes('email')"
+        [attr.placeholder]="
+          invalidFields.includes('email')
+            ? 'Your email appears to be invalid'
+            : 'youremail@email.com'
+        "
+        required 
+        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+    </div>
+    
+    <hr>
+    
+    <div class="inputText">
+      <label for="message">How can I help you?</label>
+      <textarea 
+        #message="ngModel" 
+        [(ngModel)]="contactData.message" 
+        id="message" 
+        name="message"
+        (blur)="validateForm('message')"
+        [class.invalid]="invalidFields.includes('message')"
+        [attr.placeholder]="
+          invalidFields.includes('message')
+            ? 'Please enter at least 10 characters'
+            : 'Hello Mihaela, I am interested in...'
+        "
+        required 
+        minlength="10"
+        rows="1" 
+        cols="50"></textarea>
+    </div>
+    
+    <hr>
+    
+    <div class="checkboxDiv">
+      <label class="checkbox-container" for="data-privacy-checkbox">
+        <input 
+          (change)="checkboxChanged()" 
+          #privacypolicy="ngModel" 
+          [(ngModel)]="contactData.privacypolicy" 
+          type="checkbox" 
+          id="data-privacy-checkbox" 
+          name="privacypolicy" 
+          (blur)="validateForm('checkbox')"
+          [class.invalid]="invalidFields.includes('checkbox')"
+          required>
+        <div class="checkmark"></div>
+        <span>I've read the <a href="#" class="privacy-policy-link">privacy policy</a> and agree to the processing of my data as outlined.</span>
+      </label>
+      @if ((privacypolicy.invalid && (privacypolicy.dirty || privacypolicy.touched)) || checkboxWasCheckedBefore && !contactData.privacypolicy) {
+        <p class="alert-text">Privacy policy acceptance is required.</p>
+      }
+    </div>
+    
+    <input 
+      type="submit" 
+      value="Say Hello :)" 
+      [disabled]="!contactForm.form.valid">
+  </form>
+</div>
+
+@if (submissionStatus) {
+  <div class="popup-overlay" (click)="closePopup()">
+    <div class="popup" 
+         [class.success]="submissionStatus === 'success'" 
+         [class.error]="submissionStatus === 'error'" 
+         (click)="$event.stopPropagation()">
+      <div class="popup-header">
+        <h3>{{ submissionStatus === 'success' ? 'Success!' : 'Error' }}</h3>
+      </div>
+      <div class="popup-content">
+        @if (submissionStatus === 'success') {
+          <p>Your message has been sent successfully!</p>
+        } @else {
+          <p>An error occurred while sending your message.</p>
+          <p class="error-details">{{ errorMessage }}</p>
+        }
+      </div>
+      <div class="popup-footer">
+        <button (click)="closePopup()">Close</button>
+      </div>
+    </div>
+  </div>
+}

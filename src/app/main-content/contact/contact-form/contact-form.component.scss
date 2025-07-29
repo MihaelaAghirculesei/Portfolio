@@ -1,0 +1,382 @@
+@import '../../../../styles/styles.scss';
+
+::-webkit-input-placeholder {
+  color: #ffffff;
+}
+
+/* Chrome, Safari, Edge autofill background removal */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1c1c1c inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Mozilla autofill background removal */
+@-moz-document url-prefix() {
+  input:-moz-autofill,
+  input:-moz-autofill:focus {
+    transition: background-color 5000s ease-in-out 0s;
+    background-color: #1c1c1c !important;
+    color: #ffffff !important;
+  }
+}
+
+.formDiv {
+  @include dFlex(center, center);
+  flex: 1;
+  max-height: 100%;
+  width: 100%;
+
+  form {
+    @include dFlex(center, flex-start);
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+
+    .inputText {
+      @include dFlex(center, start);
+      flex-direction: column;
+      width: 100%;
+      gap: 15px;
+      padding: 16px 0;
+
+      label {
+        @include text("Fira Code", 20px, $mainColor, 500);
+        padding: 0 40px;
+        text-align: left;
+        width: 100%;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 0 40px;
+        border: 0 solid #ffffff;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        resize: vertical;
+        background-color: transparent;
+        font-family: 'Karla';
+        font-size: 18px;
+        color: #ffffff;
+        outline: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
+
+        &:hover {
+          cursor: text;
+        }
+
+        &:focus {
+          cursor: text;
+        }
+
+        &.invalid::placeholder {
+          color: $alert-text;
+          opacity: 1;
+        }
+
+        &.invalid {
+          border-color: $alert-text;
+        }
+      }
+    }
+
+    .checkboxDiv {
+      @include dFlex(center, center);
+      width: 100%;
+      padding: 16px 0;
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        font-size: 20px;
+        user-select: none;
+        gap: 16px;
+        
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+          &:hover {
+            ~ {
+              .checkmark {
+                border: 2px solid $mainColor;
+                box-shadow: 0 0 20px rgba(61, 207, 182, 0.8);
+              }
+            }
+          }
+          &:checked {
+            ~ {
+              .checkmark {
+                box-shadow: 0 0 20px rgba(61, 207, 182, 0.8);
+                border: 2px solid $mainColor;
+                &:after {
+                  display: block;
+                }
+              }
+            }
+          }
+          &.invalid {
+            ~ {
+              .checkmark {
+                border: 2px solid $alert-text;
+              }
+            }
+          }
+        }
+        
+        .checkmark {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          margin-right: 16px;
+          position: relative;
+          top: 0;
+          left: 0;
+          height: 1.3em;
+          width: 1.3em;
+          border: 2px solid $mainColor;
+          border-radius: 5px;
+          transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+          flex-shrink: 0;
+          &:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 50%;
+            top: 50%;
+            width: 0.25em;
+            height: 0.5em;
+            border: solid $mainColor;
+            border-width: 0 0.15em 0.15em 0;
+            transform: translate(-50%, -60%) rotate(45deg);
+          }
+        }
+        
+        span {
+          font-family: 'Karla';
+          font-size: 15px;
+          color: #ffffff;
+          padding: 0;
+          a.privacy-policy-link {
+            color: $mainColor;
+            &:hover {
+              text-decoration: underline;
+              text-decoration-color: $mainColor;
+              text-underline-offset: 8px;
+              color: #ffffff;
+            }
+          }
+        }
+      }
+
+      .alert-text {
+        font-family: 'Karla';
+        font-size: 16px;
+        color: $alert-text;
+        margin: 40px 0;
+        padding: 0 40px;
+      }
+    }
+  }
+}
+
+hr {
+  margin: 24px 0;
+  width: 100%;
+  border: none;
+  border-top: 1px solid $mainColor;
+  height: 1px;
+}
+
+input[type=submit] {
+  font-family: 'Karla';
+  font-size: 18px;
+  background-color: transparent;
+  color: white;
+  padding: 12px 20px;
+  border: 1px solid #ffffff;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 300ms ease;
+  margin: 24px 0;
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+  }
+  &:hover {
+    background-color: $mainColor;
+    border: 1px solid $mainColor;
+  }
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+
+.popup {
+  background: linear-gradient(45deg, rgba(28,28,28,1) 40%, rgba(8,70,59,1) 100%);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  animation: popup-appear 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  border: 1px solid #ffffff;
+
+  &.success {
+    border: 1px solid $mainColor;
+    box-shadow: 0 0 25px rgba(61, 207, 182, 0.3);
+  }
+
+  &.error {
+    border: 1px solid $alert-text;
+    box-shadow: 0 0 25px rgba(255, 100, 100, 0.3);
+  }
+}
+
+.popup-header {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  h3 {
+    margin: 0;
+    font-family: 'Fira Code';
+    font-size: 20px;
+    color: #ffffff;
+  }
+}
+
+.popup-content {
+  padding: 24px;
+
+  p {
+    margin: 0 0 12px;
+    line-height: 1.5;
+    font-family: 'Karla';
+    font-size: 16px;
+    color: #ffffff;
+  }
+
+  .error-details {
+    color: $alert-text;
+    font-size: 14px;
+    margin-top: 12px;
+    padding: 8px;
+    background-color: rgba(255, 100, 100, 0.1);
+    border-radius: 4px;
+  }
+}
+
+.popup-footer {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  button {
+    font-family: 'Karla';
+    font-size: 16px;
+    background-color: transparent;
+    color: white;
+    padding: 8px 20px;
+    border: 1px solid #ffffff;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 300ms ease;
+
+    &:hover {
+      background-color: $mainColor;
+      border: 1px solid $mainColor;
+    }
+  }
+}
+
+@keyframes popup-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .formDiv {
+    form {
+      padding: 0;
+      .inputText {
+        label {
+          padding: 0 16px;
+          font-size: 16px;
+        }
+        input,
+        textarea {
+          padding: 0 16px;
+        }
+      }
+      .checkboxDiv {
+        .checkbox-container {
+          .alert-text {
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .popup {
+    width: 95%;
+    max-width: 450px;
+  }
+
+  .popup-header h3 {
+    font-size: 18px;
+  }
+
+  .popup-content p {
+    font-size: 15px;
+  }
+
+  .popup-footer button {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+}

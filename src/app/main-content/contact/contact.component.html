@@ -1,110 +1,15 @@
 <section id="contact">
-  @if(showOverlay){
-  <div class="overlay">
-    <div class="overlay-content">
-      <h2>{{ "app-contact.successMessage" | translate }}</h2>
-      <button (click)="closeOverlay()">
-        {{ "app-contact.closeButton" | translate }}
-      </button>
-    </div>
-  </div>
-  }
   <div class="contentWrapper">
     <div class="contactDiv">
-      <h3>{{ "app-contact.h3ContactMe" | translate }}</h3>
-      <h2>{{ "app-contact.h2workTogether" | translate }}</h2>
-      <h3>{{ "app-contact.h3Problem" | translate }}</h3>
-      <span>{{ "app-contact.spanEcourage" | translate }}</span>
-      <span
-        >{{ "app-contact.spanNeedMe" | translate }}
-        <p>{{ "app-contact.pTalk" | translate }}</p></span
-      >
+      <h3>Contact me</h3>
+      <h2>Let's work together</h2>
+      <h3>Got a problem to solve?</h3>
+      <span>I'm actively seeking opportunities where I can contribute my Angular, TypeScript, and JavaScript expertise to create exceptional user experiences that drive business success.</span>
+      <span>
+        Need a Front-End Developer? 
+        <p>Let's talk!</p>
+      </span>
     </div>
-    <div class="formDiv">
-      <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
-        <div class="inputText">
-          <label for="name">{{
-            "app-contact.formLabelName" | translate
-          }}</label>
-          <input
-            #name="ngModel"
-            name="name"
-            required
-            minlength="3"
-            [(ngModel)]="contactData.name"
-            type="text"
-            id="name"
-            (blur)="validateForm('name')"
-            [class.invalid]="invalidFields.includes('name')"
-            [attr.placeholder]="
-              invalidFields.includes('name')
-                ? 'Please enter at least 3 letters'
-                : 'Your Name goes here'
-            "
-          />
-        </div>
-        <div class="inputText">
-          <label for="eMail">{{
-            "app-contact.formLabelMail" | translate
-          }}</label>
-          <input
-            #email="ngModel"
-            name="email"
-            required
-            email
-            [(ngModel)]="contactData.email"
-            type="email"
-            id="eMail"
-            (blur)="validateForm('email')"
-            [class.invalid]="invalidFields.includes('email')"
-            [attr.placeholder]="
-              invalidFields.includes('email')
-                ? 'Your email appears to be invalid'
-                : 'and your email here'
-            "
-          />
-        </div>
-        <div class="inputText">
-          <label for="message">{{
-            "app-contact.formLabelMessage" | translate
-          }}</label>
-          <textarea
-            #message="ngModel"
-            name="message"
-            required
-            minlength="10"
-            [(ngModel)]="contactData.message"
-            id="message"
-            (blur)="validateForm('message')"
-            [class.invalid]="invalidFields.includes('message')"
-            [attr.placeholder]="
-              invalidFields.includes('message')
-                ? 'Please enter at least 10 characters'
-                : 'Hello Mihaela, I am interested in...'
-            "
-          ></textarea>
-          <div class="checkboxDiv">
-            <input
-            [(ngModel)]="contactData.privacyPolicy"
-            name="privacyPolicy"
-            type="checkbox"
-            #privacy="ngModel"
-            (blur)="validateForm('checkbox')"
-            [class.invalid]="invalidFields.includes('checkBox')"
-          />
-            <p>
-              I've read the <a [routerLink]="'/imprint'">privacy policy</a> and
-              agree to the processing of my data as outlined
-            </p>
-          </div>
-          <button
-            type="submit"
-            [disabled]="!contactForm.valid || !contactData.privacyPolicy"
-          >
-            {{ "app-contact.formBtn" | translate }}
-          </button>
-        </div>
-      </form>
-    </div>
+    <app-contact-form></app-contact-form>
   </div>
 </section>
