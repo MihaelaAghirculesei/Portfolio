@@ -40,28 +40,33 @@ export class ContactFormComponent {
   };
 
   validateForm(field: string) {
+    // Rimuovi il campo dalla lista degli errori
     this.invalidFields = this.invalidFields.filter((f) => f !== field);
     
     if (field === 'name') {
-      if (!this.contactData.name || this.contactData.name.length < 3) {
+      // Se il campo è vuoto O ha meno di 3 caratteri
+      if (!this.contactData.name || this.contactData.name.trim().length < 3) {
         this.invalidFields.push('name');
       }
     }
 
     if (field === 'email') {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!this.contactData.email || !emailRegex.test(this.contactData.email)) {
+      // Se il campo è vuoto O non corrisponde al pattern
+      if (!this.contactData.email || !emailRegex.test(this.contactData.email.trim())) {
         this.invalidFields.push('email');
       }
     }
 
     if (field === 'message') {
-      if (!this.contactData.message || this.contactData.message.length < 10) {
+      // Se il campo è vuoto O ha meno di 10 caratteri
+      if (!this.contactData.message || this.contactData.message.trim().length < 10) {
         this.invalidFields.push('message');
       }
     }
 
     if (field === 'checkbox') {
+      // Se il checkbox non è spuntato
       if (!this.contactData.privacypolicy) {
         this.invalidFields.push('checkbox');
       }

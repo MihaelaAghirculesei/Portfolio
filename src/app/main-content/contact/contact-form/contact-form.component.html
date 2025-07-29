@@ -9,6 +9,7 @@
         id="name" 
         name="name"
         (blur)="validateForm('name')"
+        (input)="validateForm('name')"
         [class.invalid]="invalidFields.includes('name')"
         [attr.placeholder]="
           invalidFields.includes('name')
@@ -30,6 +31,7 @@
         id="email" 
         name="email"
         (blur)="validateForm('email')"
+        (input)="validateForm('email')"
         [class.invalid]="invalidFields.includes('email')"
         [attr.placeholder]="
           invalidFields.includes('email')
@@ -50,6 +52,7 @@
         id="message" 
         name="message"
         (blur)="validateForm('message')"
+        (input)="validateForm('message')"
         [class.invalid]="invalidFields.includes('message')"
         [attr.placeholder]="
           invalidFields.includes('message')
@@ -67,7 +70,7 @@
     <div class="checkboxDiv">
       <label class="checkbox-container" for="data-privacy-checkbox">
         <input 
-          (change)="checkboxChanged()" 
+          (change)="checkboxChanged(); validateForm('checkbox')"
           #privacypolicy="ngModel" 
           [(ngModel)]="contactData.privacypolicy" 
           type="checkbox" 
