@@ -8,16 +8,20 @@
         type="text" 
         id="name" 
         name="name"
+        (focus)="validateForm('name')"
         (blur)="validateForm('name')"
         (input)="validateForm('name')"
         [class.invalid]="invalidFields.includes('name')"
         [attr.placeholder]="
           invalidFields.includes('name')
-            ? 'Please enter at least 3 letters'
+            ? 'Your Name goes here'
             : 'Your Name goes here'
         "
         required 
         minlength="3">
+      @if (invalidFields.includes('name')) {
+        <p class="alert-text">Please enter at least 3 letters</p>
+      }
     </div>
     
     <hr>
@@ -30,16 +34,20 @@
         type="email" 
         id="email" 
         name="email"
+        (focus)="validateForm('email')"
         (blur)="validateForm('email')"
         (input)="validateForm('email')"
         [class.invalid]="invalidFields.includes('email')"
         [attr.placeholder]="
           invalidFields.includes('email')
-            ? 'Your email appears to be invalid'
+            ? 'youremail@email.com'
             : 'youremail@email.com'
         "
         required 
         pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+      @if (invalidFields.includes('email')) {
+        <p class="alert-text">Your email appears to be invalid</p>
+      }
     </div>
     
     <hr>
@@ -51,18 +59,22 @@
         [(ngModel)]="contactData.message" 
         id="message" 
         name="message"
+        (focus)="validateForm('message')"
         (blur)="validateForm('message')"
         (input)="validateForm('message')"
         [class.invalid]="invalidFields.includes('message')"
         [attr.placeholder]="
           invalidFields.includes('message')
-            ? 'Please enter at least 10 characters'
+            ? 'Hello Mihaela, I am interested in...'
             : 'Hello Mihaela, I am interested in...'
         "
         required 
         minlength="10"
         rows="1" 
         cols="50"></textarea>
+      @if (invalidFields.includes('message')) {
+        <p class="alert-text">Please enter at least 10 characters</p>
+      }
     </div>
     
     <hr>
@@ -76,6 +88,7 @@
           type="checkbox" 
           id="data-privacy-checkbox" 
           name="privacypolicy" 
+          (focus)="validateForm('checkbox')"
           (blur)="validateForm('checkbox')"
           [class.invalid]="invalidFields.includes('checkbox')"
           required>

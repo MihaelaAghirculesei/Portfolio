@@ -1,7 +1,20 @@
 @import '../../../../styles/styles.scss';
 
 ::-webkit-input-placeholder {
-  color: #ffffff;
+  color: #888888;
+}
+
+::-moz-placeholder {
+  color: #888888;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: #888888;
+}
+
+::placeholder {
+  color: #888888;
 }
 
 /* Chrome, Safari, Edge autofill background removal */
@@ -81,14 +94,19 @@ input:-webkit-autofill:active {
           cursor: text;
         }
 
-        &.invalid::placeholder {
-          color: $alert-text;
-          opacity: 1;
-        }
-
         &.invalid {
           border-color: $alert-text;
         }
+      }
+
+      /* ✅ AGGIUNTO: Messaggi di errore sotto i campi input */
+      .alert-text {
+        font-family: 'Karla';
+        font-size: 14px;
+        color: $alert-text;
+        margin: 8px 0 0 0;
+        padding: 0 40px;
+        width: 100%;
       }
     }
 
@@ -349,6 +367,10 @@ input[type=submit] {
         }
         input,
         textarea {
+          padding: 0 16px;
+        }
+        /* ✅ AGGIUNTO: Responsive per messaggi di errore */
+        .alert-text {
           padding: 0 16px;
         }
       }
