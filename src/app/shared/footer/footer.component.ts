@@ -5,8 +5,9 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [TranslatePipe, TranslateDirective, RouterLink],
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
+  styleUrl: './footer.component.scss'
 })
-export class FooterComponent {}
+export class FooterComponent {
+}

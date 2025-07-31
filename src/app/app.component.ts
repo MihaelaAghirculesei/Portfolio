@@ -9,6 +9,7 @@ import { SkillsComponent } from './main-content/skills/skills.component';
 import { PortofolioComponent } from './main-content/portofolio/portofolio.component';
 import { FeedbacksComponent } from './main-content/feedback/feedback.component';
 import { ContactComponent } from './main-content/contact/contact.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ import { ContactComponent } from './main-content/contact/contact.component';
     PortofolioComponent,
     FeedbacksComponent,
     ContactComponent,
+    FooterComponent
   ],
   providers: [TranslateService],
   templateUrl: './app.component.html',

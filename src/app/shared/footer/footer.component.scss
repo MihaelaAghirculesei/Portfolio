@@ -1,86 +1,148 @@
-@import "./../../../styles.scss";
+@import "../../../styles/styles.scss";
 
 section {
-  @include dFlex(center, center);
   background-color: $gradientStart;
-  padding: 20px 0;
+  padding: 40px 0;
+
+  .content-width {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
 
   .footerWrapper {
-    max-width: 1440px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    height: auto;
-    padding: 20px;
-    margin-top: 40px;
-    @include dFlex(space-between, center);
+  }
 
-    @media (max-width: 1024px) {
+  .logoDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+
+    > a {
+      > img {
+        width: 120px;
+        height: auto;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          transform: scale(1.1);
+          filter: invert(0.6);
+        }
+      }
+    }
+
+    div {
+      display: flex;
       flex-direction: column;
-      gap: 16px;
+      align-items: flex-start;
+      gap: 8px;
+
+      p {
+        @include text("Karla", 16px, white, 400); 
+        margin: 0;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .copyright {
+    flex: 1;
+    text-align: center;
+    
+    p {
+      @include text("Fira Code", 16px, $mainColor, 400);
+      margin: 0;
+
+      span {
+        color: $mainColor;
+      }
+    }
+  }
+
+  .linkDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+
+    > a {
+      @include text("Karla", 16px, white, 400);
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+
+      &::after {
+        content: "•";
+        position: absolute;
+        left: -10px;
+        bottom: -30%;
+        transform: translateX(-50%) scale(0);
+        font-size: 24px;
+        color: $mainColor;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      &:hover {
+        color: $mainColor;
+
+        &::after {
+          transform: translateX(-50%) scale(1);
+        }
+      }
+    }
+  }
+}
+
+.footer-logo {
+  width: 60px;
+  height: auto;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  section {
+    .footerWrapper {
+      flex-wrap: wrap;
+      row-gap: 32px;
+    }
+
+    .logoDiv {
+      width: 40%;
+      order: 1;
+    }
+
+    .linkDiv {
+      width: 40%;
+      order: 2;
+      align-items: flex-end;
+    }
+
+    .copyright {
+      width: 100%;
+      order: 3;
       text-align: center;
     }
   }
 }
 
-.logoDiv {
-  @include dFlex(center, center);
-  flex-direction: column;
-  text-align: center;
-  > a {
-    > img {
-      width: 120px;
-      height: auto;
-      transition: transform 0.2s ease-in-out;
-
-      &:hover {
-        transform: scale(1.1);
-        filter: invert(0.6);
-      }
-    }
-  }
-
-  > span {
-    @include text("Karla", 14px, white, 400);
-  }
-}
-
-.copyright {
-  @include text("Fira Code", 16px, $mainColor, 400);
-  text-align: center;
-}
-
-.linkDiv {
-  @include dFlex(center, center);
-  flex-direction: row;
-  gap: 16px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  > a {
-    @include text("Karla", 14px, white, 400);
-    cursor: pointer;
-    text-decoration: none;
-    position: relative;
-
-    &::after {
-      content: "•";
-      position: absolute;
-      left: -10px;
-      bottom: -30%;
-      transform: translateX(-50%) scale(0);
-      font-size: 24px;
-      color: $mainColor;
-      transition: transform 0.2s ease-in-out;
+@media (max-width: 480px) {
+  section {
+    .logoDiv, .linkDiv {
+      width: 44%;
     }
 
-    &:hover {
-      color: $mainColor;
+    .linkDiv {
+      margin-top: 16px;
+    }
 
-      &::after {
-        transform: translateX(-50%) scale(1);
-      }
+    .copyright {
+      margin-top: 24px;
     }
   }
 }
