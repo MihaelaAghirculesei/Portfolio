@@ -1,30 +1,102 @@
-@import "./../../styles/styles.scss";
+@import '../../../styles/styles.scss';
 
-
-section{
-    background: linear-gradient(to right, $gradientStart, $gradientEnd);
-    @include dFlex(center, center);
-    min-height: 100vh;
-   
+section {
+  min-height: 90vh;
 }
-.contentWrapper{
-    max-width: 1440px;
-    padding: 0 40px;
-    height: 100%;
-    
-    
-    >p{
-        @include text('Karla', 18px, white, 400);
+
+h2, h3, h4 {
+  font-family: 'Fira Code', Arial, sans-serif;
+}
+
+p {
+  font-family: 'Karla', Arial, sans-serif;
+}
+
+.legal-notice-container {
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: left;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+
+  @media (max-width: 320px) {
+    padding: 0.75rem;
+  }
+
+  h1 {
+    color: $primary-green;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid $primary-green;
+    padding-bottom: 0.5rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
     }
-    >h1, h2, h3{
-        font-family: 'Fira Code';
 
+    @media (max-width: 320px) {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
-    
-}
-a{
-    color: white;
-}
-li{
-    @include text('Karla', 18px, white, 400);
+  }
+
+  h2 {
+    color: $primary-green;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 1.2rem;
+      margin-top: 1.2rem;
+    }
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #ffffff;
+
+    @media (max-width: 320px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  a {
+    color: $primary-green;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken(#ffffff, 15%);
+      text-decoration: underline;
+      text-decoration-color: $primary-green;
+      text-underline-offset: 4px;
+    }
+  }
+
+  p:last-child {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: lighten(#ffffff, 20%);
+    border-top: 1px solid $primary-green;
+    padding-top: 1rem;
+
+    @media (max-width: 320px) {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+    }
+  }
 }

@@ -1,3 +1,5 @@
 import { Routes } from '@angular/router';
-
-export const routes: Routes = [];
+import { LegalNoticeComponent } from './main-content/legal-notice/legal-notice.component';
+export const routes: Routes = [
+    { path: 'legal-notice', component: LegalNoticeComponent }
+];
