@@ -1,6 +1,6 @@
 <section class="headLine">
   <div class="contentWrapper">
-    <h2>Frontend Developer</h2>
+    <h2>{{ 'landingPage.title' | translate }}</h2>
     <h1>Mihaela Melania</h1>
     <h1>Aghirculesei</h1>
 
@@ -8,12 +8,12 @@
       <a
         href="#projects"
         class="link-button animated"
-        data-text="Check my work"
+        [attr.data-text]="'landingPage.checkWork' | translate"
       >
-        <span>Check my work</span>
+        <span>{{ 'landingPage.checkWork' | translate }}</span>
       </a>
-      <a href="#contact" class="link-button animated" data-text="Contact me">
-        <span>Contact me</span>
+      <a href="#contact" class="link-button animated" [attr.data-text]="'landingPage.contactMe' | translate">
+        <span>{{ 'landingPage.contactMe' | translate }}</span>
       </a>
     </div>
 

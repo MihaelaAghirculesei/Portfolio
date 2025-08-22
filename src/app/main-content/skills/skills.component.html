@@ -2,30 +2,30 @@
   <div class="contentWrapper">
     
     <div class="textWrapper">
-      <h3 class="overContent">{{ content.overContent }}</h3>
+      <h3 class="overContent">{{ 'skills.overContent' | translate }}</h3>
       
       <div class="textDiv">
-        <h2>{{ content.title }}</h2>
+        <h2>{{ 'skills.title' | translate }}</h2>
         
         <span class="skillIntroduction">
-          {{ content.introduction }}
+          {{ 'skills.introduction' | translate }}
         </span>
         
         <h3>
-          {{ content.additionalSkillsTitle }} 
-          <span>{{ content.additionalSkillsHighlight }}</span>
+          {{ 'skills.additionalSkillsTitle' | translate }} 
+          <span>{{ 'skills.additionalSkillsHighlight' | translate }}</span>
         </h3>
         
-        <span>{{ content.additionalSkillsText }}</span>
+        <span>{{ 'skills.additionalSkillsText' | translate }}</span>
         
         <a 
           href="#contact" 
           class="link-button animated" 
-          [attr.data-text]="content.ctaText"
+          [attr.data-text]="'skills.ctaText' | translate"
           (click)="handleContactClick($event)"
           role="button"
           aria-label="Contatta per discutere del progetto">
-          <span>{{ content.ctaText }}</span>
+          <span>{{ 'skills.ctaText' | translate }}</span>
         </a>
       </div>
     </div>
@@ -43,7 +43,7 @@
           
           @if (isLastItem(i)) {
             <div class="tooltip" role="tooltip">
-              <span>{{ content.tooltipText }}</span>
+              <span>{{ 'skills.tooltipText' | translate }}</span>
               <div class="future-skills">
                 @for (futureSkill of futureSkills; track futureSkill.name) {
                   <div class="skillItem">

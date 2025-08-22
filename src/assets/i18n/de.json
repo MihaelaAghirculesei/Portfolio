@@ -1,34 +1,21 @@
 {
-    "app-header":{
-        "hello": "hello {{value}}",
-        "title": "Translation"
-    },
-    "app-landingpage":{
-        "hello": "hello {{value}}",
-        "title": "Translation"
-    },
-    "app-aboutme":{
-        "hello": "hello {{value}}",
-        "title": "Translation"
-    },
-    "app-skills":{
-        "hello": "hello {{value}}",
-        "title": "Translation"
-    },
-    "app-portofolio":{
-        "hello": "hello {{value}}",
-        "title": "Translation"
-    },
-    "app-feedbacks":{
-        "hello": "hello {{value}}",
-        "title": "Translation"
-    },
-    "app-contact":{
-        "hello": "hello {{value}}",
-        "title": "Translation"
-    },
-    "app-footer":{
-        "hello": "hello {{value}}",
-        "title": "Translation"
-    }
+  "nav": {
+    "about": "Über mich",
+    "skills": "Fähigkeiten",
+    "portfolio": "Portfolio",
+    "contact": "Kontakt"
+  },
+  "common": {
+    "references": "Referenzen"
+  },
+  "skills": {
+    "title": "Fähigkeiten",
+    "overContent": "Technologien",
+    "introduction": "Ich verwandle Ideen in ansprechende digitale Erlebnisse! Mit Angular, TypeScript und Material Design erstelle ich moderne Anwendungen, die die Benutzererfahrung verbessern. Ich integriere REST-APIs und Firebase für dynamische Funktionalität und suche immer nach innovativen Lösungen.",
+    "additionalSkillsTitle": "Sie benötigen",
+    "additionalSkillsHighlight": "eine andere Fähigkeit?",
+    "additionalSkillsText": "Sehen Sie die Technologie, die Ihr Projekt benötigt, nicht? Kein Problem! Meine Neugier und Entschlossenheit ermöglichen es mir, neue technologische Herausforderungen anzunehmen. Jedes Projekt ist eine Gelegenheit zu wachsen und maßgeschneiderte Lösungen für Ihre Bedürfnisse zu liefern.",
+    "ctaText": "Sprechen wir",
+    "tooltipText": "Ich habe besonderes Interesse am Lernen:"
+  }
 }

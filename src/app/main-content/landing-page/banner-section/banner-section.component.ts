@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-banner-section',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './banner-section.component.html',
   styleUrl: './banner-section.component.scss'
 })

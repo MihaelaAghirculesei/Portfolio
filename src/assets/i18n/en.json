@@ -1,1 +1,21 @@
-{}
+{
+  "nav": {
+    "about": "About me",
+    "skills": "Skills",
+    "portfolio": "Portfolio",
+    "contact": "Contact"
+  },
+  "common": {
+    "references": "References"
+  },
+  "skills": {
+    "title": "Skill Set",
+    "overContent": "Technologies",
+    "introduction": "I transform ideas into engaging digital experiences! With Angular, TypeScript, and Material Design, I create modern applications that enhance user experience. I integrate REST APIs and Firebase for dynamic functionality, always seeking innovative solutions.",
+    "additionalSkillsTitle": "You Need",
+    "additionalSkillsHighlight": "another skill?",
+    "additionalSkillsText": "Don't see the technology your project needs? No problem! My curiosity and determination allow me to embrace new technological challenges. Every project is an opportunity to grow and deliver tailored solutions for your needs.",
+    "ctaText": "Let's talk",
+    "tooltipText": "I have special interests in learning:"
+  }
+}

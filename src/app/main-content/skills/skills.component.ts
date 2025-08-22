@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { SCROLL_CONFIG } from '../../shared/constants/app.constants';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface SkillItem {
   url: string;
@@ -10,10 +11,9 @@ interface SkillItem {
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillsComponent {
 

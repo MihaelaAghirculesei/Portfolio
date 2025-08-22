@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -33,11 +33,11 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-portofolio';
   showMainContent = true; 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private translate: TranslateService) {
     this.showMainContent = this.router.url === '/';
     
     this.router.events.subscribe(event => {
@@ -45,6 +45,12 @@ export class AppComponent {
         this.showMainContent = event.url === '/';
       }
     });
+  }
+
+  ngOnInit() {
+    // Initialize translation in root component
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
   }
 
   get showHeaderFooter() {

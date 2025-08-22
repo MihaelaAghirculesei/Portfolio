@@ -1,14 +1,14 @@
 import { Component, ViewChild, ElementRef, OnDestroy, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-portofolio',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './portofolio.component.html',
-  styleUrl: './portofolio.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './portofolio.component.scss'
 })
 export class PortofolioComponent implements OnDestroy {
   @ViewChild('projectsTable') projectsTable!: ElementRef;

@@ -1,10 +1,9 @@
 <section id="projects">
   <div class="contentWrapper">
-    <h3>Portfolio</h3>
-    <h2>Featured Projects</h2>
+    <h3>{{ 'portfolio.subtitle' | translate }}</h3>
+    <h2>{{ 'portfolio.title' | translate }}</h2>
     <p>
-      Explore a selection of my work here. Interact with projects to see my
-      skills in action.
+      {{ 'portfolio.description' | translate }}
     </p>
 
     <div class="projectWrapper">
@@ -93,7 +92,7 @@
 
         <div class="project-modal-footer">
           <button class="next-project-button" (click)="nextProject()">
-            Next Project
+            {{ 'portfolio.nextProject' | translate }}
           </button>
         </div>
       </div>

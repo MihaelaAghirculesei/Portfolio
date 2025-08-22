@@ -10,13 +10,9 @@ import {
   TranslateLoader,
   provideTranslateService,
 } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-
-const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
-  http: HttpClient
-) => new TranslateHttpLoader(http, '/assets/i18n', '.json');
+import { CustomTranslationLoader } from './shared/services/translation-loader.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,8 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideTranslateService({
       loader: {
         provide: TranslateLoader,
-        useFactory: httpLoaderFactory,
-        deps: [HttpClient],
+        useClass: CustomTranslationLoader,
       },
     }),
     provideHttpClient(withFetch()),
@@ -34,8 +29,7 @@ export const appConfig: ApplicationConfig = {
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
-          useFactory: httpLoaderFactory,
-          deps: [HttpClient],
+          useClass: CustomTranslationLoader,
         },
       }),
     ]),
