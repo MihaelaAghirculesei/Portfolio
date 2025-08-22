@@ -1,7 +1,7 @@
 <div class="formDiv">
   <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm" [attr.spellcheck]="false" autocomplete="off">
     <div class="inputText">
-      <label for="name">What's your name?</label>
+      <label for="name">{{ 'contact.form.nameLabel' | translate }}</label>
       <input 
         #name="ngModel" 
         [(ngModel)]="contactData.name" 
@@ -12,22 +12,18 @@
         (blur)="validateForm('name')"
         (input)="validateForm('name')"
         [class.invalid]="invalidFields.includes('name')"
-        [attr.placeholder]="
-          invalidFields.includes('name')
-            ? 'Your Name goes here'
-            : 'Your Name goes here'
-        "
+        [attr.placeholder]="'contact.form.namePlaceholder' | translate"
         required 
         minlength="3">
       @if (invalidFields.includes('name')) {
-        <p class="alert-text">Please enter at least 3 letters</p>
+        <p class="alert-text">{{ 'contact.form.nameError' | translate }}</p>
       }
     </div>
     
     <hr>
     
     <div class="inputText">
-      <label for="email">What's your email?</label>
+      <label for="email">{{ 'contact.form.emailLabel' | translate }}</label>
       <input 
         #email="ngModel" 
         [(ngModel)]="contactData.email" 
@@ -38,22 +34,18 @@
         (blur)="validateForm('email')"
         (input)="validateForm('email')"
         [class.invalid]="invalidFields.includes('email')"
-        [attr.placeholder]="
-          invalidFields.includes('email')
-            ? 'youremail@email.com'
-            : 'youremail@email.com'
-        "
+        [attr.placeholder]="'contact.form.emailPlaceholder' | translate"
         required 
         pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
       @if (invalidFields.includes('email')) {
-        <p class="alert-text">Your email appears to be invalid</p>
+        <p class="alert-text">{{ 'contact.form.emailError' | translate }}</p>
       }
     </div>
     
     <hr>
     
     <div class="inputText">
-      <label for="message">How can I help you?</label>
+      <label for="message">{{ 'contact.form.messageLabel' | translate }}</label>
       <textarea 
         #message="ngModel" 
         [(ngModel)]="contactData.message" 
@@ -63,17 +55,13 @@
         (blur)="validateForm('message')"
         (input)="validateForm('message')"
         [class.invalid]="invalidFields.includes('message')"
-        [attr.placeholder]="
-          invalidFields.includes('message')
-            ? 'Hello Mihaela, I am interested in...'
-            : 'Hello Mihaela, I am interested in...'
-        "
+        [attr.placeholder]="'contact.form.messagePlaceholder' | translate"
         required 
         minlength="10"
         rows="1" 
         cols="50"></textarea>
       @if (invalidFields.includes('message')) {
-        <p class="alert-text">Please enter at least 10 characters</p>
+        <p class="alert-text">{{ 'contact.form.messageError' | translate }}</p>
       }
     </div>
     
@@ -93,16 +81,20 @@
           [class.invalid]="invalidFields.includes('checkbox')"
           required>
         <div class="checkmark"></div>
-        <span>I've read the <a href="#" class="privacy-policy-link">privacy policy</a> and agree to the processing of my data as outlined.</span>
+        <span>
+          {{ 'contact.form.privacyText' | translate }} 
+          <a href="#" class="privacy-policy-link" (click)="openPrivacyPolicy(); $event.preventDefault()">{{ 'contact.form.privacyLink' | translate }}</a> 
+          {{ 'contact.form.privacyTextEnd' | translate }}
+        </span>
       </label>
       @if ((privacypolicy.invalid && (privacypolicy.dirty || privacypolicy.touched)) || checkboxWasCheckedBefore && !contactData.privacypolicy) {
-        <p class="alert-text">Privacy policy acceptance is required.</p>
+        <p class="alert-text">{{ 'contact.form.privacyError' | translate }}</p>
       }
     </div>
     
     <input 
       type="submit" 
-      value="Say Hello :)" 
+      [value]="'contact.form.submitButton' | translate" 
       [disabled]="!contactForm.form.valid">
   </form>
 </div>
@@ -114,18 +106,18 @@
          [class.error]="submissionStatus === 'error'" 
          (click)="$event.stopPropagation()">
       <div class="popup-header">
-        <h3>{{ submissionStatus === 'success' ? 'Success!' : 'Error' }}</h3>
+        <h3>{{ submissionStatus === 'success' ? ('contact.form.successTitle' | translate) : ('contact.form.errorTitle' | translate) }}</h3>
       </div>
       <div class="popup-content">
         @if (submissionStatus === 'success') {
-          <p>Your message has been sent successfully!</p>
+          <p>{{ 'contact.form.successMessage' | translate }}</p>
         } @else {
-          <p>An error occurred while sending your message.</p>
+          <p>{{ 'contact.form.errorMessage' | translate }}</p>
           <p class="error-details">{{ errorMessage }}</p>
         }
       </div>
       <div class="popup-footer">
-        <button (click)="closePopup()">Close</button>
+        <button (click)="closePopup()">{{ 'contact.form.closeButton' | translate }}</button>
       </div>
     </div>
   </div>

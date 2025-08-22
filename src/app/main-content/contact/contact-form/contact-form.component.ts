@@ -3,17 +3,19 @@ import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [FormsModule, RouterModule, CommonModule],
+  imports: [FormsModule, RouterModule, CommonModule, TranslatePipe],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss'
 })
 export class ContactFormComponent {
 
   http = inject(HttpClient);
+  translate = inject(TranslateService);
 
   contactData = {
     name: '',
@@ -109,6 +111,15 @@ export class ContactFormComponent {
   checkboxChanged() {
     if (this.contactData.privacypolicy) {
       this.checkboxWasCheckedBefore = true;
+    }
+  }
+
+  openPrivacyPolicy() {
+    const currentLang = this.translate.currentLang || 'en';
+    if (currentLang === 'de') {
+      window.open('/datenschutz', '_blank');
+    } else {
+      window.open('/privacy-policy', '_blank');
     }
   }
 }

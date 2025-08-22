@@ -7,7 +7,7 @@
         [ngClass]="getCardClass(i)"
         [class.active]="i === middleIndex"
       >
-        <p>{{ comment.feedback }}</p>
+        <p>{{ comment.feedbackKey | translate }}</p>
         <div class="feedbackBottom">
           <div class="lineDiv"></div>
           <span>{{ comment.name }} {{ comment.ref }}</span>

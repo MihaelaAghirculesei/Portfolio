@@ -1,13 +1,13 @@
 <section id="contact">
   <div class="contentWrapper">
     <div class="contactDiv">
-      <h3>Contact me</h3>
-      <h2>Let's work together</h2>
-      <h3>Got a problem to solve?</h3>
-      <span>I'm actively seeking opportunities where I can contribute my Angular, TypeScript, and JavaScript expertise to create exceptional user experiences that drive business success.</span>
+      <h3>{{ 'contact.title' | translate }}</h3>
+      <h2>{{ 'contact.subtitle' | translate }}</h2>
+      <h3>{{ 'contact.question' | translate }}</h3>
+      <span>{{ 'contact.description' | translate }}</span>
       <span>
-        Need a Front-End Developer? 
-        <p>Let's talk!</p>
+        {{ 'contact.needDeveloper' | translate }}
+        <p>{{ 'contact.letsTalk' | translate }}</p>
       </span>
     </div>
     <app-contact-form></app-contact-form>

@@ -13,6 +13,7 @@
         <li><a (click)="scrollToSection('aboutMe')" class="link-hover-dot-bottom">{{ 'nav.about' | translate }}</a></li>
         <li><a (click)="scrollToSection('skills')" class="link-hover-dot-bottom">{{ 'nav.skills' | translate }}</a></li>
         <li><a (click)="scrollToSection('projects')" class="link-hover-dot-bottom">{{ 'nav.portfolio' | translate }}</a></li>
+        <li><a (click)="scrollToSection('contact')" class="link-hover-dot-bottom">{{ 'nav.contact' | translate }}</a></li>
       </ul>
     </nav>
 
@@ -39,6 +40,7 @@
         <li><a (click)="scrollToSection('aboutMe'); closeMenuIfMobile()" class="link-hover-dot-bottom">{{ 'nav.about' | translate }}</a></li>
         <li><a (click)="scrollToSection('skills'); closeMenuIfMobile()" class="link-hover-dot-bottom">{{ 'nav.skills' | translate }}</a></li>
         <li><a (click)="scrollToSection('projects'); closeMenuIfMobile()" class="link-hover-dot-bottom">{{ 'nav.portfolio' | translate }}</a></li>
+        <li><a (click)="scrollToSection('contact'); closeMenuIfMobile()" class="link-hover-dot-bottom">{{ 'nav.contact' | translate }}</a></li>
         <li class="switch">
           <input id="mobile-language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox"
                  [checked]="isEnglish"
