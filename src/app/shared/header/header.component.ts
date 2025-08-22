@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
+import { ScrollService } from '../services/scroll.service';
+import { PlatformService } from '../services/platform.service';
+import { BREAKPOINTS, SCROLL_CONFIG } from '../constants/app.constants';
 
 @Component({
   selector: 'app-header',
@@ -14,21 +17,23 @@ export class HeaderComponent {
   isEnglish: boolean = false;
   isMenuOpen: boolean = false;
 
+  constructor(
+    private scrollService: ScrollService,
+    private platformService: PlatformService
+  ) {}
+
   ngOnInit() {
     this.checkScroll();
   }
 
   @HostListener('window:scroll', [])
   checkScroll() {
-    if (typeof window !== 'undefined') {
-      this.isScrolled = window.scrollY > 100;
-    }
+    this.isScrolled = this.scrollService.isScrolledBeyond(SCROLL_CONFIG.THRESHOLD);
   }
 
   toggleLanguage() {
     this.isEnglish = !this.isEnglish;
-   // TODO: Implement translation logic
-    console.log('Language toggled to:', this.isEnglish ? 'DE' : 'EN');
+    // TODO: Implement translation logic
   }
 
   toggleMenu() {
@@ -36,26 +41,19 @@ export class HeaderComponent {
   }
 
   closeMenuIfMobile() {
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+    const window = this.platformService.getWindow();
+    if (window && window.innerWidth <= BREAKPOINTS.MOBILE) {
       this.isMenuOpen = false;
     }
   }
 
   scrollToSection(sectionId: string) {
-    if (typeof window !== 'undefined') {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
-      }
-    }
+    this.scrollService.scrollToElement(sectionId, 'start');
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    if (typeof window !== 'undefined' && event.target.innerWidth > 768) {
+    if (this.platformService.isWindowDefined() && event.target.innerWidth > BREAKPOINTS.MOBILE) {
       this.isMenuOpen = false;
     }
   }

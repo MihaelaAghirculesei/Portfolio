@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BannerSectionComponent } from './banner-section/banner-section.component';
+import { ScrollService } from '../../shared/services/scroll.service';
 
 @Component({
   selector: 'app-landingpage',
@@ -10,14 +11,9 @@ import { BannerSectionComponent } from './banner-section/banner-section.componen
 })
 export class LandingpageComponent {
 
+  constructor(private scrollService: ScrollService) {}
+
   scrollToAboutMe(): void {
-    const aboutMeSection = document.getElementById('aboutMe');
-    
-    if (aboutMeSection) {
-      aboutMeSection.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
-    }
+    this.scrollService.scrollToElement('aboutMe', 'start');
   }
 }

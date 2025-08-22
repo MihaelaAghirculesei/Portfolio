@@ -84,13 +84,12 @@ export class ContactFormComponent {
             this.invalidFields = [];
           },
           error: (error) => {
-            console.error(error);
             this.submissionStatus = 'error';
             this.errorMessage = error.message || 'An error occurred while sending your message.';
             this.checkboxWasCheckedBefore = false;
             ngForm.resetForm();
           },
-          complete: () => console.info('send post complete'),
+          complete: () => {}
         });
     } else if (ngForm.submitted && ngForm.form.valid && this.mailTest) {
       this.submissionStatus = 'success';

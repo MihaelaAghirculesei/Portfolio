@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, OnDestroy, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { Projects } from '../../interfaces/projects';
+import { PlatformService } from '../../shared/services/platform.service';
 
 @Component({
   selector: 'app-portofolio',
@@ -52,14 +53,12 @@ export class PortofolioComponent implements OnDestroy {
   private touchMoved: boolean = false;
   private readonly TOUCH_THRESHOLD: number = 10;
 
-  constructor() {
+  constructor(private platformService: PlatformService) {
     this.checkOrientation();
   }
 
   ngOnDestroy(): void {
-    if (typeof document !== 'undefined') {
-      document.body.style.overflow = 'auto';
-    }
+    this.platformService.enableScroll();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -73,7 +72,8 @@ export class PortofolioComponent implements OnDestroy {
   }
 
   private checkOrientation(): void {
-    if (typeof window !== 'undefined') {
+    const window = this.platformService.getWindow();
+    if (window) {
       this.isLandscape = window.innerWidth > window.innerHeight;
     }
   }
@@ -143,17 +143,13 @@ export class PortofolioComponent implements OnDestroy {
     this.selectedIndex = index;
     this.checkOrientation();
 
-    if (typeof document !== 'undefined') {
-      document.body.style.overflow = 'hidden';
-    }
+    this.platformService.disableScroll();
   }
 
   closeOverlay() {
     this.selectedProject = null;
 
-    if (typeof document !== 'undefined') {
-      document.body.style.overflow = 'auto';
-    }
+    this.platformService.enableScroll();
   }
 
   nextProject() {

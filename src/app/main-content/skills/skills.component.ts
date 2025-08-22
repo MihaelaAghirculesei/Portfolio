@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ScrollService } from '../../shared/services/scroll.service';
+import { SCROLL_CONFIG } from '../../shared/constants/app.constants';
 
 interface SkillItem {
   url: string;
@@ -10,10 +12,12 @@ interface SkillItem {
   standalone: true,
   imports: [],
   templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.scss'],
+  styleUrl: './skills.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillsComponent {
+
+  constructor(private scrollService: ScrollService) {}
   
   readonly skillItems: SkillItem[] = [
     { url: 'assets/img/skills/angular.svg', name: 'Angular' },
@@ -49,14 +53,7 @@ export class SkillsComponent {
   };
 
   scrollToContact(): void {
-    const element = document.getElementById('contact');
-    if (element) {
-      const elementPosition = element.offsetTop - 100;
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-    }
+    this.scrollService.scrollToElementWithOffset('contact', SCROLL_CONFIG.CONTACT_OFFSET);
   }
 
   isLastItem(index: number): boolean {
