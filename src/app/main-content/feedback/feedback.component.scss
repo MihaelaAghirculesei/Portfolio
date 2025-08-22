@@ -90,31 +90,6 @@ section {
           scrollbar-color: $mainColor rgba($mainColor, 0.1);
         }
 
-        &.right {
-          mask-image: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.4),
-            rgba(0, 0, 0, 0)
-          );
-          -webkit-mask-image: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.4),
-            rgba(0, 0, 0, 0)
-          );
-        }
-
-        &.left {
-          mask-image: linear-gradient(
-            to left,
-            rgba(0, 0, 0, 0.4),
-            rgba(0, 0, 0, 0)
-          );
-          -webkit-mask-image: linear-gradient(
-            to left,
-            rgba(0, 0, 0, 0.4),
-            rgba(0, 0, 0, 0)
-          );
-        }
 
         &.active {
           opacity: 1;

@@ -54,45 +54,36 @@ export class FeedbacksComponent {
     if (this.middleIndex < this.feedbacks.length - 1) {
       this.middleIndex++;
     } else {
-      this.middleIndex = this.middleIndex;
+      this.middleIndex = 0;
     }
-    this.shiftCards('right');
+    this.updateCards();
   }
   
   slideRight() {
     if (this.middleIndex != 0) {
       this.middleIndex--;
     } else {
-      this.middleIndex = 0;
+      this.middleIndex = this.feedbacks.length - 1;
     }
-    this.shiftCards('left');
+    this.updateCards();
   }
   
-  shiftCards(direction: string) {
+  updateCards() {
     const document = this.platformService.getDocument();
     if (document) {
       const feedbackCards = document.querySelectorAll('.feedback-card');
       
-      if (direction === 'left') {
-        this.currentOffset += SLIDER_CONFIG.FEEDBACK_OFFSET;
-      } else if (direction === 'right') {
-        this.currentOffset -= SLIDER_CONFIG.FEEDBACK_OFFSET;
-      }
-      
-      if (this.currentOffset > 210) {
-        this.currentOffset = 210;
-      }
-      if (this.currentOffset < -210) {
-        this.currentOffset = -210;
-      }
+      const baseOffset = (2 - this.middleIndex) * SLIDER_CONFIG.FEEDBACK_OFFSET;
       
       feedbackCards.forEach((card: any, index: number) => {
         let isActive: boolean = index === this.middleIndex;
-        card.style.transform = `translateX(${this.currentOffset}%) scale(${
-          isActive ? 1.1 : 0.8
-        })`;
+        card.style.transform = `translateX(${baseOffset}%) scale(${isActive ? 1.1 : 0.8})`;
       });
     }
+  }
+  
+  shiftCards(direction: string) {
+    this.updateCards();
   }
   
   getCardClass(index: number): string {
