@@ -10,7 +10,7 @@
     <div class="projectWrapper">
       <table class="projects-table" #projectsTable>
         <tbody>
-          @for (project of projects; track $index) {
+          @for (project of projects; track project.name) {
             <tr class="project-row"
                 [id]="'project-' + $index"
                 (mouseenter)="setActiveProject($index, $event)"
@@ -22,7 +22,7 @@
                 {{ project.name }}
               </td>
               <td class="project-tech">
-                @for (tech of project.technologies; track $index; let last = $last) {
+                @for (tech of project.technologies; track tech; let last = $last) {
                   {{ tech }}@if (!last) {<span class="tech-separator"> | </span>}
                 }
               </td>

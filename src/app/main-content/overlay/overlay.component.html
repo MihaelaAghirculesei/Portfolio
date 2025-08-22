@@ -6,7 +6,7 @@
             <h3>What is this project about?</h3>
             <span>{{ singleProject.description }}</span>
             <div class="techDiv">
-                @for (skill of singleProject.technologies; track $index) {
+                @for (skill of singleProject.technologies; track skill) {
                     <p>
                         <img src="../../../assets/img/portfolio/{{ skill }}.svg" alt=""/>
                         {{ skill }}

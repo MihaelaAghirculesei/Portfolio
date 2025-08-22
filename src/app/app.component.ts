@@ -39,14 +39,10 @@ export class AppComponent {
 
   constructor(private router: Router) {
     this.showMainContent = this.router.url === '/';
-    console.log('Initial URL:', this.router.url); 
-    console.log('Initial show main content:', this.showMainContent); 
     
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log('Current URL:', event.url); 
         this.showMainContent = event.url === '/';
-        console.log('Show main content:', this.showMainContent); 
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { Projects } from '../../interfaces/projects';
 
 @Component({
@@ -7,6 +7,7 @@ import { Projects } from '../../interfaces/projects';
   imports: [],
   templateUrl: './portofolio.component.html',
   styleUrl: './portofolio.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PortofolioComponent implements OnDestroy {
   @ViewChild('projectsTable') projectsTable!: ElementRef;

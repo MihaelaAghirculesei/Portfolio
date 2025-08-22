@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 interface SkillItem {
   url: string;
@@ -10,7 +10,8 @@ interface SkillItem {
   standalone: true,
   imports: [],
   templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.scss']
+  styleUrls: ['./skills.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillsComponent {
   

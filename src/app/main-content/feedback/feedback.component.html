@@ -2,10 +2,10 @@
   <h2>{{ "References" | translate }}</h2>
   <div class="slider-container">
     <div class="feedback-wrapper">
-      @for (comment of feedbacks; track $index) {
+      @for (comment of feedbacks; track comment.name + comment.ref; let i = $index) {
       <div
-        [ngClass]="getCardClass($index)"
-        [class.active]="$index === middleIndex"
+        [ngClass]="getCardClass(i)"
+        [class.active]="i === middleIndex"
       >
         <p>{{ comment.feedback }}</p>
         <div class="feedbackBottom">
@@ -22,8 +22,8 @@
 
     <div class="dots">
       <button class="nav-btn left-btn" (click)="slideRight()">&#10094;</button>
-      @for (comment of feedbacks; track $index) {
-      <span [class.active]="$index === middleIndex"></span>
+      @for (comment of feedbacks; track comment.name + comment.ref; let i = $index) {
+      <span [class.active]="i === middleIndex"></span>
       }
       <button class="nav-btn right-btn" (click)="slideLeft()">&#10095;</button>
     </div>
