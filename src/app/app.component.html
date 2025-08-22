@@ -1,10 +1,13 @@
-<app-header></app-header>
-<app-landingpage></app-landingpage>
-<app-main-content></app-main-content>
-<app-aboutme></app-aboutme>
-<app-skills></app-skills>
-<app-portofolio></app-portofolio>
-<app-feedbacks></app-feedbacks>
-<app-contact></app-contact>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<app-header *ngIf="showHeaderFooter"></app-header>
+<main>
+  <app-landingpage *ngIf="showMainContent"></app-landingpage>
+  <app-main-content *ngIf="showMainContent"></app-main-content>
+  <app-aboutme *ngIf="showMainContent"></app-aboutme>
+  <app-skills *ngIf="showMainContent"></app-skills>
+  <app-portofolio *ngIf="showMainContent"></app-portofolio>
+  <app-feedbacks *ngIf="showMainContent"></app-feedbacks>
+  <app-contact *ngIf="showMainContent"></app-contact>
+  
+  <router-outlet></router-outlet>
+</main>
+<app-footer *ngIf="showHeaderFooter"></app-footer>

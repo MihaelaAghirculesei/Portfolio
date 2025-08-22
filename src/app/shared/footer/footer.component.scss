@@ -104,6 +104,64 @@ section {
   height: auto;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  
+  h1, h2 { 
+    color: $primary-green;
+    font-family: 'Fira Code', Arial, sans-serif;
+  }
+  
+  p { 
+    color: #ffffff;
+    font-family: 'Karla', Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  a {
+    color: $primary-green;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: $primary-green;
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   section {

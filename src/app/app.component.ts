@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MainContentComponent } from './main-content/main-content.component';
@@ -10,6 +10,7 @@ import { PortofolioComponent } from './main-content/portofolio/portofolio.compon
 import { FeedbacksComponent } from './main-content/feedback/feedback.component';
 import { ContactComponent } from './main-content/contact/contact.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ import { FooterComponent } from './shared/footer/footer.component';
     PortofolioComponent,
     FeedbacksComponent,
     ContactComponent,
-    FooterComponent
+    FooterComponent,
+    CommonModule 
   ],
   providers: [TranslateService],
   templateUrl: './app.component.html',
@@ -33,10 +35,23 @@ import { FooterComponent } from './shared/footer/footer.component';
 })
 export class AppComponent {
   title = 'angular-portofolio';
+  showMainContent = true; 
 
-  // constructor(private translate: TranslateService) {
-  //   this.translate.addLangs(['de', 'en']);
-  //   // this.translate.setDefaultLang('en');
-  //   this.translate.use('en');
-  // }
+  constructor(private router: Router) {
+    this.showMainContent = this.router.url === '/';
+    console.log('Initial URL:', this.router.url); 
+    console.log('Initial show main content:', this.showMainContent); 
+    
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        console.log('Current URL:', event.url); 
+        this.showMainContent = event.url === '/';
+        console.log('Show main content:', this.showMainContent); 
+      }
+    });
+  }
+
+  get showHeaderFooter() {
+    return true; 
+  }
 }
