@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
 import { BREAKPOINTS, SCROLL_CONFIG } from '../constants/app.constants';
@@ -21,7 +22,8 @@ export class HeaderComponent {
   constructor(
     private scrollService: ScrollService,
     private platformService: PlatformService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -51,7 +53,17 @@ export class HeaderComponent {
   }
 
   scrollToSection(sectionId: string) {
-    this.scrollService.scrollToElement(sectionId, 'start');
+    // Se siamo sulla home page, scorri direttamente
+    if (this.router.url === '/' || this.router.url === '') {
+      this.scrollService.scrollToElement(sectionId, 'start');
+    } else {
+      // Se siamo su un'altra pagina, naviga prima alla home e poi scrolla
+      this.router.navigate(['/']).then(() => {
+        setTimeout(() => {
+          this.scrollService.scrollToElement(sectionId, 'start');
+        }, 100);
+      });
+    }
   }
 
   @HostListener('window:resize', ['$event'])
