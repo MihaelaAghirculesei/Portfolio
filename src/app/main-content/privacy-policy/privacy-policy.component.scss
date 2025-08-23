@@ -1,0 +1,190 @@
+@import '../../../styles/styles.scss';
+
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  min-height: calc(100vh - 160px);
+  background-color: $gradientStart;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  padding: 120px 20px 40px 20px;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.content-width {
+  margin-bottom: 0;
+}
+
+h2, h3, h4 {
+  font-family: 'Fira Code', Arial, sans-serif;
+}
+
+p {
+  font-family: 'Karla', Arial, sans-serif;
+}
+
+.privacy-police-container {
+  padding: 3rem 3rem 0rem 3rem;
+  text-align: left;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1.5rem 0rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem 1rem 0rem 1rem;
+  }
+
+  @media (max-width: 320px) {
+    padding: 0.75rem 0.75rem 0rem 0.75rem;
+  }
+
+  h1 {
+    color: $primary-green;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid $primary-green;
+    padding-bottom: 0.5rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  h2 {
+    color: $primary-green;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 1.2rem;
+      margin-top: 1.2rem;
+    }
+  }
+
+  h3 {
+    color: $primary-green;
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+      margin-top: 1.2rem;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+  }
+
+  h4 {
+    color: $primary-green;
+    font-size: 1.1rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.6rem;
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+    }
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #ffffff;
+
+    @media (max-width: 320px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  ul {
+    color: #ffffff;
+    margin-left: 20px;
+    margin-bottom: 15px;
+
+    li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+  }
+
+  a {
+    color: $primary-green;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken(#ffffff, 15%);
+      text-decoration: underline;
+      text-decoration-color: $primary-green;
+      text-underline-offset: 4px;
+    }
+  }
+
+  p:last-child {
+    margin-top: 2rem;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: lighten(#ffffff, 20%);
+    border-top: 1px solid $primary-green;
+    padding-top: 1rem;
+
+    @media (max-width: 320px) {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  /* Ensure no bottom margin on the entire container */
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .section-divider {
+    height: 2px;
+    background-color: $primary-green;
+    margin: 2rem 0;
+    border: none;
+    
+    @media (max-width: 480px) {
+      margin: 1.5rem 0;
+      height: 1px;
+    }
+    
+    @media (max-width: 320px) {
+      margin: 1rem 0;
+    }
+  }
+}

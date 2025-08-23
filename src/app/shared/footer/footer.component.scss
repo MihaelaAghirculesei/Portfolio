@@ -3,6 +3,9 @@
 section {
   background-color: $gradientStart;
   padding: 40px 0;
+  margin-top: -5px;
+  position: relative;
+  z-index: 50;
 
   .content-width {
     width: 100%;
