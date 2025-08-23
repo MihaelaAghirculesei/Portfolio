@@ -102,6 +102,7 @@ export class CustomTranslationLoader implements TranslateLoader {
         "role": "Web-Entwicklerin",
         "location": "Wolfsburg, Deutschland",
         "legalNotice": "Impressum",
+        "privacyPolicy": "Datenschutzerklärung",
         "links": {
           "github": "GitHub",
           "linkedin": "LinkedIn",
@@ -211,6 +212,7 @@ export class CustomTranslationLoader implements TranslateLoader {
         "role": "Web Developer",
         "location": "Wolfsburg, Germany",
         "legalNotice": "Legal Notice",
+        "privacyPolicy": "Privacy Policy",
         "links": {
           "github": "GitHub",
           "linkedin": "LinkedIn",
