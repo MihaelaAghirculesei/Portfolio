@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PlatformService } from '../../shared/services/platform.service';
 import { SLIDER_CONFIG } from '../../shared/constants/app.constants';
 
@@ -42,7 +42,6 @@ export class FeedbacksComponent {
     },
   ];
   
-  currentOffset = 0;
   middleIndex = 2;
   
   slideLeft() {
@@ -77,9 +76,6 @@ export class FeedbacksComponent {
     }
   }
   
-  shiftCards(direction: string) {
-    this.updateCards();
-  }
   
   getCardClass(index: number): string {
     if (index < this.middleIndex) return 'left feedback-card';

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, HostListener, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe } from '@ngx-translate/core';

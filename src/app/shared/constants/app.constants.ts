@@ -1,6 +1,5 @@
 export const BREAKPOINTS = {
-  MOBILE: 768,
-  TABLET: 1024
+  MOBILE: 768
 } as const;
 
 export const SCROLL_CONFIG = {
