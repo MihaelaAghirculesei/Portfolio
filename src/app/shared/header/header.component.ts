@@ -16,7 +16,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 export class HeaderComponent {
   isHovered: boolean = false;
   isScrolled: boolean = false;
-  isEnglish: boolean = true;
+  isEnglish: boolean = false;
   isMenuOpen: boolean = false;
 
   constructor(
@@ -28,6 +28,8 @@ export class HeaderComponent {
 
   ngOnInit() {
     this.checkScroll();
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
   }
 
   @HostListener('window:scroll', [])
