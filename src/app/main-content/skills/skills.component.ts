@@ -27,6 +27,7 @@ export class SkillsComponent {
     { url: 'assets/img/skills/css.svg', name: 'CSS' },
     { url: 'assets/img/skills/firebase.svg', name: 'Firebase' },
     { url: 'assets/img/skills/git.svg', name: 'Git' },
+    { url: 'assets/img/skills/figma.svg', name: 'Figma' },
     { url: 'assets/img/skills/materialDesign.svg', name: 'Material Design' },
     { url: 'assets/img/skills/rest-api.svg', name: 'Rest-API' },
     { url: 'assets/img/skills/scrum.svg', name: 'Scrum' },
