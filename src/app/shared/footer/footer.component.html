@@ -4,7 +4,9 @@
       <div class="logoDiv">
         <a href="#header">
           <img
-            src="../../../assets/img/navBar/1. Logo Mihaela_Melania(1).png"
+            [src]="(isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png')"
+            (mouseenter)="isHovered = true" 
+            (mouseleave)="isHovered = false"
             alt="logo"
             class="footer-logo"
           />

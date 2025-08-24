@@ -12,6 +12,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 })
 export class FooterComponent {
   showLegalNotice = false;
+  isHovered: boolean = false;
 
   constructor(private translate: TranslateService) {}
 
