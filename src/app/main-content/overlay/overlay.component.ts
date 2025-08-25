@@ -13,6 +13,8 @@ export class OverlayComponent {
     technologies: [],
     previewImg: '',
     description: '',
+    githubUrl: '',
+    liveUrl: '',
   };
 
   @Input() index: number = 0;

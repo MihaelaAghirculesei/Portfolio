@@ -9,9 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './legal-notice.component.scss'
 })
 export class LegalNoticeComponent {
-  
   constructor(private router: Router) {}
-
   goBack() {
     this.router.navigate(['/']);
   }
