@@ -24,7 +24,7 @@ export class ContactFormComponent {
     privacypolicy: false,
   };
 
-  mailTest = true; 
+  mailTest = false; 
 
   submissionStatus: 'success' | 'error' | null = null;
   errorMessage = '';
@@ -32,7 +32,7 @@ export class ContactFormComponent {
   invalidFields: string[] = [];
 
   post = {
-    endPoint: 'https://mihaela-melania-aghirculesei.com/sendMail.php',
+    endPoint: 'https://mihaela-melania-aghirculesei.de/sendMail.php',
     body: (payload: any) => JSON.stringify(payload),
     options: {
       headers: {

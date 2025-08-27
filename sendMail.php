@@ -38,13 +38,13 @@ $to = 'kontakt@mihaela-melania-aghirculesei.de';
 $subject = 'Neue Nachricht von Portfolio Website - ' . $name;
 
 $emailBody = "Neue Nachricht von der Portfolio Website:\n\n";
+$emailBody .= "Absender Email: " . $email . "\n";
 $emailBody .= "Name: " . $name . "\n";
-$emailBody .= "Email: " . $email . "\n";
 $emailBody .= "Nachricht:\n" . $message . "\n\n";
 $emailBody .= "Datenschutz akzeptiert: " . ($privacyAccepted ? 'Ja' : 'Nein') . "\n";
 $emailBody .= "Gesendet am: " . date('Y-m-d H:i:s') . "\n";
 
-$headers = "From: " . $email . "\r\n";
+$headers = "From: kontakt@mihaela-melania-aghirculesei.de\r\n";
 $headers .= "Reply-To: " . $email . "\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 

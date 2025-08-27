@@ -28,15 +28,15 @@ export class PortofolioComponent implements OnDestroy {
       previewImg: 'assets/img/projects/el-pollo-locco.png',
       description: 'An exciting game where courage meets chicken chaos! Built with JavaScript, HTML and CSS, it offers smooth gameplay with keyboard and touch controls, epic Endboss challenges, immersive sound effects and responsive design for all devices.',
       githubUrl: 'https://github.com/MihaelaAghirculesei/El-Pollo-Loco',
-      liveUrl: '#'
+      liveUrl: 'https://mihaela-melania-aghirculesei.de/el-pollo-loco/'
     },
     {
-      name: 'Pokedex',
+      name: 'Pokédex',
       technologies: ['Rest-Api', 'JavaScript', 'HTML', 'CSS'],
       previewImg: 'assets/img/projects/pokedex.png',
       description: 'An interactive portal into the magical world of Pokemon! Designed with passion, it offers a smooth and engaging experience built with modern technologies: PokeAPI for always up-to-date data, responsive design for all devices, performant JavaScript and captivating CSS animations.',
       githubUrl: 'https://github.com/MihaelaAghirculesei/Pokedex',
-      liveUrl: '#'
+      liveUrl: 'https://mihaela-melania-aghirculesei.de/pokedex/'
     },
   ];
 
