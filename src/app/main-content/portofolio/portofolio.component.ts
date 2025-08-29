@@ -20,7 +20,7 @@ export class PortofolioComponent implements OnDestroy {
       previewImg: 'assets/img/projects/join.png',
       description: `Join Kanban Board is the project management revolution! An extraordinary application that transforms every project into a success through spectacular visual boards and real-time collaboration. With Join, you can easily organize tasks, track progress, and collaborate with your team in a dynamic and intuitive environment. Say goodbye to chaos and hello to productivity! Join Kanban Board is the perfect tool for teams of all sizes, from startups to large enterprises. Experience the future of project management with Join Kanban Board and take your projects to the next level. Your next big victory starts here.`,
       githubUrl: 'https://github.com/MihaelaAghirculesei/join-kanban-board',
-      liveUrl: '#'
+      liveUrl: 'https://mihaela-melania-aghirculesei.de/join/'
     },
     {
       name: 'El Pollo Loco',

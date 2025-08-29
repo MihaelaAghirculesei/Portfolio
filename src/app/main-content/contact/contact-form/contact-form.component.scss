@@ -17,7 +17,6 @@
   color: #888888;
 }
 
-/* Chrome, Safari, Edge autofill background removal */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -27,7 +26,6 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* Mozilla autofill background removal */
 @-moz-document url-prefix() {
   input:-moz-autofill,
   input:-moz-autofill:focus {
@@ -354,7 +352,6 @@ input[type=submit] {
   }
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
   .formDiv {
     form {
