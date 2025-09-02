@@ -28,7 +28,7 @@ export class PortofolioComponent implements OnDestroy {
       previewImg: 'assets/img/projects/el-pollo-locco.png',
       description: 'An exciting game where courage meets chicken chaos! Built with JavaScript, HTML and CSS, it offers smooth gameplay with keyboard and touch controls, epic Endboss challenges, immersive sound effects and responsive design for all devices.',
       githubUrl: 'https://github.com/MihaelaAghirculesei/El-Pollo-Loco',
-      liveUrl: 'https://mihaela-melania-aghirculesei.de/el-pollo-loco/'
+      liveUrl: 'https://mihaela-melania-aghirculesei.de/el_pollo_loco/'
     },
     {
       name: 'Pokédex',
