@@ -21,4 +21,8 @@ export class LandingpageComponent {
   scrollToProjects(): void {
     this.scrollService.scrollToElement('projects', 'start');
   }
+
+  scrollToContact(): void {
+    this.scrollService.scrollToElement('contact', 'start');
+  }
 }

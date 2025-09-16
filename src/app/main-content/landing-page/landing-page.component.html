@@ -13,9 +13,14 @@
       >
         <span>{{ 'landingPage.checkWork' | translate }}</span>
       </button>
-      <a href="#contact" class="link-button animated" [attr.data-text]="'landingPage.contactMe' | translate">
+      <button
+        (click)="scrollToContact()"
+        class="link-button animated"
+        [attr.data-text]="'landingPage.contactMe' | translate"
+        type="button"
+      >
         <span>{{ 'landingPage.contactMe' | translate }}</span>
-      </a>
+      </button>
     </div>
 
     <div class="edgeLine-left">
