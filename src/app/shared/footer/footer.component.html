@@ -2,15 +2,19 @@
   <div class="content-width">
     <div class="footerWrapper">
       <div class="logoDiv">
-        <a href="#header">
+        <button
+          (click)="scrollToTop()"
+          class="logo-button"
+          type="button"
+        >
           <img
             [src]="(isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png')"
-            (mouseenter)="isHovered = true" 
+            (mouseenter)="isHovered = true"
             (mouseleave)="isHovered = false"
             alt="logo"
             class="footer-logo"
           />
-        </a>
+        </button>
         <div>
           <p>{{ 'footer.role' | translate }}</p>
           <p>{{ 'footer.location' | translate }}</p>
