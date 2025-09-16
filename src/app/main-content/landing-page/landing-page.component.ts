@@ -17,4 +17,8 @@ export class LandingpageComponent {
   scrollToAboutMe(): void {
     this.scrollService.scrollToElement('aboutMe', 'start');
   }
+
+  scrollToProjects(): void {
+    this.scrollService.scrollToElement('projects', 'start');
+  }
 }

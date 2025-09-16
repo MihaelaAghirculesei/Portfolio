@@ -5,13 +5,14 @@
     <h1 class="name-spectacular surname">Aghirculesei</h1>
 
     <div class="buttonDiv">
-      <a
-        href="#projects"
+      <button
+        (click)="scrollToProjects()"
         class="link-button animated"
         [attr.data-text]="'landingPage.checkWork' | translate"
+        type="button"
       >
         <span>{{ 'landingPage.checkWork' | translate }}</span>
-      </a>
+      </button>
       <a href="#contact" class="link-button animated" [attr.data-text]="'landingPage.contactMe' | translate">
         <span>{{ 'landingPage.contactMe' | translate }}</span>
       </a>
