@@ -23,11 +23,11 @@ section {
 }
 
 h2, h3, h4 {
-  font-family: 'Fira Code', Arial, sans-serif;
+  @include code-font;
 }
 
 p {
-  font-family: 'Karla', Arial, sans-serif;
+  @include primary-font;
 }
 
 .privacy-police-container {

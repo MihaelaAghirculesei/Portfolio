@@ -74,7 +74,7 @@ input:-webkit-autofill:active {
         margin-bottom: 8px;
         resize: vertical;
         background-color: transparent;
-        font-family: 'Karla';
+        @include primary-font;
         font-size: 18px;
         color: #ffffff;
         outline: none;
@@ -98,7 +98,7 @@ input:-webkit-autofill:active {
       }
 
       .alert-text {
-        font-family: 'Karla';
+        @include primary-font;
         font-size: 14px;
         color: $alert-text;
         margin: 8px 0 0 0;
@@ -184,7 +184,7 @@ input:-webkit-autofill:active {
         }
         
         span {
-          font-family: 'Karla';
+          @include primary-font;
           font-size: 15px;
           color: #ffffff;
           padding: 0;
@@ -201,7 +201,7 @@ input:-webkit-autofill:active {
       }
 
       .alert-text {
-        font-family: 'Karla';
+        @include primary-font;
         font-size: 16px;
         color: $alert-text;
         margin: 40px 0;
@@ -220,7 +220,7 @@ hr {
 }
 
 input[type=submit] {
-  font-family: 'Karla';
+  @include primary-font;
   font-size: 18px;
   background-color: transparent;
   color: white;
@@ -290,7 +290,7 @@ input[type=submit] {
 
   h3 {
     margin: 0;
-    font-family: 'Fira Code';
+    @include code-font;
     font-size: 20px;
     color: #ffffff;
   }
@@ -302,7 +302,7 @@ input[type=submit] {
   p {
     margin: 0 0 12px;
     line-height: 1.5;
-    font-family: 'Karla';
+    @include primary-font;
     font-size: 16px;
     color: #ffffff;
   }
@@ -324,7 +324,7 @@ input[type=submit] {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   button {
-    font-family: 'Karla';
+    @include primary-font;
     font-size: 16px;
     background-color: transparent;
     color: white;

@@ -35,7 +35,7 @@
   text-align: left;
 
   h3 {
-    font-family: "Karla", sans-serif;
+    @include primary-font;
     margin-bottom: 10px;
     font-size: 24px;
     font-weight: 500;
@@ -46,7 +46,7 @@
     @include textBox(40px, 40px);
 
     h2 {
-      font-family: "Fira-Code", monospace;
+      @include code-font;
       font-size: 64px;
       color: $main-color;
       font-weight: 400;
@@ -55,7 +55,7 @@
     }
 
     span {
-      font-family: "Karla", sans-serif;
+      @include primary-font;
       font-size: 18px;
       color: white;
       font-weight: 400;

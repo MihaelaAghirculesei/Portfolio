@@ -23,7 +23,7 @@
     flex-shrink: 0;
 
     span {
-      font-family: 'Karla', Arial, sans-serif;
+      @include primary-font;
       font-size: 24px;
       font-weight: 400;
       color: $mainColor;

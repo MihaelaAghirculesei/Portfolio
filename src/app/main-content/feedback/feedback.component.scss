@@ -63,7 +63,7 @@ section {
           justify-content: flex-start;
           text-align: left;
           overflow-y: auto;
-          font-family: "Karla", sans-serif;
+          @include primary-font;
           font-size: 18px;
           font-weight: 400;
           color: white;

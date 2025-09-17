@@ -9,7 +9,13 @@
 }
 
 @mixin text($font-family, $font-size, $color, $font-weight) {
-  font-family: $font-family;
+  @if $font-family == "Karla" {
+    @include primary-font;
+  } @else if $font-family == "Fira Code" {
+    @include code-font;
+  } @else {
+    font-family: $font-family;
+  }
   font-size: $font-size;
   color: $color;
   font-weight: $font-weight;
@@ -55,7 +61,7 @@ button {
   gap: 10px;
   background-color: transparent;
   color: white;
-  font-family: Karla;
+  @include primary-font;
   
   &:hover {
     border: 2px solid $main-color;

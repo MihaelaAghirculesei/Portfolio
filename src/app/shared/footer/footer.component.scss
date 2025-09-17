@@ -227,14 +227,14 @@ section {
   overflow-y: auto;
   position: relative;
   
-  h1, h2 { 
+  h1, h2 {
     color: $primary-green;
-    font-family: 'Fira Code', Arial, sans-serif;
+    @include code-font;
   }
   
-  p { 
+  p {
     color: #ffffff;
-    font-family: 'Karla', Arial, sans-serif;
+    @include primary-font;
     line-height: 1.6;
   }
 
