@@ -8,6 +8,13 @@
   "common": {
     "references": "References"
   },
+  "legalNotice": {
+    "title": "Legal Notice",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "source": "Source"
+  },
   "skills": {
     "title": "Skill Set",
     "overContent": "Technologies",

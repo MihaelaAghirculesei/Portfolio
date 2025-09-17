@@ -98,6 +98,13 @@ export class CustomTranslationLoader implements TranslateLoader {
           "closeButton": "Schließen"
         }
       },
+      "legalNotice": {
+        "title": "Impressum",
+        "contact": "Kontakt",
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "source": "Quelle"
+      },
       "footer": {
         "role": "Web-Entwicklerin",
         "location": "Wolfsburg, Deutschland",
@@ -207,6 +214,13 @@ export class CustomTranslationLoader implements TranslateLoader {
           "errorMessage": "An error occurred while sending your message.",
           "closeButton": "Close"
         }
+      },
+      "legalNotice": {
+        "title": "Legal Notice",
+        "contact": "Contact",
+        "phone": "Phone",
+        "email": "Email",
+        "source": "Source"
       },
       "footer": {
         "role": "Web Developer",

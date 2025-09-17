@@ -8,6 +8,13 @@
   "common": {
     "references": "Referenzen"
   },
+  "legalNotice": {
+    "title": "Impressum",
+    "contact": "Kontakt",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "source": "Quelle"
+  },
   "skills": {
     "title": "Fähigkeiten",
     "overContent": "Technologien",
