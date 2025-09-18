@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-portofolio',
@@ -53,7 +53,7 @@ export class PortofolioComponent implements OnDestroy {
   private touchMoved: boolean = false;
   private readonly TOUCH_THRESHOLD: number = 10;
 
-  constructor(private platformService: PlatformService) {
+  constructor(private platformService: PlatformService, private translate: TranslateService) {
     this.checkOrientation();
   }
 
@@ -173,13 +173,26 @@ export class PortofolioComponent implements OnDestroy {
   getProjectShortDescription(project: Projects): string {
     switch (project.name) {
       case 'Join':
-        return 'Kanban Board Application';
+        return this.translate.instant('projects.join.shortDescription');
       case 'El Pollo Loco':
-        return 'Adventure Game';
-      case 'Pokedex':
-        return 'Pokemon Database';
+        return this.translate.instant('projects.elPolloLoco.shortDescription');
+      case 'Pokédex':
+        return this.translate.instant('projects.pokedex.shortDescription');
       default:
-        return 'Web Application';
+        return this.translate.instant('projects.default.shortDescription');
+    }
+  }
+
+  getProjectDescription(project: Projects): string {
+    switch (project.name) {
+      case 'Join':
+        return this.translate.instant('projects.join.description');
+      case 'El Pollo Loco':
+        return this.translate.instant('projects.elPolloLoco.description');
+      case 'Pokédex':
+        return this.translate.instant('projects.pokedex.description');
+      default:
+        return project.description;
     }
   }
 

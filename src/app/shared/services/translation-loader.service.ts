@@ -116,10 +116,27 @@ export class CustomTranslationLoader implements TranslateLoader {
           "email": "E-Mail"
         }
       },
+      "projects": {
+        "join": {
+          "description": "Join Kanban Board ist die Projektmanagement-Revolution! Eine außergewöhnliche Anwendung, die jedes Projekt durch spektakuläre visuelle Boards und Echtzeit-Kollaboration zum Erfolg führt. Mit Join kannst du Aufgaben einfach organisieren, Fortschritte verfolgen und mit deinem Team in einer dynamischen und intuitiven Umgebung zusammenarbeiten. Verabschiede dich vom Chaos und begrüße die Produktivität! Join Kanban Board ist das perfekte Tool für Teams jeder Größe, von Startups bis zu großen Unternehmen. Erlebe die Zukunft des Projektmanagements mit Join Kanban Board und bringe deine Projekte auf die nächste Stufe. Dein nächster großer Sieg beginnt hier.",
+          "shortDescription": "Kanban Board Anwendung"
+        },
+        "elPolloLoco": {
+          "description": "Ein aufregendes Spiel, bei dem Mut auf Hühner-Chaos trifft! Gebaut mit JavaScript, HTML und CSS bietet es flüssiges Gameplay mit Tastatur- und Touch-Steuerung, epische Endboss-Herausforderungen, immersive Soundeffekte und responsives Design für alle Geräte.",
+          "shortDescription": "Abenteuer Spiel"
+        },
+        "pokedex": {
+          "description": "Ein interaktives Portal in die magische Welt der Pokemon! Mit Leidenschaft entwickelt bietet es eine reibungslose und fesselnde Erfahrung mit modernen Technologien: PokeAPI für immer aktuelle Daten, responsives Design für alle Geräte, performantes JavaScript und fesselnde CSS-Animationen.",
+          "shortDescription": "Pokemon Datenbank"
+        },
+        "default": {
+          "shortDescription": "Web Anwendung"
+        }
+      },
       "banner": {
         "remoteWork": "Verfügbar für Remote-Arbeit",
         "role": "Frontend Entwicklerin",
-        "openToWork": "Offen für Arbeit & Lernen", 
+        "openToWork": "Offen für Arbeit & Lernen",
         "location": "Wohnhaft in Wolfsburg",
         "skills": "Angular & TypeScript",
         "passion": "Leidenschaftlich für sauberen Code"
@@ -221,6 +238,23 @@ export class CustomTranslationLoader implements TranslateLoader {
         "phone": "Phone",
         "email": "Email",
         "source": "Source"
+      },
+      "projects": {
+        "join": {
+          "description": "Join Kanban Board is the project management revolution! An extraordinary application that transforms every project into a success through spectacular visual boards and real-time collaboration. With Join, you can easily organize tasks, track progress, and collaborate with your team in a dynamic and intuitive environment. Say goodbye to chaos and hello to productivity! Join Kanban Board is the perfect tool for teams of all sizes, from startups to large enterprises. Experience the future of project management with Join Kanban Board and take your projects to the next level. Your next big victory starts here.",
+          "shortDescription": "Kanban Board Application"
+        },
+        "elPolloLoco": {
+          "description": "An exciting game where courage meets chicken chaos! Built with JavaScript, HTML and CSS, it offers smooth gameplay with keyboard and touch controls, epic Endboss challenges, immersive sound effects and responsive design for all devices.",
+          "shortDescription": "Adventure Game"
+        },
+        "pokedex": {
+          "description": "An interactive portal into the magical world of Pokemon! Designed with passion, it offers a smooth and engaging experience built with modern technologies: PokeAPI for always up-to-date data, responsive design for all devices, performant JavaScript and captivating CSS animations.",
+          "shortDescription": "Pokemon Database"
+        },
+        "default": {
+          "shortDescription": "Web Application"
+        }
       },
       "footer": {
         "role": "Web Developer",
