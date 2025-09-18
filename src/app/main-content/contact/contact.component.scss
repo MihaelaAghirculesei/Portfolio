@@ -1,7 +1,8 @@
 @import "../../../styles/styles.scss";
 
 section {
-  padding-top: 40px;
+  padding: $section-padding 0;
+  min-height: 100vh;
   @include dFlex(center, center);
   background-color: $gradientStart;
   width: 100%;

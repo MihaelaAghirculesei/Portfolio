@@ -3,8 +3,7 @@ export const BREAKPOINTS = {
 } as const;
 
 export const SCROLL_CONFIG = {
-  THRESHOLD: 100,
-  CONTACT_OFFSET: -100
+  THRESHOLD: 100
 } as const;
 
 export const SLIDER_CONFIG = {

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ScrollService } from '../../shared/services/scroll.service';
-import { SCROLL_CONFIG } from '../../shared/constants/app.constants';
 import { TranslatePipe } from '@ngx-translate/core';
 
 interface SkillItem {
@@ -40,7 +39,7 @@ export class SkillsComponent {
   ];
 
   scrollToContact(): void {
-    this.scrollService.scrollToElementWithOffset('contact', SCROLL_CONFIG.CONTACT_OFFSET);
+    this.scrollService.scrollToElement('contact', 'start');
   }
 
   isLastItem(index: number): boolean {
