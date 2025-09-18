@@ -20,7 +20,10 @@
         </div>
         <div class="contentRight">
             <p (click)="closeOverlay()">X</p>
-            <img src="../{{ singleProject.previewImg }}" alt="" />
+            <div class="imageContainer">
+                <img src="../{{ singleProject.previewImg }}" alt="" />
+                <div class="lineDiv"></div>
+            </div>
             <button (click)="next.emit()">
                 Next Project
                 <img src="../../../assets/img/portfolio/arrow_right.svg" alt=""/>
@@ -28,3 +31,4 @@
         </div>
     </div>
 </div>
+

@@ -47,9 +47,6 @@
         @include text("Karla", 16px, white, 400);
         @include dFlex(center, center);
       }
-      > button {
-        margin: 32px 32px;
-      }
     }
   }
 }
@@ -74,11 +71,22 @@
     cursor: pointer;
   }
 
-  > img {
-    width: 520px;
-    height: 370px;
-    border-radius: 30px;
-    z-index: 1;
+  .imageContainer {
+    position: relative;
+    display: inline-block;
+
+    img {
+      width: 350px;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 30px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .lineDiv {
+      @include decorativeLine(15px, 10px);
+    }
   }
 
   > button {

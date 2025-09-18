@@ -25,7 +25,6 @@ export class FooterComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    // Calculate the actual footer height
     const footerElement = this.elementRef.nativeElement;
     if (footerElement) {
       this.footerHeight = footerElement.offsetHeight;
@@ -59,7 +58,6 @@ export class FooterComponent implements AfterViewInit {
   }
 
   private updateModalHeight() {
-    // Update CSS custom property with the actual footer height
     document.documentElement.style.setProperty('--footer-height', `${this.footerHeight}px`);
   }
 

@@ -33,7 +33,10 @@
       @if (activePreview && !selectedProject && hoverPosition !== null) {
         <div class="projects-hover-content" [style.top.px]="hoverPosition">
           <figure>
-            <img [src]="activePreview" [alt]="getProjectScreenshotAlt(activeProjectId)">
+            <div class="imageContainer">
+              <img [src]="activePreview" [alt]="getProjectScreenshotAlt(activeProjectId)">
+              <div class="lineDiv"></div>
+            </div>
           </figure>
         </div>
       }
@@ -85,7 +88,10 @@
             </button>
 
             <div class="project-image">
-              <img [src]="selectedProject.previewImg" [alt]="getProjectScreenshotAlt(selectedIndex)">
+              <div class="imageContainer">
+                <img [src]="selectedProject.previewImg" [alt]="getProjectScreenshotAlt(selectedIndex)">
+                <div class="lineDiv"></div>
+              </div>
             </div>
           </div>
         </div>
