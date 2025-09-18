@@ -45,20 +45,166 @@
     </div>
   </div>
 
-  <div *ngIf="showLegalNotice" class="modal-overlay" (click)="closeLegalNotice()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <button class="close-btn" (click)="closeLegalNotice()">&times;</button>
-      
-      <h1>Impressum</h1>
-      <p>Mihaela Melania Aghirculesei<br />
-      Springwiesen, 29<br />
-      38446 Wolfsburg</p>
-      
-      <h2>Kontakt</h2>
-      <p>Telefon: 01749627899<br />
-      E-Mail: kontakt&#64;mihaela-melania-aghirculesei.de</p>
-      
-      <p>Quelle: <a href="https://www.e-recht24.de/impressum-generator.html" target="_blank">https://www.e-recht24.de/impressum-generator.html</a></p>
+  <div *ngIf="showLegalNotice" class="modal-backdrop">
+    <div class="modal-overlay" (click)="closeLegalNotice()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closeLegalNotice()">&times;</button>
+
+        <ng-container *ngIf="translate.currentLang === 'de'; else englishLegalNotice">
+          <h1>Impressum</h1>
+          <h2>Angaben gemäß § 5 TMG</h2>
+          <p>
+            <strong>Mihaela Melania Aghirculesei</strong><br />
+            Springwiesen, 29<br />
+            38446 Wolfsburg
+          </p>
+
+          <h2>Kontakt</h2>
+          <p>
+            Telefon: 01749627899<br />
+            E-Mail: kontakt&#64;mihaela-melania-aghirculesei.de
+          </p>
+
+          <h2>Verantwortlich für den Inhalt</h2>
+          <p>
+            Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:<br />
+            Mihaela Melania Aghirculesei (Anschrift wie oben)
+          </p>
+        </ng-container>
+
+        <ng-template #englishLegalNotice>
+          <h1>Legal Notice</h1>
+          <h2>Information according to § 5 TMG</h2>
+          <p>
+            <strong>Mihaela Melania Aghirculesei</strong><br />
+            Springwiesen, 29<br />
+            38446 Wolfsburg<br />
+            Germany
+          </p>
+
+          <h2>Contact</h2>
+          <p>
+            Phone: 01749627899<br />
+            Email: kontakt&#64;mihaela-melania-aghirculesei.de
+          </p>
+
+          <h2>Responsible for Content</h2>
+          <p>
+            Responsible for content according to § 55 Abs. 2 RStV:<br />
+            Mihaela Melania Aghirculesei (address as above)
+          </p>
+        </ng-template>
+
+        <div class="source-info">
+          <p><small><span *ngIf="translate.currentLang === 'de'; else legalSourceEn">Quelle</span><ng-template #legalSourceEn>Source</ng-template>: <a href="https://www.e-recht24.de/impressum-generator.html" target="_blank">e-recht24.de</a></small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showPrivacyPolicy" class="modal-backdrop">
+    <div class="modal-overlay" (click)="closePrivacyPolicy()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closePrivacyPolicy()">&times;</button>
+
+      <ng-container *ngIf="translate.currentLang === 'de'; else englishPrivacyPolicy">
+        <h1>Datenschutzerklärung</h1>
+        <h2>1. Datenschutz auf einen Blick</h2>
+        <h3>Allgemeine Hinweise</h3>
+        <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+
+        <h3>Datenerfassung auf dieser Website</h3>
+        <h4>Wer ist verantwortlich für die Datenerfassung?</h4>
+        <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten finden Sie unten.</p>
+
+        <h4>Wie erfassen wir Ihre Daten?</h4>
+        <p>Ihre Daten werden erhoben, wenn Sie uns diese mitteilen (z.B. Kontaktformular) oder automatisch beim Besuch der Website durch unsere IT-Systeme (technische Daten wie Browser, Betriebssystem, Uhrzeit).</p>
+
+        <h4>Wofür nutzen wir Ihre Daten?</h4>
+        <p>Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.</p>
+
+        <h4>Welche Rechte haben Sie?</h4>
+        <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft, Berichtigung oder Löschung Ihrer gespeicherten personenbezogenen Daten sowie das Recht auf Einschränkung der Verarbeitung und Beschwerde bei der zuständigen Aufsichtsbehörde.</p>
+
+        <h2>2. Hosting</h2>
+        <h3>Strato</h3>
+        <p>Anbieter: Strato AG, Otto-Ostrowski-Straße 7, 10249 Berlin. Beim Besuch unserer Website erfasst Strato verschiedene Logfiles inklusive Ihrer IP-Adressen.</p>
+        <p>Weitere Informationen: <a href="https://www.strato.de/datenschutz/" target="_blank" rel="noopener noreferrer">Strato Datenschutzerklärung</a></p>
+        <p>Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an zuverlässiger Website-Darstellung).</p>
+
+        <h2>3. Allgemeine Hinweise</h2>
+        <h3>Datenschutz</h3>
+        <p>Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften. Wir weisen darauf hin, dass die Datenübertragung im Internet Sicherheitslücken aufweisen kann.</p>
+
+        <h3>Speicherdauer</h3>
+        <p>Ihre personenbezogenen Daten verbleiben bei uns, bis der Zweck für die Datenverarbeitung entfällt oder Sie eine Löschung verlangen.</p>
+
+        <h2>4. Datenerfassung auf dieser Website</h2>
+        <h3>Kontaktformular</h3>
+        <p>Anfragen über unser Kontaktformular werden inklusive Ihrer Kontaktdaten zur Bearbeitung und für Rückfragen gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+
+        <h2>5. Tools</h2>
+        <h3>Google Fonts (lokales Hosting)</h3>
+        <p>Diese Seite nutzt Google Fonts zur einheitlichen Darstellung von Schriftarten. Die Fonts sind lokal installiert - keine Verbindung zu Google-Servern.</p>
+      </ng-container>
+
+      <ng-template #englishPrivacyPolicy>
+        <h1>Privacy Policy</h1>
+        <h2>1. Privacy at a Glance</h2>
+        <h3>General Information</h3>
+        <p>The following information provides a simple overview of what happens to your personal data when you visit this website. Personal data is any data that can be used to personally identify you.</p>
+
+        <h3>Data Collection on This Website</h3>
+        <h4>Who is responsible for data collection?</h4>
+        <p>Data processing on this website is carried out by the website operator. Contact details can be found below.</p>
+
+        <h4>How do we collect your data?</h4>
+        <p>Your data is collected when you provide it to us (e.g., contact form) or automatically when visiting the website through our IT systems (technical data like browser, operating system, time of visit).</p>
+
+        <h4>What do we use your data for?</h4>
+        <p>Some data is collected to ensure error-free provision of the website. Other data may be used to analyze your user behavior.</p>
+
+        <h4>What rights do you have?</h4>
+        <p>You have the right to free information, correction or deletion of your stored personal data, as well as the right to restriction of processing and complaint to the responsible supervisory authority.</p>
+
+        <h2>2. Hosting</h2>
+        <h3>Strato</h3>
+        <p>Provider: Strato AG, Otto-Ostrowski-Straße 7, 10249 Berlin. When you visit our website, Strato collects various log files including your IP addresses.</p>
+        <p>More information: <a href="https://www.strato.de/datenschutz/" target="_blank" rel="noopener noreferrer">Strato Privacy Policy</a></p>
+        <p>Legal basis: Art. 6(1)(f) GDPR (legitimate interest in reliable website presentation).</p>
+
+        <h2>3. General Information</h2>
+        <h3>Data Protection</h3>
+        <p>We treat your personal data confidentially and in accordance with statutory data protection regulations. We point out that data transmission on the Internet may have security gaps.</p>
+
+        <h3>Storage Duration</h3>
+        <p>Your personal data will remain with us until the purpose for data processing no longer applies or you request deletion.</p>
+
+        <h2>4. Data Collection on This Website</h2>
+        <h3>Contact Form</h3>
+        <p>Inquiries via our contact form are stored including your contact details for processing and follow-up questions. We do not share this data without your consent.</p>
+
+        <h2>5. Tools</h2>
+        <h3>Google Fonts (Local Hosting)</h3>
+        <p>This site uses Google Fonts for uniform font display. The fonts are locally installed - no connection to Google servers.</p>
+      </ng-template>
+
+      <div class="contact-info">
+        <h3 *ngIf="translate.currentLang === 'de'; else contactTitleEn">Kontaktdaten</h3>
+        <ng-template #contactTitleEn><h3>Contact Information</h3></ng-template>
+        <p>
+          <strong>Mihaela Melania Aghirculesei</strong><br />
+          Springwiesen, 29<br />
+          38446 Wolfsburg<br />
+          <br />
+          <span *ngIf="translate.currentLang === 'de'; else phoneEn">Telefon</span>
+          <ng-template #phoneEn>Phone</ng-template>: 01749627899<br />
+          <span *ngIf="translate.currentLang === 'de'; else emailEn">E-Mail</span>
+          <ng-template #emailEn>Email</ng-template>: kontakt&#64;mihaela-melania-aghirculesei.de
+        </p>
+        <p><small><span *ngIf="translate.currentLang === 'de'; else sourceEn">Quelle</span><ng-template #sourceEn>Source</ng-template>: <a href="https://www.e-recht24.de" target="_blank">e-recht24.de</a></small></p>
+      </div>
+      </div>
     </div>
   </div>
 </section>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, HostListener, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -9,31 +9,67 @@ import { ScrollService } from '../services/scroll.service';
   standalone: true,
   imports: [CommonModule, RouterLink, TranslatePipe],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  styleUrl: './footer.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
-export class FooterComponent {
+export class FooterComponent implements AfterViewInit {
   showLegalNotice = false;
+  showPrivacyPolicy = false;
   isHovered: boolean = false;
+  private footerHeight: number = 120;
 
   constructor(
-    private translate: TranslateService,
-    private scrollService: ScrollService
+    public translate: TranslateService,
+    private scrollService: ScrollService,
+    private elementRef: ElementRef
   ) {}
+
+  ngAfterViewInit() {
+    // Calculate the actual footer height
+    const footerElement = this.elementRef.nativeElement;
+    if (footerElement) {
+      this.footerHeight = footerElement.offsetHeight;
+    }
+  }
 
   openLegalNotice() {
     this.showLegalNotice = true;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    this.updateModalHeight();
   }
 
   closeLegalNotice() {
     this.showLegalNotice = false;
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
   }
 
   openPrivacyPolicy() {
-    const currentLang = this.translate.currentLang || 'en';
-    if (currentLang === 'de') {
-      window.open('/datenschutz', '_blank');
-    } else {
-      window.open('/privacy-policy', '_blank');
+    this.showPrivacyPolicy = true;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    this.updateModalHeight();
+  }
+
+  closePrivacyPolicy() {
+    this.showPrivacyPolicy = false;
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
+  }
+
+  private updateModalHeight() {
+    // Update CSS custom property with the actual footer height
+    document.documentElement.style.setProperty('--footer-height', `${this.footerHeight}px`);
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(event: KeyboardEvent) {
+    if (this.showPrivacyPolicy) {
+      this.closePrivacyPolicy();
+    }
+    if (this.showLegalNotice) {
+      this.closeLegalNotice();
     }
   }
 

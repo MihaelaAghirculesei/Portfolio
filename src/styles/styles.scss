@@ -2,6 +2,38 @@
 @import './mixins.scss';
 @import './buttons.scss';
 
+.close-btn {
+  position: absolute !important;
+  top: 15px !important;
+  right: 20px !important;
+  background: #3DCFB6 !important;
+  border: 2px solid #3DCFB6 !important;
+  font-size: 36px !important;
+  color: #1a1a1a !important;
+  cursor: pointer !important;
+  z-index: 1001 !important;
+  width: 50px !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  font-weight: bold !important;
+  box-shadow: 0 4px 12px rgba(61, 207, 182, 0.4) !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    background: #ffffff !important;
+    color: #3DCFB6 !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(61, 207, 182, 0.6) !important;
+  }
+
+  &:active {
+    transform: scale(0.95) !important;
+  }
+}
+
 @mixin dFlex($jc, $ai) {
   display: flex;
   justify-content: $jc;

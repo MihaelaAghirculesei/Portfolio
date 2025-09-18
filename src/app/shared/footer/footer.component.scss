@@ -5,7 +5,7 @@ section {
   padding: 40px 0;
   margin-top: -5px;
   position: relative;
-  z-index: 50;
+  z-index: 100;
 
   .content-width {
     width: 100%;
@@ -205,63 +205,97 @@ section {
   height: auto;
 }
 
-.modal-overlay {
+.modal-backdrop {
   position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 80px - var(--footer-height, 120px));
+  background: #1a1a1a;
+  z-index: 40;
+  overflow: hidden;
+}
+
+.modal-overlay {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  overflow: hidden;
 }
 
 .modal-content {
   background: #1a1a1a;
   padding: 2rem;
   border-radius: 8px;
-  max-width: 500px;
-  max-height: 80vh;
+  width: 90vw;
+  height: calc(100vh - 80px - var(--footer-height, 120px) - 40px);
   overflow-y: auto;
   position: relative;
-  
-  h1, h2 {
+
+  h1, h2, h3, h4 {
     color: $primary-green;
     @include code-font;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
   }
-  
+
+  h1 {
+    font-size: 2rem;
+    margin-top: 0;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
   p {
     color: #ffffff;
     @include primary-font;
     line-height: 1.6;
+    margin-bottom: 1rem;
   }
 
   a {
     color: $primary-green;
     text-decoration: none;
-    
+
     &:hover {
       text-decoration: underline;
     }
   }
-}
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: $primary-green;
-  cursor: pointer;
-  
-  &:hover {
-    opacity: 0.7;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary-green;
+    border-radius: 4px;
+
+    &:hover {
+      background: lighten($primary-green, 10%);
+    }
   }
 }
+
 
 /* Media Queries */
 @media (max-width: 768px) {
