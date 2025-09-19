@@ -157,6 +157,21 @@
   background: repeating-linear-gradient(135deg, $main-color 0px, $main-color 2px, transparent 2px, transparent 20px);
   border-radius: 30px;
   opacity: 0.8;
+
+  @media (max-width: 1024px) {
+    top: calc(#{$top} - 20px);
+    left: calc(#{$left} + 5px);
+  }
+
+  @media (max-width: 768px) {
+    top: calc(#{$top} - 25px);
+    left: calc(#{$left} + 5px);
+  }
+
+  @media (max-width: 480px) {
+    top: calc(#{$top} - 35px);
+    left: calc(#{$left} + 5px);
+  }
 }
 
 @mixin featureItem($gap: 20px) {

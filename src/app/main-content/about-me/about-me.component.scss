@@ -115,7 +115,7 @@
     span { padding-left: 0; max-width: 100%; text-align: center; font-size: 16px; }
     .aboutMePs { padding-left: 0; gap: 15px; p { font-size: 16px; } }
   }
-  .lineDiv { top: 30px; left: -12px; }
+  .lineDiv { left: -12px; }
 }
 
 @media (max-width: 480px) {
@@ -133,5 +133,5 @@
       .iconWrapper img { height: 28px; width: 28px; }
     }
   }
-  .lineDiv { top: 25px; left: -12px; }
+  .lineDiv { left: -12px; }
 }

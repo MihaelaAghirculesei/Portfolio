@@ -85,7 +85,7 @@
     }
 
     .lineDiv {
-      @include decorativeLine(15px, 10px);
+      @include decorativeLine(5px, 10px);
     }
   }
 
@@ -97,3 +97,4 @@
     cursor: pointer;
   }
 }
+
