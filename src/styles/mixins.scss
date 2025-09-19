@@ -1,4 +1,3 @@
-// === FONT MIXINS ===
 @mixin primary-font {
   font-family: "Karla", sans-serif;
 }
@@ -7,7 +6,6 @@
   font-family: "Fira Code", monospace;
 }
 
-// === LAYOUT MIXINS ===
 @mixin displayFlex($direction: row, $justify: center, $align: center, $gap: 0) {
   display: flex;
   flex-direction: $direction;
@@ -22,7 +20,6 @@
   align-items: $ai;
 }
 
-// === COMPONENT MIXINS ===
 @mixin skillsGrid($max-width: 500px, $gap: 20px) {
   max-width: $max-width;
   display: grid;
@@ -59,7 +56,6 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-// === LANDING PAGE MIXINS ===
 @mixin fullScreenSection() {
   height: 100vh;
   @include dFlex(center, center);
@@ -113,7 +109,6 @@
   }
 }
 
-// === ABOUT ME MIXINS ===
 @mixin imageContainer($size: 580px, $border-radius: 30px) {
   height: $size;
   width: $size;

@@ -55,11 +55,9 @@ export class HeaderComponent {
   }
 
   scrollToSection(sectionId: string) {
-    // Se siamo sulla home page, scorri direttamente
     if (this.router.url === '/' || this.router.url === '') {
       this.scrollService.scrollToElement(sectionId, 'start');
     } else {
-      // Se siamo su un'altra pagina, naviga prima alla home e poi scrolla
       this.router.navigate(['/']).then(() => {
         setTimeout(() => {
           this.scrollService.scrollToElement(sectionId, 'start');

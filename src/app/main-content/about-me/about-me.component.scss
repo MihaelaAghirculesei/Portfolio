@@ -78,7 +78,7 @@
 }
 
 @media (min-width: 2000px) {
-  .contentWrapper { gap: 100px; max-width: 1800px; }
+  .contentWrapper { gap: 100px; max-width: 1440px; }
   .imgDiv { @include imageContainer(720px); }
 }
 
