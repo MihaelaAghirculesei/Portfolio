@@ -14,7 +14,6 @@ import { ScrollService } from '../services/scroll.service';
 })
 export class FooterComponent implements AfterViewInit {
   showLegalNotice = false;
-  showPrivacyPolicy = false;
   isHovered: boolean = false;
   private footerHeight: number = 120;
 
@@ -44,28 +43,12 @@ export class FooterComponent implements AfterViewInit {
     document.documentElement.style.overflow = 'auto';
   }
 
-  openPrivacyPolicy() {
-    this.showPrivacyPolicy = true;
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-    this.updateModalHeight();
-  }
-
-  closePrivacyPolicy() {
-    this.showPrivacyPolicy = false;
-    document.body.style.overflow = 'auto';
-    document.documentElement.style.overflow = 'auto';
-  }
-
   private updateModalHeight() {
     document.documentElement.style.setProperty('--footer-height', `${this.footerHeight}px`);
   }
 
   @HostListener('document:keydown.escape', ['$event'])
   onEscapeKey(event: KeyboardEvent) {
-    if (this.showPrivacyPolicy) {
-      this.closePrivacyPolicy();
-    }
     if (this.showLegalNotice) {
       this.closeLegalNotice();
     }

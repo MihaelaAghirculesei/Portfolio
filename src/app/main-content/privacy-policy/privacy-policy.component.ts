@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -10,5 +11,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './privacy-policy.component.scss'
 })
 export class PrivacyPolicyComponent {
-  constructor(public translateService: TranslateService) {}
+  constructor(public translateService: TranslateService, private location: Location) {}
+
+  goBack(): void {
+    this.location.back();
+  }
 }
