@@ -130,25 +130,9 @@ section {
       @include text("Karla", 16px, white, 400);
       cursor: pointer;
       text-decoration: none;
-      position: relative;
-
-      &::after {
-        content: "•";
-        position: absolute;
-        left: -10px;
-        bottom: -30%;
-        transform: translateX(-50%) scale(0);
-        font-size: 24px;
-        color: $mainColor;
-        transition: transform 0.2s ease-in-out;
-      }
 
       &:hover {
         color: $mainColor;
-
-        &::after {
-          transform: translateX(-50%) scale(1);
-        }
       }
     }
    }
