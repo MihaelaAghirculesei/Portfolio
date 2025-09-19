@@ -27,8 +27,12 @@ h3 {
   flex: 1;
   height: 100%;
   text-align: left;
+  max-width: 100%;
+  word-wrap: break-word;
   > span {
     @include text("Karla", 16px, white, 700);
+    max-width: 100%;
+    word-wrap: break-word;
     > p {
       color: $mainColor;
     }
@@ -55,28 +59,64 @@ app-contact-form {
   .contentWrapper {
     flex-direction: column;
     align-items: center;
+    padding: 0 15px;
   }
 
   .contactDiv {
     flex: unset;
-    width: 90%;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+
+    > span {
+      width: 100%;
+      display: block;
+      hyphens: auto;
+      word-break: break-word;
+    }
   }
 
   h2 {
     font-size: 48px;
+    word-break: break-word;
   }
 
   h3 {
     font-size: 20px;
+    word-break: break-word;
   }
 }
 
 @media (max-width: 480px) {
+  .contentWrapper {
+    padding: 0 10px;
+  }
+
+  .contactDiv {
+    padding: 0 5px;
+
+    > span {
+      font-size: 15px;
+      line-height: 1.4;
+    }
+  }
+
   h2 {
     font-size: 36px;
   }
 
   h3 {
     font-size: 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .contactDiv {
+    padding: 0;
+
+    > span {
+      font-size: 14px;
+      line-height: 1.3;
+    }
   }
 }
