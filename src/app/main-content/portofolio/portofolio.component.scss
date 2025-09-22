@@ -1,9 +1,10 @@
 @import "../../../styles/styles.scss";
 
 #projects {
-  padding: 120px 0;
-  background-color: $gradientStart;
+  padding: 0;
+  background-color: $gradient-start;
   @include dFlex(center, center);
+  scroll-margin-top: 150px;
   
   .contentWrapper {
     text-align: left;
@@ -11,25 +12,23 @@
     width: 100%;
     margin: 0 40px;
     
-    > h3 {
-      color: $mainColor;
-      font-size: 24px;
-      @include primary-font;
-      margin-bottom: 20px;
-    }
-    
     > h2 {
-      color: $mainColor;
-      font-size: 64px;
-      @include code-font;
+      color: $main-color;
+      font-size: 48px;
+      @include primary-font;
       font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    > h3 {
+      @include text("Fira Code", 30px, $main-color, 400);
     }
     
     > p {
       font-size: 18px;
       @include primary-font;
       width: 30%;
-      margin: 40px 0;
+      margin: 0 0 10px 0;
       line-height: 120%;
       color: white;
     }
@@ -46,30 +45,32 @@
     
     tbody {
       tr.project-row {
-        border-top: 1px solid $mainColor;
-        border-bottom: 1px solid $mainColor;
+        border-top: 1px solid $main-color;
+        border-bottom: 1px solid $main-color;
         transition: all 300ms ease;
         cursor: pointer;
         -webkit-tap-highlight-color: rgba(61, 207, 183, 0.2);
         
         &:hover, &:active, &.active-touch {
-          background-color: rgba($mainColor, 0.18);
+          background-color: rgba($main-color, 0.18);
           
           .project-name {
             &::after {
               content: '↗';
               margin-left: 8px;
               font-size: 18px;
-              color: $mainColor;
+              color: $main-color;
             }
           }
         }
-        
-        .project-name, .project-tech {
-          padding: 40px 32px;
+
+        .project-tech {
+          padding: 40px 0;
+          text-align: center;
         }
-        
+
         .project-name {
+          padding: 0 0 0 16px;
           font-size: 24px;
           @include code-font;
           font-weight: 700;
@@ -82,14 +83,14 @@
         }
         
         .project-tech {
-          text-align: right;
+          text-align: center;
           font-size: 18px;
           @include primary-font;
           font-weight: 400;
           color: white;
           
           .tech-separator {
-            color: $mainColor;
+            color: $main-color;
             margin: 0 4px;
           }
         }
@@ -101,7 +102,7 @@
 .projects-hover-content {
   display: block;
   position: absolute;
-  right: 0;
+  right: -25px;
   transition: top 0.3s ease;
   opacity: 1;
   transform: translateY(0);
@@ -204,7 +205,7 @@
   .project-number {
     font-size: 128px;
     @include primary-font;
-    color: $mainColor;
+    color: $main-color;
     line-height: 1;
   }
 
@@ -221,7 +222,7 @@
     margin-bottom: 16px;
     @include code-font;
     font-weight: 700;
-    color: $mainColor;
+    color: $main-color;
   }
 
   .project-long-description {
@@ -235,7 +236,7 @@
       max-height: 80px;
       overflow-y: auto;
       line-height: 1.6;
-      border: 1px solid rgba($mainColor, 0.3);
+      border: 1px solid rgba($main-color, 0.3);
       border-radius: 8px;
       padding: 12px 16px 12px 12px;
       
@@ -244,18 +245,18 @@
       }
       
       &::-webkit-scrollbar-track {
-        background: rgba($mainColor, 0.15);
+        background: rgba($main-color, 0.15);
         border-radius: 10px;
       }
       
       &::-webkit-scrollbar-thumb {
-        background: $mainColor;
+        background: $main-color;
         border-radius: 10px;
         transition: all 0.2s ease;
         min-height: 30px;
         
         &:hover {
-          background: $mainColor;
+          background: $main-color;
           opacity: 0.8;
         }
       }
@@ -360,7 +361,7 @@
         object-fit: cover;
         border-radius: 30px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border: 2px solid rgba($mainColor, 0.3);
+        border: 2px solid rgba($main-color, 0.3);
         position: relative;
         z-index: 2;
       }
@@ -382,7 +383,7 @@
     display: flex;
     background: none;
     border: none;
-    color: $mainColor;
+    color: $main-color;
     font-size: 18px;
     font-weight: 500;
     cursor: pointer;
@@ -431,16 +432,16 @@
     content: '↗';
     margin-left: 8px;
     transition: all 300ms ease;
-    color: $mainColor;
+    color: $main-color;
     font-size: 16px;
   }
 
   &:hover, &:active {
-    border: 1px solid $mainColor;
+    border: 1px solid $main-color;
 
     &::after {
       transform: translate(4px, -4px);
-      color: $mainColor;
+      color: $main-color;
     }
   }
 }
@@ -468,9 +469,15 @@
   #projects .contentWrapper > p {
     width: 100%;
   }
-  
+
   .projectWrapper .projects-table {
     width: 100%;
+  }
+}
+
+@media (min-width: 801px) {
+  #projects .projectWrapper .projects-table {
+    width: 55% !important;
   }
   
   .project-modal {
@@ -561,6 +568,33 @@
   }
 }
 
+@media (max-width: 830px) {
+  .projects-hover-content figure .imageContainer {
+    img {
+      width: 220px !important;
+      height: 145px !important;
+    }
+    .lineDiv {
+      width: 220px !important;
+      height: 145px !important;
+    }
+  }
+}
+
+
+@media (max-width: 800px) and (min-width: 760px) {
+  .projectWrapper .projects-table {
+    width: 60% !important;
+  }
+
+  .projectWrapper .projects-table tbody tr {
+    .project-name, .project-tech {
+      display: table-cell !important;
+      vertical-align: middle;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .projectWrapper .projects-table tbody tr {
     .project-name, .project-tech {
@@ -570,6 +604,7 @@
     }
     .project-name {
       padding: 16px 0 4px 0 !important;
+      
       font-size: 20px;
     }
     .project-tech {

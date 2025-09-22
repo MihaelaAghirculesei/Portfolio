@@ -6,13 +6,6 @@
   font-family: "Fira Code", monospace;
 }
 
-@mixin displayFlex($direction: row, $justify: center, $align: center, $gap: 0) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $justify;
-  align-items: $align;
-  gap: $gap;
-}
 
 @mixin dFlex($jc, $ai) {
   display: flex;
@@ -66,7 +59,7 @@
 
 @mixin edgeLine($position: left) {
   position: absolute;
-  #{$position}: if($position == left, 0, 2px);
+  #{$position}: 0;
   bottom: 0;
   @include dFlex(center, center);
   flex-direction: column;

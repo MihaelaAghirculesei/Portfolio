@@ -79,6 +79,10 @@ export class PortofolioComponent implements OnDestroy {
   }
 
   setActiveProject(projectIndex: number, event: MouseEvent): void {
+    if (window.innerWidth <= 600) {
+      return;
+    }
+
     this.activeProjectId = projectIndex;
     this.activePreview = this.projects[projectIndex].previewImg;
 
@@ -86,7 +90,26 @@ export class PortofolioComponent implements OnDestroy {
     const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
     const trRect = trElement.getBoundingClientRect();
 
-    this.hoverPosition = trRect.top - tableRect.top + (trRect.height / 2) - 100;
+    const basePosition = trRect.top - tableRect.top + (trRect.height / 2) - 100;
+
+    // Check if we're in small preview format (≤830px)
+    const isSmallPreview = window.innerWidth <= 830;
+
+    if (projectIndex === 0) {
+      // Join: extra offset up for small preview
+      const extraOffset = isSmallPreview ? -10 : 0;
+      this.hoverPosition = basePosition + 70 + extraOffset;
+    } else if (projectIndex === 1) {
+      // El Pollo Loco: extra offset down for small preview
+      const extraOffset = isSmallPreview ? 30 : 0;
+      this.hoverPosition = basePosition + 15 + extraOffset;
+    } else if (projectIndex === 2) {
+      // Pokédex: extra offset down for small preview
+      const extraOffset = isSmallPreview ? 70 : 0;
+      this.hoverPosition = basePosition - 40 + extraOffset;
+    } else {
+      this.hoverPosition = basePosition;
+    }
   }
 
   clearActiveProject(): void {

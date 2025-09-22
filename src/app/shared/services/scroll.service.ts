@@ -24,7 +24,7 @@ export class ScrollService {
               extraOffset = 60;
               break;
             case 'projects':
-              extraOffset = 100;
+              extraOffset = 20;
               break;
             case 'references':
               extraOffset = 100;
@@ -34,7 +34,7 @@ export class ScrollService {
           }
         }
 
-        elementPosition = element.offsetTop - headerHeight + extraOffset;
+        elementPosition = element.offsetTop - headerHeight - extraOffset;
 
         window.scrollTo({
           top: elementPosition,

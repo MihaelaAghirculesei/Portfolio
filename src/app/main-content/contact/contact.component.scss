@@ -1,22 +1,23 @@
 @import "../../../styles/styles.scss";
 
 section {
-  padding: $section-padding 0;
+  padding: 0 0 $section-padding 0;
   min-height: 100vh;
   @include dFlex(center, center);
-  background-color: $gradientStart;
+  background-color: $gradient-start;
   width: 100%;
   flex-direction: column;
 }
 
-h2 {
-  @include text("Fira Code", 64px, $mainColor, 700);
+h3 {
+  @include text("Fira Code", 30px, $main-color, 400);
   margin: 15px 0;
   text-align: left;
+  text-decoration: none;
 }
 
-h3 {
-  @include text("Karla", 24px, $mainColor, 500);
+h2 {
+  @include text("Karla", 48px, $main-color, 700);
   padding: 20px 0;
   text-align: center;
 }
@@ -34,7 +35,7 @@ h3 {
     max-width: 100%;
     word-wrap: break-word;
     > p {
-      color: $mainColor;
+      color: $main-color;
     }
   }
 }
@@ -76,13 +77,13 @@ app-contact-form {
     }
   }
 
-  h2 {
-    font-size: 48px;
+  h3 {
+    font-size: 28px;
     word-break: break-word;
   }
 
-  h3 {
-    font-size: 20px;
+  h2 {
+    font-size: 36px;
     word-break: break-word;
   }
 }
@@ -101,12 +102,12 @@ app-contact-form {
     }
   }
 
-  h2 {
-    font-size: 36px;
+  h3 {
+    font-size: 26px;
   }
 
-  h3 {
-    font-size: 18px;
+  h2 {
+    font-size: 32px;
   }
 }
 

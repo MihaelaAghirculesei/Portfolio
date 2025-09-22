@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { MainContentComponent } from './main-content/main-content.component';
 import { LandingpageComponent } from './main-content/landing-page/landing-page.component';
 import { AboutmeComponent } from './main-content/about-me/about-me.component';
 import { SkillsComponent } from './main-content/skills/skills.component';
@@ -19,7 +18,6 @@ import { CommonModule } from '@angular/common';
     RouterOutlet,
     HeaderComponent,
     TranslateModule,
-    MainContentComponent,
     LandingpageComponent,
     AboutmeComponent,
     SkillsComponent,

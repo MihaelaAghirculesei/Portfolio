@@ -12,13 +12,13 @@
 }
 
 .contentWrapper {
-  border: 1px solid $mainColor;
+  border: 1px solid $main-color;
   max-width: 1440px;
   width: 100%;
   max-height: 650px;
   height: 100%;
   @include dFlex(space-between, center);
-  background: linear-gradient(to top right, $gradientStart, $gradientEnd);
+  background: linear-gradient(to top right, $gradient-start, $gradient-end);
   border-radius: 30px;
 
   .contentLeft {
@@ -28,13 +28,13 @@
     padding-left: 40px;
     flex: 1;
     > h1 {
-      @include text("Karla", 128px, $mainColor, 700);
+      @include text("Karla", 128px, $main-color, 700);
     }
     > h2 {
       @include text("Fira Code", 64px, white, 700);
     }
     > h3 {
-      @include text("Fira Code", 24px, $mainColor, 700);
+      @include text("Fira Code", 24px, $main-color, 700);
     }
     > span {
       @include text("Karla", 18px, white, 400);
@@ -91,7 +91,7 @@
 
   > button {
     @include dFlex(center, center);
-    color: $mainColor;
+    color: $main-color;
     border: none;
     z-index: 2;
     cursor: pointer;

@@ -1,7 +1,7 @@
 @import "../../../styles/styles.scss";
 
 section {
-  background-color: $gradientStart;
+  background-color: $gradient-start;
   padding: 30px 0;
   margin-top: -5px;
   position: relative;
@@ -73,7 +73,7 @@ section {
     text-align: center;
     
     p {
-      @include text("Fira Code", 16px, $mainColor, 400);
+      @include text("Fira Code", 16px, $main-color, 400);
       margin: 0;
 
       .name-effect {
@@ -112,7 +112,7 @@ section {
       }
 
       .year-highlight {
-        color: $mainColor;
+        color: $main-color;
         font-weight: 600;
         text-shadow: 0 0 10px rgba(61, 207, 182, 0.5);
         animation: glow 2s ease-in-out infinite alternate;
@@ -132,7 +132,7 @@ section {
       text-decoration: none;
 
       &:hover {
-        color: $mainColor;
+        color: $main-color;
       }
     }
    }
@@ -222,7 +222,7 @@ section {
   position: relative;
 
   h1, h2, h3, h4 {
-    color: $primary-green;
+    color: $main-color;
     @include code-font;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
@@ -253,7 +253,7 @@ section {
   }
 
   a {
-    color: $primary-green;
+    color: $main-color;
     text-decoration: none;
 
     &:hover {
@@ -271,11 +271,11 @@ section {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $primary-green;
+    background: $main-color;
     border-radius: 4px;
 
     &:hover {
-      background: lighten($primary-green, 10%);
+      background: lighten($main-color, 10%);
     }
   }
 }

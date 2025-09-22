@@ -14,7 +14,7 @@
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 16px;
+    padding: 0;
     text-align: center;
     gap: 0;
     
@@ -73,7 +73,8 @@
 
         &.surname {
           animation-delay: 7s;
-          
+          padding-bottom: 15px;
+
           &::before {
             animation-delay: 10s;
           }
@@ -183,26 +184,31 @@ app-banner-section {
 
 @media (max-width: 768px) {
   .headLine .contentWrapper {
-    h2 { font-size: 24px; }
-    h1 { 
-      font-size: 44px; 
-      word-spacing: -0.1em; 
-      line-height: 1.0; 
-      padding-bottom: 14px;
+    h2 { font-size: 20px; padding-bottom: 7px; }
+    h1 {
+      font-size: 44px;
+      word-spacing: -0.1em;
+      line-height: 1.0;
+      padding-bottom: 0;
       margin: 0;
-      
+
       &:first-of-type {
-        margin-bottom: 8px;
+        margin-bottom: 0;
       }
-      
+
       &:last-of-type {
-        margin-top: -3px;
+        margin-top: 0;
+        padding-bottom: 0;
       }
     }
     
     .buttonDiv { gap: 16px; flex-direction: column; }
     
-    .edgeLine-left .greenLineDown { height: 150px; }
+    .edgeLine-left {
+      left: -8px;
+
+      .greenLineDown { height: 150px; }
+    }
     
     .edgeLine-right {
       .email-link {
@@ -253,24 +259,24 @@ app-banner-section {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 367px) {
   .headLine .contentWrapper {
-    h2 { font-size: 16px; }
-    h1 { 
-      font-size: 35px; 
+    h2 { font-size: 20px; padding-bottom: 7px; }
+    h1 {
+      font-size: 35px;
       word-spacing: -0.1em;
       line-height: 0.9;
-      padding-bottom: 0px;
-      margin: -1px 0;
-      
+      padding: 0;
+      margin: 0;
+
       &:first-of-type {
-        margin-bottom: 0px;
+        margin: 0;
       }
-      
+
       &:last-of-type {
-        margin-top: -3px;
+        margin: 0;
       }
-      
+
       &.name-spectacular {
         letter-spacing: 1px;
       }

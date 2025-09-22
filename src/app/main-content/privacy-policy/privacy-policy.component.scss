@@ -8,7 +8,7 @@
 
 section {
   min-height: calc(100vh - 160px);
-  background-color: $gradientStart;
+  background-color: $gradient-start;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -53,10 +53,10 @@ p {
   }
 
   h1 {
-    color: $primary-green;
+    color: $main-color;
     font-size: 2.2rem;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid $primary-green;
+    border-bottom: 2px solid $main-color;
     padding-bottom: 0.5rem;
 
     @media (max-width: 480px) {
@@ -70,7 +70,7 @@ p {
   }
 
   h2 {
-    color: $primary-green;
+    color: $main-color;
     font-size: 1.5rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -87,7 +87,7 @@ p {
   }
 
   h3 {
-    color: $primary-green;
+    color: $main-color;
     font-size: 1.3rem;
     margin-top: 1.5rem;
     margin-bottom: 0.8rem;
@@ -104,7 +104,7 @@ p {
   }
 
   h4 {
-    color: $primary-green;
+    color: $main-color;
     font-size: 1.1rem;
     margin-top: 1.2rem;
     margin-bottom: 0.6rem;
@@ -142,14 +142,14 @@ p {
   }
 
   a {
-    color: $primary-green;
+    color: $main-color;
     text-decoration: none;
     transition: color 0.3s ease;
 
     &:hover {
       color: darken(#ffffff, 15%);
       text-decoration: underline;
-      text-decoration-color: $primary-green;
+      text-decoration-color: $main-color;
       text-underline-offset: 4px;
     }
   }
@@ -159,7 +159,7 @@ p {
     margin-bottom: 0;
     font-size: 0.85rem;
     color: lighten(#ffffff, 20%);
-    border-top: 1px solid $primary-green;
+    border-top: 1px solid $main-color;
     padding-top: 1rem;
 
     @media (max-width: 320px) {
@@ -175,7 +175,7 @@ p {
 
   .section-divider {
     height: 2px;
-    background-color: $primary-green;
+    background-color: $main-color;
     margin: 2rem 0;
     border: none;
     

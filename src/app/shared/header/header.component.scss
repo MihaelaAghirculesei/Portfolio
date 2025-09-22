@@ -21,7 +21,7 @@ header {
     height: 98px;
     position: relative;
     max-width: 1440px;
-    padding: 0 50px;
+    padding: 21px;
   }
 }
 
@@ -52,12 +52,12 @@ header {
           bottom: -25px;
           transform: translateX(-50%) scale(0);
           font-size: 28px;
-          color: $mainColor;
+          color: $main-color;
           transition: transform 0.2s ease-in-out;
         }
 
         &:hover {
-          color: $mainColor;
+          color: $main-color;
           
           &::after {
             transform: translateX(-50%) scale(1);
@@ -302,7 +302,7 @@ input.check-toggle-round-flat:checked + label:after {
           @include primary-font;
 
           &:hover {
-            color: $mainColor;
+            color: $main-color;
           }
         }
       }
@@ -326,7 +326,7 @@ input.check-toggle-round-flat:checked + label:after {
 
   div.content-width {
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 21px;
   }
 
   .mobile-dropdown {
