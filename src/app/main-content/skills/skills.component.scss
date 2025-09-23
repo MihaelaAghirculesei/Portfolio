@@ -52,6 +52,10 @@
       padding-left: 0;
       margin-bottom: 15px;
       text-align: left;
+
+      @media (max-width: 768px) {
+        font-size: 25px;
+      }
     }
 
     h3:not(:first-of-type) {
@@ -189,7 +193,7 @@
 
   p {
     @include code-font;
-    font-size: 14px;
+    font-size: 16px;
     color: $main-color;
     font-weight: 400;
     margin: 0;
@@ -210,13 +214,13 @@
 
 @media (max-width: 1200px) {
   .contentWrapper { gap: 40px; margin: 0 40px; }
-  .textWrapper .textDiv { min-width: 460px; h3 { font-size: 28px; } }
+  .textWrapper .textDiv { min-width: 460px; h3 { font-size: 25px; } }
   .skillButtons { gap: 15px; }
 }
 
 @media (max-width: 1024px) {
   .contentWrapper { gap: 35px; margin: 0 35px; }
-  .textWrapper .textDiv { min-width: 420px; padding: 35px; h3 { font-size: 28px; } }
+  .textWrapper .textDiv { min-width: 420px; padding: 35px; h3 { font-size: 25px; } }
   .skillButtons { gap: 12px; }
 }
 
@@ -224,7 +228,7 @@
   .contentWrapper { gap: 40px; }
   .textWrapper .textDiv { min-width: 400px; }
   .skillButtons { gap: 12px; }
-  .skillDiv { > img { width: 40px; height: 40px; } > p { font-size: 14px; } }
+  .skillDiv { > img { width: 40px; height: 40px; } > p { font-size: 16px; } }
 }
 
 @media (max-width: 900px) and (orientation: portrait) {
@@ -234,9 +238,9 @@
   .textWrapper .textDiv {
     min-width: auto; max-width: 100%; padding: 35px; border-radius: 35px;
     
-    h3 { padding-left: 0; text-align: left; font-size: 26px; }
-    h2 { padding-left: 0; text-align: left; font-size: 36px; }
-    .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: left; font-size: 17px; }
+    h3 { padding-left: 0; text-align: left; font-size: 25px; }
+    h2 { padding-left: 0; text-align: left; font-size: 33px; }
+    .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: left; font-size: 16px; }
     .link-button { margin-left: 0; align-self: center; }
   }
   .skillButtons { gap: 12px; }
@@ -249,13 +253,13 @@
   .textWrapper .textDiv {
     min-width: auto; max-width: 100%; padding: 30px; border-radius: 30px; text-align: center;
     
-    h3 { padding-left: 0; font-size: 26px; text-align: left; }
-    h2 { padding-left: 0; font-size: 32px; text-align: left; }
+    h3 { padding-left: 0; font-size: 25px; text-align: left; }
+    h2 { padding-left: 0; font-size: 33px; text-align: left; }
     .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: left; font-size: 16px; }
     .link-button { margin-left: 0; align-self: center; }
   }
   .skillButtons { gap: 12px; }
-  .skillDiv { > img { width: 45px; height: 45px; } > p { font-size: 14px; } }
+  .skillDiv { > img { width: 45px; height: 45px; } > p { font-size: 16px; } }
 }
 
 @media (max-width: 600px) { .skillDiv { height: 90px; } }
@@ -264,11 +268,11 @@
   .contentWrapper { margin: 0 20px; }
   .textWrapper .textDiv {
     padding: 20px; border-radius: $border-radius-base; max-width: 100%;
-    h3 { font-size: 26px; }
+    h3 { font-size: 25px; }
     .skillIntroduction, > span:last-of-type { font-size: 16px; text-align: left; }
   }
   .skillButtons { gap: 8px; }
-  .skillDiv { height: 80px; > img { width: 40px; height: 40px; } > p { font-size: 13px; } }
+  .skillDiv { height: 80px; > img { width: 40px; height: 40px; } > p { font-size: 16px; } }
 }
 
 @media (max-width: 420px) {
@@ -279,4 +283,12 @@
 @media (max-width: 340px) {
   .skillButtons { gap: 6px; }
   .tooltip { left: 10px; &::after { left: 100px; } }
+}
+
+@media (max-width: 360px) {
+  .textWrapper .textDiv {
+    .skillIntroduction, > span:last-of-type {
+      line-height: 1.3 !important;
+    }
+  }
 }

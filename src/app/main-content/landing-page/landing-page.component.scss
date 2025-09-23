@@ -18,11 +18,16 @@
     text-align: center;
     gap: 0;
     
-    h2 {
+    p {
       font-size: 40px;
       @include code-font;
       color: white;
       margin: 0;
+      font-weight: 900;
+
+      @media (max-width: 768px) {
+        font-size: 16px;
+      }
     }
 
     h1 {
@@ -184,9 +189,9 @@ app-banner-section {
 
 @media (max-width: 768px) {
   .headLine .contentWrapper {
-    h2 { font-size: 20px; padding-bottom: 7px; }
+    p { font-size: 16px; padding-bottom: 7px; font-weight: 900; }
     h1 {
-      font-size: 44px;
+      font-size: 35px;
       word-spacing: -0.1em;
       line-height: 1.0;
       padding-bottom: 0;
@@ -198,6 +203,7 @@ app-banner-section {
 
       &:last-of-type {
         margin-top: 0;
+        
         padding-bottom: 0;
       }
     }
@@ -261,7 +267,7 @@ app-banner-section {
 
 @media (max-width: 367px) {
   .headLine .contentWrapper {
-    h2 { font-size: 20px; padding-bottom: 7px; }
+    p { font-size: 16px; padding-bottom: 7px; font-weight: 900; }
     h1 {
       font-size: 35px;
       word-spacing: -0.1em;
@@ -288,7 +294,7 @@ app-banner-section {
       margin-top: 20px;
       
       .link-button {
-        font-size: 14px;
+        font-size: 16px;
         padding: 8px 16px;
       }
     }

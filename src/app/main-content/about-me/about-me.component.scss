@@ -40,6 +40,10 @@
     font-size: 48px;
     font-weight: 700;
     opacity: 0.9;
+
+    @media (max-width: 768px) {
+      font-size: 33px;
+    }
   }
 
   .aboutMeDiv {
@@ -53,6 +57,10 @@
       padding-left: 0;
       margin-bottom: 15px;
       text-align: left;
+
+      @media (max-width: 768px) {
+        font-size: 25px;
+      }
     }
 
     span {
@@ -113,7 +121,7 @@
     &:hover { transform: translateY(-15px); }
   }
   .aboutMeWrapper { margin-top: 20px; flex: 2; }
-  .aboutMeDiv h3 { font-size: 28px; }
+  .aboutMeDiv h3 { font-size: 25px; }
   .lineDiv { top: 20px; left: -8px; }
 }
 
@@ -121,18 +129,18 @@
   .contentWrapper { gap: 40px; margin: 0 30px; }
   .imgDiv { @include imageContainer(460px); padding-left: 30px; }
   .aboutMeWrapper { margin-top: 80px; }
-  .aboutMeDiv h3 { font-size: 28px; }
+  .aboutMeDiv h3 { font-size: 25px; }
 }
 
 @media (max-width: 900px) {
   .contentWrapper { flex-direction: column; gap: 30px; margin: 0 20px; text-align: center; }
   .imgDiv { @include imageContainer(min(60vw, 350px)); padding-left: 0; margin: 0 auto; }
   .aboutMeWrapper { margin-top: 0; text-align: center; }
-  .aboutMeWrapper h2 { font-size: 36px; }
+  .aboutMeWrapper h2 { font-size: 33px; }
   .aboutMeDiv {
     padding: 30px !important;
     border-radius: 30px;
-    h3, .mainTitle { font-size: 26px !important; padding-left: 0; text-align: center; margin-bottom: 0; }
+    h3, .mainTitle { font-size: 25px !important; padding-left: 0; text-align: center; margin-bottom: 0; }
     span, .introText, p, strong { padding-left: 0; max-width: 100%; text-align: center; font-size: 16px; color: white; }
     .aboutMePs {
       padding-left: 0;
@@ -152,7 +160,7 @@
   .aboutMeDiv {
     padding: 20px !important;
     border-radius: 20px;
-    h3, .mainTitle { font-size: 26px !important; padding-left: 0; text-align: center; margin-bottom: 0; }
+    h3, .mainTitle { font-size: 25px !important; padding-left: 0; text-align: center; margin-bottom: 0; }
     span, .introText, p, strong { font-size: 16px; padding-left: 0; max-width: 100%; text-align: center; color: white; }
     .aboutMePs {
       flex-direction: row;
@@ -166,4 +174,13 @@
     }
   }
   .lineDiv { left: -12px; }
+}
+
+@media (max-width: 360px) {
+  .aboutMeDiv {
+    span, .introText, p, strong, .aboutMePs {
+      font-size: 16px !important;
+      line-height: 1.3 !important;
+    }
+  }
 }

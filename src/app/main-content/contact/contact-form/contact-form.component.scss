@@ -99,7 +99,7 @@ input:-webkit-autofill:active {
 
       .alert-text {
         @include primary-font;
-        font-size: 14px;
+        font-size: 16px;
         color: $alert-text;
         margin: 8px 0 0 0;
         padding: 0 40px;
@@ -185,7 +185,7 @@ input:-webkit-autofill:active {
         
         span {
           @include primary-font;
-          font-size: 15px;
+          font-size: 16px;
           color: #ffffff;
           padding: 0;
           a.privacy-policy-link {
@@ -293,6 +293,10 @@ input[type=submit] {
     @include code-font;
     font-size: 20px;
     color: #ffffff;
+
+    @media (max-width: 768px) {
+      font-size: 25px;
+    }
   }
 }
 
@@ -309,7 +313,7 @@ input[type=submit] {
 
   .error-details {
     color: $alert-text;
-    font-size: 14px;
+    font-size: 16px;
     margin-top: 12px;
     padding: 8px;
     background-color: rgba(255, 100, 100, 0.1);
@@ -385,15 +389,23 @@ input[type=submit] {
   }
 
   .popup-header h3 {
-    font-size: 18px;
+    font-size: 25px;
   }
 
   .popup-content p {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .popup-footer button {
-    font-size: 14px;
+    font-size: 16px;
     padding: 6px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .formDiv form label,
+  .popup-content p,
+  .alert-text {
+    line-height: 1.2 !important;
   }
 }

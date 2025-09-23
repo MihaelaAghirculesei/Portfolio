@@ -98,3 +98,17 @@
   }
 }
 
+@media (max-width: 768px) {
+  .overlayDiv .textDiv > h1 {
+    font-size: 35px !important;
+  }
+
+  .overlayDiv .textDiv > h2 {
+    font-size: 33px !important;
+  }
+
+  .overlayDiv .textDiv > h3 {
+    font-size: 25px !important;
+  }
+}
+

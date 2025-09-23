@@ -10,6 +10,10 @@ font-size: 48px;
 font-weight: 700;
 margin-bottom: 20px;
 padding-top: 25px;
+
+@media (max-width: 768px) {
+  font-size: 33px;
+}
 }
 .slider-container {
 position: relative;
@@ -86,7 +90,6 @@ scrollbar-color: $main-color rgba($main-color, 0.1);
 opacity: 1;
 transform: scale(1.1);
 z-index: 2;
-
 }
 }
 }
@@ -235,7 +238,7 @@ padding: 15px;
 margin: 0 5px;
 min-width: 280px;
 p {
-font-size: 15px;
+font-size: 16px;
 line-height: 1.4;
 padding: 5px 8px 5px 0;
 text-align: left;
@@ -250,7 +253,7 @@ left: 15%;
 }
 .feedbackBottom {
 > span {
-font-size: 15px;
+font-size: 16px;
 }
 .lineDiv {
 display: none;
@@ -304,8 +307,9 @@ padding: 12px;
 margin: 0 2px;
 min-width: 220px;
 p {
-font-size: 14px;
-line-height: 1.3;
+font-size: 16px;
+line-height: 1.1;
+font-weight: 250;
 padding: 3px 8px 3px 0;
 }
 }
@@ -318,7 +322,9 @@ left: 10%;
 }
 .feedbackBottom {
 > span {
-font-size: 14px;
+font-size: 16px;
+line-height: 1.1;
+font-weight: 250;
 }
 .lineDiv {
 display: none;
@@ -344,3 +350,4 @@ section .slider-container .dots .nav-btn {
 font-size: 2rem !important;
 }
 }
+
