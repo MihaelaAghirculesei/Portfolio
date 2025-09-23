@@ -18,10 +18,10 @@ export class ScrollService {
         if (isMobile) {
           switch (elementId) {
             case 'aboutMe':
-              extraOffset = 40;
+              extraOffset = 0;
               break;
             case 'skills':
-              extraOffset = 60;
+              extraOffset = 0;
               break;
             case 'projects':
               extraOffset = 20;
