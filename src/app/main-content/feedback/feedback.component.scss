@@ -32,7 +32,7 @@ height: 80%;
 padding: 20px;
 margin: 0 15px;
 background: rgba($main-color, 0.3);
-border-radius: 35px;
+border-radius: 15px;
 border: 1px solid $main-color;
 color: white;
 text-align: center;
@@ -53,7 +53,7 @@ word-wrap: break-word;
 hyphens: auto;
 line-height: 1.6;
 margin: 0;
-padding: 10px 8px 10px 0;
+padding: 15px 12px 20px 0;
 flex: 1;
 display: flex;
 align-items: flex-start;
@@ -69,11 +69,12 @@ width: 6px;
 }
 &::-webkit-scrollbar-track {
 background: rgba($main-color, 0.1);
-border-radius: 3px;
+border-radius: 1px;
 }
 &::-webkit-scrollbar-thumb {
 background: $main-color;
-border-radius: 3px;
+border-radius: 1px;
+visibility: visible !important;
 &:hover {
 background: lighten($main-color, 10%);
 }
@@ -85,6 +86,7 @@ scrollbar-color: $main-color rgba($main-color, 0.1);
 opacity: 1;
 transform: scale(1.1);
 z-index: 2;
+
 }
 }
 }
@@ -149,6 +151,9 @@ opacity: 0.8 !important;
 gap: 35px;
 margin-top: 10px;
 flex-shrink: 0;
+background-color: rgba(0, 0, 0, 0.2);
+padding: 8px;
+border-radius: 8px;
 > span {
 @include text("Karla", 18px, white, 400);
 }
@@ -209,7 +214,6 @@ width: 100px;
 }
 .dots {
 .nav-btn {
-font-size: 2rem !important;
 margin: 0 10px;
 }
 }
@@ -249,12 +253,11 @@ left: 15%;
 font-size: 15px;
 }
 .lineDiv {
-width: 80px;
+display: none;
 }
 }
 .dots {
 .nav-btn {
-font-size: 2rem !important;
 margin: 0 8px;
 }
 }
@@ -283,7 +286,6 @@ left: 12%;
 }
 .dots {
 .nav-btn {
-font-size: 2rem !important;
 margin: 0 5px;
 }
 }
@@ -318,15 +320,13 @@ left: 10%;
 > span {
 font-size: 14px;
 }
+.lineDiv {
+display: none;
+}
 }
 .dots {
 .nav-btn {
-font-size: 2rem !important;
 margin: 0 3px;
-}
-span {
-height: 10px !important;
-width: 10px !important;
 }
 }
 }
