@@ -101,7 +101,13 @@
   }
 }
 
-.skillButtons { @include skillsGrid(500px, 20px); }
+.skillButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(104px, 100%), 1fr));
+  gap: 15px;
+  width: 100%;
+  flex: 1;
+}
 
 .skillDiv {
   height: 108px;
@@ -193,31 +199,31 @@
 @media (min-width: 2000px) {
   .contentWrapper { gap: 100px; max-width: 1440px; }
   .textWrapper .textDiv { min-width: 720px; }
-  .skillButtons { max-width: 600px; gap: 30px; }
+  .skillButtons { gap: 20px; }
 }
 
 @media (min-width: 1600px) {
   .contentWrapper { gap: 80px; }
   .textWrapper .textDiv { min-width: 620px; }
-  .skillButtons { max-width: 550px; gap: 25px; }
+  .skillButtons { gap: 18px; }
 }
 
 @media (max-width: 1200px) {
   .contentWrapper { gap: 40px; margin: 0 40px; }
   .textWrapper .textDiv { min-width: 460px; h3 { font-size: 28px; } }
-  .skillButtons { max-width: 400px; gap: 18px; }
+  .skillButtons { gap: 15px; }
 }
 
 @media (max-width: 1024px) {
   .contentWrapper { gap: 35px; margin: 0 35px; }
   .textWrapper .textDiv { min-width: 420px; padding: 35px; h3 { font-size: 28px; } }
-  .skillButtons { max-width: 380px; gap: 16px; }
+  .skillButtons { gap: 12px; }
 }
 
 @media (min-width: 1200px) and (max-height: 900px) {
   .contentWrapper { gap: 40px; }
   .textWrapper .textDiv { min-width: 400px; }
-  .skillButtons { max-width: 450px; gap: 15px; }
+  .skillButtons { gap: 12px; }
   .skillDiv { > img { width: 40px; height: 40px; } > p { font-size: 14px; } }
 }
 
@@ -233,7 +239,7 @@
     .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: left; font-size: 17px; }
     .link-button { margin-left: 0; align-self: center; }
   }
-  .skillButtons { max-width: 380px; gap: 15px; }
+  .skillButtons { gap: 12px; }
 }
 
 @media (max-width: 768px) {
@@ -248,7 +254,7 @@
     .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: left; font-size: 16px; }
     .link-button { margin-left: 0; align-self: center; }
   }
-  .skillButtons { max-width: 350px; gap: 15px; }
+  .skillButtons { gap: 12px; }
   .skillDiv { > img { width: 45px; height: 45px; } > p { font-size: 14px; } }
 }
 
@@ -261,16 +267,16 @@
     h3 { font-size: 26px; }
     .skillIntroduction, > span:last-of-type { font-size: 16px; text-align: left; }
   }
-  .skillButtons { max-width: 300px; gap: 10px; }
+  .skillButtons { gap: 8px; }
   .skillDiv { height: 80px; > img { width: 40px; height: 40px; } > p { font-size: 13px; } }
 }
 
 @media (max-width: 420px) {
-  .skillButtons { max-width: 280px; }
+  .skillButtons { gap: 8px; }
   .tooltip { left: 40px; right: auto; &::after { left: 32px; transform: none; } }
 }
 
 @media (max-width: 340px) {
-  .skillButtons { max-width: 250px; gap: 15px; }
+  .skillButtons { gap: 6px; }
   .tooltip { left: 10px; &::after { left: 100px; } }
 }
