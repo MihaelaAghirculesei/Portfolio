@@ -1,23 +1,84 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Inject, PLATFORM_ID, QueryList, ViewChildren } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+
+interface AboutSection {
+  icon: string;
+  titleKey: string;
+  textKey: string;
+  alt: string;
+  delay: number;
+}
+
+interface AOS {
+  init(options?: {
+    duration?: number;
+    easing?: string;
+    once?: boolean;
+    offset?: number;
+  }): void;
+}
+
+declare global {
+  interface Window {
+    AOS?: AOS;
+  }
+}
 
 @Component({
   selector: 'app-aboutme',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.scss'
 })
 export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('aboutMeSection', { static: false }) sectionRef!: ElementRef;
-  
+  @ViewChild('imgDiv', { static: false }) imgDivRef!: ElementRef;
+  @ViewChild('imageContainer', { static: false }) imageContainerRef!: ElementRef;
+
   private observer?: IntersectionObserver;
   private animationFrameId?: number;
   private isBrowser: boolean;
+  private eventListeners: (() => void)[] = [];
+
+  readonly ASSETS_PATH = '../../assets/img/about-me/';
+  readonly AOS_CONFIG = {
+    duration: 800,
+    easing: 'ease-in-out' as const,
+    once: true,
+    offset: 100
+  };
+
+  readonly aboutSections: AboutSection[] = [
+    {
+      icon: 'about_me.svg',
+      titleKey: 'aboutMe.visionTitle',
+      textKey: 'aboutMe.visionText',
+      alt: 'Brain Icon',
+      delay: 400
+    },
+    {
+      icon: 'location.svg',
+      titleKey: 'aboutMe.locationTitle',
+      textKey: 'aboutMe.locationText',
+      alt: 'Location Marker',
+      delay: 500
+    },
+    {
+      icon: 'about_me_highlights.svg',
+      titleKey: 'aboutMe.growthTitle',
+      textKey: 'aboutMe.growthText',
+      alt: 'Skills Icon',
+      delay: 600
+    }
+  ];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
+  trackByIcon(index: number, item: AboutSection): string {
+    return item.icon;
   }
 
   ngOnInit(): void {
@@ -41,17 +102,15 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.animationFrameId) {
         cancelAnimationFrame(this.animationFrameId);
       }
+
+      this.eventListeners.forEach(cleanup => cleanup());
+      this.eventListeners = [];
     }
   }
 
   private initScrollAnimations(): void {
-    if ((window as any).AOS) {
-      (window as any).AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: true,
-        offset: 100
-      });
+    if (window.AOS) {
+      window.AOS.init(this.AOS_CONFIG);
     }
   }
 
@@ -81,14 +140,29 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
   private addHoverEffects(): void {
     const iconWrappers = document.querySelectorAll('.iconWrapper');
     iconWrappers.forEach(wrapper => {
-      wrapper.addEventListener('mouseenter', this.onIconHover.bind(this));
-      wrapper.addEventListener('mouseleave', this.onIconLeave.bind(this));
+      const mouseEnterHandler = this.onIconHover.bind(this);
+      const mouseLeaveHandler = this.onIconLeave.bind(this);
+
+      wrapper.addEventListener('mouseenter', mouseEnterHandler);
+      wrapper.addEventListener('mouseleave', mouseLeaveHandler);
+
+      this.eventListeners.push(() => {
+        wrapper.removeEventListener('mouseenter', mouseEnterHandler);
+        wrapper.removeEventListener('mouseleave', mouseLeaveHandler);
+      });
     });
 
-    const imgDiv = document.querySelector('.imgDiv');
-    if (imgDiv) {
-      imgDiv.addEventListener('mouseenter', this.onImageHover.bind(this));
-      imgDiv.addEventListener('mouseleave', this.onImageLeave.bind(this));
+    if (this.imgDivRef?.nativeElement) {
+      const mouseEnterHandler = this.onImageHover.bind(this);
+      const mouseLeaveHandler = this.onImageLeave.bind(this);
+
+      this.imgDivRef.nativeElement.addEventListener('mouseenter', mouseEnterHandler);
+      this.imgDivRef.nativeElement.addEventListener('mouseleave', mouseLeaveHandler);
+
+      this.eventListeners.push(() => {
+        this.imgDivRef.nativeElement.removeEventListener('mouseenter', mouseEnterHandler);
+        this.imgDivRef.nativeElement.removeEventListener('mouseleave', mouseLeaveHandler);
+      });
     }
   }
 
@@ -96,8 +170,8 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
     const target = event.target as HTMLElement;
     const icon = target.querySelector('img');
     if (icon) {
-      icon.style.transform = 'scale(1.1) rotate(5deg)';
-      icon.style.filter = 'brightness(1.4) drop-shadow(0 4px 8px rgba(61, 207, 182, 0.3))';
+      icon.classList.remove('icon-normal');
+      icon.classList.add('icon-hover');
     }
   }
 
@@ -105,24 +179,24 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
     const target = event.target as HTMLElement;
     const icon = target.querySelector('img');
     if (icon) {
-      icon.style.transform = 'scale(1) rotate(0deg)';
-      icon.style.filter = 'brightness(1.2)';
+      icon.classList.remove('icon-hover');
+      icon.classList.add('icon-normal');
     }
   }
 
   private onImageHover(event: Event): void {
-    const img = document.querySelector('.imageContainer img') as HTMLImageElement;
+    const img = this.imageContainerRef?.nativeElement.querySelector('img');
     if (img) {
-      img.style.transform = 'scale(1.05)';
-      img.style.filter = 'brightness(1.2) contrast(1.1)';
+      img.classList.remove('image-normal');
+      img.classList.add('image-hover');
     }
   }
 
   private onImageLeave(event: Event): void {
-    const img = document.querySelector('.imageContainer img') as HTMLImageElement;
+    const img = this.imageContainerRef?.nativeElement.querySelector('img');
     if (img) {
-      img.style.transform = 'scale(1)';
-      img.style.filter = 'brightness(1.1) contrast(1.05)';
+      img.classList.remove('image-hover');
+      img.classList.add('image-normal');
     }
   }
 }

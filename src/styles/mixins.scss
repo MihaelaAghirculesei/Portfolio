@@ -6,6 +6,99 @@
   font-family: "Fira Code", monospace;
 }
 
+@mixin responsive-typography($typography-map) {
+  h2 {
+    font-size: map-get($typography-map, h2);
+  }
+
+  .aboutMeDiv {
+    h3 {
+      font-size: map-get($typography-map, h3);
+    }
+
+    span, .aboutMePs, .aboutMePs p {
+      font-size: map-get($typography-map, text);
+    }
+  }
+}
+
+@mixin white-text-base {
+  color: white;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+@mixin about-text-element {
+  @include primary-font;
+  @include white-text-base;
+  max-width: 100%;
+  width: 100%;
+  padding-left: 0;
+  text-align: left;
+}
+
+@mixin mobile-layout($img-size: min(80vw, 300px), $border-radius: 20px, $small-icons: false) {
+  .contentWrapper {
+    flex-direction: column;
+    gap: 30px;
+    margin: 0 20px;
+    text-align: center;
+  }
+
+  .imgDiv {
+    @include imageContainer($img-size);
+    padding-left: 0;
+    margin: 0 auto;
+  }
+
+  .aboutMeWrapper {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .aboutMeDiv {
+    border-radius: $border-radius;
+
+    h3 {
+      padding-left: 0;
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    span, p, strong {
+      padding-left: 0;
+      max-width: 100%;
+      text-align: center;
+      color: white;
+    }
+
+    .aboutMePs {
+      flex-direction: row;
+      text-align: left;
+      gap: 15px;
+      padding-left: 0;
+      align-items: flex-start;
+      margin-bottom: 15px;
+
+      p, strong {
+        color: white;
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      @if $small-icons {
+        .iconWrapper img {
+          height: 28px;
+          width: 28px;
+        }
+      }
+    }
+  }
+
+  .lineDiv {
+    left: -12px;
+  }
+}
 
 @mixin dFlex($jc, $ai) {
   display: flex;

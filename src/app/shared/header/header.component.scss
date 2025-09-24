@@ -310,6 +310,12 @@ input.check-toggle-round-flat:checked + label:after {
   }
 }
 
+@media (min-width: 1920px) {
+  div.content-width {
+    padding: 21px 0;
+  }
+}
+
 @media (max-width: 768px) {
   .desktop-nav {
     display: none;

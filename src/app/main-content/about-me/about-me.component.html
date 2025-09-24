@@ -1,42 +1,50 @@
 <section id="aboutMe" class="aboutMeSection">
-    <div class="contentWrapper">
-      <div class="imgDiv" data-aos="fade-right" data-aos-duration="800">
-        <div class="imageContainer">
-          <img src="../../assets/img/about-me/mihaela-aghirculesei(2).jpg" 
-               alt="Mihaela Aghirculesei - Frontend Developer" 
-               loading="lazy"
-               decoding="async" />
-        </div>
-        <div class="lineDiv"></div>
+  <div class="contentWrapper">
+    <article class="imgDiv" #imgDiv data-aos="fade-right" [attr.data-aos-duration]="AOS_CONFIG.duration">
+      <div class="imageContainer" #imageContainer>
+        <img
+          [src]="ASSETS_PATH + 'mihaela-aghirculesei(2).jpg'"
+          alt="Mihaela Aghirculesei - Frontend Developer"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
-      
-      <div class="aboutMeWrapper" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
-        <h2 class="subtitle">{{ 'aboutMe.subtitle' | translate }}</h2>
-        <div class="aboutMeDiv">
-          <h3 class="mainTitle">{{ 'aboutMe.mainTitle' | translate }}</h3>
-          <span class="introText">{{ 'aboutMe.introText' | translate }}</span>
-          
-          <div class="aboutMePs" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
-            <div class="iconWrapper">
-              <img src="../../assets/img/about-me/about_me.svg" alt="Brain Icon" />
-            </div>
-            <p><strong>{{ 'aboutMe.visionTitle' | translate }}</strong> {{ 'aboutMe.visionText' | translate }}</p>
+      <div class="lineDiv"></div>
+    </article>
+
+    <article
+      class="aboutMeWrapper"
+      data-aos="fade-left"
+      [attr.data-aos-duration]="AOS_CONFIG.duration"
+      data-aos-delay="200"
+    >
+      <header>
+        <h2 class="subtitle">{{ "aboutMe.subtitle" | translate }}</h2>
+      </header>
+
+      <div class="aboutMeDiv">
+        <h3 class="mainTitle">{{ "aboutMe.mainTitle" | translate }}</h3>
+        <span class="introText">{{ "aboutMe.introText" | translate }}</span>
+
+        <div
+          class="aboutMePs"
+          *ngFor="let section of aboutSections; trackBy: trackByIcon"
+          data-aos="fade-up"
+          data-aos-duration="600"
+          [attr.data-aos-delay]="section.delay"
+        >
+          <div class="iconWrapper">
+            <img
+              [src]="ASSETS_PATH + section.icon"
+              [alt]="section.alt"
+            />
           </div>
-  
-          <div class="aboutMePs" data-aos="fade-up" data-aos-duration="600" data-aos-delay="500">
-            <div class="iconWrapper">
-              <img src="../../assets/img/about-me/location.svg" alt="Location Marker" />
-            </div>
-            <p><strong>{{ 'aboutMe.locationTitle' | translate }}</strong> {{ 'aboutMe.locationText' | translate }}</p>
-          </div>
-  
-          <div class="aboutMePs" data-aos="fade-up" data-aos-duration="600" data-aos-delay="600">
-            <div class="iconWrapper">
-              <img src="../../assets/img/about-me/about_me_highlights.svg" alt="Skills Icon" />
-            </div>
-            <p><strong>{{ 'aboutMe.growthTitle' | translate }}</strong> {{ 'aboutMe.growthText' | translate }}</p>
-          </div>
+          <p>
+            <strong>{{ section.titleKey | translate }}</strong>
+            {{ section.textKey | translate }}
+          </p>
         </div>
       </div>
-    </div>
+    </article>
+  </div>
 </section>
