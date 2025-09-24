@@ -1,28 +1,16 @@
-@import '../../../../styles/styles.scss';
-
-::-webkit-input-placeholder {
-  color: #888888;
-}
-
-::-moz-placeholder {
-  color: #888888;
-  opacity: 1;
-}
-
-:-ms-input-placeholder {
-  color: #888888;
-}
+@import "../../../../styles/styles.scss";
 
 ::placeholder {
-  color: #888888;
+  color: $placeholder-color;
+  opacity: 1;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px #1c1c1c inset !important;
-  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0 30px $background-color inset !important;
+  -webkit-text-fill-color: $white !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -30,8 +18,8 @@ input:-webkit-autofill:active {
   input:-moz-autofill,
   input:-moz-autofill:focus {
     transition: background-color 5000s ease-in-out 0s;
-    background-color: #1c1c1c !important;
-    color: #ffffff !important;
+    background-color: $background-color !important;
+    color: $white !important;
   }
 }
 
@@ -47,7 +35,7 @@ input:-webkit-autofill:active {
     height: auto;
     width: 100%;
     max-width: 500px;
-    padding: 20px;
+    padding: calc($content-margin-base / 2);
 
     .inputText {
       @include dFlex(center, start);
@@ -57,8 +45,10 @@ input:-webkit-autofill:active {
       padding: 16px 0;
 
       label {
-        @include text("Fira Code", 20px, $main-color, 500);
-        padding: 0 40px;
+        @include code-font;
+        color: $main-color;
+        font-weight: 500;
+        padding: 0 $content-margin-base;
         text-align: left;
         width: 100%;
       }
@@ -66,8 +56,8 @@ input:-webkit-autofill:active {
       input,
       textarea {
         width: 100%;
-        padding: 0 40px;
-        border: 0 solid #ffffff;
+        padding: 0 $content-margin-base;
+        border: 0 solid $white;
         border-radius: 4px;
         box-sizing: border-box;
         margin-top: 16px;
@@ -75,8 +65,7 @@ input:-webkit-autofill:active {
         resize: vertical;
         background-color: transparent;
         @include primary-font;
-        font-size: 18px;
-        color: #ffffff;
+        color: $white;
         outline: none;
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -99,10 +88,9 @@ input:-webkit-autofill:active {
 
       .alert-text {
         @include primary-font;
-        font-size: 16px;
         color: $alert-text;
         margin: 8px 0 0 0;
-        padding: 0 40px;
+        padding: 0 $content-margin-base;
         width: 100%;
       }
     }
@@ -113,14 +101,12 @@ input:-webkit-autofill:active {
       padding: 16px 0;
 
       .checkbox-container {
-        display: flex;
-        align-items: center;
+        @include dFlex(flex-start, center);
         position: relative;
         cursor: pointer;
-        font-size: 20px;
         user-select: none;
         gap: 16px;
-        
+
         input {
           position: absolute;
           opacity: 0;
@@ -131,14 +117,14 @@ input:-webkit-autofill:active {
             ~ {
               .checkmark {
                 border: 2px solid $main-color;
-                box-shadow: 0 0 20px rgba(61, 207, 182, 0.8);
+                box-shadow: 0 0 20px $main-color-rgba;
               }
             }
           }
           &:checked {
             ~ {
               .checkmark {
-                box-shadow: 0 0 20px rgba(61, 207, 182, 0.8);
+                box-shadow: 0 0 20px $main-color-rgba;
                 border: 2px solid $main-color;
                 &:after {
                   display: block;
@@ -154,7 +140,7 @@ input:-webkit-autofill:active {
             }
           }
         }
-        
+
         .checkmark {
           display: inline-block;
           width: 20px;
@@ -167,7 +153,7 @@ input:-webkit-autofill:active {
           width: 1.3em;
           border: 2px solid $main-color;
           border-radius: 5px;
-          transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+          transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
           flex-shrink: 0;
           &:after {
             content: "";
@@ -182,11 +168,10 @@ input:-webkit-autofill:active {
             transform: translate(-50%, -60%) rotate(45deg);
           }
         }
-        
+
         span {
           @include primary-font;
-          font-size: 16px;
-          color: #ffffff;
+          color: $white;
           padding: 0;
           a.privacy-policy-link {
             color: $main-color;
@@ -194,7 +179,7 @@ input:-webkit-autofill:active {
               text-decoration: underline;
               text-decoration-color: $main-color;
               text-underline-offset: 8px;
-              color: #ffffff;
+              color: $white;
             }
           }
         }
@@ -202,10 +187,9 @@ input:-webkit-autofill:active {
 
       .alert-text {
         @include primary-font;
-        font-size: 16px;
         color: $alert-text;
-        margin: 40px 0;
-        padding: 0 40px;
+        margin: $content-margin-base 0;
+        padding: 0 $content-margin-base;
       }
     }
   }
@@ -219,16 +203,15 @@ hr {
   height: 1px;
 }
 
-input[type=submit] {
+input[type="submit"] {
   @include primary-font;
-  font-size: 18px;
   background-color: transparent;
   color: white;
   padding: 12px 20px;
-  border: 1px solid #ffffff;
+  border: 1px solid $white;
   border-radius: 24px;
   cursor: pointer;
-  transition: all 300ms ease;
+  transition: all $transition-base;
   margin: 24px 0;
   &:disabled {
     opacity: 0.5;
@@ -253,50 +236,41 @@ input[type=submit] {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include dFlex(center, center);
   z-index: 1000;
   backdrop-filter: blur(3px);
 }
 
 .popup {
-  background: linear-gradient(45deg, rgba(28,28,28,1) 40%, rgba(8,70,59,1) 100%);
+  background: linear-gradient(45deg, $gradient-start 40%, $gradient-end 100%);
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  animation: popup-appear 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-  border: 1px solid #ffffff;
+  animation: popup-appear 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid $white;
 
   &.success {
     border: 1px solid $main-color;
-    box-shadow: 0 0 25px rgba(61, 207, 182, 0.3);
+    box-shadow: 0 0 25px $main-color-light;
   }
 
   &.error {
     border: 1px solid $alert-text;
-    box-shadow: 0 0 25px rgba(255, 100, 100, 0.3);
+    box-shadow: 0 0 25px $alert-shadow;
   }
 }
 
 .popup-header {
   padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include dFlex(space-between, center);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
   h3 {
     margin: 0;
     @include code-font;
-    font-size: 20px;
-    color: #ffffff;
-
-    @media (max-width: 768px) {
-      font-size: 25px;
-    }
+    color: $white;
   }
 }
 
@@ -307,36 +281,32 @@ input[type=submit] {
     margin: 0 0 12px;
     line-height: 1.5;
     @include primary-font;
-    font-size: 16px;
-    color: #ffffff;
+    color: $white;
   }
 
   .error-details {
     color: $alert-text;
-    font-size: 16px;
     margin-top: 12px;
     padding: 8px;
-    background-color: rgba(255, 100, 100, 0.1);
+    background-color: $alert-light;
     border-radius: 4px;
   }
 }
 
 .popup-footer {
   padding: 15px 20px;
-  display: flex;
-  justify-content: flex-end;
+  @include dFlex(flex-end, center);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   button {
     @include primary-font;
-    font-size: 16px;
     background-color: transparent;
     color: white;
     padding: 8px 20px;
-    border: 1px solid #ffffff;
+    border: 1px solid $white;
     border-radius: 24px;
     cursor: pointer;
-    transition: all 300ms ease;
+    transition: all $transition-base;
 
     &:hover {
       background-color: $main-color;
@@ -356,14 +326,17 @@ input[type=submit] {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $mobile-max) {
+  @include responsive-typography($typography-mobile);
+
   .formDiv {
+    padding: 20px;
+
     form {
       padding: 0;
       .inputText {
         label {
           padding: 0 16px;
-          font-size: 16px;
         }
         input,
         textarea {
@@ -388,18 +361,21 @@ input[type=submit] {
     max-width: 450px;
   }
 
-  .popup-header h3 {
-    font-size: 25px;
-  }
-
-  .popup-content p {
-    font-size: 16px;
-  }
-
   .popup-footer button {
-    font-size: 16px;
     padding: 6px 16px;
   }
+}
+
+@media (min-width: $tablet-min) and (max-width: $tablet-max) {
+  @include responsive-typography($typography-tablet);
+}
+
+@media (min-width: $desktop-min) and (max-width: $desktop-max) {
+  @include responsive-typography($typography-desktop);
+}
+
+@media (min-width: $desktop-4k-min) {
+  @include responsive-typography($typography-4k);
 }
 
 @media (max-width: 360px) {

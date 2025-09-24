@@ -3,13 +3,19 @@ $background-color: #1c1c1c;
 $gradient-start: #1c1c1c;
 $gradient-end: #08463b;
 $alert-text: #EC7B7B;
+$placeholder-color: #888888;
+$white: #ffffff;
+
+$main-color-rgba: rgba(61, 207, 182, 0.8);
+$main-color-light: rgba(61, 207, 182, 0.3);
+$alert-light: rgba(255, 100, 100, 0.1);
+$alert-shadow: rgba(255, 100, 100, 0.3);
 
 $section-padding: 60px;
 $border-radius-base: 20px;
 
 $transition-base: 0.3s ease;
 
-// Responsive Breakpoints
 $mobile-max: 480px;
 $tablet-min: 481px;
 $tablet-max: 1024px;
@@ -19,9 +25,9 @@ $desktop-4k-min: 1920px;
 $large-screens-min: 1600px;
 $ultra-wide-min: 2000px;
 
-// Typography Scale
 $typography-mobile: (
-  h2: 35px,
+  h1: 35px,
+  h2: 33px,
   h3: 25px,
   text: 16px
 );
@@ -44,7 +50,6 @@ $typography-4k: (
   text: 20px
 );
 
-// Layout Spacing
 $content-max-width: 1440px;
 $about-wrapper-margin-top: 120px;
 $content-gap-base: 60px;

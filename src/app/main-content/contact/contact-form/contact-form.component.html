@@ -1,124 +1,177 @@
 <div class="formDiv">
-  <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm" [attr.spellcheck]="false" autocomplete="off">
+  <form
+    (ngSubmit)="onSubmit(contactForm)"
+    #contactForm="ngForm"
+    [attr.spellcheck]="false"
+    autocomplete="off"
+  >
     <div class="inputText">
-      <label for="name">{{ 'contact.form.nameLabel' | translate }}</label>
-      <input 
-        #name="ngModel" 
-        [(ngModel)]="contactData.name" 
-        type="text" 
-        id="name" 
+      <label for="name">{{ "contact.form.nameLabel" | translate }}</label>
+      <input
+        #name="ngModel"
+        [(ngModel)]="contactData.name"
+        type="text"
+        id="name"
         name="name"
         (focus)="validateForm('name')"
         (blur)="validateForm('name')"
         (input)="validateForm('name')"
         [class.invalid]="invalidFields.includes('name')"
         [attr.placeholder]="'contact.form.namePlaceholder' | translate"
-        required 
-        minlength="3">
+        required
+        minlength="3"
+        autocomplete="name"
+      />
       @if (invalidFields.includes('name')) {
-        <p class="alert-text">{{ 'contact.form.nameError' | translate }}</p>
+      <p class="alert-text" role="alert">
+        {{ "contact.form.nameError" | translate }}
+      </p>
       }
     </div>
-    
-    <hr>
-    
+
+    <hr />
+
     <div class="inputText">
-      <label for="email">{{ 'contact.form.emailLabel' | translate }}</label>
-      <input 
-        #email="ngModel" 
-        [(ngModel)]="contactData.email" 
-        type="email" 
-        id="email" 
+      <label for="email">{{ "contact.form.emailLabel" | translate }}</label>
+      <input
+        #email="ngModel"
+        [(ngModel)]="contactData.email"
+        type="email"
+        id="email"
         name="email"
         (focus)="validateForm('email')"
         (blur)="validateForm('email')"
         (input)="validateForm('email')"
         [class.invalid]="invalidFields.includes('email')"
         [attr.placeholder]="'contact.form.emailPlaceholder' | translate"
-        required 
-        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+        required
+        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+        autocomplete="email"
+      />
       @if (invalidFields.includes('email')) {
-        <p class="alert-text">{{ 'contact.form.emailError' | translate }}</p>
+      <p class="alert-text" role="alert">
+        {{ "contact.form.emailError" | translate }}
+      </p>
       }
     </div>
-    
-    <hr>
-    
+
+    <hr />
+
     <div class="inputText">
-      <label for="message">{{ 'contact.form.messageLabel' | translate }}</label>
-      <textarea 
-        #message="ngModel" 
-        [(ngModel)]="contactData.message" 
-        id="message" 
+      <label for="message">{{ "contact.form.messageLabel" | translate }}</label>
+      <textarea
+        #message="ngModel"
+        [(ngModel)]="contactData.message"
+        id="message"
         name="message"
         (focus)="validateForm('message')"
         (blur)="validateForm('message')"
         (input)="validateForm('message')"
         [class.invalid]="invalidFields.includes('message')"
         [attr.placeholder]="'contact.form.messagePlaceholder' | translate"
-        required 
+        required
         minlength="10"
-        rows="1" 
-        cols="50"></textarea>
+        rows="4"
+        [attr.aria-label]="'contact.form.messageLabel' | translate"
+      ></textarea>
       @if (invalidFields.includes('message')) {
-        <p class="alert-text">{{ 'contact.form.messageError' | translate }}</p>
+      <p class="alert-text" role="alert">
+        {{ "contact.form.messageError" | translate }}
+      </p>
       }
     </div>
-    
-    <hr>
-    
+
+    <hr />
+
     <div class="checkboxDiv">
       <label class="checkbox-container" for="data-privacy-checkbox">
-        <input 
+        <input
           (change)="checkboxChanged(); validateForm('checkbox')"
-          #privacypolicy="ngModel" 
-          [(ngModel)]="contactData.privacypolicy" 
-          type="checkbox" 
-          id="data-privacy-checkbox" 
-          name="privacypolicy" 
+          #privacypolicy="ngModel"
+          [(ngModel)]="contactData.privacypolicy"
+          type="checkbox"
+          id="data-privacy-checkbox"
+          name="privacypolicy"
           (focus)="validateForm('checkbox')"
           (blur)="validateForm('checkbox')"
           [class.invalid]="invalidFields.includes('checkbox')"
-          required>
+          [attr.aria-describedby]="
+            invalidFields.includes('checkbox') ? 'privacy-error' : null
+          "
+          required
+        />
         <div class="checkmark"></div>
         <span>
-          {{ 'contact.form.privacyText' | translate }} 
-          <a href="#" class="privacy-policy-link" (click)="openPrivacyPolicy(); $event.preventDefault()">{{ 'contact.form.privacyLink' | translate }}</a> 
-          {{ 'contact.form.privacyTextEnd' | translate }}
+          {{ "contact.form.privacyText" | translate }}
+          <a
+            href="#"
+            class="privacy-policy-link"
+            (click)="openPrivacyPolicy(); $event.preventDefault()"
+            [attr.aria-label]="'contact.form.privacyLink' | translate"
+          >
+            {{ "contact.form.privacyLink" | translate }}
+          </a>
+          {{ "contact.form.privacyTextEnd" | translate }}
         </span>
       </label>
-      @if ((privacypolicy.invalid && (privacypolicy.dirty || privacypolicy.touched)) || checkboxWasCheckedBefore && !contactData.privacypolicy) {
-        <p class="alert-text">{{ 'contact.form.privacyError' | translate }}</p>
+      @if ((privacypolicy.invalid && (privacypolicy.dirty ||
+      privacypolicy.touched)) || checkboxWasCheckedBefore &&
+      !contactData.privacypolicy) {
+      <p class="alert-text" id="privacy-error" role="alert">
+        {{ "contact.form.privacyError" | translate }}
+      </p>
       }
     </div>
-    
-    <input 
-      type="submit" 
-      [value]="'contact.form.submitButton' | translate" 
-      [disabled]="!contactForm.form.valid">
+
+    <input
+      type="submit"
+      [value]="'contact.form.submitButton' | translate"
+      [disabled]="!contactForm.form.valid"
+      [attr.aria-label]="'contact.form.submitButton' | translate"
+    />
   </form>
 </div>
 
 @if (submissionStatus) {
-  <div class="popup-overlay" (click)="closePopup()">
-    <div class="popup" 
-         [class.success]="submissionStatus === 'success'" 
-         [class.error]="submissionStatus === 'error'" 
-         (click)="$event.stopPropagation()">
-      <div class="popup-header">
-        <h3>{{ submissionStatus === 'success' ? ('contact.form.successTitle' | translate) : ('contact.form.errorTitle' | translate) }}</h3>
-      </div>
-      <div class="popup-content">
-        @if (submissionStatus === 'success') {
-          <p>{{ 'contact.form.successMessage' | translate }}</p>
-        } @else {
-          <p>{{ 'contact.form.errorMessage' | translate }}</p>
-          <p class="error-details">{{ errorMessage }}</p>
-        }
-      </div>
-      <div class="popup-footer">
-        <button (click)="closePopup()">{{ 'contact.form.closeButton' | translate }}</button>
-      </div>
+<div
+  class="popup-overlay"
+  (click)="closePopup()"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-labelledby]="'popup-title'"
+>
+  <div
+    class="popup"
+    [class.success]="submissionStatus === 'success'"
+    [class.error]="submissionStatus === 'error'"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="popup-header">
+      <h3 id="popup-title">
+        {{
+          submissionStatus === "success"
+            ? ("contact.form.successTitle" | translate)
+            : ("contact.form.errorTitle" | translate)
+        }}
+      </h3>
+    </div>
+    <div class="popup-content">
+      @if (submissionStatus === 'success') {
+      <p>{{ "contact.form.successMessage" | translate }}</p>
+      } @else {
+      <p>{{ "contact.form.errorMessage" | translate }}</p>
+      <p class="error-details" role="alert">{{ errorMessage }}</p>
+      }
+    </div>
+    <div class="popup-footer">
+      <button
+        (click)="closePopup()"
+        type="button"
+        [attr.aria-label]="'contact.form.closeButton' | translate"
+      >
+        {{ "contact.form.closeButton" | translate }}
+      </button>
     </div>
   </div>
+</div>
 }

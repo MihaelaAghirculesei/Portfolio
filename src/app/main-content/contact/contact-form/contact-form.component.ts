@@ -10,10 +10,9 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [FormsModule, RouterModule, CommonModule, TranslatePipe],
   templateUrl: './contact-form.component.html',
-  styleUrl: './contact-form.component.scss'
+  styleUrl: './contact-form.component.scss',
 })
 export class ContactFormComponent {
-
   http = inject(HttpClient);
   translate = inject(TranslateService);
 
@@ -24,11 +23,11 @@ export class ContactFormComponent {
     privacypolicy: false,
   };
 
-  mailTest = false; 
+  mailTest = false;
 
   submissionStatus: 'success' | 'error' | null = null;
   errorMessage = '';
-  
+
   invalidFields: string[] = [];
 
   post = {
@@ -43,7 +42,7 @@ export class ContactFormComponent {
 
   validateForm(field: string) {
     this.invalidFields = this.invalidFields.filter((f) => f !== field);
-    
+
     if (field === 'name') {
       if (!this.contactData.name || this.contactData.name.trim().length < 3) {
         this.invalidFields.push('name');
@@ -52,13 +51,19 @@ export class ContactFormComponent {
 
     if (field === 'email') {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!this.contactData.email || !emailRegex.test(this.contactData.email.trim())) {
+      if (
+        !this.contactData.email ||
+        !emailRegex.test(this.contactData.email.trim())
+      ) {
         this.invalidFields.push('email');
       }
     }
 
     if (field === 'message') {
-      if (!this.contactData.message || this.contactData.message.trim().length < 10) {
+      if (
+        !this.contactData.message ||
+        this.contactData.message.trim().length < 10
+      ) {
         this.invalidFields.push('message');
       }
     }
@@ -72,7 +77,12 @@ export class ContactFormComponent {
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid && !this.mailTest) {
-      this.http.post<any>(this.post.endPoint, this.post.body(this.contactData), this.post.options)
+      this.http
+        .post<any>(
+          this.post.endPoint,
+          this.post.body(this.contactData),
+          this.post.options
+        )
         .subscribe({
           next: (response) => {
             this.submissionStatus = 'success';
@@ -82,11 +92,12 @@ export class ContactFormComponent {
           },
           error: (error) => {
             this.submissionStatus = 'error';
-            this.errorMessage = error.message || 'An error occurred while sending your message.';
+            this.errorMessage =
+              error.message || 'An error occurred while sending your message.';
             this.checkboxWasCheckedBefore = false;
             ngForm.resetForm();
           },
-          complete: () => {}
+          complete: () => {},
         });
     } else if (ngForm.submitted && ngForm.form.valid && this.mailTest) {
       this.submissionStatus = 'success';

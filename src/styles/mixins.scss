@@ -7,8 +7,16 @@
 }
 
 @mixin responsive-typography($typography-map) {
+  h1 {
+    font-size: map-get($typography-map, h1);
+  }
+
   h2 {
     font-size: map-get($typography-map, h2);
+  }
+
+  h3 {
+    font-size: map-get($typography-map, h3);
   }
 
   .aboutMeDiv {
@@ -19,6 +27,32 @@
     span, .aboutMePs, .aboutMePs p {
       font-size: map-get($typography-map, text);
     }
+  }
+
+  .formDiv {
+    label {
+      font-size: map-get($typography-map, h3);
+    }
+
+    input, textarea {
+      font-size: map-get($typography-map, text);
+    }
+
+    .checkbox-container span {
+      font-size: map-get($typography-map, text);
+    }
+
+    .alert-text {
+      font-size: map-get($typography-map, text);
+    }
+  }
+
+  .popup-header h3 {
+    font-size: map-get($typography-map, h3);
+  }
+
+  .popup-content p {
+    font-size: map-get($typography-map, text);
   }
 }
 
