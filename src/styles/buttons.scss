@@ -64,11 +64,54 @@
 }
 
 @keyframes moveText1 {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes moveText2 {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 2rem !important;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px !important;
+  border-radius: 4px !important;
+
+  &:hover:not(:disabled) {
+    color: $main-color;
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.3) !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $main-color !important;
+    outline-offset: 2px !important;
+  }
+
+  &.left-btn {
+    order: -1;
+  }
+
+  &.right-btn {
+    order: 1;
+  }
 }

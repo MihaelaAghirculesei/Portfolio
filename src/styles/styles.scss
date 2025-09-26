@@ -1,13 +1,13 @@
-@import './variables.scss';
-@import './mixins.scss';
-@import './buttons.scss';
+@import "./variables.scss";
+@import "./mixins.scss";
+@import "./buttons.scss";
 
 .close-btn {
   position: absolute !important;
   top: 15px !important;
   right: 20px !important;
-  background: #3DCFB6 !important;
-  border: 2px solid #3DCFB6 !important;
+  background: #3dcfb6 !important;
+  border: 2px solid #3dcfb6 !important;
   font-size: 36px !important;
   color: #1a1a1a !important;
   cursor: pointer !important;
@@ -24,7 +24,7 @@
 
   &:hover {
     background: #ffffff !important;
-    color: #3DCFB6 !important;
+    color: #3dcfb6 !important;
     transform: scale(1.1) !important;
     box-shadow: 0 6px 20px rgba(61, 207, 182, 0.6) !important;
   }
@@ -73,14 +73,16 @@ body {
   width: 100%;
   overflow-x: hidden;
   min-height: 100vh;
-  
+
   &.menu-open {
     overflow: hidden !important;
     height: 100vh;
   }
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0;
   color: $main-color;
   @include primary-font;
@@ -95,7 +97,7 @@ button {
   background-color: transparent;
   color: white;
   @include primary-font;
-  
+
   &:hover {
     border: 2px solid $main-color;
     cursor: pointer;
@@ -131,7 +133,7 @@ button {
   background: linear-gradient(180deg, #08463b 0%, #1c1c1c 100%);
   border-radius: 10px;
   transition: background 0.3s ease;
-  
+
   &:hover {
     background: linear-gradient(180deg, #1c1c1c 0%, #08463b 100%);
   }
@@ -160,4 +162,71 @@ button {
   flex: 1;
   @include dFlex(flex-start, flex-start);
   flex-direction: column;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.dot-btn {
+  height: 10px !important;
+  width: 10px !important;
+  margin: 0 5px !important;
+  display: inline-block !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 50% !important;
+  opacity: 0.8 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+
+  &:hover:not(:disabled) {
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  &:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.4 !important;
+  }
+
+  &.active {
+    opacity: 1 !important;
+    background: $main-color !important;
+    border-color: $main-color !important;
+    box-shadow: 0 2px 8px rgba(61, 207, 182, 0.6) !important;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $main-color !important;
+    outline-offset: 2px !important;
+  }
+
+  @media (max-width: 480px) {
+    margin: 0 3px !important;
+  }
+}
+
+.dots-navigation {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 24px !important;
+  margin-top: 40px !important;
+  z-index: 30 !important;
+  position: relative !important;
+
+  .nav-btn {
+    margin: 0 15px;
+  }
 }

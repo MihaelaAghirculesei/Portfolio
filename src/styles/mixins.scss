@@ -69,6 +69,18 @@
       font-size: map-get($typography-map, text);
     }
   }
+
+  .feedback-card {
+    p {
+      font-size: map-get($typography-map, text);
+    }
+  }
+
+  .feedbackBottom {
+    > span {
+      font-size: map-get($typography-map, text);
+    }
+  }
 }
 
 @mixin responsive-section-layout() {
@@ -394,4 +406,39 @@
       font-weight: 600;
     }
   }
+}
+
+@mixin customScrollbar(
+  $width: 6px,
+  $track-color: rgba($main-color, 0.1),
+  $thumb-color: $main-color,
+  $thumb-hover-color: null
+) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: 1px;
+    visibility: visible !important;
+
+    @if $thumb-hover-color {
+      &:hover {
+        background: $thumb-hover-color;
+      }
+    } @else {
+      &:hover {
+        background: lighten($thumb-color, 10%);
+      }
+    }
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color $track-color;
 }

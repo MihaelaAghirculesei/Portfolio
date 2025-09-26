@@ -1,31 +1,68 @@
-<section>
+<section role="region" [attr.aria-label]="'common.references' | translate">
   <h2>{{ "common.references" | translate }}</h2>
   <div class="slider-container">
-    <div class="feedback-wrapper">
+    <div class="feedback-wrapper"
+         role="group"
+         [attr.aria-label]="'references.carousel' | translate"
+         (keydown)="onKeyDown($event)"
+         (mouseenter)="pauseAutoPlay()"
+         (mouseleave)="resumeAutoPlay()"
+         (touchstart)="onTouchStart($event)"
+         (touchend)="onTouchEnd($event)"
+         tabindex="0">
       @for (comment of feedbacks; track comment.name + comment.ref; let i = $index) {
       <div
         [ngClass]="getCardClass(i)"
         [class.active]="i === middleIndex"
+        [attr.aria-hidden]="i !== middleIndex"
+        role="tabpanel"
+        [attr.aria-label]="'references.feedback' | translate"
       >
-        <p>{{ comment.feedbackKey | translate }}</p>
+        <p [attr.aria-live]="i === middleIndex ? 'polite' : 'off'">{{ comment.feedbackKey | translate }}</p>
         <div class="feedbackBottom">
-          <div class="lineDiv"></div>
-          <span>{{ comment.name }} - Frontend Developer</span>
+          <div class="lineDiv" aria-hidden="true"></div>
+          <span>{{ comment.name }} - {{ comment.role || 'Frontend Developer' }}</span>
         </div>
       </div>
       }
     </div>
 
-    <img src="assets/img/feedback/quotes.svg" 
-         alt="Quotes" 
-         class="quotes-overlay">
+    <img src="assets/img/feedback/quotes.svg"
+         alt=""
+         class="quotes-overlay"
+         aria-hidden="true"
+         role="presentation">
 
-    <div class="dots">
-      <button class="nav-btn left-btn" (click)="slideRight()">&#10094;</button>
+    <div class="dots" role="tablist" [attr.aria-label]="'references.navigation' | translate">
+      <button
+        class="nav-btn left-btn"
+        (click)="slideRight()"
+        [attr.aria-label]="'common.previous' | translate"
+        [disabled]="isTransitioning"
+        type="button">
+        &#10094;
+      </button>
       @for (comment of feedbacks; track comment.name + comment.ref; let i = $index) {
-      <span [class.active]="i === middleIndex"></span>
+      <button
+        class="dot-btn"
+        [class.active]="i === middleIndex"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'references.goToSlide' | translate: {index: i + 1}"
+        [attr.aria-selected]="i === middleIndex"
+        [disabled]="isTransitioning"
+        role="tab"
+        type="button">
+        <span class="sr-only">{{ 'references.slide' | translate }} {{ i + 1 }}</span>
+      </button>
       }
-      <button class="nav-btn right-btn" (click)="slideLeft()">&#10095;</button>
+      <button
+        class="nav-btn right-btn"
+        (click)="slideLeft()"
+        [attr.aria-label]="'common.next' | translate"
+        [disabled]="isTransitioning"
+        type="button">
+        &#10095;
+      </button>
     </div>
   </div>
 </section>
