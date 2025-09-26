@@ -24,7 +24,9 @@
       font-size: map-get($typography-map, h3);
     }
 
-    span, .aboutMePs, .aboutMePs p {
+    span,
+    .aboutMePs,
+    .aboutMePs p {
       font-size: map-get($typography-map, text);
     }
   }
@@ -34,7 +36,8 @@
       font-size: map-get($typography-map, h3);
     }
 
-    input, textarea {
+    input,
+    textarea {
       font-size: map-get($typography-map, text);
     }
 
@@ -54,6 +57,44 @@
   .popup-content p {
     font-size: map-get($typography-map, text);
   }
+
+  .contactDiv {
+    p {
+      font-size: map-get($typography-map, text);
+    }
+  }
+
+  .contact-cta {
+    span {
+      font-size: map-get($typography-map, text);
+    }
+  }
+}
+
+@mixin responsive-section-layout() {
+  min-height: 100vh;
+  width: 100%;
+  @include dFlex(center, center);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@mixin content-wrapper-responsive(
+  $max-width: 1440px,
+  $gap: $spacing-md,
+  $padding: $spacing-xl
+) {
+  @include dFlex(center, stretch);
+  max-width: $max-width;
+  gap: $gap;
+  flex-wrap: wrap;
+  padding: 0 $padding;
+
+  @media (max-width: $mobile-max) {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 $spacing-lg;
+  }
 }
 
 @mixin white-text-base {
@@ -71,7 +112,11 @@
   text-align: left;
 }
 
-@mixin mobile-layout($img-size: min(80vw, 300px), $border-radius: 20px, $small-icons: false) {
+@mixin mobile-layout(
+  $img-size: min(80vw, 300px),
+  $border-radius: 20px,
+  $small-icons: false
+) {
   .contentWrapper {
     flex-direction: column;
     gap: 30px;
@@ -99,7 +144,9 @@
       margin-bottom: 0;
     }
 
-    span, p, strong {
+    span,
+    p,
+    strong {
       padding-left: 0;
       max-width: 100%;
       text-align: center;
@@ -114,7 +161,8 @@
       align-items: flex-start;
       margin-bottom: 15px;
 
-      p, strong {
+      p,
+      strong {
         color: white;
         margin: 0;
         line-height: 1.4;
@@ -155,8 +203,10 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: transform $transition-base;
-  
-  &:hover { transform: translateY(-2px); }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
 
 @mixin tooltip() {
@@ -211,7 +261,7 @@
   cursor: pointer;
   transition: all 300ms ease;
   margin-bottom: 8px;
-  
+
   &:hover {
     transform: rotate(90deg) scale(1.1);
     margin-bottom: 0;
@@ -222,7 +272,7 @@
   height: $size;
   width: $size;
   transition: all 300ms ease;
-  
+
   &:hover {
     filter: brightness(0) invert(1);
     transform: scale(1.1);
@@ -236,9 +286,11 @@
   position: relative;
   transform: translateY(-15px);
   transition: transform $transition-base;
-  
-  &:hover { transform: translateY(-20px); }
-  
+
+  &:hover {
+    transform: translateY(-20px);
+  }
+
   .imageContainer {
     position: relative;
     height: 100%;
@@ -246,19 +298,24 @@
     z-index: 2;
     border-radius: $border-radius;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     transition: box-shadow $transition-base;
-    
-    &:hover { box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
-    
-    img, picture {
+
+    &:hover {
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    img,
+    picture {
       height: 100%;
       width: 100%;
       object-fit: cover;
       transition: transform $transition-base;
       filter: brightness(1.05) contrast(1.02);
-      
-      &:hover { transform: scale(1.02); }
+
+      &:hover {
+        transform: scale(1.02);
+      }
     }
   }
 }
@@ -269,7 +326,13 @@
   left: $left;
   width: 100%;
   height: 100%;
-  background: repeating-linear-gradient(135deg, $main-color 0px, $main-color 2px, transparent 2px, transparent 20px);
+  background: repeating-linear-gradient(
+    135deg,
+    $main-color 0px,
+    $main-color 2px,
+    transparent 2px,
+    transparent 20px
+  );
   border-radius: 30px;
   opacity: 0.8;
 
@@ -293,35 +356,39 @@
   @include dFlex(flex-start, center);
   @include primary-font;
   font-size: 18px;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   font-weight: 400;
   gap: $gap;
   padding-left: 20px;
   margin-bottom: 25px;
   transition: transform $transition-base;
-  
-  &:hover { transform: translateX(5px); }
-  
+
+  &:hover {
+    transform: translateX(5px);
+  }
+
   .iconWrapper {
     flex-shrink: 0;
     padding: 8px;
     border-radius: 12px;
     background: rgba($main-color, 0.1);
     transition: transform $transition-base;
-    
-    &:hover { transform: rotate(5deg); }
-    
+
+    &:hover {
+      transform: rotate(5deg);
+    }
+
     img {
       height: 32px;
       width: 32px;
       filter: brightness(1.2);
     }
   }
-  
+
   p {
     margin: 0;
     line-height: 1.6;
-    
+
     strong {
       color: $main-color;
       font-weight: 600;

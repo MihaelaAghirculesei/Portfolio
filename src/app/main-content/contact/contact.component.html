@@ -1,15 +1,15 @@
-<section id="contact">
+<section id="contact" aria-labelledby="contact-title">
   <div class="contentWrapper">
-    <div class="contactDiv">
-      <h2>{{ 'contact.title' | translate }}</h2>
-      <h3>{{ 'contact.subtitle' | translate }}</h3>
-      <p>{{ 'contact.question' | translate }}</p>
-      <span>{{ 'contact.description' | translate }}</span>
-      <span>
-        {{ 'contact.needDeveloper' | translate }}
-        <p>{{ 'contact.letsTalk' | translate }}</p>
-      </span>
-    </div>
-    <app-contact-form></app-contact-form>
+    <header class="contactDiv">
+      <h2 id="contact-title">{{ "contact.title" | translate }}</h2>
+      <h3>{{ "contact.subtitle" | translate }}</h3>
+      <p>{{ "contact.question" | translate }}</p>
+      <p>{{ "contact.description" | translate }}</p>
+      <div class="contact-cta" role="region" aria-label="Call to action">
+        <span>{{ "contact.needDeveloper" | translate }}</span>
+        <p>{{ "contact.letsTalk" | translate }}</p>
+      </div>
+    </header>
+    <app-contact-form role="form" aria-label="Contact form"></app-contact-form>
   </div>
 </section>

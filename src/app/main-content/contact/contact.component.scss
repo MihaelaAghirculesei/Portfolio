@@ -2,27 +2,26 @@
 
 section {
   padding: 0 0 $section-padding 0;
-  min-height: 100vh;
-  @include dFlex(center, center);
+  @include responsive-section-layout;
   background-color: $gradient-start;
-  width: 100%;
-  flex-direction: column;
 }
 
 h3 {
-  @include text("Fira Code", 30px, $main-color, 400);
-  margin: 15px 0;
+  @include code-font;
+  font-size: 36px;
+  color: $main-color;
+  font-weight: 400;
+  margin: $spacing-lg 0;
   text-align: left;
   text-decoration: none;
-
-  @media (max-width: 768px) {
-    font-size: 25px;
-  }
 }
 
 h2 {
-  @include text("Karla", 48px, $main-color, 700);
-  padding: 20px 0;
+  @include primary-font;
+  font-size: 48px;
+  color: $main-color;
+  font-weight: 700;
+  padding: $spacing-xl 0;
   text-align: center;
 }
 
@@ -34,25 +33,41 @@ h2 {
   text-align: left;
   max-width: 100%;
   word-wrap: break-word;
-  > span {
-    @include text("Karla", 16px, white, 700);
+
+  p {
+    @include primary-font;
+    color: $white;
+    font-weight: 400;
     max-width: 100%;
     word-wrap: break-word;
-    > p {
-      color: $main-color;
-    }
+    margin: $spacing-sm 0;
+    line-height: 1.6;
+  }
+}
+
+.contact-cta {
+  margin-top: $spacing-lg;
+
+  span {
+    @include primary-font;
+    color: $white;
+    font-weight: 700;
+    max-width: 100%;
+    word-wrap: break-word;
+    display: block;
+    line-height: 1.5;
+  }
+
+  p {
+    color: $main-color;
+    font-weight: 700;
+    margin: $spacing-sm 0;
+    line-height: 1.5;
   }
 }
 
 .contentWrapper {
-  @include dFlex(center, stretch);
-  max-width: 1440px;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding: 0 20px 0 20px;
-  @media (max-width: 325px) {
-    padding: 0 20px;
-  }
+  @include content-wrapper-responsive;
 }
 
 app-contact-form {
@@ -60,68 +75,58 @@ app-contact-form {
   width: 100%;
 }
 
-@media (max-width: 768px) {
-  .contentWrapper {
-    flex-direction: column;
-    align-items: center;
-    padding: 0 15px;
-  }
+@media (max-width: $mobile-max) {
+  @include responsive-typography($typography-mobile);
 
   .contactDiv {
     flex: unset;
     width: 100%;
-    padding: 0 10px;
+    padding: 0 $spacing-md;
     box-sizing: border-box;
 
-    > span {
-      width: 100%;
-      display: block;
-      hyphens: auto;
-      word-break: break-word;
-    }
-  }
-
-  h3 {
-    font-size: 25px;
-    word-break: break-word;
-  }
-
-  h2 {
-    font-size: 33px;
-    word-break: break-word;
-  }
-}
-
-@media (max-width: 480px) {
-  .contentWrapper {
-    padding: 0 10px;
-  }
-
-  .contactDiv {
-    padding: 0 5px;
-
-    > span {
-      font-size: 16px;
+    p {
       line-height: 1.4;
     }
   }
 
-  h3 {
-    font-size: 25px;
+  .contact-cta {
+    span {
+      width: 100%;
+      display: block;
+      hyphens: auto;
+      word-break: break-word;
+      line-height: 1.4;
+    }
   }
 
-  h2 {
-    font-size: 33px;
+  h2,
+  h3 {
+    word-break: break-word;
   }
+}
+
+@media (min-width: $tablet-min) and (max-width: $tablet-max) {
+  @include responsive-typography($typography-tablet);
+}
+
+@media (min-width: $desktop-min) and (max-width: $desktop-max) {
+  @include responsive-typography($typography-desktop);
+}
+
+@media (min-width: $desktop-4k-min) {
+  @include responsive-typography($typography-4k);
 }
 
 @media (max-width: 360px) {
   .contactDiv {
     padding: 0;
 
-    > span {
-      font-size: 16px;
+    p {
       line-height: 1.2;
     }
+  }
+
+  .contact-cta span {
+    line-height: 1.2;
   }
 }

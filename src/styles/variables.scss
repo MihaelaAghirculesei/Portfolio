@@ -1,8 +1,8 @@
-$main-color: #3DCFB6;
+$main-color: #3dcfb6;
 $background-color: #1c1c1c;
 $gradient-start: #1c1c1c;
 $gradient-end: #08463b;
-$alert-text: #EC7B7B;
+$alert-text: #ec7b7b;
 $placeholder-color: #888888;
 $white: #ffffff;
 
@@ -11,8 +11,27 @@ $main-color-light: rgba(61, 207, 182, 0.3);
 $alert-light: rgba(255, 100, 100, 0.1);
 $alert-shadow: rgba(255, 100, 100, 0.3);
 
+$white-pure: #ffffff;
+$white-dimmed: rgba(255, 255, 255, 0.8);
+$white-transparent-light: rgba(255, 255, 255, 0.1);
+$white-transparent-medium: rgba(255, 255, 255, 0.5);
+
+$black-pure: #000000;
+$modal-backdrop: rgba(0, 0, 0, 0.7);
+$shadow-light: rgba(0, 0, 0, 0.2);
+$shadow-medium: rgba(0, 0, 0, 0.3);
+$shadow-heavy: rgba(0, 0, 0, 0.5);
+
 $section-padding: 60px;
 $border-radius-base: 20px;
+
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 20px;
+$spacing-xxl: 24px;
+$spacing-xxxl: 32px;
 
 $transition-base: 0.3s ease;
 
@@ -29,25 +48,25 @@ $typography-mobile: (
   h1: 35px,
   h2: 33px,
   h3: 25px,
-  text: 16px
+  text: 16px,
 );
 
 $typography-tablet: (
   h2: 40px,
   h3: 30px,
-  text: 17px
+  text: 17px,
 );
 
 $typography-desktop: (
   h2: 48px,
   h3: 36px,
-  text: 18px
+  text: 18px,
 );
 
 $typography-4k: (
   h2: 56px,
   h3: 42px,
-  text: 20px
+  text: 20px,
 );
 
 $content-max-width: 1440px;
