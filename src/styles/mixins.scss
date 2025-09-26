@@ -443,6 +443,56 @@
   scrollbar-color: $thumb-color $track-color;
 }
 
+@mixin spectacularText($animation-duration: 40s, $glow-duration: 30s) {
+  background: linear-gradient(
+    45deg,
+    #ffffff 0%,
+    $main-color 15%,
+    #ffffff 30%,
+    $main-color 45%,
+    #ffffff 60%,
+    $main-color 75%,
+    #ffffff 100%
+  );
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: spectacularFlow $animation-duration ease-in-out infinite;
+  position: relative;
+  display: inline-block;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-shadow: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba($main-color, 0.05) 30%,
+      rgba($main-color, 0.1) 50%,
+      rgba($main-color, 0.05) 70%,
+      transparent 100%
+    );
+    animation: spectacularGlow $glow-duration ease-in-out infinite;
+    border-radius: 8px;
+    z-index: -1;
+  }
+
+  &:hover {
+    animation-duration: 3s;
+    transform: scale(1.02) translateY(-2px);
+    filter: drop-shadow(0 8px 25px rgba($main-color, 0.4));
+    transition: all 0.6s ease;
+  }
+}
+
 @mixin scrollingBanner($rotation: -4deg, $duration: 60s) {
   @include dFlex(flex-start, center);
   width: 100%;

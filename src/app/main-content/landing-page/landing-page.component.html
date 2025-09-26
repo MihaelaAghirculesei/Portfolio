@@ -1,69 +1,74 @@
-<section class="headLine" id="headLine">
+<section class="headLine" id="headLine" aria-label="Landing page hero section">
   <div class="contentWrapper">
-    <p>{{ 'landingPage.title' | translate }}</p>
-    <h1 class="name-spectacular">Mihaela Melania</h1>
-    <h1 class="name-spectacular surname">Aghirculesei</h1>
+    <p aria-label="Professional title">{{ "landingPage.title" | translate }}</p>
+    <h1 class="name-spectacular" aria-label="First name">
+      {{ profileInfo.firstName }}
+    </h1>
+    <h1 class="name-spectacular surname" aria-label="Last name">
+      {{ profileInfo.lastName }}
+    </h1>
 
-    <div class="buttonDiv">
+    <div class="buttonDiv" role="group" aria-label="Main navigation buttons">
+      @for (button of actionButtons; track button.labelKey) {
       <button
-        (click)="scrollToProjects()"
+        (click)="button.action()"
         class="link-button animated"
-        [attr.data-text]="'landingPage.checkWork' | translate"
+        [attr.data-text]="button.labelKey | translate"
+        [attr.aria-label]="button.labelKey | translate"
         type="button"
       >
-        <span>{{ 'landingPage.checkWork' | translate }}</span>
+        <span>{{ button.labelKey | translate }}</span>
       </button>
-      <button
-        (click)="scrollToContact()"
-        class="link-button animated"
-        [attr.data-text]="'landingPage.contactMe' | translate"
-        type="button"
-      >
-        <span>{{ 'landingPage.contactMe' | translate }}</span>
-      </button>
+      }
     </div>
 
-    <div class="edgeLine-left">
-      <button class="arrowDown" (click)="scrollToAboutMe()" type="button">
+    <aside class="edgeLine-left" aria-label="Navigation controls">
+      <button
+        class="arrowDown"
+        (click)="scrollToAboutMe()"
+        type="button"
+        aria-label="Scroll to about me section"
+      >
         <img
           class="arrowDownImg"
           src="../../assets/img/arrow_down.svg"
-          alt="Scroll down arrow"
+          alt=""
+          role="presentation"
         />
       </button>
-      <div class="greenLineDown"></div>
-    </div>
+      <div class="greenLineDown" role="presentation"></div>
+    </aside>
 
-    <div class="edgeLine-right">
+    <aside class="edgeLine-right" aria-label="Social links">
+      @for (social of socialLinks; track social.url) {
       <a
-        href="mailto:kontakt@mihaela-melania-aghirculesei.de"
-        class="vertical-text link-hover-dot-left email-link"
+        [href]="social.url"
+        [class]="
+          social.iconSrc.includes('mail')
+            ? 'vertical-text link-hover-dot-left email-link'
+            : ''
+        "
+        [target]="social.isExternal ? '_blank' : '_self'"
+        [rel]="social.isExternal ? 'noopener noreferrer' : ''"
+        [attr.aria-label]="
+          social.alt + (social.isExternal ? ' (opens in new tab)' : '')
+        "
       >
-        <span class="email-text"
-          >kontakt&commat;mihaela-melania-aghirculesei.de</span
-        >
+        @if (social.iconSrc.includes('mail')) {
+        <span class="email-text" aria-hidden="true">{{
+          profileInfo.email
+        }}</span>
+        }
         <img
-          src="../../assets/img/landingPage/mail.svg"
-          alt="Email"
-          class="email-icon"
+          [src]="social.iconSrc"
+          [alt]=""
+          [class]="social.iconSrc.includes('mail') ? 'email-icon' : ''"
+          role="presentation"
         />
       </a>
-      <a
-        href="https://github.com/MihaelaAghirculesei"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src="../../assets/img/github_green.svg" alt="GitHub" />
-      </a>
-      <a
-        href="https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src="../../assets/img/linkedin_green.svg" alt="LinkedIn" />
-      </a>
-      <div class="hero-right-line"></div>
-    </div>
+      }
+      <div class="hero-right-line" role="presentation"></div>
+    </aside>
   </div>
   <app-banner-section></app-banner-section>
 </section>

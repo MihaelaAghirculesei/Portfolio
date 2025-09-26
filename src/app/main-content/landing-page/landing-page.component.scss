@@ -1,8 +1,8 @@
-@import '../../../styles/styles.scss';
+@import "../../../styles/styles.scss";
 
 .headLine {
   @include code-font;
-  padding: 98px 16px 0 16px;
+  padding: 98px $spacing-lg 0 $spacing-lg;
   @include fullScreenSection();
   background: linear-gradient(68deg, $gradient-start 23%, $gradient-end 100%);
 
@@ -17,100 +17,54 @@
     padding: 0;
     text-align: center;
     gap: 0;
-    
+
     p {
       font-size: 40px;
       @include code-font;
-      color: white;
+      color: $white;
       margin: 0;
       font-weight: 900;
-
-      @media (max-width: 768px) {
-        font-size: 16px;
-      }
     }
 
     h1 {
       font-size: 90px;
       @include primary-font;
       word-spacing: -0.1em;
-      color: white;
+      color: $white;
       margin: 0;
       line-height: 1.1;
 
       &.name-spectacular {
-        background: linear-gradient(45deg, 
-          #ffffff 0%, 
-          #3DCFB6 15%, 
-          #ffffff 30%, 
-          #3DCFB6 45%, 
-          #ffffff 60%, 
-          #3DCFB6 75%, 
-          #ffffff 100%);
-        background-size: 400% 100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: nameFlow 40s ease-in-out infinite;
-        position: relative;
-        display: inline-block;
-        font-weight: 600;
-        letter-spacing: 2px;
-        text-shadow: none;
-        
-        &::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(61, 207, 182, 0.05) 30%,
-            rgba(61, 207, 182, 0.1) 50%,
-            rgba(61, 207, 182, 0.05) 70%,
-            transparent 100%);
-          animation: nameGlow 30s ease-in-out infinite;
-          border-radius: 8px;
-          z-index: -1;
-        }
+        @include spectacularText(40s, 30s);
 
         &.surname {
           animation-delay: 7s;
-          padding-bottom: 15px;
+          padding-bottom: $spacing-sm + $spacing-xs;
 
           &::before {
             animation-delay: 10s;
           }
-        }
-
-        &:hover {
-          animation-duration: 3s;
-          transform: scale(1.02) translateY(-2px);
-          filter: drop-shadow(0 8px 25px rgba(61, 207, 182, 0.4));
-          transition: all 0.6s ease;
         }
       }
     }
 
     .buttonDiv {
       @include dFlex(center, center);
-      gap: 48px;
-      margin: 40px 0;
+      gap: $spacing-xxxl + $spacing-lg;
+      margin: $spacing-xl + $spacing-xl 0;
     }
 
     .edgeLine-left {
       @include edgeLine(left);
-      
+
       .arrowDown {
         @include arrowButton();
-        
+
         .arrowDownImg {
           transform: rotate(270deg);
         }
       }
-      
+
       .greenLineDown {
         @include verticalLine();
       }
@@ -118,7 +72,7 @@
 
     .edgeLine-right {
       @include edgeLine(right);
-      
+
       .vertical-text {
         writing-mode: vertical-rl;
         transform: scale(-1);
@@ -126,20 +80,22 @@
 
       .email-link {
         position: relative;
-        color: white;
+        color: $white;
         text-decoration: none;
         @include primary-font;
-        font-size: 18px;
-        transition: all 300ms ease;
-        
+        font-size: $font-size-base + 2px;
+        transition: all $transition-base;
+
         &:hover {
           color: $main-color;
-          .email-text { color: $main-color; }
+          .email-text {
+            color: $main-color;
+          }
         }
-        
+
         .email-text {
-          color: white;
-          transition: all 300ms ease;
+          color: $white;
+          transition: all $transition-base;
         }
 
         .email-icon {
@@ -167,33 +123,53 @@ app-banner-section {
   right: 0;
 }
 
-@media (max-width: 1440px) {
-  .contentWrapper { width: 100%; }
+@media (max-width: $content-max-width) {
+  .contentWrapper {
+    width: 100%;
+  }
 }
 
 @media (max-height: 918px) {
   .edgeLine-right {
     .email-link {
-      .email-text { display: none !important; }
+      .email-text {
+        display: none !important;
+      }
       .email-icon {
         display: block !important;
         transform: scale(-1);
-        width: 24px;
-        height: 24px;
+        width: $icon-size-sm;
+        height: $icon-size-sm;
       }
     }
-    .hero-right-line { height: 150px; }
-    a img { @include socialIcon(24px); }
+    .hero-right-line {
+      height: $line-height-sm;
+    }
+    a img {
+      @include socialIcon($icon-size-sm);
+    }
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $tablet-max) {
   .headLine .contentWrapper {
-    p { font-size: 16px; padding-bottom: 7px; font-weight: 900; }
     h1 {
-      font-size: 35px;
+      font-size: 80px;
+    }
+  }
+}
+
+@media (max-width: $mobile-max) {
+  .headLine .contentWrapper {
+    p {
+      font-size: $font-size-base;
+      padding-bottom: $spacing-xs;
+      font-weight: 900;
+    }
+    h1 {
+      font-size: $font-size-h1-mobile;
       word-spacing: -0.1em;
-      line-height: 1.0;
+      line-height: 1;
       padding-bottom: 0;
       margin: 0;
 
@@ -203,73 +179,54 @@ app-banner-section {
 
       &:last-of-type {
         margin-top: 0;
-        
         padding-bottom: 0;
       }
     }
-    
-    .buttonDiv { gap: 16px; flex-direction: column; }
-    
-    .edgeLine-left {
-      left: -8px;
 
-      .greenLineDown { height: 150px; }
+    .buttonDiv {
+      gap: $spacing-sm;
+      flex-direction: column;
     }
-    
+
+    .edgeLine-left {
+      left: -$spacing-xs;
+
+      .greenLineDown {
+        height: $line-height-sm;
+      }
+    }
+
     .edgeLine-right {
       .email-link {
-        .email-text { display: none; }
+        .email-text {
+          display: none;
+        }
         .email-icon {
           display: block;
           transform: scale(-1);
-          width: 24px;
-          height: 24px;
+          width: $icon-size-sm;
+          height: $icon-size-sm;
         }
       }
-      .hero-right-line { height: 150px; }
-      a img { @include socialIcon(24px); }
+      .hero-right-line {
+        height: $line-height-sm;
+      }
+      a img {
+        @include socialIcon($icon-size-sm);
+      }
     }
   }
 }
 
-@keyframes nameFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  25% {
-    background-position: 100% 50%;
-  }
-  50% {
-    background-position: 200% 50%;
-  }
-  75% {
-    background-position: 300% 50%;
-  }
-  100% {
-    background-position: 400% 50%;
-  }
-}
-
-@keyframes nameGlow {
-  0% {
-    opacity: 0;
-    transform: scaleX(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleX(1.1);
-  }
-  100% {
-    opacity: 0;
-    transform: scaleX(0.8);
-  }
-}
-
-@media (max-width: 367px) {
+@media (max-width: $mobile-small-max) {
   .headLine .contentWrapper {
-    p { font-size: 16px; padding-bottom: 7px; font-weight: 900; }
+    p {
+      font-size: $font-size-base;
+      padding-bottom: $spacing-xs;
+      font-weight: 900;
+    }
     h1 {
-      font-size: 35px;
+      font-size: $font-size-h1-mobile;
       word-spacing: -0.1em;
       line-height: 0.9;
       padding: 0;
@@ -284,18 +241,18 @@ app-banner-section {
       }
 
       &.name-spectacular {
-        letter-spacing: 1px;
+        letter-spacing: $letter-spacing-sm;
       }
     }
-    
+
     .buttonDiv {
       flex-direction: column;
-      gap: 12px;
-      margin-top: 20px;
-      
+      gap: $spacing-xs;
+      margin-top: $spacing-md;
+
       .link-button {
-        font-size: 16px;
-        padding: 8px 16px;
+        font-size: $font-size-base;
+        padding: $spacing-xs $spacing-sm;
       }
     }
   }
