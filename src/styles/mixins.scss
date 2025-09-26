@@ -442,3 +442,36 @@
   scrollbar-width: thin;
   scrollbar-color: $thumb-color $track-color;
 }
+
+@mixin scrollingBanner($rotation: -4deg, $duration: 60s) {
+  @include dFlex(flex-start, center);
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba($white, 0.07);
+  position: absolute;
+  transform: rotate($rotation);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  .banner-track {
+    @include dFlex(flex-start, center);
+    animation: scroll-left $duration linear infinite;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+
+    span {
+      @include primary-font;
+      color: $main-color;
+      line-height: 1;
+      white-space: nowrap;
+
+      &.separator {
+        opacity: 0.7;
+      }
+    }
+  }
+}

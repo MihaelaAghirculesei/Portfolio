@@ -1,44 +1,14 @@
-<div class="banner-container">
-  <div class="banner-track">
-    <span>{{ 'banner.remoteWork' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.role' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.openToWork' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.location' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.skills' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.passion' | translate }}</span>
-    <span>•</span>
+<section
+  class="banner-container"
+  role="banner"
+  [attr.aria-label]="'banner.scrollingText' | translate"
+>
+  @for (track of bannerTracks; track $index) {
+  <div class="banner-track" [attr.aria-hidden]="$index > 0" role="marquee">
+    @for (item of bannerItems; track item.key) {
+    <span>{{ item.key | translate }}</span>
+    <span class="separator" aria-hidden="true">•</span>
+    }
   </div>
-  <div class="banner-track" aria-hidden="true">
-    <span>{{ 'banner.remoteWork' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.role' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.openToWork' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.location' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.skills' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.passion' | translate }}</span>
-    <span>•</span>
-  </div>
-  <div class="banner-track" aria-hidden="true">
-    <span>{{ 'banner.remoteWork' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.role' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.openToWork' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.location' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.skills' | translate }}</span>
-    <span>•</span>
-    <span>{{ 'banner.passion' | translate }}</span>
-    <span>•</span>
-  </div>
-</div>
+  }
+</section>

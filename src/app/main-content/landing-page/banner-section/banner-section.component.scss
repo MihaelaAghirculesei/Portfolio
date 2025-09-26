@@ -1,90 +1,59 @@
 @import "../../../../styles/styles.scss";
 
 .banner-container {
-  width: 100%;
-  overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.0705882353);
+  @include scrollingBanner(-4deg, 60s);
   padding: 25px 0;
-  position: absolute;
   bottom: 100px;
   left: 0;
   right: 0;
-  transform: rotate(-4deg);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  display: flex;
 
   .banner-track {
-    display: flex;
-    align-items: center;
-    animation: scroll-left 60s linear infinite;
-    white-space: nowrap;
     gap: 0;
-    flex-shrink: 0;
 
     span {
-      @include primary-font;
       font-size: 24px;
       font-weight: 400;
-      color: $main-color;
-      line-height: 1;
-      display: inline-block;
-      white-space: nowrap;
-      margin-right: 32px;
+      margin-right: $spacing-xxxl;
 
-      &:nth-child(even) {
+      &.separator {
         font-size: 20px;
-        opacity: 0.7;
-        margin-right: 32px;
+        margin-right: $spacing-xxxl;
       }
     }
   }
 }
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: $tablet-max) {
   .banner-container {
     bottom: 20px;
     padding: 20px 0;
-    
+
     .banner-track {
-      gap: 0;
-      
       span {
         font-size: 20px;
-        margin-right: 24px;
-        
-        &:nth-child(even) {
+        margin-right: $spacing-xl;
+
+        &.separator {
           font-size: 18px;
-          margin-right: 24px;
+          margin-right: $spacing-xl;
         }
       }
     }
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $mobile-max) {
   .banner-container {
     padding: 15px 0;
-    
+
     .banner-track {
-      gap: 0;
-      
       span {
         font-size: 16px;
-        margin-right: 16px;
+        margin-right: $spacing-lg;
 
-        &:nth-child(even) {
+        &.separator {
           font-size: 16px;
-          margin-right: 16px;
+          margin-right: $spacing-lg;
         }
       }
     }
@@ -92,7 +61,7 @@
 }
 
 @media screen and (width: 1024px) and (height: 600px),
-       screen and (width: 1280px) and (height: 800px) {
+  screen and (width: 1280px) and (height: 800px) {
   .banner-container {
     position: static !important;
     margin-top: auto;
