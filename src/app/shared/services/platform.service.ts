@@ -33,10 +33,20 @@ export class PlatformService {
   }
 
   disableScroll(): void {
-    this.setBodyOverflow('hidden');
+    const doc = this.getDocument();
+    if (doc?.body) {
+      doc.body.style.overflow = 'hidden';
+      doc.body.style.position = 'fixed';
+      doc.body.style.width = '100%';
+    }
   }
 
   enableScroll(): void {
-    this.setBodyOverflow('auto');
+    const doc = this.getDocument();
+    if (doc?.body) {
+      doc.body.style.overflow = 'auto';
+      doc.body.style.position = 'static';
+      doc.body.style.width = 'auto';
+    }
   }
 }

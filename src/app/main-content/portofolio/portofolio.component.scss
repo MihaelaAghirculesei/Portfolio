@@ -161,7 +161,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 10001;
 }
 
 .project-modal-backdrop {
@@ -171,7 +171,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 9998;
+  z-index: 10000;
 }
 
 .project-modal {
@@ -182,7 +182,7 @@
   max-height: 90vh;
   margin: auto;
   padding: 40px;
-  z-index: 10000;
+  z-index: 10002;
   overflow-y: auto;
   animation: modalFadeIn 0.3s ease-in-out;
   display: flex;
