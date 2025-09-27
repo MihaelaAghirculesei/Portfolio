@@ -81,6 +81,18 @@
       font-size: map-get($typography-map, text);
     }
   }
+
+  .legal-notice-container {
+    .contact-details p,
+    .contact-name,
+    .contact-address {
+      font-size: map-get($typography-map, text);
+    }
+
+    .source-footer p {
+      font-size: map-get($typography-map, text);
+    }
+  }
 }
 
 @mixin responsive-section-layout() {

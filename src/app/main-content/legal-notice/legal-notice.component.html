@@ -1,16 +1,55 @@
-<section>
-    <div class="legal-notice-container">
-      <button class="close-btn" (click)="goBack()">&times;</button>
-      <h1>{{ 'legalNotice.title' | translate }}</h1>
+<section class="legal-notice-main" role="main" aria-label="Legal notice and contact information">
+  <div class="legal-notice-container">
+    <button
+      class="close-btn"
+      (click)="goBack()"
+      type="button"
+      aria-label="Close legal notice and return to homepage"
+    >
+      &times;
+    </button>
 
-      <p>Mihaela Melania Aghirculesei<br />
-      Springwiesen, 29<br />
-      38446 Wolfsburg</p>
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h1>{{ 'legalNotice.title' | translate }}</h1>
+      </div>
 
-      <h2>{{ 'legalNotice.contact' | translate }}</h2>
-      <p>{{ 'legalNotice.phone' | translate }}: <a href="tel:+491749627899">+49 174 9627899</a><br />
-        {{ 'legalNotice.email' | translate }}: <a href="mailto:kontakt&#64;mihaela-melania-aghirculesei.de">kontakt&#64;mihaela-melania-aghirculesei.de</a></p>
+      <section class="contact-section" aria-labelledby="contact-heading">
+        <address class="contact-info">
+          <p class="contact-name">{{ contactInfo.name }}</p>
+          <p class="contact-address">
+            {{ contactInfo.address.street }}<br>
+            {{ contactInfo.address.postalCode }} {{ contactInfo.address.city }}
+          </p>
+        </address>
 
-      <p>{{ 'legalNotice.source' | translate }}: <a href="https://www.e-recht24.de/impressum-generator.html" target="_blank">https://www.e-recht24.de/impressum-generator.html</a></p>
+        <h2 id="contact-heading">{{ 'legalNotice.contact' | translate }}</h2>
+        <div class="contact-details">
+          <p>
+            <span class="contact-label">{{ 'legalNotice.phone' | translate }}:</span>
+            <a [href]="phoneLink" class="contact-link">{{ contactInfo.phone }}</a>
+          </p>
+          <p>
+            <span class="contact-label">{{ 'legalNotice.email' | translate }}:</span>
+            <a [href]="emailLink" class="contact-link">{{ contactInfo.email }}</a>
+          </p>
+        </div>
+      </section>
     </div>
+
+    <footer class="source-footer">
+      <p>
+        {{ 'legalNotice.source' | translate }}:
+        <a
+          [href]="sourceLink.url"
+          [target]="sourceLink.isExternal ? '_blank' : '_self'"
+          [rel]="sourceLink.isExternal ? 'noopener noreferrer' : ''"
+          [attr.aria-label]="'Source: ' + sourceLink.label + (sourceLink.isExternal ? ' (opens in new tab)' : '')"
+          class="source-link"
+        >
+          {{ sourceLink.url }}
+        </a>
+      </p>
+    </footer>
+  </div>
 </section>

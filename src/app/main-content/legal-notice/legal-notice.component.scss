@@ -1,118 +1,137 @@
 @import '../../../styles/styles.scss';
 
-section {
-  min-height: calc(100vh - 160px);
-  background-color: #1c1c1c;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+.legal-notice-main {
+  min-height: 100vh;
+  background-color: $background-color;
+  @include dFlex(center, flex-start);
   width: 100%;
-  padding: 120px 20px 40px 20px;
+  padding: 98px $spacing-md $spacing-sm;
   box-sizing: border-box;
-}
+  position: relative;
 
-h2, h3, h4 {
-  @include code-font;
-}
-
-p {
-  @include primary-font;
+  @media (max-width: $mobile-max) {
+    padding: 120px $spacing-md 40px;
+  }
 }
 
 .legal-notice-container {
-  padding: 3rem;
+  padding: $spacing-sm;
   text-align: left;
   width: 100%;
-  max-width: 1440px;
-  height: 100%;
+  max-width: $content-max-width;
   position: relative;
+  @include dFlex(center, space-between);
+  flex-direction: column;
+  min-height: 100%;
 
-  @media (max-width: 768px) {
-    padding: 1.5rem;
+  @media (min-width: $tablet-min) {
+    padding: $spacing-md;
   }
 
-  @media (max-width: 480px) {
-    padding: 1rem;
+  .content-wrapper {
+    flex: 1;
   }
 
-  @media (max-width: 320px) {
-    padding: 0.75rem;
-  }
+  .page-header {
+    margin-bottom: $spacing-lg;
 
-  h1 {
-    color: $main-color;
-    font-size: 2.2rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid $main-color;
-    padding-bottom: 0.5rem;
-
-    @media (max-width: 768px) {
-      font-size: 35px;
+    h1 {
+      color: $main-color;
+      @include primary-font;
+      font-size: 2.2rem;
+      margin-bottom: $spacing-lg + $spacing-sm;
+      border-bottom: 2px solid $main-color;
+      padding-bottom: $spacing-sm;
     }
   }
 
-  h2 {
-    color: $main-color;
-    font-size: 1.5rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+  .contact-section {
+    margin-bottom: $spacing-xl + $spacing-lg;
 
-    @media (max-width: 768px) {
-      font-size: 33px;
+    .contact-info {
+      font-style: normal;
+      margin-bottom: $spacing-xl;
+
+      .contact-name {
+        @include primary-font;
+        color: $white;
+        font-weight: 600;
+        margin-bottom: $spacing-sm;
+      }
+
+      .contact-address {
+        @include primary-font;
+        color: $white;
+        line-height: 1.6;
+        margin-bottom: $spacing-lg;
+      }
+    }
+
+    h2 {
+      @include code-font;
+      color: $main-color;
+      font-size: 1.5rem;
+      margin: $spacing-xl 0 $spacing-lg;
+    }
+
+    .contact-details {
+      p {
+        @include primary-font;
+        line-height: 1.6;
+        margin-bottom: $spacing-lg;
+        color: $white;
+
+        .contact-label {
+          color: $white-dimmed;
+        }
+
+        .contact-link {
+          color: $main-color;
+          text-decoration: none;
+          transition: all $transition-base;
+
+          &:hover {
+            color: $white;
+            text-decoration: underline;
+            text-decoration-color: $main-color;
+            text-underline-offset: 4px;
+          }
+        }
+      }
     }
   }
 
-  h3 {
-    color: $main-color;
-    font-size: 1.25rem;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-
-    @media (max-width: 768px) {
-      font-size: 25px;
-    }
-  }
-
-  p {
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    color: #ffffff;
-
-    @media (max-width: 320px) {
-      font-size: 0.9rem;
-    }
-  }
-
-  a {
-    color: $main-color;
-    text-decoration: none;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: darken(#ffffff, 15%);
-      text-decoration: underline;
-      text-decoration-color: $main-color;
-      text-underline-offset: 4px;
-    }
-  }
-
-  p:last-child {
-    margin-top: 2rem;
-    font-size: 0.85rem;
-    color: lighten(#ffffff, 20%);
+  .source-footer {
+    margin-top: $spacing-md;
+    padding-top: $spacing-sm;
     border-top: 1px solid $main-color;
-    padding-top: 1rem;
+    margin-bottom: 0;
 
-    @media (max-width: 320px) {
-      margin-top: 1.5rem;
-      font-size: 0.75rem;
+    p {
+      @include primary-font;
+      font-size: 0.85rem;
+      color: $white-dimmed;
+      margin: 0;
+
+      .source-link {
+        color: $main-color;
+        text-decoration: none;
+        transition: all $transition-base;
+
+        &:hover {
+          color: $white;
+          text-decoration: underline;
+          text-decoration-color: $main-color;
+          text-underline-offset: 4px;
+        }
+      }
     }
   }
 
   .close-btn {
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: $spacing-sm + $spacing-xs;
+    right: $spacing-md;
     background: none;
     border: none;
     font-size: 28px;
@@ -120,16 +139,66 @@ p {
     cursor: pointer;
     width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include dFlex(center, center);
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: all $transition-base;
     z-index: 10;
 
     &:hover {
-      background-color: rgba(8, 70, 59, 0.2);
+      background-color: rgba($gradient-end, 0.2);
       transform: scale(1.1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $main-color;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Responsive design using standard breakpoints
+@include responsive-typography($typography-mobile);
+
+@media (min-width: $tablet-min) and (max-width: $tablet-max) {
+  @include responsive-typography($typography-tablet);
+
+  .legal-notice-container {
+    .page-header h1 {
+      font-size: map-get($typography-tablet, h2);
+    }
+  }
+}
+
+@media (min-width: $desktop-min) and (max-width: $desktop-max) {
+  @include responsive-typography($typography-desktop);
+
+  .legal-notice-container {
+    .page-header h1 {
+      font-size: map-get($typography-desktop, h2) + 8px;
+    }
+  }
+}
+
+@media (min-width: $desktop-4k-min) {
+  @include responsive-typography($typography-4k);
+
+  .legal-notice-container {
+    .page-header h1 {
+      font-size: map-get($typography-4k, h2) + 12px;
+    }
+  }
+}
+
+@media (max-width: $mobile-max) {
+  .legal-notice-container {
+    padding: $spacing-lg;
+
+    .close-btn {
+      top: $spacing-sm;
+      right: $spacing-sm;
+      width: 36px;
+      height: 36px;
+      font-size: 24px;
     }
   }
 }

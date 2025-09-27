@@ -1,6 +1,6 @@
 import { Component, ElementRef, AfterViewInit, HostListener, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ScrollService } from '../services/scroll.service';
 
@@ -20,7 +20,8 @@ export class FooterComponent implements AfterViewInit {
   constructor(
     public translate: TranslateService,
     private scrollService: ScrollService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private router: Router
   ) {}
 
   ngAfterViewInit() {
@@ -55,6 +56,12 @@ export class FooterComponent implements AfterViewInit {
   }
 
   scrollToTop(): void {
-    this.scrollService.scrollToElement('headLine', 'start');
+    // Check if we're on the home page
+    if (this.router.url === '/') {
+      this.scrollService.scrollToElement('headLine', 'start');
+    } else {
+      // Navigate to home page
+      this.router.navigate(['/']);
+    }
   }
 }

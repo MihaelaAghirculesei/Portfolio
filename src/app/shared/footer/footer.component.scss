@@ -88,6 +88,20 @@ section {
         position: relative;
         display: inline-block;
         margin-right: 12px;
+        overflow: hidden;
+        contain: layout style paint;
+        vertical-align: baseline;
+        line-height: inherit;
+
+        @media (min-width: $tablet-min) {
+          vertical-align: text-bottom;
+          margin-top: -1px;
+        }
+
+        @media (min-width: $desktop-min) {
+          vertical-align: text-bottom;
+          margin-top: -2px;
+        }
 
         &::after {
           content: '';
@@ -101,6 +115,7 @@ section {
             rgba(61, 207, 182, 0.3),
             transparent);
           animation: shine 4s ease-in-out infinite;
+          will-change: transform;
         }
 
         &:hover {
