@@ -17,11 +17,12 @@ export class OverlayComponent {
     liveUrl: '',
   };
 
-  @Input() index: number = 0;
+  @Input() index = 0;
+
   @Output() close = new EventEmitter<void>();
   @Output() next = new EventEmitter<void>();
 
-  closeOverlay() {
+  closeOverlay(): void {
     this.close.emit();
   }
 }

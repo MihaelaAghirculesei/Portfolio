@@ -124,7 +124,7 @@
         width: 350px;
         height: 230px;
         object-fit: cover;
-        border-radius: 16px;
+        border-radius: 0;
         transform: translate(-20px, -20px);
         animation: fadeIn 0.3s ease-in-out;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -132,11 +132,6 @@
         z-index: 2;
       }
 
-      .lineDiv {
-        @include decorativeLine(5px, 10px);
-        transform: translate(-20px, -20px);
-        z-index: 1;
-      }
     }
   }
 }
@@ -161,7 +156,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10001;
+  z-index: 999999;
+
+  // Cover entire page including header
+  padding-top: 0;
+  align-items: center;
+
+  // Extra high z-index for mobile
+  @media (max-width: 768px) {
+    z-index: 99999999;
+  }
+}
+
+// Create overlay that covers header area on mobile
+@media (max-width: 768px) {
+  .project-modal-overlay {
+    &::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 120px; // Cover header area
+      background: transparent;
+      z-index: 999999999;
+      pointer-events: none;
+    }
+  }
 }
 
 .project-modal-backdrop {
@@ -170,23 +191,64 @@
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 10000;
+  z-index: 999998;
+
+  // Extra high z-index for mobile
+  @media (max-width: 768px) {
+    z-index: 99999998;
+  }
 }
 
 .project-modal {
   background: linear-gradient(45deg, rgba(28,28,28,1) 40%, rgba(8,70,59,1) 100%);
-  border-radius: 24px;
+  border-radius: 0;
   max-width: 1440px;
   width: 90%;
   max-height: 90vh;
   margin: auto;
   padding: 40px;
-  z-index: 10002;
+  z-index: 999999;
   overflow-y: auto;
+
+  // Extra high z-index for mobile
+  @media (max-width: 768px) {
+    z-index: 99999999;
+  }
   animation: modalFadeIn 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
+
+  // Mobile responsive - full screen coverage
+  @media (max-width: 768px) {
+    width: 95%;
+    max-height: 90vh;
+    padding: 20px;
+  }
+
+  @media (max-width: 480px) {
+    width: 98%;
+    max-height: 90vh;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 0;
+  }
+
+  @media (max-width: 360px) {
+    width: 100%;
+    max-height: 90vh;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 0;
+  }
+
+  @media (max-width: 320px) {
+    max-height: 90vh;
+    padding: 8px;
+    margin: 2px;
+  }
 }
 
 @keyframes modalFadeIn {
@@ -204,11 +266,38 @@
   display: flex;
   flex-direction: row;
   padding: 24px;
+
+  // Mobile responsive - switch to column layout
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+    gap: 16px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 4px;
+    gap: 12px;
+  }
 }
 
 .project-info {
   width: 50%;
   padding-right: 24px;
+
+  // Mobile responsive
+  @media (max-width: 768px) {
+    width: 100% !important;
+    padding-right: 0;
+    order: 1 !important;
+  }
+
+  @media (max-width: 480px) {
+    padding-right: 0;
+  }
 
   .project-number {
     font-size: 128px;
@@ -245,7 +334,7 @@
       overflow-y: auto;
       line-height: 1.6;
       border: 1px solid rgba($main-color, 0.3);
-      border-radius: 8px;
+      border-radius: 0;
       padding: 12px 16px 12px 12px;
       
       &::-webkit-scrollbar {
@@ -254,12 +343,12 @@
       
       &::-webkit-scrollbar-track {
         background: rgba($main-color, 0.15);
-        border-radius: 10px;
+        border-radius: 0;
       }
       
       &::-webkit-scrollbar-thumb {
         background: $main-color;
-        border-radius: 10px;
+        border-radius: 0;
         transition: all 0.2s ease;
         min-height: 30px;
         
@@ -305,10 +394,25 @@
 
 .project-image-container {
   width: 50%;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 16px;
   display: flex;
   flex-direction: column;
+
+  // Mobile responsive
+  @media (max-width: 768px) {
+    width: 100% !important;
+    order: -1 !important;
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 4px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 2px;
+  }
 
   .close-button {
     align-self: flex-end;
@@ -320,10 +424,25 @@
     justify-content: center;
     border: none;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     background-color: transparent;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: rgba($main-color, 0.1);
+      transform: scale(1.1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $main-color;
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
 
     .close-icon {
       position: relative;
@@ -341,6 +460,7 @@
         top: 50%;
         left: 50%;
         transform-origin: center;
+        transition: all 0.3s ease;
       }
 
       &::before {
@@ -349,6 +469,14 @@
 
       &::after {
         transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
+
+    &:hover .close-icon {
+      &::before,
+      &::after {
+        background-color: $main-color;
+        width: 26px;
       }
     }
   }
@@ -362,21 +490,65 @@
     .imageContainer {
       position: relative;
       display: inline-block;
+      width: 100%;
+
+      // Mobile responsive - full width container
+      @media (max-width: 768px) {
+        display: block;
+        width: 100%;
+      }
 
       img {
         width: 500px;
         height: 350px;
         object-fit: cover;
-        border-radius: 30px;
+        border-radius: 0;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border: 2px solid rgba($main-color, 0.3);
         position: relative;
         z-index: 2;
+
+        // Tablet responsive
+        @media (max-width: 1024px) and (min-width: 769px) {
+          width: 400px !important;
+          height: 280px !important;
+          object-fit: cover !important;
+        }
+
+        // Mobile responsive - adapt to page width
+        @media (max-width: 768px) {
+          width: 100% !important;
+          max-width: none !important;
+          height: auto !important;
+          max-height: 250px !important;
+          min-height: 150px !important;
+          object-fit: contain !important;
+        }
+
+        @media (max-width: 480px) {
+          max-height: 200px !important;
+          min-height: 120px !important;
+        }
+
+        @media (max-width: 360px) {
+          max-height: 180px !important;
+          min-height: 100px !important;
+        }
+
+        @media (max-width: 320px) {
+          max-height: 160px !important;
+          min-height: 90px !important;
+        }
       }
 
       .lineDiv {
         @include decorativeLine(5px, 10px);
         z-index: 1;
+
+        // Hide on mobile to save space
+        @media (max-width: 480px) {
+          display: none;
+        }
       }
     }
   }
@@ -558,7 +730,7 @@
       margin-top: 0;
       
       img {
-        border-radius: 20px;
+        border-radius: 0;
       }
     }
     .close-button {
@@ -628,15 +800,15 @@
   .project-modal {
     width: 100%;
     height: auto;
-    min-height: 100%;
-    max-height: none;
+    min-height: 100vh;
+    max-height: 100vh;
     border-radius: 0;
     padding: 16px;
     overflow-y: auto;
   }
   
   .project-modal-content {
-    flex-direction: column-reverse;
+    flex-direction: column !important;
     justify-content: flex-start;
     padding: 0;
     margin: 16px;
@@ -682,7 +854,7 @@
       margin-top: 0;
       
       img {
-        border-radius: 16px;
+        border-radius: 0;
       }
     }
   }

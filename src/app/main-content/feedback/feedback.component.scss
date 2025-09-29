@@ -1,28 +1,30 @@
 @import "../../../styles/styles.scss";
-section {
-background-color: $gradient-start;
-text-align: center;
-padding: 0 $spacing-md;
 
-> h2 {
-color: $main-color;
-@include primary-font;
-font-weight: 700;
-margin-bottom: $spacing-xl;
-padding-top: $spacing-xxl;
-}
-.slider-container {
-position: relative;
-max-width: 1440px;
-margin: 0 auto;
-padding: 0 21px;
-.feedback-wrapper {
-@include dFlex(center, center);
-width: 100%;
-height: 320px;
-overflow-x: hidden;
-position: relative;
-padding: 15px 0 0 0;
+section {
+  background-color: $gradient-start;
+  text-align: center;
+  padding: 0 $spacing-md;
+
+  > h2 {
+    color: $main-color;
+    @include primary-font;
+    font-weight: 700;
+    margin-bottom: $spacing-xl;
+    padding-top: $spacing-xxl;
+  }
+  .slider-container {
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 21px;
+
+    .feedback-wrapper {
+      @include dFlex(center, center);
+      width: 100%;
+      height: 320px;
+      overflow-x: hidden;
+      position: relative;
+      padding: 15px 0 0 0;
 
 &:focus-visible {
 outline: 2px solid $main-color;

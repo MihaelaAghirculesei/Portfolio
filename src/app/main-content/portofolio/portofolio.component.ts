@@ -1,4 +1,5 @@
-import { Component, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -52,8 +53,10 @@ export class PortofolioComponent implements OnDestroy {
   private touchStartY: number = 0;
   private touchMoved: boolean = false;
   private readonly TOUCH_THRESHOLD: number = 10;
+  private headerElement: HTMLElement | null = null;
+  private originalHeaderDisplay: string = '';
 
-  constructor(private platformService: PlatformService, private translate: TranslateService) {
+  constructor(private platformService: PlatformService, private translate: TranslateService, @Inject(PLATFORM_ID) private platformId: Object) {
     this.checkOrientation();
   }
 
@@ -145,6 +148,14 @@ export class PortofolioComponent implements OnDestroy {
     this.clearActiveProject();
   }
 
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(event: KeyboardEvent): void {
+    if (this.selectedProject) {
+      event.preventDefault();
+      this.closeOverlay();
+    }
+  }
+
   @HostListener('touchmove', ['$event'])
   onTouchMove(event: TouchEvent): void {
     if (event.touches.length > 0) {
@@ -167,12 +178,26 @@ export class PortofolioComponent implements OnDestroy {
     this.checkOrientation();
 
     this.platformService.disableScroll();
+
+    // Hide header on mobile when modal opens
+    if (isPlatformBrowser(this.platformId)) {
+      this.headerElement = document.querySelector('header');
+      if (this.headerElement) {
+        this.originalHeaderDisplay = this.headerElement.style.display || 'block';
+        this.headerElement.style.display = 'none';
+      }
+    }
   }
 
   closeOverlay() {
     this.selectedProject = null;
 
     this.platformService.enableScroll();
+
+    // Restore header visibility when modal closes
+    if (isPlatformBrowser(this.platformId) && this.headerElement) {
+      this.headerElement.style.display = this.originalHeaderDisplay;
+    }
   }
 
   nextProject() {

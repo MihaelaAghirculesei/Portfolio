@@ -44,16 +44,16 @@
   </div>
 
   @if (selectedProject) {
-    <div class="project-modal-overlay">
-      <div class="project-modal-backdrop" (click)="closeOverlay()"></div>
+    <div class="project-modal-overlay" role="dialog" aria-modal="true" [attr.aria-labelledby]="'project-title-' + selectedIndex" [attr.aria-describedby]="'project-description-' + selectedIndex">
+      <div class="project-modal-backdrop" (click)="closeOverlay()" aria-hidden="true"></div>
 
-      <div class="project-modal">
+      <div class="project-modal" tabindex="-1">
         <div class="project-modal-content">
 
           <div class="project-info">
             <span class="project-number">{{ (selectedIndex + 1).toString().padStart(2, '0') }}</span>
-            <h2 class="project-title">{{ selectedProject.name }}</h2>
-            <p class="project-description">{{ getProjectShortDescription(selectedProject) }}</p>
+            <h2 class="project-title" [id]="'project-title-' + selectedIndex">{{ selectedProject.name }}</h2>
+            <p class="project-description" [id]="'project-description-' + selectedIndex">{{ getProjectShortDescription(selectedProject) }}</p>
 
             <div class="project-long-description">
               <p>{{ getProjectDescription(selectedProject) }}</p>
@@ -73,31 +73,30 @@
             </div>
 
             <div class="project-buttons">
-              <a [href]="selectedProject.githubUrl" target="_blank" rel="noopener noreferrer" class="link-button2">
+              <a [href]="selectedProject.githubUrl" target="_blank" rel="noopener noreferrer" class="link-button2" [attr.aria-label]="'View ' + selectedProject.name + ' source code on GitHub'">
                 {{ 'portfolio.github' | translate }}
               </a>
-              <a [href]="selectedProject.liveUrl" target="_blank" rel="noopener noreferrer" class="link-button2">
+              <a [href]="selectedProject.liveUrl" target="_blank" rel="noopener noreferrer" class="link-button2" [attr.aria-label]="'View ' + selectedProject.name + ' live demo'">
                 {{ 'portfolio.liveTest' | translate }}
               </a>
             </div>
           </div>
 
           <div class="project-image-container">
-            <button class="close-button" (click)="closeOverlay()">
-              <span class="close-icon"></span>
+            <button class="close-button" (click)="closeOverlay()" aria-label="Close project details modal" title="Close (ESC)">
+              <span class="close-icon" aria-hidden="true"></span>
             </button>
 
             <div class="project-image">
               <div class="imageContainer">
                 <img [src]="selectedProject.previewImg" [alt]="getProjectScreenshotAlt(selectedIndex)">
-                <div class="lineDiv"></div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="project-modal-footer">
-          <button class="next-project-button" (click)="nextProject()">
+          <button class="next-project-button" (click)="nextProject()" aria-label="View next project" title="Next Project">
             {{ 'portfolio.nextProject' | translate }}
           </button>
         </div>
