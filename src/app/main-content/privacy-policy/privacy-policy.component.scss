@@ -18,7 +18,7 @@ section {
 
 .content-width {
   margin-bottom: 0;
-  max-width: 1440px;
+  max-width: $content-max-width;
   margin: 0 auto;
 }
 
@@ -90,6 +90,11 @@ p {
 
     @media (max-width: $tablet-max) {
       font-size: 35px;
+    }
+
+    @media (max-width: $mobile-large-max) {
+      max-width: 200px;
+      word-wrap: break-word;
     }
   }
 
@@ -169,11 +174,11 @@ p {
 
   ul {
     color: $white;
-    margin-left: 20px;
-    margin-bottom: 15px;
+    margin-left: $spacing-xl;
+    margin-bottom: $spacing-lg;
 
     li {
-      margin-bottom: 8px;
+      margin-bottom: $spacing-sm;
       line-height: 1.6;
     }
   }
