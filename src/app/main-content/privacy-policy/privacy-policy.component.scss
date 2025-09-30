@@ -9,9 +9,7 @@
 section {
   min-height: calc(100vh - 160px);
   background-color: $gradient-start;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  @include dFlex(center, flex-start);
   width: 100%;
   padding: 120px 20px 40px 20px;
   box-sizing: border-box;
@@ -40,15 +38,46 @@ p {
   height: 100%;
   position: relative;
 
-  @media (max-width: 768px) {
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: 2px solid $main-color;
+    color: $main-color;
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    @include dFlex(center, center);
+    transition: all $transition-base;
+    z-index: 10;
+
+    &:hover {
+      background-color: $main-color;
+      color: $background-color;
+      transform: rotate(90deg);
+    }
+
+    @media (max-width: $mobile-max) {
+      width: 35px;
+      height: 35px;
+      font-size: 1.5rem;
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+
+  @media (max-width: $tablet-max) {
     padding: 1.5rem 1.5rem 0rem 1.5rem;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: $mobile-max) {
     padding: 1rem 1rem 0rem 1rem;
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: $mobile-small-max) {
     padding: 0.75rem 0.75rem 0rem 0.75rem;
   }
 
@@ -59,29 +88,45 @@ p {
     border-bottom: 2px solid $main-color;
     padding-bottom: 0.5rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: $tablet-max) {
       font-size: 35px;
     }
   }
 
   h2 {
     color: $main-color;
-    font-size: 1.5rem;
+    font-size: 56px;
     margin-top: 2rem;
     margin-bottom: 1rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: $desktop-max) {
+      font-size: 48px;
+    }
+
+    @media (max-width: $tablet-max) {
+      font-size: 40px;
+    }
+
+    @media (max-width: $mobile-max) {
       font-size: 33px;
     }
   }
 
   h3 {
     color: $main-color;
-    font-size: 1.3rem;
+    font-size: 42px;
     margin-top: 1.5rem;
     margin-bottom: 0.8rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: $desktop-max) {
+      font-size: 36px;
+    }
+
+    @media (max-width: $tablet-max) {
+      font-size: 30px;
+    }
+
+    @media (max-width: $mobile-max) {
       font-size: 25px;
     }
   }
@@ -92,12 +137,12 @@ p {
     margin-top: 1.2rem;
     margin-bottom: 0.6rem;
 
-    @media (max-width: 480px) {
+    @media (max-width: $mobile-max) {
       font-size: 1rem;
       margin-top: 1rem;
     }
 
-    @media (max-width: 320px) {
+    @media (max-width: $mobile-small-max) {
       font-size: 0.9rem;
       margin-top: 0.8rem;
     }
@@ -106,15 +151,24 @@ p {
   p {
     line-height: 1.6;
     margin-bottom: 1rem;
-    color: #ffffff;
+    color: $white;
+    font-size: 20px;
 
-    @media (max-width: 320px) {
-      font-size: 0.9rem;
+    @media (max-width: $desktop-max) {
+      font-size: 18px;
+    }
+
+    @media (max-width: $tablet-max) {
+      font-size: 17px;
+    }
+
+    @media (max-width: $mobile-max) {
+      font-size: 16px;
     }
   }
 
   ul {
-    color: #ffffff;
+    color: $white;
     margin-left: 20px;
     margin-bottom: 15px;
 
@@ -127,10 +181,10 @@ p {
   a {
     color: $main-color;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color $transition-base;
 
     &:hover {
-      color: darken(#ffffff, 15%);
+      color: $white-dimmed;
       text-decoration: underline;
       text-decoration-color: $main-color;
       text-underline-offset: 4px;
@@ -141,11 +195,11 @@ p {
     margin-top: 2rem;
     margin-bottom: 0;
     font-size: 0.85rem;
-    color: lighten(#ffffff, 20%);
+    color: $white-dimmed;
     border-top: 1px solid $main-color;
     padding-top: 1rem;
 
-    @media (max-width: 320px) {
+    @media (max-width: $mobile-small-max) {
       margin-top: 1.5rem;
       font-size: 0.75rem;
     }
@@ -161,13 +215,13 @@ p {
     background-color: $main-color;
     margin: 2rem 0;
     border: none;
-    
-    @media (max-width: 480px) {
+
+    @media (max-width: $mobile-max) {
       margin: 1.5rem 0;
       height: 1px;
     }
-    
-    @media (max-width: 320px) {
+
+    @media (max-width: $mobile-small-max) {
       margin: 1rem 0;
     }
   }

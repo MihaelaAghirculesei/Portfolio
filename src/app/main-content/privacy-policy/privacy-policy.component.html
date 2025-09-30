@@ -4,7 +4,7 @@
       *ngIf="translateService.currentLang === 'de'; else englishVersion"
     >
       <div class="privacy-police-container">
-        <button class="close-btn" (click)="goBack()">&times;</button>
+        <button class="close-btn" (click)="goBack()" aria-label="Datenschutzerklärung schließen">&times;</button>
         <h1>Datenschutz&shy;erkl&auml;rung</h1>
         <h2>1. Datenschutz auf einen Blick</h2>
         <h3>Allgemeine Hinweise</h3>
@@ -185,14 +185,14 @@
         </p>
         <p>
           Quelle:
-          <a href="https://www.e-recht24.de">https://www.e-recht24.de</a>
+          <a href="https://www.e-recht24.de" target="_blank" rel="noopener noreferrer">https://www.e-recht24.de</a>
         </p>
       </div>
     </ng-container>
 
     <ng-template #englishVersion>
       <div class="privacy-police-container">
-        <button class="close-btn" (click)="goBack()">&times;</button>
+        <button class="close-btn" (click)="goBack()" aria-label="Close privacy policy">&times;</button>
         <h1>Privacy Policy</h1>
         <h2>1. Privacy at a Glance</h2>
         <h3>General Information</h3>
@@ -352,7 +352,7 @@
         </p>
         <p>
           Source:
-          <a href="https://www.e-recht24.de">https://www.e-recht24.de</a>
+          <a href="https://www.e-recht24.de" target="_blank" rel="noopener noreferrer">https://www.e-recht24.de</a>
         </p>
       </div>
     </ng-template>
