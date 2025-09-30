@@ -151,7 +151,23 @@ app-banner-section {
   }
 }
 
-@media (max-width: $tablet-max) {
+@media (min-width: 546px) and (max-width: 649px) {
+  .headLine .contentWrapper {
+    h1 {
+      font-size: 50px;
+    }
+  }
+}
+
+@media (min-width: 650px) and (max-width: 770px) {
+  .headLine .contentWrapper {
+    h1 {
+      font-size: 60px;
+    }
+  }
+}
+
+@media (min-width: 771px) and (max-width: $tablet-max) {
   .headLine .contentWrapper {
     h1 {
       font-size: 80px;
@@ -159,7 +175,7 @@ app-banner-section {
   }
 }
 
-@media (max-width: $mobile-max) {
+@media (max-width: 545px) {
   .headLine .contentWrapper {
     p {
       font-size: $font-size-base;
@@ -220,25 +236,8 @@ app-banner-section {
 
 @media (max-width: $mobile-small-max) {
   .headLine .contentWrapper {
-    p {
-      font-size: $font-size-base;
-      padding-bottom: $spacing-xs;
-      font-weight: 900;
-    }
     h1 {
-      font-size: $font-size-h1-mobile;
-      word-spacing: -0.1em;
       line-height: 0.9;
-      padding: 0;
-      margin: 0;
-
-      &:first-of-type {
-        margin: 0;
-      }
-
-      &:last-of-type {
-        margin: 0;
-      }
 
       &.name-spectacular {
         letter-spacing: $letter-spacing-sm;
@@ -246,7 +245,6 @@ app-banner-section {
     }
 
     .buttonDiv {
-      flex-direction: column;
       gap: $spacing-xs;
       margin-top: $spacing-md;
 
