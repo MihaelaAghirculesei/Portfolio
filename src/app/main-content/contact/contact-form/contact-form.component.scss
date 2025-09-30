@@ -34,7 +34,7 @@ input:-webkit-autofill:active {
     flex-direction: column;
     height: auto;
     width: 100%;
-    max-width: 500px;
+    max-width: 730px;
     padding: calc($content-margin-base / 2);
 
     .inputText {
@@ -143,14 +143,12 @@ input:-webkit-autofill:active {
 
         .checkmark {
           display: inline-block;
-          width: 20px;
-          height: 20px;
+          width: 22px;
+          height: 22px;
           margin-right: 16px;
           position: relative;
           top: 0;
           left: 0;
-          height: 1.3em;
-          width: 1.3em;
           border: 2px solid $main-color;
           border-radius: 5px;
           transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -161,10 +159,10 @@ input:-webkit-autofill:active {
             display: none;
             left: 50%;
             top: 50%;
-            width: 0.25em;
-            height: 0.5em;
+            width: 5px;
+            height: 10px;
             border: solid $main-color;
-            border-width: 0 0.15em 0.15em 0;
+            border-width: 0 2.5px 2.5px 0;
             transform: translate(-50%, -60%) rotate(45deg);
           }
         }
