@@ -5,40 +5,68 @@
   background-color: $gradient-start;
   @include dFlex(center, center);
   scroll-margin-top: 150px;
-  
+
   .contentWrapper {
     text-align: left;
     max-width: 1440px;
     width: 100%;
     margin: 0 40px;
-    
+
     > h2 {
       color: $main-color;
-      font-size: 48px;
+      font-size: 56px;
       @include primary-font;
       font-weight: 700;
       margin-bottom: 10px;
 
-      @media (max-width: 768px) {
+      @media (max-width: $desktop-max) {
+        font-size: 48px;
+      }
+
+      @media (max-width: $tablet-max) {
+        font-size: 40px;
+      }
+
+      @media (max-width: $mobile-max) {
         font-size: 33px;
       }
     }
 
     > h3 {
-      @include text("Fira Code", 30px, $main-color, 400);
+      @include text("Fira Code", 42px, $main-color, 400);
 
-      @media (max-width: 768px) {
+      @media (max-width: $desktop-max) {
+        font-size: 36px;
+      }
+
+      @media (max-width: $tablet-max) {
+        font-size: 30px;
+      }
+
+      @media (max-width: $mobile-max) {
         font-size: 25px;
       }
     }
-    
+
     > p {
-      font-size: 18px;
+      font-size: 20px;
       @include primary-font;
       width: 30%;
       margin: 0 0 10px 0;
       line-height: 120%;
-      color: white;
+      color: $white;
+
+      @media (max-width: $desktop-max) {
+        font-size: 18px;
+      }
+
+      @media (max-width: $tablet-max) {
+        font-size: 17px;
+      }
+
+      @media (max-width: $mobile-max) {
+        font-size: 16px;
+      }
     }
   }
 }
@@ -46,25 +74,27 @@
 .projectWrapper {
   position: relative;
   width: 100%;
-  
+
   .projects-table {
     width: 70%;
     border-collapse: collapse;
-    
+
     tbody {
       tr.project-row {
         border-top: 1px solid $main-color;
         border-bottom: 1px solid $main-color;
-        transition: all 300ms ease;
+        transition: all $transition-base;
         cursor: pointer;
-        -webkit-tap-highlight-color: rgba(61, 207, 183, 0.2);
-        
-        &:hover, &:active, &.active-touch {
-          background-color: rgba($main-color, 0.18);
-          
+        -webkit-tap-highlight-color: $main-color-light;
+
+        &:hover,
+        &:active,
+        &.active-touch {
+          background-color: $main-color-light;
+
           .project-name {
             &::after {
-              content: '↗';
+              content: "↗";
               margin-left: 8px;
               font-size: 18px;
               color: $main-color;
@@ -82,21 +112,21 @@
           font-size: 24px;
           @include code-font;
           font-weight: 700;
-          color: white;
-          
+          color: $white;
+
           .arrow-icon {
             display: inline-block;
             margin-left: 8px;
           }
         }
-        
+
         .project-tech {
           text-align: center;
           font-size: 18px;
           @include primary-font;
           font-weight: 400;
-          color: white;
-          
+          color: $white;
+
           .tech-separator {
             color: $main-color;
             margin: 0 4px;
@@ -111,7 +141,7 @@
   display: block;
   position: absolute;
   right: -25px;
-  transition: top 0.3s ease;
+  transition: top $transition-base;
   opacity: 1;
   transform: translateY(0);
 
@@ -127,23 +157,22 @@
         border-radius: 0;
         transform: translate(-20px, -20px);
         animation: fadeIn 0.3s ease-in-out;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 32px $shadow-medium;
         position: relative;
         z-index: 2;
       }
-
     }
   }
 }
 
 @keyframes fadeIn {
-  from { 
-    opacity: 0; 
-    transform: translate(-20px, -20px) scale(0.95); 
+  from {
+    opacity: 0;
+    transform: translate(-20px, -20px) scale(0.95);
   }
-  to { 
-    opacity: 1; 
-    transform: translate(-20px, -20px) scale(1); 
+  to {
+    opacity: 1;
+    transform: translate(-20px, -20px) scale(1);
   }
 }
 
@@ -153,22 +182,19 @@
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include dFlex(center, center);
   z-index: 999999;
   padding-top: 0;
-  align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: $tablet-medium-max) {
     z-index: 99999999;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $tablet-medium-max) {
   .project-modal-overlay {
     &::before {
-      content: '';
+      content: "";
       position: fixed;
       top: 0;
       left: 0;
@@ -189,16 +215,16 @@
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: $modal-backdrop;
   z-index: 999998;
 
-  @media (max-width: 768px) {
+  @media (max-width: $tablet-medium-max) {
     z-index: 99999998;
   }
 }
 
 .project-modal {
-  background: linear-gradient(45deg, rgba(28,28,28,1) 40%, rgba(8,70,59,1) 100%);
+  background: linear-gradient(45deg, $gradient-start 40%, $gradient-end 100%);
   border-radius: 0;
   max-width: 1440px;
   width: 90%;
@@ -208,23 +234,23 @@
   z-index: 999999;
   overflow-y: auto;
   animation: modalFadeIn 0.3s ease-in-out;
-  display: flex;
+  @include dFlex(flex-start, stretch);
   flex-direction: column;
 
-  @media (min-width: 769px) and (max-width: 1024px) {
+  @media (min-width: $tablet-medium-min) and (max-width: $tablet-max) {
     max-height: fit-content;
     height: auto;
     overflow-y: visible;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: $tablet-medium-max) {
     z-index: 99999999;
     width: 95%;
     max-height: 90vh;
     padding: 20px;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: $mobile-max) {
     width: 98%;
     max-height: 90vh;
     padding: 15px;
@@ -232,7 +258,7 @@
     border-radius: 0;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: $mobile-medium-max) {
     width: 100%;
     max-height: 90vh;
     padding: 10px;
@@ -240,7 +266,7 @@
     border-radius: 0;
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: $mobile-small-max) {
     max-height: 90vh;
     padding: 8px;
     margin: 2px;
@@ -259,21 +285,21 @@
 }
 
 .project-modal-content {
-  display: flex;
+  @include dFlex(flex-start, stretch);
   flex-direction: row;
   padding: 24px;
 
-  @media (max-width: 768px) {
+  @media (max-width: $tablet-medium-max) {
     flex-direction: column;
     padding: 16px;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: $mobile-max) {
     padding: 8px;
     gap: 16px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: $mobile-medium-max) {
     padding: 4px;
     gap: 12px;
   }
@@ -283,13 +309,13 @@
   width: 50%;
   padding-right: 24px;
 
-  @media (max-width: 768px) {
+  @media (max-width: $tablet-medium-max) {
     width: 100% !important;
     padding-right: 0;
     order: 1 !important;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: $mobile-max) {
     padding-right: 0;
   }
 
@@ -305,7 +331,7 @@
     font-weight: 700;
     @include code-font;
     margin-bottom: 16px;
-    color: white;
+    color: $white;
   }
 
   .project-description {
@@ -318,39 +344,19 @@
 
   .project-long-description {
     margin-bottom: 16px;
-    
+
     p {
       @include primary-font;
       font-size: 18px;
-      color: #ffffff;
+      color: $white;
       height: auto;
       max-height: 80px;
       overflow-y: auto;
       line-height: 1.6;
-      border: 1px solid rgba($main-color, 0.3);
+      border: 1px solid $main-color-light;
       border-radius: 0;
       padding: 12px 16px 12px 12px;
-      
-      &::-webkit-scrollbar {
-        width: 12px;
-      }
-      
-      &::-webkit-scrollbar-track {
-        background: rgba($main-color, 0.15);
-        border-radius: 0;
-      }
-      
-      &::-webkit-scrollbar-thumb {
-        background: $main-color;
-        border-radius: 0;
-        transition: all 0.2s ease;
-        min-height: 30px;
-        
-        &:hover {
-          background: $main-color;
-          opacity: 0.8;
-        }
-      }
+      @include customScrollbar(12px, $main-color-lighter, $main-color);
     }
   }
 
@@ -358,20 +364,18 @@
     margin-bottom: 24px;
 
     .tech-tags {
-      display: flex;
+      @include dFlex(flex-start, center);
       flex-wrap: wrap;
       gap: 24px;
-      align-items: center;
-      
+
       .tech-tag {
-        display: flex;
-        align-items: center;
+        @include dFlex(flex-start, center);
         gap: 8px;
-        color: #fff;
+        color: $white;
         font-size: 18px;
         font-weight: 500;
         @include primary-font;
-        
+
         .tech-icon {
           width: 20px;
           height: 20px;
@@ -381,7 +385,7 @@
   }
 
   .project-buttons {
-    display: flex;
+    @include dFlex(flex-start, center);
     gap: 16px;
   }
 }
@@ -390,20 +394,20 @@
   width: 50%;
   border-radius: 0;
   padding: 16px;
-  display: flex;
+  @include dFlex(flex-start, stretch);
   flex-direction: column;
 
-  @media (max-width: 768px) {
+  @media (max-width: $tablet-medium-max) {
     width: 100% !important;
     order: -1 !important;
     padding: 8px;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: $mobile-max) {
     padding: 4px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: $mobile-medium-max) {
     padding: 2px;
   }
 
@@ -412,19 +416,17 @@
     margin-bottom: 8px;
     width: 32px;
     height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include dFlex(center, center);
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all $transition-base;
     background-color: transparent;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     border-radius: 50%;
 
     &:hover {
-      background-color: rgba($main-color, 0.1);
+      background-color: $white-transparent-light;
       transform: scale(1.1);
     }
 
@@ -445,15 +447,15 @@
 
       &::before,
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         width: 24px;
         height: 2px;
-        background-color: #ffffff;
+        background-color: $white;
         top: 50%;
         left: 50%;
         transform-origin: center;
-        transition: all 0.3s ease;
+        transition: all $transition-base;
       }
 
       &::before {
@@ -476,16 +478,14 @@
 
   .project-image {
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include dFlex(center, center);
 
     .imageContainer {
       position: relative;
       display: inline-block;
       width: 100%;
 
-      @media (max-width: 768px) {
+      @media (max-width: $tablet-medium-max) {
         display: block;
         width: 100%;
       }
@@ -495,17 +495,17 @@
         height: 350px;
         object-fit: cover;
         border-radius: 0;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px $shadow-light;
         position: relative;
         z-index: 2;
 
-        @media (max-width: 1024px) and (min-width: 769px) {
+        @media (max-width: $tablet-max) and (min-width: $tablet-medium-min) {
           width: 400px !important;
           height: 280px !important;
           object-fit: cover !important;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: $tablet-medium-max) {
           width: 100% !important;
           max-width: none !important;
           height: auto !important;
@@ -514,17 +514,17 @@
           object-fit: contain !important;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: $mobile-max) {
           max-height: 200px !important;
           min-height: 120px !important;
         }
 
-        @media (max-width: 360px) {
+        @media (max-width: $mobile-medium-max) {
           max-height: 180px !important;
           min-height: 100px !important;
         }
 
-        @media (max-width: 320px) {
+        @media (max-width: $mobile-small-max) {
           max-height: 160px !important;
           min-height: 90px !important;
         }
@@ -534,7 +534,7 @@
         @include decorativeLine(5px, 10px);
         z-index: 1;
 
-        @media (max-width: 480px) {
+        @media (max-width: $mobile-max) {
           display: none;
         }
       }
@@ -544,11 +544,10 @@
 
 .project-modal-footer {
   padding: 16px;
-  display: flex;
-  justify-content: flex-end;
+  @include dFlex(flex-end, center);
 
   .next-project-button {
-    display: flex;
+    @include dFlex(center, center);
     background: none;
     border: none;
     color: $main-color;
@@ -568,12 +567,13 @@
       top: 0;
       width: 16px;
       height: 24px;
-      transition: all 300ms ease;
+      transition: all $transition-base;
     }
-    
-    &:hover, &:active {
-      color: #ffffff;
-      
+
+    &:hover,
+    &:active {
+      color: $white;
+
       &::after {
         right: -32px;
       }
@@ -585,26 +585,27 @@
   display: inline-flex;
   align-items: center;
   background-color: transparent;
-  border: 1px solid #ffffff;
+  border: 1px solid $white;
   padding: 18px 28px;
   border-radius: 32px;
-  color: white;
+  color: $white;
   text-decoration: none;
   @include primary-font;
   font-size: 16px;
   font-weight: 500;
-  transition: all 300ms ease;
-  -webkit-tap-highlight-color: rgba(61, 207, 183, 0.2);
+  transition: all $transition-base;
+  -webkit-tap-highlight-color: $main-color-light;
 
   &::after {
-    content: '↗';
+    content: "↗";
     margin-left: 8px;
-    transition: all 300ms ease;
+    transition: all $transition-base;
     color: $main-color;
     font-size: 16px;
   }
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     border: 1px solid $main-color;
 
     &::after {
@@ -614,8 +615,7 @@
   }
 }
 
-
-@media (max-width: 1440px) {
+@media (max-width: $desktop-medium-max) {
   .project-info {
     .project-number {
       font-size: 64px;
@@ -633,7 +633,7 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: $desktop-small-max) {
   #projects .contentWrapper > p {
     width: 100%;
   }
@@ -643,28 +643,28 @@
   }
 }
 
-@media (min-width: 801px) {
+@media (min-width: $tablet-large-min) {
   #projects .projectWrapper .projects-table {
     width: 55% !important;
   }
-  
+
   .project-modal {
     width: 100%;
     max-height: 90vh;
     border-radius: 16px;
     padding: 24px;
   }
-  
+
   .project-modal-content {
     padding: 16px;
   }
-  
+
   .project-image-container {
     padding: 8px;
   }
 }
 
-@media (max-width: 1024px) and (orientation: landscape) {
+@media (max-width: $tablet-max) and (orientation: landscape) {
   .project-modal {
     width: 100%;
     height: auto;
@@ -672,15 +672,15 @@
     padding: 16px;
     overflow-y: auto;
   }
-  
+
   .project-modal-content {
     flex-direction: row;
     padding: 12px;
   }
-  
+
   .project-info {
     width: 50%;
-    
+
     .project-number {
       font-size: 48px;
     }
@@ -699,10 +699,10 @@
     }
     .project-technologies .tech-tags {
       gap: 12px;
-      
+
       .tech-tag {
         font-size: 16px;
-        
+
         .tech-icon {
           width: 18px;
           height: 18px;
@@ -710,13 +710,13 @@
       }
     }
   }
-  
+
   .project-image-container {
     width: 50%;
-    
+
     .project-image {
       margin-top: 0;
-      
+
       img {
         border-radius: 0;
       }
@@ -725,18 +725,18 @@
       margin-bottom: 4px;
     }
   }
-  
+
   .project-modal-footer {
     padding: 8px;
   }
-  
+
   .link-button2 {
     padding: 12px 20px;
     font-size: 16px;
   }
 }
 
-@media (max-width: 830px) {
+@media (max-width: $tablet-large-max) {
   .projects-hover-content figure .imageContainer {
     img {
       width: 220px !important;
@@ -749,30 +749,31 @@
   }
 }
 
-
-@media (max-width: 800px) and (min-width: 760px) {
+@media (max-width: $tablet-large-max) and (min-width: $tablet-small-min) {
   .projectWrapper .projects-table {
     width: 60% !important;
   }
 
   .projectWrapper .projects-table tbody tr {
-    .project-name, .project-tech {
+    .project-name,
+    .project-tech {
       display: table-cell !important;
       vertical-align: middle;
     }
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $tablet-medium-max) {
   .projectWrapper .projects-table tbody tr {
-    .project-name, .project-tech {
+    .project-name,
+    .project-tech {
       display: block !important;
       text-align: left !important;
       padding: 20px 16px;
     }
     .project-name {
       padding: 16px 0 4px 0 !important;
-      
+
       font-size: 20px;
     }
     .project-tech {
@@ -781,10 +782,9 @@
       font-size: 16px;
     }
   }
-
 }
 
-@media (width: 768px) and (height: 1024px) and (orientation: portrait) {
+@media (width: $tablet-medium-max) and (height: $tablet-max) and (orientation: portrait) {
   .project-modal {
     max-height: fit-content !important;
     height: auto !important;
@@ -793,7 +793,7 @@
   }
 }
 
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: $tablet-medium-max) and (orientation: portrait) {
   .project-modal {
     width: 100%;
     height: auto;
@@ -862,7 +862,7 @@
   }
 }
 
-@media (max-width: 768px) and (orientation: landscape) {
+@media (max-width: $tablet-medium-max) and (orientation: landscape) {
   .project-modal {
     height: auto;
     max-height: 100vh;
@@ -871,15 +871,15 @@
     padding: 12px;
     overflow-y: auto;
   }
-  
+
   .project-modal-content {
     flex-direction: row;
     padding: 8px;
   }
-  
+
   .project-info {
     width: 50%;
-    
+
     .project-number {
       font-size: 36px;
     }
@@ -898,10 +898,10 @@
     }
     .project-technologies .tech-tags {
       gap: 8px;
-      
+
       .tech-tag {
         font-size: 16px;
-        
+
         .tech-icon {
           width: 16px;
           height: 16px;
@@ -909,21 +909,22 @@
       }
     }
   }
-  
+
   .project-image-container {
     width: 50%;
     padding: 4px;
-    
+
     .close-button {
       margin-bottom: 4px;
       width: 24px;
       height: 24px;
-      
+
       .close-icon {
         width: 24px;
         height: 24px;
-        
-        &::before, &::after {
+
+        &::before,
+        &::after {
           width: 18px;
         }
       }
@@ -932,37 +933,37 @@
       margin-top: 0;
     }
   }
-  
+
   .project-modal-footer {
     padding: 4px;
-    
+
     .next-project-button {
       font-size: 16px;
       margin-right: 40px;
     }
   }
-  
+
   .link-button2 {
     padding: 10px 16px;
     font-size: 16px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: $tablet-small-max) {
   #projects .contentWrapper > h2 {
     font-size: 33px;
   }
-  
+
   .projectWrapper .projects-table tbody tr .project-name {
     font-size: 20px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $mobile-max) {
   .project-modal-content {
     margin: 8px;
   }
-  
+
   .project-info {
     .project-number {
       font-size: 32px;
@@ -975,10 +976,10 @@
     }
     .project-technologies .tech-tags {
       gap: 8px;
-      
+
       .tech-tag {
         font-size: 16px;
-        
+
         .tech-icon {
           width: 16px;
           height: 16px;
@@ -989,27 +990,27 @@
       max-height: 70px;
     }
   }
-  
+
   .project-image-container .close-button {
     margin-bottom: 0;
   }
-  
+
   .project-modal-footer .next-project-button {
     margin-right: 30px;
     font-size: 16px;
   }
-  
+
   .link-button2 {
     padding: 8px 14px;
     font-size: 16px;
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: $mobile-small-max) {
   .project-modal {
     padding: 8px;
   }
-  
+
   .project-info {
     .project-number {
       font-size: 28px;
@@ -1025,21 +1026,21 @@
     }
     .project-technologies .tech-tags .tech-tag {
       font-size: 16px;
-      
+
       .tech-icon {
         width: 24px;
         height: 24px;
       }
     }
   }
-  
+
   .link-button2 {
     padding: 6px 12px;
     font-size: 16px;
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: $mobile-medium-max) {
   #projects .contentWrapper > p,
   .project-tech,
   .project-modal-content p,

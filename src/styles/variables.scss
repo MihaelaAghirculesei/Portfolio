@@ -8,6 +8,7 @@ $white: #ffffff;
 
 $main-color-rgba: rgba(61, 207, 182, 0.8);
 $main-color-light: rgba(61, 207, 182, 0.3);
+$main-color-lighter: rgba(61, 207, 182, 0.15);
 $alert-light: rgba(255, 100, 100, 0.1);
 $alert-shadow: rgba(255, 100, 100, 0.3);
 
@@ -35,9 +36,20 @@ $spacing-xxxl: 32px;
 
 $transition-base: 0.3s ease;
 
+$mobile-small-max: 320px;
+$mobile-medium-max: 360px;
 $mobile-max: 480px;
+$tablet-small-max: 600px;
+$tablet-small-min: 760px;
+$tablet-medium-min: 769px;
+$tablet-medium-max: 768px;
+$tablet-large-max: 800px;
+$tablet-large-min: 801px;
+$tablet-extra-large-max: 830px;
 $tablet-min: 481px;
 $tablet-max: 1024px;
+$desktop-small-max: 1200px;
+$desktop-medium-max: 1440px;
 $desktop-min: 1025px;
 $desktop-max: 1919px;
 $desktop-4k-min: 1920px;
