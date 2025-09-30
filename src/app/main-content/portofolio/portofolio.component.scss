@@ -157,18 +157,14 @@
   align-items: center;
   justify-content: center;
   z-index: 999999;
-
-  // Cover entire page including header
   padding-top: 0;
   align-items: center;
 
-  // Extra high z-index for mobile
   @media (max-width: 768px) {
     z-index: 99999999;
   }
 }
 
-// Create overlay that covers header area on mobile
 @media (max-width: 768px) {
   .project-modal-overlay {
     &::before {
@@ -177,7 +173,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 120px; // Cover header area
+      height: 120px;
       background: transparent;
       z-index: 999999999;
       pointer-events: none;
@@ -196,7 +192,6 @@
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 999998;
 
-  // Extra high z-index for mobile
   @media (max-width: 768px) {
     z-index: 99999998;
   }
@@ -212,17 +207,18 @@
   padding: 40px;
   z-index: 999999;
   overflow-y: auto;
-
-  // Extra high z-index for mobile
-  @media (max-width: 768px) {
-    z-index: 99999999;
-  }
   animation: modalFadeIn 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
 
-  // Mobile responsive - full screen coverage
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-height: fit-content;
+    height: auto;
+    overflow-y: visible;
+  }
+
   @media (max-width: 768px) {
+    z-index: 99999999;
     width: 95%;
     max-height: 90vh;
     padding: 20px;
@@ -267,7 +263,6 @@
   flex-direction: row;
   padding: 24px;
 
-  // Mobile responsive - switch to column layout
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 16px;
@@ -288,7 +283,6 @@
   width: 50%;
   padding-right: 24px;
 
-  // Mobile responsive
   @media (max-width: 768px) {
     width: 100% !important;
     padding-right: 0;
@@ -399,7 +393,6 @@
   display: flex;
   flex-direction: column;
 
-  // Mobile responsive
   @media (max-width: 768px) {
     width: 100% !important;
     order: -1 !important;
@@ -492,7 +485,6 @@
       display: inline-block;
       width: 100%;
 
-      // Mobile responsive - full width container
       @media (max-width: 768px) {
         display: block;
         width: 100%;
@@ -504,18 +496,15 @@
         object-fit: cover;
         border-radius: 0;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border: 2px solid rgba($main-color, 0.3);
         position: relative;
         z-index: 2;
 
-        // Tablet responsive
         @media (max-width: 1024px) and (min-width: 769px) {
           width: 400px !important;
           height: 280px !important;
           object-fit: cover !important;
         }
 
-        // Mobile responsive - adapt to page width
         @media (max-width: 768px) {
           width: 100% !important;
           max-width: none !important;
@@ -545,7 +534,6 @@
         @include decorativeLine(5px, 10px);
         z-index: 1;
 
-        // Hide on mobile to save space
         @media (max-width: 480px) {
           display: none;
         }
@@ -796,6 +784,15 @@
 
 }
 
+@media (width: 768px) and (height: 1024px) and (orientation: portrait) {
+  .project-modal {
+    max-height: fit-content !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    min-height: auto !important;
+  }
+}
+
 @media (max-width: 768px) and (orientation: portrait) {
   .project-modal {
     width: 100%;
@@ -806,19 +803,19 @@
     padding: 16px;
     overflow-y: auto;
   }
-  
+
   .project-modal-content {
     flex-direction: column !important;
     justify-content: flex-start;
     padding: 0;
     margin: 16px;
   }
-  
+
   .project-info {
     width: 100%;
     padding-right: 0;
     margin-top: 16px;
-    
+
     .project-number {
       font-size: 40px;
     }
@@ -835,30 +832,30 @@
     }
     .project-technologies .tech-tags .tech-tag {
       font-size: 16px;
-      
+
       .tech-icon {
         width: 18px;
         height: 18px;
       }
     }
   }
-  
+
   .project-image-container {
     width: 100%;
     padding: 8px;
-    
+
     .close-button {
       margin-bottom: 0;
     }
     .project-image {
       margin-top: 0;
-      
+
       img {
         border-radius: 0;
       }
     }
   }
-  
+
   .link-button2 {
     padding: 12px 20px;
     font-size: 16px;
