@@ -1,4 +1,12 @@
-import { Component, ViewChild, ElementRef, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  HostListener,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
@@ -9,7 +17,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [TranslatePipe],
   templateUrl: './portofolio.component.html',
-  styleUrl: './portofolio.component.scss'
+  styleUrl: './portofolio.component.scss',
 })
 export class PortofolioComponent implements OnDestroy {
   @ViewChild('projectsTable') projectsTable!: ElementRef;
@@ -21,23 +29,25 @@ export class PortofolioComponent implements OnDestroy {
       previewImg: 'assets/img/projects/join.png',
       description: `Join Kanban Board is the project management revolution! An extraordinary application that transforms every project into a success through spectacular visual boards and real-time collaboration. With Join, you can easily organize tasks, track progress, and collaborate with your team in a dynamic and intuitive environment. Say goodbye to chaos and hello to productivity! Join Kanban Board is the perfect tool for teams of all sizes, from startups to large enterprises. Experience the future of project management with Join Kanban Board and take your projects to the next level. Your next big victory starts here.`,
       githubUrl: 'https://github.com/MihaelaAghirculesei/join-kanban-board',
-      liveUrl: 'https://mihaela-melania-aghirculesei.de/join'
+      liveUrl: 'https://mihaela-melania-aghirculesei.de/join',
     },
     {
       name: 'El Pollo Loco',
       technologies: ['JavaScript', 'HTML', 'CSS'],
       previewImg: 'assets/img/projects/el-pollo-locco.png',
-      description: 'An exciting game where courage meets chicken chaos! Built with JavaScript, HTML and CSS, it offers smooth gameplay with keyboard and touch controls, epic Endboss challenges, immersive sound effects and responsive design for all devices.',
+      description:
+        'An exciting game where courage meets chicken chaos! Built with JavaScript, HTML and CSS, it offers smooth gameplay with keyboard and touch controls, epic Endboss challenges, immersive sound effects and responsive design for all devices.',
       githubUrl: 'https://github.com/MihaelaAghirculesei/El-Pollo-Loco',
-      liveUrl: 'https://mihaela-melania-aghirculesei.de/el_pollo_loco'
+      liveUrl: 'https://mihaela-melania-aghirculesei.de/el_pollo_loco',
     },
     {
       name: 'Pokédex',
       technologies: ['Rest-Api', 'JavaScript', 'HTML', 'CSS'],
       previewImg: 'assets/img/projects/pokedex.png',
-      description: 'An interactive portal into the magical world of Pokemon! Designed with passion, it offers a smooth and engaging experience built with modern technologies: PokeAPI for always up-to-date data, responsive design for all devices, performant JavaScript and captivating CSS animations.',
+      description:
+        'An interactive portal into the magical world of Pokemon! Designed with passion, it offers a smooth and engaging experience built with modern technologies: PokeAPI for always up-to-date data, responsive design for all devices, performant JavaScript and captivating CSS animations.',
       githubUrl: 'https://github.com/MihaelaAghirculesei/Pokedex',
-      liveUrl: 'https://mihaela-melania-aghirculesei.de/pokedex'
+      liveUrl: 'https://mihaela-melania-aghirculesei.de/pokedex',
     },
   ];
 
@@ -56,7 +66,11 @@ export class PortofolioComponent implements OnDestroy {
   private headerElement: HTMLElement | null = null;
   private originalHeaderDisplay: string = '';
 
-  constructor(private platformService: PlatformService, private translate: TranslateService, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    private platformService: PlatformService,
+    private translate: TranslateService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.checkOrientation();
   }
 
@@ -82,32 +96,28 @@ export class PortofolioComponent implements OnDestroy {
   }
 
   setActiveProject(projectIndex: number, event: MouseEvent): void {
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 480) {
       return;
     }
 
     this.activeProjectId = projectIndex;
     this.activePreview = this.projects[projectIndex].previewImg;
 
-    const trElement = (event.currentTarget as HTMLElement);
+    const trElement = event.currentTarget as HTMLElement;
     const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
     const trRect = trElement.getBoundingClientRect();
 
-    const basePosition = trRect.top - tableRect.top + (trRect.height / 2) - 100;
+    const basePosition = trRect.top - tableRect.top + trRect.height / 2 - 100;
 
-    // Check if we're in small preview format (≤830px)
-    const isSmallPreview = window.innerWidth <= 830;
+    const isSmallPreview = window.innerWidth <= 860;
 
     if (projectIndex === 0) {
-      // Join: extra offset up for small preview
       const extraOffset = isSmallPreview ? -10 : 0;
       this.hoverPosition = basePosition + 70 + extraOffset;
     } else if (projectIndex === 1) {
-      // El Pollo Loco: extra offset down for small preview
       const extraOffset = isSmallPreview ? 30 : 0;
       this.hoverPosition = basePosition + 15 + extraOffset;
     } else if (projectIndex === 2) {
-      // Pokédex: extra offset down for small preview
       const extraOffset = isSmallPreview ? 70 : 0;
       this.hoverPosition = basePosition - 40 + extraOffset;
     } else {
@@ -130,11 +140,12 @@ export class PortofolioComponent implements OnDestroy {
       this.activeProjectId = projectIndex;
       this.activePreview = this.projects[projectIndex].previewImg;
 
-      const trElement = (event.currentTarget as HTMLElement);
-      const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
+      const trElement = event.currentTarget as HTMLElement;
+      const tableRect =
+        this.projectsTable.nativeElement.getBoundingClientRect();
       const trRect = trElement.getBoundingClientRect();
 
-      this.hoverPosition = trRect.top - tableRect.top + (trRect.height / 2) - 100;
+      this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - 100;
     }
   }
 
@@ -179,11 +190,11 @@ export class PortofolioComponent implements OnDestroy {
 
     this.platformService.disableScroll();
 
-    // Hide header on mobile when modal opens
     if (isPlatformBrowser(this.platformId)) {
       this.headerElement = document.querySelector('header');
       if (this.headerElement) {
-        this.originalHeaderDisplay = this.headerElement.style.display || 'block';
+        this.originalHeaderDisplay =
+          this.headerElement.style.display || 'block';
         this.headerElement.style.display = 'none';
       }
     }
@@ -194,7 +205,6 @@ export class PortofolioComponent implements OnDestroy {
 
     this.platformService.enableScroll();
 
-    // Restore header visibility when modal closes
     if (isPlatformBrowser(this.platformId) && this.headerElement) {
       this.headerElement.style.display = this.originalHeaderDisplay;
     }
@@ -210,7 +220,11 @@ export class PortofolioComponent implements OnDestroy {
   }
 
   getProjectScreenshotAlt(projectIndex: number | null): string {
-    if (projectIndex === null || projectIndex < 0 || projectIndex >= this.projects.length) {
+    if (
+      projectIndex === null ||
+      projectIndex < 0 ||
+      projectIndex >= this.projects.length
+    ) {
       return 'Project screenshot';
     }
     const project = this.projects[projectIndex];
@@ -246,29 +260,35 @@ export class PortofolioComponent implements OnDestroy {
 
   hasTechIcon(technology: string): boolean {
     const techIcons = [
-      'Angular', 'Firebase', 'TypeScript', 'HTML', 'CSS', 'SCSS',
-      'JavaScript', 'Rest-Api'
+      'Angular',
+      'Firebase',
+      'TypeScript',
+      'HTML',
+      'CSS',
+      'SCSS',
+      'JavaScript',
+      'Rest-Api',
     ];
     return techIcons.includes(technology);
   }
 
   getTechIconPath(technology: string): string | null {
     const iconMap: { [key: string]: string } = {
-      'Angular': 'assets/img/projects/icons/angular.svg',
-      'Firebase': 'assets/img/projects/icons/firebase.svg',
-      'TypeScript': 'assets/img/projects/icons/typescript.svg',
-      'HTML': 'assets/img/projects/icons/html.svg',
-      'CSS': 'assets/img/projects/icons/css.svg',
-      'SCSS': 'assets/img/projects/icons/sass.svg',
-      'JavaScript': 'assets/img/projects/icons/javascript.svg',
-      'Rest-Api': 'assets/img/projects/icons/rest-api.svg'
+      Angular: 'assets/img/projects/icons/angular.svg',
+      Firebase: 'assets/img/projects/icons/firebase.svg',
+      TypeScript: 'assets/img/projects/icons/typescript.svg',
+      HTML: 'assets/img/projects/icons/html.svg',
+      CSS: 'assets/img/projects/icons/css.svg',
+      SCSS: 'assets/img/projects/icons/sass.svg',
+      JavaScript: 'assets/img/projects/icons/javascript.svg',
+      'Rest-Api': 'assets/img/projects/icons/rest-api.svg',
     };
-    
+
     return iconMap[technology] || null;
   }
 
   onHover(event: MouseEvent, project: Projects) {
-    const index = this.projects.findIndex(p => p.name === project.name);
+    const index = this.projects.findIndex((p) => p.name === project.name);
     if (index !== -1) {
       this.setActiveProject(index, event);
     }

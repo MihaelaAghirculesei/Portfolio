@@ -33,7 +33,11 @@
       </table>
 
       @if (activePreview && !selectedProject && hoverPosition !== null) {
-      <div class="projects-hover-content" [style.top.px]="hoverPosition">
+      <div
+        class="projects-hover-content"
+        [style.top.px]="hoverPosition"
+        [attr.data-project-id]="activeProjectId"
+      >
         <div class="imageContainer">
           <img
             [src]="activePreview"
