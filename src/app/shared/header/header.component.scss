@@ -339,6 +339,7 @@ button.logo-button {
 
   .dropdown-content {
     padding: $mobile-dropdown-padding;
+    cursor: pointer;
 
     ul {
       list-style-type: none;

@@ -1,3 +1,4 @@
+// Colors
 $main-color: #3dcfb6;
 $background-color: #1c1c1c;
 $gradient-start: #1c1c1c;
@@ -5,29 +6,28 @@ $gradient-end: #08463b;
 $alert-text: #ec7b7b;
 $placeholder-color: #888888;
 $white: #ffffff;
+$black-pure: #000000;
 
+// Color variants
 $main-color-rgba: rgba(61, 207, 182, 0.8);
+$main-color-lighter: rgba(61, 207, 182, 0.15);
 $main-color-light: rgba(61, 207, 182, 0.3);
 $main-color-medium: rgba(61, 207, 182, 0.5);
 $main-color-strong: rgba(61, 207, 182, 0.7);
-$main-color-lighter: rgba(61, 207, 182, 0.15);
+
 $alert-light: rgba(255, 100, 100, 0.1);
 $alert-shadow: rgba(255, 100, 100, 0.3);
 
-$white-pure: #ffffff;
 $white-dimmed: rgba(255, 255, 255, 0.8);
 $white-transparent-light: rgba(255, 255, 255, 0.1);
 $white-transparent-medium: rgba(255, 255, 255, 0.5);
 
-$black-pure: #000000;
 $modal-backdrop: rgba(0, 0, 0, 0.7);
 $shadow-light: rgba(0, 0, 0, 0.2);
 $shadow-medium: rgba(0, 0, 0, 0.3);
 $shadow-heavy: rgba(0, 0, 0, 0.5);
 
-$section-padding: 60px;
-$border-radius-base: 20px;
-
+// Spacing
 $spacing-xs: 4px;
 $spacing-sm: 8px;
 $spacing-md: 12px;
@@ -36,28 +36,30 @@ $spacing-xl: 20px;
 $spacing-xxl: 24px;
 $spacing-xxxl: 32px;
 
+$section-padding: 60px;
+$content-gap-base: 60px;
+$content-margin-base: 40px;
+$h2-margin-bottom: 10px;
+$h3-margin-bottom: 15px;
+$span-margin: 10px 0 15px 0;
+$feature-margin-bottom: 15px;
+$about-wrapper-margin-top: 120px;
+
+// Border radius
+$border-radius-base: 20px;
+
+// Transitions
 $transition-base: 0.3s ease;
 
-$mobile-small-max: 320px;
-$mobile-medium-max: 360px;
-$mobile-large-max: 400px;
-$mobile-max: 480px;
-$tablet-small-max: 480px;
-$tablet-small-min: 760px;
-$tablet-medium-min: 481px;
-$tablet-medium-max: 480px;
-$tablet-large-max: 860px;
-$tablet-large-min: 801px;
-$tablet-extra-large-max: 830px;
-$tablet-min: 481px;
-$tablet-max: 1024px;
-$desktop-small-max: 1200px;
-$desktop-medium-max: 1440px;
-$desktop-min: 1025px;
-$desktop-max: 1919px;
-$desktop-4k-min: 1920px;
-$large-screens-min: 1600px;
-$ultra-wide-min: 2000px;
+// Sizes
+$content-max-width: 1440px;
+$icon-size-sm: 24px;
+$line-height-sm: 150px;
+
+// Typography
+$font-size-base: 16px;
+$font-size-h1-mobile: 35px;
+$letter-spacing-sm: 1px;
 
 $typography-mobile: (
   h1: 35px,
@@ -84,18 +86,27 @@ $typography-4k: (
   text: 20px,
 );
 
-$content-max-width: 1440px;
-$about-wrapper-margin-top: 120px;
-$content-gap-base: 60px;
-$content-margin-base: 40px;
-$h2-margin-bottom: 10px;
-$h3-margin-bottom: 15px;
-$span-margin: 10px 0 15px 0;
-$feature-margin-bottom: 15px;
-
+// Breakpoints (organized from smallest to largest)
 $mobile-small-max: 367px;
-$icon-size-sm: 24px;
-$line-height-sm: 150px;
-$font-size-base: 16px;
-$font-size-h1-mobile: 35px;
-$letter-spacing-sm: 1px;
+$mobile-medium-max: 360px;
+$mobile-large-max: 400px;
+$mobile-max: 480px;
+
+$tablet-min: 481px;
+$tablet-medium-min: 481px;
+$tablet-medium-max: 480px;
+$tablet-small-max: 480px;
+$tablet-small-min: 760px;
+$tablet-large-min: 801px;
+$tablet-extra-large-max: 830px;
+$tablet-large-max: 860px;
+$tablet-max: 1024px;
+
+$desktop-min: 1025px;
+$desktop-small-max: 1200px;
+$desktop-medium-max: 1440px;
+$desktop-max: 1919px;
+$desktop-4k-min: 1920px;
+
+$large-screens-min: 1600px;
+$ultra-wide-min: 2000px;

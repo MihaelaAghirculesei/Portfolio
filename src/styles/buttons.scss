@@ -1,17 +1,16 @@
 .link-button {
+  @include dFlex(center, center);
+  @include primary-font;
   position: relative;
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
   background-color: transparent;
-  border: 1px solid #ffffff;
+  border: 1px solid $white;
   padding: 16px 24px;
   border-radius: 32px;
-  color: white;
+  color: $white;
   text-decoration: none;
   overflow: hidden;
-  transition: border-color 0.3s ease, color 0.3s ease;
-  @include primary-font;
+  transition: border-color $transition-base, color $transition-base;
 
   &:hover {
     border-color: $main-color;
@@ -33,6 +32,7 @@
 
     &::before,
     &::after {
+      @include dFlex(center, center);
       content: attr(data-text);
       position: absolute;
       white-space: nowrap;
@@ -40,9 +40,6 @@
       top: 0;
       height: 100%;
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       opacity: 0;
       transition: opacity 0.2s;
       color: $main-color;
@@ -84,12 +81,12 @@
 .nav-btn {
   background: none;
   border: none;
-  font-size: 2rem !important;
-  color: white;
+  font-size: 2rem;
+  color: $white;
   cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 8px !important;
-  border-radius: 4px !important;
+  transition: all $transition-base;
+  padding: 8px;
+  border-radius: 4px;
 
   &:hover:not(:disabled) {
     color: $main-color;
@@ -97,14 +94,14 @@
   }
 
   &:disabled {
-    color: rgba(255, 255, 255, 0.3) !important;
-    cursor: not-allowed !important;
-    transform: none !important;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+    transform: none;
   }
 
   &:focus-visible {
-    outline: 2px solid $main-color !important;
-    outline-offset: 2px !important;
+    outline: 2px solid $main-color;
+    outline-offset: 2px;
   }
 
   &.left-btn {

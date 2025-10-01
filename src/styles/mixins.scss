@@ -235,19 +235,19 @@
 
 @mixin tooltip() {
   @include primary-font;
+  position: absolute;
   font-size: 16px;
   font-weight: 500;
-  position: absolute;
-  background: #fff;
+  background: $white;
   border-radius: 24px;
   padding: 24px;
   text-align: center;
-  color: #000;
+  color: $black-pure;
   display: none;
   opacity: 0;
   transition: transform $transition-base, opacity 1s ease-in-out;
   z-index: 10;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px $shadow-medium;
 }
 
 @mixin fullScreenSection() {
@@ -310,6 +310,7 @@
   position: relative;
   transform: translateY(-15px);
   transition: transform $transition-base;
+  will-change: transform;
 
   &:hover {
     transform: translateY(-20px);
@@ -322,11 +323,11 @@
     z-index: 2;
     border-radius: $border-radius;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px $shadow-medium;
     transition: box-shadow $transition-base;
 
     &:hover {
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 25px 50px $shadow-heavy;
     }
 
     img,
@@ -336,6 +337,7 @@
       object-fit: cover;
       transition: transform $transition-base;
       filter: brightness(1.05) contrast(1.02);
+      will-change: transform;
 
       &:hover {
         transform: scale(1.02);
@@ -380,12 +382,13 @@
   @include dFlex(flex-start, center);
   @include primary-font;
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.8);
+  color: $white-dimmed;
   font-weight: 400;
   gap: $gap;
   padding-left: 20px;
   margin-bottom: 25px;
   transition: transform $transition-base;
+  will-change: transform;
 
   &:hover {
     transform: translateX(5px);
@@ -395,7 +398,7 @@
     flex-shrink: 0;
     padding: 8px;
     border-radius: 12px;
-    background: rgba($main-color, 0.1);
+    background: $main-color-lighter;
     transition: transform $transition-base;
 
     &:hover {
@@ -458,32 +461,30 @@
 @mixin spectacularText($animation-duration: 40s, $glow-duration: 30s) {
   background: linear-gradient(
     45deg,
-    #ffffff 0%,
+    $white 0%,
     $main-color 15%,
-    #ffffff 30%,
+    $white 30%,
     $main-color 45%,
-    #ffffff 60%,
+    $white 60%,
     $main-color 75%,
-    #ffffff 100%
+    $white 100%
   );
   background-size: 400% 100%;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   animation: spectacularFlow $animation-duration ease-in-out infinite;
   position: relative;
   display: inline-block;
   font-weight: 600;
   letter-spacing: 2px;
   text-shadow: none;
+  will-change: transform;
 
   &::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: linear-gradient(
       90deg,
       transparent 0%,
@@ -500,7 +501,7 @@
   &:hover {
     animation-duration: 3s;
     transform: scale(1.02) translateY(-2px);
-    filter: drop-shadow(0 8px 25px rgba($main-color, 0.4));
+    filter: drop-shadow(0 8px 25px $main-color-light);
     transition: all 0.6s ease;
   }
 }
