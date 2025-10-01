@@ -1,55 +1,54 @@
 <section class="skillsSection" id="skills">
   <div class="contentWrapper">
-    
     <div class="textWrapper">
       <h2 class="overContent">{{ 'skills.overContent' | translate }}</h2>
-      
+
       <div class="textDiv">
         <h3>{{ 'skills.title' | translate }}</h3>
-        
+
         <span class="skillIntroduction">
           {{ 'skills.introduction' | translate }}
         </span>
-        
+
         <h3>
-          {{ 'skills.additionalSkillsTitle' | translate }} 
+          {{ 'skills.additionalSkillsTitle' | translate }}
           <span>{{ 'skills.additionalSkillsHighlight' | translate }}</span>
         </h3>
-        
+
         <span>{{ 'skills.additionalSkillsText' | translate }}</span>
-        
-        <a 
-          href="#contact" 
-          class="link-button animated" 
+
+        <a
+          href="#contact"
+          class="link-button animated"
           [attr.data-text]="'skills.ctaText' | translate"
+          [attr.aria-label]="'skills.ctaAriaLabel' | translate"
           (click)="handleContactClick($event)"
-          role="button"
-          aria-label="Contatta per discutere del progetto">
+          role="button">
           <span>{{ 'skills.ctaText' | translate }}</span>
         </a>
       </div>
     </div>
-    
+
     <div class="skillButtons">
       @for (skill of skillItems; track skill.name; let i = $index) {
         <div class="skillDiv">
-          <img 
-            [src]="skill.url" 
-            [alt]="skill.name + ' logo'" 
+          <img
+            [src]="skill.url"
+            [alt]="skill.name + ' logo'"
             loading="lazy"
             width="55"
             height="55" />
           <p>{{ skill.name }}</p>
-          
+
           @if (isLastItem(i)) {
             <div class="tooltip" role="tooltip">
               <span>{{ 'skills.tooltipText' | translate }}</span>
               <div class="future-skills">
                 @for (futureSkill of futureSkills; track futureSkill.name) {
                   <div class="skillItem">
-                    <img 
-                      [src]="futureSkill.url" 
-                      [alt]="futureSkill.name + ' logo'" 
+                    <img
+                      [src]="futureSkill.url"
+                      [alt]="futureSkill.name + ' logo'"
                       loading="lazy"
                       width="40"
                       height="40" />

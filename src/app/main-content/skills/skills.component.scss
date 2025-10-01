@@ -1,70 +1,110 @@
 @import '../../../styles/styles.scss';
 
+$section-min-height: 900px;
+$content-max-width: 1440px;
+$text-min-width: 580px;
+$skill-div-height: 108px;
+$skill-div-height-md: 90px;
+$skill-div-height-sm: 80px;
+$grid-min-size: 104px;
+
+$tooltip-width: 224px;
+$tooltip-height: 150px;
+$tooltip-arrow-size: 12px;
+
+$skill-icon-size: 55px;
+$skill-icon-size-md: 45px;
+$skill-icon-size-sm: 40px;
+
+$opacity-overlay: 0.9;
+$brightness-hover: 1.05;
+$contrast-hover: 1.02;
+$scale-hover: 1.1;
+$scale-hover-small: 1.05;
+
 .skillsSection {
   background: radial-gradient(circle at 0% 50%, $gradient-end 0%, $gradient-start 25%);
-  min-height: 900px;
+  min-height: $section-min-height;
   width: 100%;
-  @include dFlex(center, center);
   padding: $section-padding 0 0 0;
   overflow: hidden;
+  @include dFlex(center, center);
 }
 
 .contentWrapper {
-  max-width: 1440px;
+  max-width: $content-max-width;
   width: 100%;
   gap: 60px;
   margin: 0 40px;
-  color: white;
-  @include dFlex(space-between, center);
+  color: $white;
   position: relative;
   z-index: 1;
+  @include dFlex(space-between, center);
 }
 
 .textWrapper {
   flex: 1;
-  @include dFlex(flex-start, flex-start);
   flex-direction: column;
+  @include dFlex(flex-start, flex-start);
 
   .overContent {
     @include primary-font;
     margin-bottom: 10px;
-    font-size: 48px;
+    font-size: map-get($typography-desktop, h2);
     font-weight: 700;
-    opacity: 0.9;
+    opacity: $opacity-overlay;
     color: $main-color;
     text-align: left;
+
+    @media (max-width: $tablet-max) {
+      font-size: map-get($typography-tablet, h2);
+    }
+
+    @media (max-width: $mobile-max) {
+      font-size: map-get($typography-mobile, h2);
+    }
+
+    @media (min-width: $desktop-4k-min) {
+      font-size: map-get($typography-4k, h2);
+    }
   }
 
   .textDiv {
     @include textBox(40px, #{$border-radius-base * 2});
     width: 100%;
-    min-width: 580px;
+    min-width: $text-min-width;
 
-    strong {
-      color: white;
-    }
+    strong { color: $white; }
 
     h3 {
       @include code-font;
-      font-size: 30px;
+      font-size: map-get($typography-tablet, h3);
       color: $main-color;
       font-weight: 400;
-      padding-left: 0;
       margin-bottom: 15px;
+      padding-left: 0;
       text-align: left;
 
-      @media (max-width: 768px) {
-        font-size: 25px;
+      @media (max-width: $mobile-max) {
+        font-size: map-get($typography-mobile, h3);
+      }
+
+      @media (min-width: $desktop-min) {
+        font-size: map-get($typography-desktop, h3);
+      }
+
+      @media (min-width: $desktop-4k-min) {
+        font-size: map-get($typography-4k, h3);
       }
     }
 
     h3:not(:first-of-type) {
       @include primary-font;
       font-size: 24px;
-      color: white;
+      color: $white;
       font-weight: 700;
-      padding-left: 0;
       margin: 16px 0 12px 0;
+      padding-left: 0;
       text-align: left;
 
       span { color: $main-color; }
@@ -72,82 +112,109 @@
 
     h2 {
       @include primary-font;
-      font-size: 48px;
-      color: white;
+      font-size: map-get($typography-desktop, h2);
+      color: $white;
       font-weight: 700;
-      padding-left: 0;
       margin: 16px 0 12px 0;
+      padding-left: 0;
       text-align: left;
+
+      @media (max-width: $tablet-max) {
+        font-size: map-get($typography-tablet, h2);
+      }
+
+      @media (max-width: $mobile-max) {
+        font-size: map-get($typography-mobile, h2);
+      }
+
+      @media (min-width: $desktop-4k-min) {
+        font-size: map-get($typography-4k, h2);
+      }
+
       span { color: $main-color; }
     }
 
-    .skillIntroduction, > span:last-of-type {
+    .skillIntroduction,
+    > span:last-of-type {
       @include primary-font;
-      font-size: 17px;
-      color: white;
+      font-size: map-get($typography-tablet, text);
+      color: $white;
       font-weight: 400;
       max-width: 100%;
       width: 100%;
-      padding-left: 0;
       margin: 10px 0 15px 0;
+      padding-left: 0;
       display: block;
       line-height: 1.4;
       text-align: left;
 
-      strong {
-        color: white;
+      @media (max-width: $mobile-max) {
+        font-size: map-get($typography-mobile, text);
       }
+
+      @media (min-width: $desktop-min) {
+        font-size: map-get($typography-desktop, text);
+      }
+
+      @media (min-width: $desktop-4k-min) {
+        font-size: map-get($typography-4k, text);
+      }
+
+      strong { color: $white; }
     }
 
-    .link-button {
-      margin: 16px 0 0 0;
-    }
+    .link-button { margin: 16px 0 0 0; }
   }
 }
 
 .skillButtons {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(104px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min($grid-min-size, 100%), 1fr));
   gap: 15px;
   width: 100%;
   flex: 1;
 }
 
 .skillDiv {
-  height: 108px;
+  height: $skill-div-height;
   margin-top: 12px;
-  @include dFlex(flex-start, center);
   flex-direction: column;
   text-align: center;
   position: relative;
   transition: transform $transition-base;
+  @include dFlex(flex-start, center);
 
   &:hover { transform: translateY(-5px); }
 
   > img {
-    width: 55px;
-    height: 55px;
+    width: $skill-icon-size;
+    height: $skill-icon-size;
     padding-bottom: 4px;
     object-fit: contain;
+    filter: brightness($brightness-hover) contrast($contrast-hover);
     transition: transform $transition-base;
-    filter: brightness(1.05) contrast(1.02);
-    &:hover { transform: scale(1.1); }
+
+    &:hover { transform: scale($scale-hover); }
   }
 
   > p {
     @include code-font;
     font-size: 16px;
-    color: white;
+    color: $white;
     font-weight: 400;
-    text-align: center;
-    transition: color 0.1s ease-in-out;
     margin: 0;
     line-height: 1.2;
+    text-align: center;
+    transition: color $transition-base;
   }
 
   &:last-child:hover {
-    .tooltip { display: block; transform: translateY(-10px); opacity: 1; }
     p { color: $main-color; }
+    .tooltip {
+      display: block;
+      opacity: 1;
+      transform: translateY(-10px);
+    }
   }
 }
 
@@ -155,39 +222,47 @@
   @include tooltip();
   right: -30px;
   top: -165px;
-  @include dFlex(center, center);
+  width: $tooltip-width;
+  height: $tooltip-height;
   flex-direction: column;
   gap: 12px;
-  width: 224px;
-  height: 150px;
+  @include dFlex(center, center);
 
-  > span { color: $main-color; line-height: 1.4; }
-  
+  > span {
+    color: $main-color;
+    line-height: 1.4;
+  }
+
   &::after {
     content: "";
     position: absolute;
     top: 100%;
     left: 50%;
+    border: $tooltip-arrow-size solid;
+    border-color: $white transparent transparent transparent;
     transform: translateX(-50%);
-    border: 12px solid;
-    border-color: white transparent transparent transparent;
   }
 }
 
-.future-skills { @include dFlex(center, center); gap: 20px; }
+.future-skills {
+  gap: 20px;
+  @include dFlex(center, center);
+}
 
 .skillItem {
-  @include dFlex(center, center);
   flex-direction: column;
   gap: 8px;
   transition: transform $transition-base;
-  &:hover { transform: scale(1.05); }
+  @include dFlex(center, center);
+
+  &:hover { transform: scale($scale-hover-small); }
 
   img {
-    width: 40px;
-    height: 40px;
+    width: $skill-icon-size-sm;
+    height: $skill-icon-size-sm;
     object-fit: contain;
     transition: transform $transition-base;
+
     &:hover { transform: rotate(5deg); }
   }
 
@@ -201,7 +276,10 @@
 }
 
 @media (min-width: 2000px) {
-  .contentWrapper { gap: 100px; max-width: 1440px; }
+  .contentWrapper {
+    gap: 100px;
+    max-width: $content-max-width;
+  }
   .textWrapper .textDiv { min-width: 720px; }
   .skillButtons { gap: 20px; }
 }
@@ -213,14 +291,23 @@
 }
 
 @media (max-width: 1200px) {
-  .contentWrapper { gap: 40px; margin: 0 40px; }
-  .textWrapper .textDiv { min-width: 460px; h3 { font-size: 25px; } }
+  .contentWrapper {
+    gap: 40px;
+    margin: 0 40px;
+  }
+  .textWrapper .textDiv { min-width: 460px; }
   .skillButtons { gap: 15px; }
 }
 
 @media (max-width: 1024px) {
-  .contentWrapper { gap: 35px; margin: 0 35px; }
-  .textWrapper .textDiv { min-width: 420px; padding: 35px; h3 { font-size: 25px; } }
+  .contentWrapper {
+    gap: 35px;
+    margin: 0 35px;
+  }
+  .textWrapper .textDiv {
+    min-width: 420px;
+    padding: 35px;
+  }
   .skillButtons { gap: 12px; }
 }
 
@@ -228,67 +315,153 @@
   .contentWrapper { gap: 40px; }
   .textWrapper .textDiv { min-width: 400px; }
   .skillButtons { gap: 12px; }
-  .skillDiv { > img { width: 40px; height: 40px; } > p { font-size: 16px; } }
+  .skillDiv {
+    > img {
+      width: $skill-icon-size-sm;
+      height: $skill-icon-size-sm;
+    }
+  }
 }
 
 @media (max-width: 900px) and (orientation: portrait) {
   .skillsSection { min-height: auto; }
-  .contentWrapper { flex-direction: column; gap: 30px; margin: 0 30px; text-align: center; }
-  .textWrapper { text-align: center; .overContent { text-align: center; font-size: 36px; } }
+  .contentWrapper {
+    flex-direction: column;
+    gap: 30px;
+    margin: 0 30px;
+    text-align: center;
+  }
+  .textWrapper {
+    text-align: center;
+    .overContent { text-align: center; }
+  }
   .textWrapper .textDiv {
-    min-width: auto; max-width: 100%; padding: 35px; border-radius: 35px;
-    
-    h3 { padding-left: 0; text-align: left; font-size: 25px; }
-    h2 { padding-left: 0; text-align: left; font-size: 33px; }
-    .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: left; font-size: 16px; }
-    .link-button { margin-left: 0; align-self: center; }
+    min-width: auto;
+    max-width: 100%;
+    padding: 35px;
+    border-radius: 35px;
+
+    h3 {
+      padding-left: 0;
+      text-align: left;
+    }
+    h2 {
+      padding-left: 0;
+      text-align: left;
+    }
+    .skillIntroduction,
+    > span:last-of-type {
+      max-width: 100%;
+      padding-left: 0;
+      text-align: left;
+    }
+    .link-button {
+      margin-left: 0;
+      align-self: center;
+    }
   }
   .skillButtons { gap: 12px; }
 }
 
 @media (max-width: 768px) {
   .skillsSection { min-height: auto; }
-  .contentWrapper { flex-direction: column; gap: 40px; margin: 0 25px; text-align: center; }
-  .textWrapper { text-align: center; .overContent { text-align: center; font-size: 32px; } }
+  .contentWrapper {
+    flex-direction: column;
+    gap: 40px;
+    margin: 0 25px;
+    text-align: center;
+  }
+  .textWrapper {
+    text-align: center;
+    .overContent { text-align: center; }
+  }
   .textWrapper .textDiv {
-    min-width: auto; max-width: 100%; padding: 30px; border-radius: 30px; text-align: center;
-    
-    h3 { padding-left: 0; font-size: 25px; text-align: left; }
-    h2 { padding-left: 0; font-size: 33px; text-align: left; }
-    .skillIntroduction, > span:last-of-type { padding-left: 0; max-width: 100%; text-align: left; font-size: 16px; }
-    .link-button { margin-left: 0; align-self: center; }
+    min-width: auto;
+    max-width: 100%;
+    padding: 30px;
+    border-radius: 30px;
+    text-align: center;
+
+    h3 {
+      padding-left: 0;
+      text-align: left;
+    }
+    h2 {
+      padding-left: 0;
+      text-align: left;
+    }
+    .skillIntroduction,
+    > span:last-of-type {
+      max-width: 100%;
+      padding-left: 0;
+      text-align: left;
+    }
+    .link-button {
+      margin-left: 0;
+      align-self: center;
+    }
   }
   .skillButtons { gap: 12px; }
-  .skillDiv { > img { width: 45px; height: 45px; } > p { font-size: 16px; } }
+  .skillDiv {
+    > img {
+      width: $skill-icon-size-md;
+      height: $skill-icon-size-md;
+    }
+  }
 }
 
-@media (max-width: 600px) { .skillDiv { height: 90px; } }
+@media (max-width: 600px) {
+  .skillDiv { height: $skill-div-height-md; }
+}
 
 @media (max-width: 480px) {
+  .skillsSection { padding-bottom: 20px; }
   .contentWrapper { margin: 0 20px; }
   .textWrapper .textDiv {
-    padding: 20px; border-radius: $border-radius-base; max-width: 100%;
-    h3 { font-size: 25px; }
-    .skillIntroduction, > span:last-of-type { font-size: 16px; text-align: left; }
+    max-width: 100%;
+    padding: 20px;
+    border-radius: $border-radius-base;
+
+    .skillIntroduction,
+    > span:last-of-type {
+      text-align: left;
+    }
   }
   .skillButtons { gap: 8px; }
-  .skillDiv { height: 80px; > img { width: 40px; height: 40px; } > p { font-size: 16px; } }
+  .skillDiv {
+    height: $skill-div-height-sm;
+    > img {
+      width: $skill-icon-size-sm;
+      height: $skill-icon-size-sm;
+    }
+  }
 }
 
 @media (max-width: 420px) {
   .skillButtons { gap: 8px; }
-  .tooltip { left: 40px; right: auto; &::after { left: 32px; transform: none; } }
+  .tooltip {
+    left: 40px;
+    right: auto;
+    &::after {
+      left: 32px;
+      transform: none;
+    }
+  }
 }
 
 @media (max-width: 340px) {
   .skillButtons { gap: 6px; }
-  .tooltip { left: 10px; &::after { left: 100px; } }
+  .tooltip {
+    left: 10px;
+    &::after { left: 100px; }
+  }
 }
 
 @media (max-width: 360px) {
   .textWrapper .textDiv {
-    .skillIntroduction, > span:last-of-type {
-      line-height: 1.3 !important;
+    .skillIntroduction,
+    > span:last-of-type {
+      line-height: 1.3;
     }
   }
 }

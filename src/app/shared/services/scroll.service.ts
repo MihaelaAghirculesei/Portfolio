@@ -21,7 +21,7 @@ export class ScrollService {
               extraOffset = 0;
               break;
             case 'skills':
-              extraOffset = 0;
+              extraOffset = -5;
               break;
             case 'projects':
               extraOffset = 20;

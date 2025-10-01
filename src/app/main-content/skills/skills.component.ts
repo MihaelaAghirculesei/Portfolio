@@ -15,10 +15,7 @@ interface SkillItem {
   styleUrl: './skills.component.scss',
 })
 export class SkillsComponent {
-
-  constructor(private scrollService: ScrollService) {}
-  
-  readonly skillItems: SkillItem[] = [
+  readonly skillItems: readonly SkillItem[] = [
     { url: 'assets/img/skills/angular.svg', name: 'Angular' },
     { url: 'assets/img/skills/typescript.svg', name: 'TypeScript' },
     { url: 'assets/img/skills/javascript.svg', name: 'JavaScript' },
@@ -33,14 +30,12 @@ export class SkillsComponent {
     { url: 'assets/img/skills/mindset.svg', name: 'Growth Mindset' }
   ];
 
-  readonly futureSkills: SkillItem[] = [
+  readonly futureSkills: readonly SkillItem[] = [
     { url: 'assets/img/skills/react.svg', name: 'React' },
     { url: 'assets/img/skills/vuejs.svg', name: 'Vue.js' }
   ];
 
-  scrollToContact(): void {
-    this.scrollService.scrollToElement('contact', 'start');
-  }
+  constructor(private scrollService: ScrollService) {}
 
   isLastItem(index: number): boolean {
     return index === this.skillItems.length - 1;
@@ -48,6 +43,6 @@ export class SkillsComponent {
 
   handleContactClick(event: Event): void {
     event.preventDefault();
-    this.scrollToContact();
+    this.scrollService.scrollToElement('contact', 'start');
   }
 }
