@@ -1,58 +1,52 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { BREAKPOINTS, SCROLL_CONFIG } from '../constants/app.constants';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScrollService {
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
 
-  scrollToElement(elementId: string, block: 'start' | 'center' | 'end' = 'start'): void {
-    if (typeof window !== 'undefined') {
-      const element = document.getElementById(elementId);
-      if (element) {
-        const headerHeight = SCROLL_CONFIG.HEADER_HEIGHT;
-        let elementPosition = element.offsetTop - headerHeight;
+  private readonly mobileOffsets: Record<string, number> = {
+    aboutMe: 0,
+    skills: SCROLL_CONFIG.MOBILE_SKILLS_OFFSET,
+    projects: 20,
+    references: 100,
+  };
 
-        const isMobile = window.innerWidth <= BREAKPOINTS.TABLET_MAX;
-        let extraOffset = 0;
+  scrollToElement(
+    elementId: string,
+    block: 'start' | 'center' | 'end' = 'start'
+  ): void {
+    if (!this.isBrowser) return;
 
-        if (isMobile) {
-          switch (elementId) {
-            case 'aboutMe':
-              extraOffset = 0;
-              break;
-            case 'skills':
-              extraOffset = SCROLL_CONFIG.MOBILE_SKILLS_OFFSET;
-              break;
-            case 'projects':
-              extraOffset = 20;
-              break;
-            case 'references':
-              extraOffset = 100;
-              break;
-            default:
-              extraOffset = 0;
-          }
-        }
+    const element = this.document.getElementById(elementId);
+    if (!element) return;
 
-        elementPosition = element.offsetTop - headerHeight - extraOffset;
+    const window = this.document.defaultView;
+    if (!window) return;
 
-        window.scrollTo({
-          top: elementPosition,
-          behavior: 'smooth'
-        });
-      }
-    }
+    const isMobile = window.innerWidth <= BREAKPOINTS.TABLET_MAX;
+    const extraOffset = isMobile ? this.mobileOffsets[elementId] ?? 0 : 0;
+    const elementPosition =
+      element.offsetTop - SCROLL_CONFIG.HEADER_HEIGHT - extraOffset;
+
+    window.scrollTo({
+      top: elementPosition,
+      behavior: 'smooth',
+    });
   }
 
-
   scrollToPosition(position: number): void {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({
-        top: position,
-        behavior: 'smooth'
-      });
-    }
+    if (!this.isBrowser) return;
+
+    this.document.defaultView?.scrollTo({
+      top: position,
+      behavior: 'smooth',
+    });
   }
 
   scrollToTop(): void {
@@ -60,10 +54,10 @@ export class ScrollService {
   }
 
   getCurrentScrollPosition(): number {
-    if (typeof window !== 'undefined') {
-      return window.scrollY || window.pageYOffset || 0;
-    }
-    return 0;
+    if (!this.isBrowser) return 0;
+
+    const window = this.document.defaultView;
+    return window?.scrollY ?? window?.pageYOffset ?? 0;
   }
 
   isScrolledBeyond(threshold: number): boolean {

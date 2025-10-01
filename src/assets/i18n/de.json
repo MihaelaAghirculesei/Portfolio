@@ -18,12 +18,18 @@
   "common": {
     "references": "Referenzen"
   },
-  "legalNotice": {
-    "title": "Impressum",
-    "contact": "Kontakt",
-    "phone": "Telefon",
-    "email": "E-Mail",
-    "source": "Quelle"
+  "references": {
+    "projectNames": {
+      "kochwelt": "Kochwelt",
+      "join": "Join"
+    },
+    "feedbacks": {
+      "marvin1": "Ich möchte meine aufrichtige Wertschätzung für Mihaelas Engagement in unserem Projekt ausdrücken. Obwohl es anfangs vielleicht einige Herausforderungen gab, war klar, wie viel Mühe sie investiert hat und wie schnell sie gelernt hat. Ihr Engagement und ihre Unterstützung waren Schlüsselfaktoren, die uns geholfen haben, das Projekt so effizient abzuschließen. Ohne ihren Beitrag wären die Dinge nicht so reibungslos verlaufen. Ich freue mich darauf, in zukünftigen Projekten wieder mit ihr zusammenzuarbeiten.",
+      "christian": "Mihaela hat durchweg Initiative gezeigt, indem sie selbstständig Aufgaben identifiziert und Features gründlich getestet hat. Sie zeigte ein starkes Auge für Details und erkannte oft Probleme, die andere übersehen hatten. Immer motiviert und proaktiv, trug sie sinnvoll in ihrem Bereich bei und half dabei, Aufgaben zuverlässig und engagiert voranzutreiben.",
+      "marvin2": "Ich hatte das Vergnügen, mit Mihaela am Join-Projekt zu arbeiten. Während unserer Zusammenarbeit fand ich sie als eine außergewöhnlich zuverlässige, engagierte und zielorientierte Kollegin. Sie arbeitet strukturiert, denkt lösungsorientiert und trägt aktiv zum Team bei. Ihr professioneller Ansatz und ihre starke Initiative machten sie zu einem wertvollen Gewinn für das Projekt. Sie erledigte ihre Aufgaben immer gewissenhaft und pünktlich. Ich schätze Mihaelas Arbeitsethik und Teamgeist sehr und kann die Zusammenarbeit mit ihr vorbehaltlos empfehlen.",
+      "soufiane": "Mihaela zeigte große Entschlossenheit, Ehrgeiz und Lernbereitschaft. Sie war immer motiviert, sich in neue Themen einzuarbeiten und brachte frische Perspektiven ins Team. Ihr Engagement spielte eine wichtige Rolle dabei, das Projekt voranzutreiben. Die Zusammenarbeit mit Mihaela war eine großartige Erfahrung.",
+      "ha": "Es war ein echtes Vergnügen, mit Mihaela während unseres Gruppenprojekts an der Developer Akademie zu arbeiten. Obwohl Programmieren anfangs eine Herausforderung für sie war, blieb sie engagiert, machte bemerkenswerte Fortschritte und inspirierte oft andere mit ihrer Entschlossenheit. Sie ist äußerst freundlich, höflich und bringt einen großartigen Sinn für Humor ins Team, was eine positive und motivierende Atmosphäre schafft. Mihaela ist fleißig, fokussiert und geht jede Aufgabe mit Präzision und Sorgfalt an."
+    }
   },
   "skills": {
     "title": "Fähigkeiten",
@@ -32,17 +38,81 @@
     "additionalSkillsTitle": "Sie benötigen",
     "additionalSkillsHighlight": "eine andere Fähigkeit?",
     "additionalSkillsText": "Sehen Sie die Technologie, die Ihr Projekt benötigt, nicht? Kein Problem! Meine Neugier und Entschlossenheit ermöglichen es mir, neue technologische Herausforderungen anzunehmen. Jedes Projekt ist eine Gelegenheit zu wachsen und maßgeschneiderte Lösungen für Ihre Bedürfnisse zu liefern.",
-    "ctaText": "Sprechen wir",
+    "ctaText": "Lass uns reden",
     "ctaAriaLabel": "Kontaktieren Sie mich, um Ihr Projekt zu besprechen",
     "tooltipText": "Ich habe besonderes Interesse am Lernen:"
   },
+  "landingPage": {
+    "greeting": "Hallo! Ich bin",
+    "role": "Frontend Entwicklerin",
+    "title": "Frontend Entwicklerin",
+    "checkWork": "Meine Arbeit ansehen",
+    "contactMe": "Kontaktiere mich",
+    "description": "Ich bin eine Frontend-Entwicklerin mit Sitz in Wolfsburg."
+  },
+  "aboutMe": {
+    "title": "Über mich",
+    "subtitle": "Wer ich bin",
+    "mainTitle": "Über mich",
+    "introText": "Hallo! Ich bin Mihaela, eine Frontend-Entwicklerin, die glaubt, dass Technologie schön, zugänglich und für jeden Menschen bereichernd sein sollte. Ich liebe es, intuitive und inklusive digitale Erlebnisse zu schaffen, die das Leben der Menschen verbessern.",
+    "visionTitle": "Meine Vision:",
+    "visionText": "Code ist Poesie, Design ist Storytelling und User Experience ist alles. Ich liebe es, Ideen in interaktive Realitäten zu verwandeln, die Nutzer einfach lieben müssen.",
+    "locationTitle": "Grenzenlos:",
+    "locationText": "Wolfsburg ist meine Basis, aber mein Ehrgeiz kennt keine Grenzen - bereit für Remote-Projekte, die alles verändern.",
+    "growthTitle": "Immer wachsend:",
+    "growthText": "In einem Bereich, der sich niemals aufhört zu verändern, höre ich niemals auf zu lernen. Jeder Tag bringt neue Möglichkeiten zu wachsen, zu erschaffen und Einfluss zu nehmen. Bereit zur Zusammenarbeit und etwas Außergewöhnliches zu schaffen?"
+  },
+  "portfolio": {
+    "subtitle": "Portfolio",
+    "title": "Ausgewählte Projekte",
+    "description": "Erkunden Sie hier eine Auswahl meiner Arbeiten. Interagieren Sie mit den Projekten, um meine Fähigkeiten in Aktion zu sehen.",
+    "nextProject": "Nächstes Projekt",
+    "github": "GitHub",
+    "liveTest": "Live Test"
+  },
+  "contact": {
+    "title": "Kontaktiere mich",
+    "subtitle": "Lass uns zusammenarbeiten",
+    "question": "Hast du ein Problem zu lösen?",
+    "description": "Ich suche aktiv nach Möglichkeiten, bei denen ich meine Angular-, TypeScript- und JavaScript-Expertise einsetzen kann, um außergewöhnliche Benutzererfahrungen zu schaffen, die den Geschäftserfolg vorantreiben.",
+    "needDeveloper": "Brauchst du eine Frontend-Entwicklerin?",
+    "letsTalk": "Lass uns sprechen!",
+    "form": {
+      "nameLabel": "Wie ist dein Name?",
+      "namePlaceholder": "Dein Name kommt hierher",
+      "nameError": "Bitte gib mindestens 3 Buchstaben ein",
+      "emailLabel": "Wie ist deine E-Mail?",
+      "emailPlaceholder": "deineemail@email.com",
+      "emailError": "Deine E-Mail scheint ungültig zu sein",
+      "messageLabel": "Wie kann ich dir helfen?",
+      "messagePlaceholder": "Hallo Mihaela, ich interessiere mich für...",
+      "messageError": "Bitte gib mindestens 10 Zeichen ein",
+      "privacyText": "Ich habe die",
+      "privacyLink": "Datenschutzerklärung",
+      "privacyTextEnd": "gelesen und stimme der Verarbeitung meiner Daten wie beschrieben zu.",
+      "privacyError": "Die Zustimmung zur Datenschutzerklärung ist erforderlich.",
+      "submitButton": "Hallo sagen :)",
+      "successTitle": "Erfolg!",
+      "successMessage": "Deine Nachricht wurde erfolgreich gesendet!",
+      "errorTitle": "Fehler",
+      "errorMessage": "Beim Senden deiner Nachricht ist ein Fehler aufgetreten.",
+      "closeButton": "Schließen"
+    }
+  },
+  "legalNotice": {
+    "title": "Impressum",
+    "contact": "Kontakt",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "source": "Quelle"
+  },
   "footer": {
     "logoAriaLabel": "Zum Seitenanfang scrollen",
-    "role": "Frontend-Entwicklerin",
+    "role": "Web-Entwicklerin",
     "location": "Wolfsburg, Deutschland",
     "legalNotice": "Impressum",
     "legalNoticeAriaLabel": "Impressum und rechtliche Hinweise anzeigen",
-    "privacyPolicy": "Datenschutz",
+    "privacyPolicy": "Datenschutzerklärung",
     "privacyPolicyAriaLabel": "Datenschutzerklärung anzeigen",
     "links": {
       "github": "GitHub",
@@ -52,5 +122,30 @@
       "email": "E-Mail",
       "emailAriaLabel": "Senden Sie mir eine E-Mail"
     }
+  },
+  "projects": {
+    "join": {
+      "description": "Join Kanban Board ist die Projektmanagement-Revolution! Eine außergewöhnliche Anwendung, die jedes Projekt durch spektakuläre visuelle Boards und Echtzeit-Kollaboration zum Erfolg führt. Mit Join kannst du Aufgaben einfach organisieren, Fortschritte verfolgen und mit deinem Team in einer dynamischen und intuitiven Umgebung zusammenarbeiten. Verabschiede dich vom Chaos und begrüße die Produktivität! Join Kanban Board ist das perfekte Tool für Teams jeder Größe, von Startups bis zu großen Unternehmen. Erlebe die Zukunft des Projektmanagements mit Join Kanban Board und bringe deine Projekte auf die nächste Stufe. Dein nächster großer Sieg beginnt hier.",
+      "shortDescription": "Kanban Board Anwendung"
+    },
+    "elPolloLoco": {
+      "description": "Ein aufregendes Spiel, bei dem Mut auf Hühner-Chaos trifft! Gebaut mit JavaScript, HTML und CSS bietet es flüssiges Gameplay mit Tastatur- und Touch-Steuerung, epische Endboss-Herausforderungen, immersive Soundeffekte und responsives Design für alle Geräte.",
+      "shortDescription": "Abenteuer Spiel"
+    },
+    "pokedex": {
+      "description": "Ein interaktives Portal in die magische Welt der Pokemon! Mit Leidenschaft entwickelt bietet es eine reibungslose und fesselnde Erfahrung mit modernen Technologien: PokeAPI für immer aktuelle Daten, responsives Design für alle Geräte, performantes JavaScript und fesselnde CSS-Animationen.",
+      "shortDescription": "Pokemon Datenbank"
+    },
+    "default": {
+      "shortDescription": "Web Anwendung"
+    }
+  },
+  "banner": {
+    "remoteWork": "Verfügbar für Remote-Arbeit",
+    "role": "Frontend Entwicklerin",
+    "openToWork": "Offen für Arbeit & Lernen",
+    "location": "Wohnhaft in Wolfsburg",
+    "skills": "Angular & TypeScript",
+    "passion": "Leidenschaftlich für sauberen Code"
   }
 }

@@ -4,32 +4,30 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, HttpClient } from '@angular/common/http';
 import {
   TranslateModule,
   TranslateLoader,
   provideTranslateService,
 } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideRouter } from '@angular/router';
-import { CustomTranslationLoader } from './shared/services/translation-loader.service';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideTranslateService({
-      loader: {
-        provide: TranslateLoader,
-        useClass: CustomTranslationLoader,
-      },
-    }),
     provideHttpClient(withFetch()),
     importProvidersFrom([
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
-          useClass: CustomTranslationLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient],
         },
       }),
     ]),
