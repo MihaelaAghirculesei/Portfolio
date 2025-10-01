@@ -1,5 +1,43 @@
 @import "../../../styles/styles.scss";
 
+$header-height: 98px;
+$header-padding: 21px;
+$logo-width: 120px;
+$hamburger-width: 30px;
+$hamburger-height: 24px;
+$hamburger-bar-height: 3px;
+$hamburger-bar-radius: 3px;
+$mobile-dropdown-padding: 20px;
+$mobile-dropdown-ul-padding: 24px 40px;
+$mobile-dropdown-max-height: 300px;
+$mobile-dropdown-border-radius: 24px;
+$mobile-dropdown-right: 16px;
+
+$switch-width: 97px;
+$switch-height: 35px;
+$switch-padding: 2px;
+$switch-toggle-width: 50px;
+$switch-toggle-margin: 46px;
+$switch-border-radius: 60px;
+$switch-border-radius-small: 52px;
+$switch-font-size: 12px;
+$switch-span-top: 12px;
+
+$nav-gap: 24px;
+$nav-font-size: 20px;
+$nav-link-gap: 20px;
+$nav-dot-size: 28px;
+$nav-dot-bottom: -25px;
+
+$logo-scale: 1.15;
+$logo-translate-y: -10px;
+$logo-translate-y-md: -12px;
+$logo-translate-y-lg: -15px;
+$logo-translate-x: 5px;
+
+$main-color-60: rgba(61, 207, 182, 0.6);
+$main-color-90: rgba(61, 207, 182, 0.9);
+
 header {
   position: fixed;
   top: 0;
@@ -7,21 +45,21 @@ header {
   right: 0;
   background-color: transparent;
   z-index: 199;
-  transition: background-color 0.3s ease;
-  
+  transition: background-color $transition-base;
+
   &.scrolled {
-    background-color: #1c1c1c;
+    background-color: $background-color;
   }
-  
+
   div.content-width {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
-    height: 98px;
+    height: $header-height;
     position: relative;
-    max-width: 1440px;
-    padding: 21px;
+    max-width: $content-max-width;
+    padding: $header-padding;
   }
 }
 
@@ -32,33 +70,45 @@ header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 24px;
+    gap: $nav-gap;
 
     li {
       background-color: transparent;
-      font-size: 20px;
+      font-size: map-get($typography-tablet, text);
+
+      @media (max-width: $mobile-max) {
+        font-size: map-get($typography-mobile, text);
+      }
+
+      @media (min-width: $desktop-min) {
+        font-size: map-get($typography-desktop, text);
+      }
+
+      @media (min-width: $desktop-4k-min) {
+        font-size: map-get($typography-4k, text);
+      }
 
       a {
         text-decoration: none;
-        color: white;
+        color: $white;
         position: relative;
         cursor: pointer;
         @include primary-font;
-        
+
         &::after {
           content: "•";
           position: absolute;
           left: 50%;
-          bottom: -25px;
+          bottom: $nav-dot-bottom;
           transform: translateX(-50%) scale(0);
-          font-size: 28px;
+          font-size: $nav-dot-size;
           color: $main-color;
-          transition: transform 0.2s ease-in-out;
+          transition: transform $transition-base;
         }
 
         &:hover {
           color: $main-color;
-          
+
           &::after {
             transform: translateX(-50%) scale(1);
           }
@@ -70,84 +120,87 @@ header {
 
 .logo {
   width: auto;
-  height: 120px;
+  height: $logo-width;
   cursor: pointer;
-  transition: all 0.5s ease;
-  
+  transition: all $transition-base;
+
   &:hover {
-    transform: scale(1.15) translateY(-10px);
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3)) 
-            drop-shadow(0 0 20px rgba(61, 207, 182, 0.6));
+    transform: scale($logo-scale) translateY($logo-translate-y);
+    filter: drop-shadow(0 10px 20px $shadow-medium)
+      drop-shadow(0 0 20px $main-color-60);
     animation: shakeFloat 0.6s ease-in-out;
   }
 }
 
 @keyframes shakeFloat {
-  0% { 
-    transform: scale(1.15) translateY(-10px) translateX(0); 
+  0% {
+    transform: scale($logo-scale) translateY($logo-translate-y) translateX(0);
   }
-  25% { 
-    transform: scale(1.15) translateY(-12px) translateX(-5px); 
+  25% {
+    transform: scale($logo-scale) translateY($logo-translate-y-md)
+      translateX(-$logo-translate-x);
   }
-  50% { 
-    transform: scale(1.15) translateY(-15px) translateX(0); 
+  50% {
+    transform: scale($logo-scale) translateY($logo-translate-y-lg) translateX(0);
   }
-  75% { 
-    transform: scale(1.15) translateY(-12px) translateX(5px); 
+  75% {
+    transform: scale($logo-scale) translateY($logo-translate-y-md)
+      translateX($logo-translate-x);
   }
-  100% { 
-    transform: scale(1.15) translateY(-10px) translateX(0); 
+  100% {
+    transform: scale($logo-scale) translateY($logo-translate-y) translateX(0);
   }
 }
 
 @keyframes pulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 20px rgba(61, 207, 182, 0.6));
+  0%,
+  100% {
+    filter: drop-shadow(0 0 20px $main-color-60);
   }
   50% {
-    filter: drop-shadow(0 0 30px rgba(61, 207, 182, 0.9));
+    filter: drop-shadow(0 0 30px $main-color-90);
   }
 }
 
 .switch {
   position: relative;
   display: inline-block;
-  margin: 0 5px;
+  margin: 0 $spacing-xs + 1px;
 }
 
 .switch > span {
   position: absolute;
-  top: 12px;
+  top: $switch-span-top;
   pointer-events: none;
-  font-family: "Karla", sans-serif !important;
+  @include code-font;
   font-weight: bold;
-  font-size: 12px;
+  font-size: $switch-font-size;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+  text-shadow: 0 1px 0 rgba($black-pure, 0.06);
   width: 50%;
   text-align: center;
 }
 
 input.check-toggle-round-flat:checked ~ .off {
-  color: #fff;
+  color: $white;
 }
 
 input.check-toggle-round-flat:checked ~ .on {
-  color: #3DCFB690;
+  color: $main-color-60;
 }
 
 .switch > span.on {
   left: 0;
-  padding-left: 2px;
-  color: #fff;
-  font-family: "Karla", sans-serif !important;
+  padding-left: $switch-padding;
+  color: $white;
+  @include code-font;
 }
 
 .switch > span.off {
   right: 0;
-  padding-right: 2px;
-  color: #3DCFB690;
-  font-family: "Karla", sans-serif !important;
+  padding-right: $switch-padding;
+  color: $main-color-60;
+  @include code-font;
 }
 
 .check-toggle {
@@ -162,18 +215,18 @@ input.check-toggle-round-flat:checked ~ .on {
   cursor: pointer;
   outline: none;
   user-select: none;
-  font-family: "Karla", sans-serif !important;
+  @include code-font;
 }
 
 input.check-toggle-round-flat + label {
-  padding: 2px;
-  width: 97px;
-  height: 35px;
-  background-color: #3DCFB690;
-  border-radius: 60px;
+  padding: $switch-padding;
+  width: $switch-width;
+  height: $switch-height;
+  background-color: $main-color-60;
+  border-radius: $switch-border-radius;
 }
 
-input.check-toggle-round-flat + label:before, 
+input.check-toggle-round-flat + label:before,
 input.check-toggle-round-flat + label:after {
   display: block;
   position: absolute;
@@ -181,53 +234,60 @@ input.check-toggle-round-flat + label:after {
 }
 
 input.check-toggle-round-flat + label:before {
-  top: 2px;
-  left: 2px;
-  bottom: 2px;
-  right: 2px;
-  background-color: #1c1c1c;
-  border-radius: 60px;
+  top: $switch-padding;
+  left: $switch-padding;
+  bottom: $switch-padding;
+  right: $switch-padding;
+  background-color: $background-color;
+  border-radius: $switch-border-radius;
 }
 
 input.check-toggle-round-flat + label:after {
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
-  width: 50px;
-  background-color: #3DCFB6;
-  border-radius: 52px;
-  transition: margin 0.2s;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: $switch-toggle-width;
+  background-color: $main-color;
+  border-radius: $switch-border-radius-small;
+  transition: margin $transition-base;
 }
 
 input.check-toggle-round-flat:checked + label:after {
-  margin-left: 46px;
+  margin-left: $switch-toggle-margin;
 }
 
 .menu-toggle {
+  all: unset;
   display: none;
   cursor: pointer;
   z-index: 200;
 }
 
+button.logo-button {
+  all: unset;
+  display: block;
+  cursor: pointer;
+}
+
 .hamburger {
-  width: 30px;
-  height: 24px;
+  width: $hamburger-width;
+  height: $hamburger-height;
   position: relative;
 
   span {
     display: block;
     position: absolute;
-    height: 3px;
+    height: $hamburger-bar-height;
     width: 100%;
-    background-color: white;
-    border-radius: 3px;
+    background-color: $white;
+    border-radius: $hamburger-bar-radius;
     opacity: 1;
     left: 0;
     transform: rotate(0deg);
-    transition: .25s ease-in-out;
+    transition: 0.25s ease-in-out;
 
     &:nth-child(1) {
-      top: 0px;
+      top: 0;
     }
 
     &:nth-child(2) {
@@ -261,44 +321,55 @@ input.check-toggle-round-flat:checked + label:after {
 
 .mobile-dropdown {
   position: fixed;
-  top: 98px;
+  top: $header-height;
   width: auto;
-  right: 16px;
+  right: $mobile-dropdown-right;
   height: 0;
-  background-color: #1c1c1c;
+  background: linear-gradient(45deg, $background-color 40%, $gradient-end 100%);
   overflow: hidden;
-  transition: height 0.3s ease;
-  border-radius: 24px;
+  transition: height $transition-base;
+  border-radius: $mobile-dropdown-border-radius;
   z-index: 100;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px $shadow-medium;
   display: none;
-  background: linear-gradient(45deg, rgba(28,28,28,1) 40%, rgba(8,70,59,1) 100%);
-  
+
   &.open {
     height: auto;
   }
 
   .dropdown-content {
-    padding: 20px;
+    padding: $mobile-dropdown-padding;
 
     ul {
       list-style-type: none;
-      padding: 24px 40px;
+      padding: $mobile-dropdown-ul-padding;
       margin: 0;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 20px;
-      
+      gap: $nav-link-gap;
+
       li {
         background-color: transparent;
-        font-size: 20px;
+        font-size: map-get($typography-tablet, text);
+
+        @media (max-width: $mobile-max) {
+          font-size: map-get($typography-mobile, text);
+        }
+
+        @media (min-width: $desktop-min) {
+          font-size: map-get($typography-desktop, text);
+        }
+
+        @media (min-width: $desktop-4k-min) {
+          font-size: map-get($typography-4k, text);
+        }
 
         a {
           text-decoration: none;
           display: block;
           padding: 5px 0;
-          color: white;
+          color: $white;
           @include primary-font;
 
           &:hover {
@@ -310,13 +381,13 @@ input.check-toggle-round-flat:checked + label:after {
   }
 }
 
-@media (min-width: 1920px) {
+@media (min-width: $desktop-4k-min) {
   div.content-width {
-    padding: 21px 0;
+    padding: $header-padding 0;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $tablet-max) {
   .desktop-nav {
     display: none;
   }
@@ -332,7 +403,7 @@ input.check-toggle-round-flat:checked + label:after {
 
   div.content-width {
     justify-content: space-between;
-    padding: 21px;
+    padding: $header-padding;
   }
 
   .mobile-dropdown {
@@ -340,8 +411,7 @@ input.check-toggle-round-flat:checked + label:after {
 
     &.open {
       height: auto;
-      max-height: 300px;
+      max-height: $mobile-dropdown-max-height;
     }
   }
 }
-

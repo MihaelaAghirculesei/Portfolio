@@ -5,7 +5,8 @@ export const BREAKPOINTS = {
 export const SCROLL_CONFIG = {
   THRESHOLD: 100,
   HEADER_HEIGHT: 98,
-  MOBILE_SKILLS_OFFSET: -5
+  MOBILE_SKILLS_OFFSET: -5,
+  NAVIGATION_DELAY: 100
 } as const;
 
 export const SLIDER_CONFIG = {

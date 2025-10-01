@@ -1,50 +1,142 @@
-<header [ngClass]="{'scrolled': isScrolled}">
+<header [ngClass]="{ scrolled: isScrolled }">
   <div class="content-width">
     <nav class="desktop-nav">
       <ul>
         <li class="switch">
-          <input id="language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox"
-                 [checked]="isEnglish"
-                 (click)="toggleLanguage()">
+          <input
+            id="language-toggle"
+            class="check-toggle check-toggle-round-flat"
+            type="checkbox"
+            [checked]="isEnglish"
+            (click)="toggleLanguage()"
+          />
           <label for="language-toggle"></label>
           <span class="on">EN</span>
           <span class="off">DE</span>
         </li>
-        <li><a (click)="scrollToSection('aboutMe')" class="link-hover-dot-bottom">{{ 'nav.about' | translate }}</a></li>
-        <li><a (click)="scrollToSection('skills')" class="link-hover-dot-bottom">{{ 'nav.skills' | translate }}</a></li>
-        <li><a (click)="scrollToSection('projects')" class="link-hover-dot-bottom">{{ 'nav.portfolio' | translate }}</a></li>
-        <li><a (click)="scrollToSection('contact')" class="link-hover-dot-bottom">{{ 'nav.contact' | translate }}</a></li>
+        <li>
+          <a
+            (click)="scrollToSection('aboutMe')"
+            class="link-hover-dot-bottom"
+            [attr.aria-label]="'nav.aboutAriaLabel' | translate"
+          >
+            {{ "nav.about" | translate }}
+          </a>
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('skills')"
+            class="link-hover-dot-bottom"
+            [attr.aria-label]="'nav.skillsAriaLabel' | translate"
+          >
+            {{ "nav.skills" | translate }}
+          </a>
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('projects')"
+            class="link-hover-dot-bottom"
+            [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
+          >
+            {{ "nav.portfolio" | translate }}
+          </a>
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('contact')"
+            class="link-hover-dot-bottom"
+            [attr.aria-label]="'nav.contactAriaLabel' | translate"
+          >
+            {{ "nav.contact" | translate }}
+          </a>
+        </li>
       </ul>
     </nav>
 
-    <div class="menu-toggle" (click)="toggleMenu()">
-      <div class="hamburger" [ngClass]="{'active': isMenuOpen}">
+    <button
+      class="menu-toggle"
+      (click)="toggleMenu()"
+      [attr.aria-label]="
+        isMenuOpen
+          ? ('header.closeMenuAriaLabel' | translate)
+          : ('header.openMenuAriaLabel' | translate)
+      "
+      [attr.aria-expanded]="isMenuOpen"
+      type="button"
+    >
+      <div class="hamburger" [ngClass]="{ active: isMenuOpen }">
         <span></span>
         <span></span>
         <span></span>
       </div>
-    </div>
+    </button>
 
-    <img (click)="scrollToSection('headLine')"
-         [src]="(isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png')" 
-         (mouseenter)="isHovered = true" 
-         (mouseleave)="isHovered = false" 
-         alt="logo" 
-         id="logo" 
-         class="logo">
+    <button
+      (click)="scrollToSection('headLine')"
+      class="logo-button"
+      type="button"
+      [attr.aria-label]="'header.logoAriaLabel' | translate"
+    >
+      <img
+        [src]="
+          isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png'
+        "
+        (mouseenter)="isHovered = true"
+        (mouseleave)="isHovered = false"
+        [alt]="'header.logoAlt' | translate"
+        id="logo"
+        class="logo"
+      />
+    </button>
   </div>
 
-  <div class="mobile-dropdown" [ngClass]="{'open': isMenuOpen}">
+  <div class="mobile-dropdown" [ngClass]="{ open: isMenuOpen }">
     <div class="dropdown-content">
       <ul>
-        <li><a (click)="scrollToSection('aboutMe'); closeMenuIfMobile()" class="link-hover-dot-bottom">{{ 'nav.about' | translate }}</a></li>
-        <li><a (click)="scrollToSection('skills'); closeMenuIfMobile()" class="link-hover-dot-bottom">{{ 'nav.skills' | translate }}</a></li>
-        <li><a (click)="scrollToSection('projects'); closeMenuIfMobile()" class="link-hover-dot-bottom">{{ 'nav.portfolio' | translate }}</a></li>
-        <li><a (click)="scrollToSection('contact'); closeMenuIfMobile()" class="link-hover-dot-bottom">{{ 'nav.contact' | translate }}</a></li>
+        <li>
+          <a
+            (click)="scrollToSection('aboutMe'); closeMenuIfMobile()"
+            class="link-hover-dot-bottom"
+            [attr.aria-label]="'nav.aboutAriaLabel' | translate"
+          >
+            {{ "nav.about" | translate }}
+          </a>
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('skills'); closeMenuIfMobile()"
+            class="link-hover-dot-bottom"
+            [attr.aria-label]="'nav.skillsAriaLabel' | translate"
+          >
+            {{ "nav.skills" | translate }}
+          </a>
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('projects'); closeMenuIfMobile()"
+            class="link-hover-dot-bottom"
+            [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
+          >
+            {{ "nav.portfolio" | translate }}
+          </a>
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('contact'); closeMenuIfMobile()"
+            class="link-hover-dot-bottom"
+            [attr.aria-label]="'nav.contactAriaLabel' | translate"
+          >
+            {{ "nav.contact" | translate }}
+          </a>
+        </li>
         <li class="switch">
-          <input id="mobile-language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox"
-                 [checked]="isEnglish"
-                 (click)="toggleLanguage()">
+          <input
+            id="mobile-language-toggle"
+            class="check-toggle check-toggle-round-flat"
+            type="checkbox"
+            [checked]="isEnglish"
+            (click)="toggleLanguage()"
+          />
           <label for="mobile-language-toggle"></label>
           <span class="on">EN</span>
           <span class="off">DE</span>

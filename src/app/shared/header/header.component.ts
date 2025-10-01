@@ -11,7 +11,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, TranslatePipe],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   isHovered: boolean = false;
@@ -26,49 +26,55 @@ export class HeaderComponent {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.checkScroll();
     this.translate.setDefaultLang('en');
     this.translate.use('en');
   }
 
   @HostListener('window:scroll', [])
-  checkScroll() {
-    this.isScrolled = this.scrollService.isScrolledBeyond(SCROLL_CONFIG.THRESHOLD);
+  checkScroll(): void {
+    this.isScrolled = this.scrollService.isScrolledBeyond(
+      SCROLL_CONFIG.THRESHOLD
+    );
   }
 
-  toggleLanguage() {
+  toggleLanguage(): void {
     this.isEnglish = !this.isEnglish;
     const lang = this.isEnglish ? 'de' : 'en';
     this.translate.use(lang);
   }
 
-  toggleMenu() {
+  toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  closeMenuIfMobile() {
+  closeMenuIfMobile(): void {
     const window = this.platformService.getWindow();
     if (window && window.innerWidth <= BREAKPOINTS.TABLET_MAX) {
       this.isMenuOpen = false;
     }
   }
 
-  scrollToSection(sectionId: string) {
+  scrollToSection(sectionId: string): void {
     if (this.router.url === '/' || this.router.url === '') {
       this.scrollService.scrollToElement(sectionId, 'start');
     } else {
       this.router.navigate(['/']).then(() => {
         setTimeout(() => {
           this.scrollService.scrollToElement(sectionId, 'start');
-        }, 100);
+        }, SCROLL_CONFIG.NAVIGATION_DELAY);
       });
     }
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    if (this.platformService.isWindowDefined() && event.target.innerWidth > BREAKPOINTS.TABLET_MAX) {
+  onResize(event: Event): void {
+    const target = event.target as Window;
+    if (
+      this.platformService.isWindowDefined() &&
+      target.innerWidth > BREAKPOINTS.TABLET_MAX
+    ) {
       this.isMenuOpen = false;
     }
   }

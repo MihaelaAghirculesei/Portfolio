@@ -1,17 +1,29 @@
 @import "../../../styles/styles.scss";
 
+$footer-padding: 30px;
+$footer-padding-mobile: 20px;
+$footer-padding-small: 15px;
+$footer-margin-top: -5px;
+$footer-content-padding: 20px;
+
+$logo-width: 120px;
+$logo-height: 100px;
+$logo-margin-left: -25px;
+$logo-top-offset: -30px;
+$logo-scale: 1.15;
+
 section {
   background-color: $gradient-start;
-  padding: 30px 0;
-  margin-top: -5px;
+  padding: $footer-padding 0;
+  margin-top: $footer-margin-top;
   position: relative;
   z-index: 100;
 
   .content-width {
     width: 100%;
-    max-width: 1440px;
+    max-width: $content-max-width;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 $footer-content-padding;
   }
 
   .footerWrapper {
@@ -27,27 +39,25 @@ section {
     align-items: flex-start;
     gap: 24px;
 
-    > .logo-button {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
+    button.logo-button {
+      all: unset;
       display: block;
-      margin-left: -25px;
+      margin-left: $logo-margin-left;
       position: relative;
-      top: -30px;
+      top: $logo-top-offset;
       z-index: 10;
+      cursor: pointer;
 
       > img {
-        width: 120px;
-        height: 100px;
+        width: $logo-width;
+        height: $logo-height;
         cursor: pointer;
         transition: all $transition-base;
 
         &:hover {
-          transform: scale(1.15);
+          transform: scale($logo-scale);
           filter: drop-shadow(0 10px 20px $shadow-medium)
-            drop-shadow(0 0 20px rgba($main-color, 0.6));
+            drop-shadow(0 0 20px $main-color-medium);
           animation: shakeFloat 0.6s ease-in-out;
         }
       }
@@ -149,7 +159,7 @@ section {
           background: linear-gradient(
             90deg,
             transparent,
-            rgba(61, 207, 182, 0.3),
+            $main-color-light,
             transparent
           );
           animation: shine 4s ease-in-out infinite;
@@ -159,7 +169,7 @@ section {
         &:hover {
           animation-duration: 1s;
           transform: scale(1.05);
-          filter: drop-shadow(0 0 15px rgba($main-color, 0.7));
+          filter: drop-shadow(0 0 15px $main-color-strong);
           transition: all $transition-base;
         }
       }
@@ -167,7 +177,7 @@ section {
       .year-highlight {
         color: $main-color;
         font-weight: 600;
-        text-shadow: 0 0 10px rgba($main-color, 0.5);
+        text-shadow: 0 0 10px $main-color-medium;
         animation: glow 2s ease-in-out infinite alternate;
       }
     }
@@ -206,64 +216,12 @@ section {
   }
 }
 
-@keyframes shakeFloat {
-  0% {
-    transform: scale(1.15) translateY(-10px) translateX(0);
-  }
-  25% {
-    transform: scale(1.15) translateY(-12px) translateX(-5px);
-  }
-  50% {
-    transform: scale(1.15) translateY(-15px) translateX(0);
-  }
-  75% {
-    transform: scale(1.15) translateY(-12px) translateX(5px);
-  }
-  100% {
-    transform: scale(1.15) translateY(-10px) translateX(0);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -300% 0;
-  }
-  50% {
-    background-position: 300% 0;
-  }
-  100% {
-    background-position: -300% 0;
-  }
-}
-
-@keyframes shine {
-  0% {
-    left: -100%;
-  }
-  50% {
-    left: 100%;
-  }
-  100% {
-    left: -100%;
-  }
-}
-
-@keyframes glow {
-  0% {
-    text-shadow: 0 0 5px rgba($main-color, 0.5);
-  }
-  100% {
-    text-shadow: 0 0 20px rgba($main-color, 0.8),
-      0 0 30px rgba($main-color, 0.6);
-  }
-}
-
 @media (max-width: $tablet-max) {
   section {
     .footerWrapper {
-      flex-wrap: wrap !important;
+      flex-wrap: wrap;
       row-gap: 32px;
-      flex-direction: row !important;
+      flex-direction: row;
     }
 
     .logoDiv {
@@ -278,8 +236,8 @@ section {
     }
 
     .copyright {
-      width: 100% !important;
-      order: 3 !important;
+      width: 100%;
+      order: 3;
       text-align: center;
 
       p .name-effect {
@@ -295,7 +253,7 @@ section {
 
 @media (max-width: $mobile-max) {
   section {
-    padding: 20px 0;
+    padding: $footer-padding-mobile 0;
 
     .logoDiv,
     .linkDiv {
@@ -340,7 +298,7 @@ section {
 
 @media (max-width: $mobile-small-max) {
   section {
-    padding: 15px 0;
+    padding: $footer-padding-small 0;
 
     .logoDiv {
       gap: 8px;

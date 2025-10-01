@@ -3,7 +3,17 @@
     "about": "Über mich",
     "skills": "Fähigkeiten",
     "portfolio": "Portfolio",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "aboutAriaLabel": "Navigiere zum Abschnitt Über mich",
+    "skillsAriaLabel": "Navigiere zum Abschnitt Fähigkeiten",
+    "portfolioAriaLabel": "Navigiere zum Abschnitt Portfolio",
+    "contactAriaLabel": "Navigiere zum Abschnitt Kontakt"
+  },
+  "header": {
+    "logoAriaLabel": "Zurück zum Seitenanfang",
+    "logoAlt": "Mihaela Melania Aghirculesei Logo",
+    "openMenuAriaLabel": "Navigationsmenü öffnen",
+    "closeMenuAriaLabel": "Navigationsmenü schließen"
   },
   "common": {
     "references": "Referenzen"
@@ -23,6 +33,24 @@
     "additionalSkillsHighlight": "eine andere Fähigkeit?",
     "additionalSkillsText": "Sehen Sie die Technologie, die Ihr Projekt benötigt, nicht? Kein Problem! Meine Neugier und Entschlossenheit ermöglichen es mir, neue technologische Herausforderungen anzunehmen. Jedes Projekt ist eine Gelegenheit zu wachsen und maßgeschneiderte Lösungen für Ihre Bedürfnisse zu liefern.",
     "ctaText": "Sprechen wir",
+    "ctaAriaLabel": "Kontaktieren Sie mich, um Ihr Projekt zu besprechen",
     "tooltipText": "Ich habe besonderes Interesse am Lernen:"
+  },
+  "footer": {
+    "logoAriaLabel": "Zum Seitenanfang scrollen",
+    "role": "Frontend-Entwicklerin",
+    "location": "Wolfsburg, Deutschland",
+    "legalNotice": "Impressum",
+    "legalNoticeAriaLabel": "Impressum und rechtliche Hinweise anzeigen",
+    "privacyPolicy": "Datenschutz",
+    "privacyPolicyAriaLabel": "Datenschutzerklärung anzeigen",
+    "links": {
+      "github": "GitHub",
+      "githubAriaLabel": "Besuchen Sie mein GitHub-Profil",
+      "linkedin": "LinkedIn",
+      "linkedinAriaLabel": "Besuchen Sie mein LinkedIn-Profil",
+      "email": "E-Mail",
+      "emailAriaLabel": "Senden Sie mir eine E-Mail"
+    }
   }
 }
