@@ -27,12 +27,12 @@ export class SkillsComponent {
     { url: 'assets/img/skills/materialDesign.svg', name: 'Material Design' },
     { url: 'assets/img/skills/rest-api.svg', name: 'Rest-API' },
     { url: 'assets/img/skills/scrum.svg', name: 'Scrum' },
-    { url: 'assets/img/skills/mindset.svg', name: 'Growth Mindset' }
+    { url: 'assets/img/skills/mindset.svg', name: 'Growth Mindset' },
   ];
 
   readonly futureSkills: readonly SkillItem[] = [
     { url: 'assets/img/skills/react.svg', name: 'React' },
-    { url: 'assets/img/skills/vuejs.svg', name: 'Vue.js' }
+    { url: 'assets/img/skills/vuejs.svg', name: 'Vue.js' },
   ];
 
   constructor(private scrollService: ScrollService) {}

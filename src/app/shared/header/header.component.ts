@@ -49,7 +49,7 @@ export class HeaderComponent {
 
   closeMenuIfMobile() {
     const window = this.platformService.getWindow();
-    if (window && window.innerWidth <= BREAKPOINTS.MOBILE) {
+    if (window && window.innerWidth <= BREAKPOINTS.TABLET_MAX) {
       this.isMenuOpen = false;
     }
   }
@@ -68,7 +68,7 @@ export class HeaderComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    if (this.platformService.isWindowDefined() && event.target.innerWidth > BREAKPOINTS.MOBILE) {
+    if (this.platformService.isWindowDefined() && event.target.innerWidth > BREAKPOINTS.TABLET_MAX) {
       this.isMenuOpen = false;
     }
   }

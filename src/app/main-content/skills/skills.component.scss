@@ -1,4 +1,4 @@
-@import '../../../styles/styles.scss';
+@import "../../../styles/styles.scss";
 
 $section-min-height: 900px;
 $content-max-width: 1440px;
@@ -23,7 +23,11 @@ $scale-hover: 1.1;
 $scale-hover-small: 1.05;
 
 .skillsSection {
-  background: radial-gradient(circle at 0% 50%, $gradient-end 0%, $gradient-start 25%);
+  background: radial-gradient(
+    circle at 0% 50%,
+    $gradient-end 0%,
+    $gradient-start 25%
+  );
   min-height: $section-min-height;
   width: 100%;
   padding: $section-padding 0 0 0;
@@ -74,7 +78,9 @@ $scale-hover-small: 1.05;
     width: 100%;
     min-width: $text-min-width;
 
-    strong { color: $white; }
+    strong {
+      color: $white;
+    }
 
     h3 {
       @include code-font;
@@ -107,7 +113,9 @@ $scale-hover-small: 1.05;
       padding-left: 0;
       text-align: left;
 
-      span { color: $main-color; }
+      span {
+        color: $main-color;
+      }
     }
 
     h2 {
@@ -131,7 +139,9 @@ $scale-hover-small: 1.05;
         font-size: map-get($typography-4k, h2);
       }
 
-      span { color: $main-color; }
+      span {
+        color: $main-color;
+      }
     }
 
     .skillIntroduction,
@@ -160,16 +170,23 @@ $scale-hover-small: 1.05;
         font-size: map-get($typography-4k, text);
       }
 
-      strong { color: $white; }
+      strong {
+        color: $white;
+      }
     }
 
-    .link-button { margin: 16px 0 0 0; }
+    .link-button {
+      margin: 16px 0 0 0;
+    }
   }
 }
 
 .skillButtons {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min($grid-min-size, 100%), 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min($grid-min-size, 100%), 1fr)
+  );
   gap: 15px;
   width: 100%;
   flex: 1;
@@ -184,7 +201,9 @@ $scale-hover-small: 1.05;
   transition: transform $transition-base;
   @include dFlex(flex-start, center);
 
-  &:hover { transform: translateY(-5px); }
+  &:hover {
+    transform: translateY(-5px);
+  }
 
   > img {
     width: $skill-icon-size;
@@ -194,7 +213,9 @@ $scale-hover-small: 1.05;
     filter: brightness($brightness-hover) contrast($contrast-hover);
     transition: transform $transition-base;
 
-    &:hover { transform: scale($scale-hover); }
+    &:hover {
+      transform: scale($scale-hover);
+    }
   }
 
   > p {
@@ -209,7 +230,9 @@ $scale-hover-small: 1.05;
   }
 
   &:last-child:hover {
-    p { color: $main-color; }
+    p {
+      color: $main-color;
+    }
     .tooltip {
       display: block;
       opacity: 1;
@@ -255,7 +278,9 @@ $scale-hover-small: 1.05;
   transition: transform $transition-base;
   @include dFlex(center, center);
 
-  &:hover { transform: scale($scale-hover-small); }
+  &:hover {
+    transform: scale($scale-hover-small);
+  }
 
   img {
     width: $skill-icon-size-sm;
@@ -263,7 +288,9 @@ $scale-hover-small: 1.05;
     object-fit: contain;
     transition: transform $transition-base;
 
-    &:hover { transform: rotate(5deg); }
+    &:hover {
+      transform: rotate(5deg);
+    }
   }
 
   p {
@@ -280,14 +307,24 @@ $scale-hover-small: 1.05;
     gap: 100px;
     max-width: $content-max-width;
   }
-  .textWrapper .textDiv { min-width: 720px; }
-  .skillButtons { gap: 20px; }
+  .textWrapper .textDiv {
+    min-width: 720px;
+  }
+  .skillButtons {
+    gap: 20px;
+  }
 }
 
 @media (min-width: 1600px) {
-  .contentWrapper { gap: 80px; }
-  .textWrapper .textDiv { min-width: 620px; }
-  .skillButtons { gap: 18px; }
+  .contentWrapper {
+    gap: 80px;
+  }
+  .textWrapper .textDiv {
+    min-width: 620px;
+  }
+  .skillButtons {
+    gap: 18px;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -295,8 +332,12 @@ $scale-hover-small: 1.05;
     gap: 40px;
     margin: 0 40px;
   }
-  .textWrapper .textDiv { min-width: 460px; }
-  .skillButtons { gap: 15px; }
+  .textWrapper .textDiv {
+    min-width: 460px;
+  }
+  .skillButtons {
+    gap: 15px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -308,13 +349,21 @@ $scale-hover-small: 1.05;
     min-width: 420px;
     padding: 35px;
   }
-  .skillButtons { gap: 12px; }
+  .skillButtons {
+    gap: 12px;
+  }
 }
 
 @media (min-width: 1200px) and (max-height: 900px) {
-  .contentWrapper { gap: 40px; }
-  .textWrapper .textDiv { min-width: 400px; }
-  .skillButtons { gap: 12px; }
+  .contentWrapper {
+    gap: 40px;
+  }
+  .textWrapper .textDiv {
+    min-width: 400px;
+  }
+  .skillButtons {
+    gap: 12px;
+  }
   .skillDiv {
     > img {
       width: $skill-icon-size-sm;
@@ -324,7 +373,9 @@ $scale-hover-small: 1.05;
 }
 
 @media (max-width: 900px) and (orientation: portrait) {
-  .skillsSection { min-height: auto; }
+  .skillsSection {
+    min-height: auto;
+  }
   .contentWrapper {
     flex-direction: column;
     gap: 30px;
@@ -333,7 +384,9 @@ $scale-hover-small: 1.05;
   }
   .textWrapper {
     text-align: center;
-    .overContent { text-align: center; }
+    .overContent {
+      text-align: center;
+    }
   }
   .textWrapper .textDiv {
     min-width: auto;
@@ -360,11 +413,15 @@ $scale-hover-small: 1.05;
       align-self: center;
     }
   }
-  .skillButtons { gap: 12px; }
+  .skillButtons {
+    gap: 12px;
+  }
 }
 
 @media (max-width: 768px) {
-  .skillsSection { min-height: auto; }
+  .skillsSection {
+    min-height: auto;
+  }
   .contentWrapper {
     flex-direction: column;
     gap: 40px;
@@ -373,7 +430,9 @@ $scale-hover-small: 1.05;
   }
   .textWrapper {
     text-align: center;
-    .overContent { text-align: center; }
+    .overContent {
+      text-align: center;
+    }
   }
   .textWrapper .textDiv {
     min-width: auto;
@@ -401,7 +460,9 @@ $scale-hover-small: 1.05;
       align-self: center;
     }
   }
-  .skillButtons { gap: 12px; }
+  .skillButtons {
+    gap: 12px;
+  }
   .skillDiv {
     > img {
       width: $skill-icon-size-md;
@@ -411,12 +472,18 @@ $scale-hover-small: 1.05;
 }
 
 @media (max-width: 600px) {
-  .skillDiv { height: $skill-div-height-md; }
+  .skillDiv {
+    height: $skill-div-height-md;
+  }
 }
 
 @media (max-width: 480px) {
-  .skillsSection { padding-bottom: 20px; }
-  .contentWrapper { margin: 0 20px; }
+  .skillsSection {
+    padding-bottom: 20px;
+  }
+  .contentWrapper {
+    margin: 0 20px;
+  }
   .textWrapper .textDiv {
     max-width: 100%;
     padding: 20px;
@@ -427,7 +494,9 @@ $scale-hover-small: 1.05;
       text-align: left;
     }
   }
-  .skillButtons { gap: 8px; }
+  .skillButtons {
+    gap: 8px;
+  }
   .skillDiv {
     height: $skill-div-height-sm;
     > img {
@@ -438,7 +507,9 @@ $scale-hover-small: 1.05;
 }
 
 @media (max-width: 420px) {
-  .skillButtons { gap: 8px; }
+  .skillButtons {
+    gap: 8px;
+  }
   .tooltip {
     left: 40px;
     right: auto;
@@ -450,10 +521,14 @@ $scale-hover-small: 1.05;
 }
 
 @media (max-width: 340px) {
-  .skillButtons { gap: 6px; }
+  .skillButtons {
+    gap: 6px;
+  }
   .tooltip {
     left: 10px;
-    &::after { left: 100px; }
+    &::after {
+      left: 100px;
+    }
   }
 }
 

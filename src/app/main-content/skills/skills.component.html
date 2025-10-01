@@ -1,21 +1,21 @@
 <section class="skillsSection" id="skills">
   <div class="contentWrapper">
     <div class="textWrapper">
-      <h2 class="overContent">{{ 'skills.overContent' | translate }}</h2>
+      <h2 class="overContent">{{ "skills.overContent" | translate }}</h2>
 
       <div class="textDiv">
-        <h3>{{ 'skills.title' | translate }}</h3>
+        <h3>{{ "skills.title" | translate }}</h3>
 
         <span class="skillIntroduction">
-          {{ 'skills.introduction' | translate }}
+          {{ "skills.introduction" | translate }}
         </span>
 
         <h3>
-          {{ 'skills.additionalSkillsTitle' | translate }}
-          <span>{{ 'skills.additionalSkillsHighlight' | translate }}</span>
+          {{ "skills.additionalSkillsTitle" | translate }}
+          <span>{{ "skills.additionalSkillsHighlight" | translate }}</span>
         </h3>
 
-        <span>{{ 'skills.additionalSkillsText' | translate }}</span>
+        <span>{{ "skills.additionalSkillsText" | translate }}</span>
 
         <a
           href="#contact"
@@ -23,42 +23,45 @@
           [attr.data-text]="'skills.ctaText' | translate"
           [attr.aria-label]="'skills.ctaAriaLabel' | translate"
           (click)="handleContactClick($event)"
-          role="button">
-          <span>{{ 'skills.ctaText' | translate }}</span>
+          role="button"
+        >
+          <span>{{ "skills.ctaText" | translate }}</span>
         </a>
       </div>
     </div>
 
     <div class="skillButtons">
       @for (skill of skillItems; track skill.name; let i = $index) {
-        <div class="skillDiv">
-          <img
-            [src]="skill.url"
-            [alt]="skill.name + ' logo'"
-            loading="lazy"
-            width="55"
-            height="55" />
-          <p>{{ skill.name }}</p>
+      <div class="skillDiv">
+        <img
+          [src]="skill.url"
+          [alt]="skill.name + ' logo'"
+          loading="lazy"
+          width="55"
+          height="55"
+        />
+        <p>{{ skill.name }}</p>
 
-          @if (isLastItem(i)) {
-            <div class="tooltip" role="tooltip">
-              <span>{{ 'skills.tooltipText' | translate }}</span>
-              <div class="future-skills">
-                @for (futureSkill of futureSkills; track futureSkill.name) {
-                  <div class="skillItem">
-                    <img
-                      [src]="futureSkill.url"
-                      [alt]="futureSkill.name + ' logo'"
-                      loading="lazy"
-                      width="40"
-                      height="40" />
-                    <p>{{ futureSkill.name }}</p>
-                  </div>
-                }
-              </div>
+        @if (isLastItem(i)) {
+        <div class="tooltip" role="tooltip">
+          <span>{{ "skills.tooltipText" | translate }}</span>
+          <div class="future-skills">
+            @for (futureSkill of futureSkills; track futureSkill.name) {
+            <div class="skillItem">
+              <img
+                [src]="futureSkill.url"
+                [alt]="futureSkill.name + ' logo'"
+                loading="lazy"
+                width="40"
+                height="40"
+              />
+              <p>{{ futureSkill.name }}</p>
             </div>
-          }
+            }
+          </div>
         </div>
+        }
+      </div>
       }
     </div>
   </div>

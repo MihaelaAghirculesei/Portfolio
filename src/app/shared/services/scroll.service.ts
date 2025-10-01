@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BREAKPOINTS, SCROLL_CONFIG } from '../constants/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,10 @@ export class ScrollService {
     if (typeof window !== 'undefined') {
       const element = document.getElementById(elementId);
       if (element) {
-        const headerHeight = 98;
+        const headerHeight = SCROLL_CONFIG.HEADER_HEIGHT;
         let elementPosition = element.offsetTop - headerHeight;
 
-        const isMobile = window.innerWidth <= 768;
+        const isMobile = window.innerWidth <= BREAKPOINTS.TABLET_MAX;
         let extraOffset = 0;
 
         if (isMobile) {
@@ -21,7 +22,7 @@ export class ScrollService {
               extraOffset = 0;
               break;
             case 'skills':
-              extraOffset = -5;
+              extraOffset = SCROLL_CONFIG.MOBILE_SKILLS_OFFSET;
               break;
             case 'projects':
               extraOffset = 20;
