@@ -42,12 +42,12 @@ section {
         width: 120px;
         height: 100px;
         cursor: pointer;
-        transition: all 0.5s ease;
+        transition: all $transition-base;
 
         &:hover {
           transform: scale(1.15);
-          filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
-                  drop-shadow(0 0 20px rgba(61, 207, 182, 0.6));
+          filter: drop-shadow(0 10px 20px $shadow-medium)
+                  drop-shadow(0 0 20px rgba($main-color, 0.6));
           animation: shakeFloat 0.6s ease-in-out;
         }
       }
@@ -61,9 +61,24 @@ section {
       padding-top: 5px;
 
       p {
-        @include text("Karla", 16px, white, 400); 
+        @include primary-font;
+        font-size: map-get($typography-tablet, text);
+        color: $white;
+        font-weight: 400;
         margin: 0;
         line-height: 1.4;
+
+        @media (max-width: $mobile-max) {
+          font-size: map-get($typography-mobile, text);
+        }
+
+        @media (min-width: $desktop-min) {
+          font-size: map-get($typography-desktop, text);
+        }
+
+        @media (min-width: $desktop-4k-min) {
+          font-size: map-get($typography-4k, text);
+        }
       }
     }
   }
@@ -73,11 +88,26 @@ section {
     text-align: center;
     
     p {
-      @include text("Fira Code", 16px, $main-color, 400);
+      @include code-font;
+      font-size: map-get($typography-tablet, text);
+      color: $main-color;
+      font-weight: 400;
       margin: 0;
 
+      @media (max-width: $mobile-max) {
+        font-size: map-get($typography-mobile, text);
+      }
+
+      @media (min-width: $desktop-min) {
+        font-size: map-get($typography-desktop, text);
+      }
+
+      @media (min-width: $desktop-4k-min) {
+        font-size: map-get($typography-4k, text);
+      }
+
       .name-effect {
-        background: linear-gradient(45deg, #3DCFB6, #ffffff, #3DCFB6, #ffffff);
+        background: linear-gradient(45deg, $main-color, $white-pure, $main-color, $white-pure);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -121,15 +151,15 @@ section {
         &:hover {
           animation-duration: 1s;
           transform: scale(1.05);
-          filter: drop-shadow(0 0 15px rgba(61, 207, 182, 0.7));
-          transition: all 0.3s ease;
+          filter: drop-shadow(0 0 15px rgba($main-color, 0.7));
+          transition: all $transition-base;
         }
       }
 
       .year-highlight {
         color: $main-color;
         font-weight: 600;
-        text-shadow: 0 0 10px rgba(61, 207, 182, 0.5);
+        text-shadow: 0 0 10px rgba($main-color, 0.5);
         animation: glow 2s ease-in-out infinite alternate;
       }
     }
@@ -142,9 +172,24 @@ section {
     gap: 8px;
 
     > a {
-      @include text("Karla", 16px, white, 400);
+      @include primary-font;
+      font-size: map-get($typography-tablet, text);
+      color: $white;
+      font-weight: 400;
       cursor: pointer;
       text-decoration: none;
+
+      @media (max-width: $mobile-max) {
+        font-size: map-get($typography-mobile, text);
+      }
+
+      @media (min-width: $desktop-min) {
+        font-size: map-get($typography-desktop, text);
+      }
+
+      @media (min-width: $desktop-4k-min) {
+        font-size: map-get($typography-4k, text);
+      }
 
       &:hover {
         color: $main-color;
@@ -197,118 +242,14 @@ section {
 
 @keyframes glow {
   0% {
-    text-shadow: 0 0 5px rgba(61, 207, 182, 0.5);
+    text-shadow: 0 0 5px rgba($main-color, 0.5);
   }
   100% {
-    text-shadow: 0 0 20px rgba(61, 207, 182, 0.8), 0 0 30px rgba(61, 207, 182, 0.6);
+    text-shadow: 0 0 20px rgba($main-color, 0.8), 0 0 30px rgba($main-color, 0.6);
   }
 }
 
-.modal-backdrop {
-  position: fixed;
-  top: 80px;
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 80px - var(--footer-height, 120px));
-  background: #1a1a1a;
-  z-index: 40;
-  overflow: hidden;
-}
-
-.modal-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.modal-content {
-  background: #1a1a1a;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 90vw;
-  height: calc(100vh - 80px - var(--footer-height, 120px) - 40px);
-  overflow-y: auto;
-  position: relative;
-
-  h1, h2, h3, h4 {
-    color: $main-color;
-    @include code-font;
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-    margin-top: 0;
-
-    @media (max-width: 768px) {
-      font-size: 35px;
-    }
-  }
-
-  h2 {
-    font-size: 1.5rem;
-
-    @media (max-width: 768px) {
-      font-size: 33px;
-    }
-  }
-
-  h3 {
-    font-size: 1.25rem;
-
-    @media (max-width: 768px) {
-      font-size: 25px;
-    }
-  }
-
-  h4 {
-    font-size: 1.1rem;
-  }
-
-  p {
-    color: #ffffff;
-    @include primary-font;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  a {
-    color: $main-color;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #2a2a2a;
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $main-color;
-    border-radius: 4px;
-
-    &:hover {
-      background: lighten($main-color, 10%);
-    }
-  }
-}
-
-
-@media (max-width: 1000px) {
+@media (max-width: $tablet-max) {
   section {
     .footerWrapper {
       flex-wrap: wrap !important;
@@ -343,7 +284,7 @@ section {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $mobile-max) {
   section {
     padding: 20px 0;
 
@@ -387,7 +328,7 @@ section {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: $mobile-small-max) {
   section {
     padding: 15px 0;
 

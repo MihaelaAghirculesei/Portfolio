@@ -1,66 +1,28 @@
-import { Component, ElementRef, AfterViewInit, HostListener, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ScrollService } from '../services/scroll.service';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
-  encapsulation: ViewEncapsulation.None
+  styleUrl: './footer.component.scss'
 })
-export class FooterComponent implements AfterViewInit {
-  showLegalNotice = false;
-  isHovered: boolean = false;
-  private footerHeight: number = 120;
+export class FooterComponent {
+  isHovered = false;
+  currentYear = new Date().getFullYear();
 
   constructor(
-    public translate: TranslateService,
     private scrollService: ScrollService,
-    private elementRef: ElementRef,
     private router: Router
   ) {}
 
-  ngAfterViewInit() {
-    const footerElement = this.elementRef.nativeElement;
-    if (footerElement) {
-      this.footerHeight = footerElement.offsetHeight;
-    }
-  }
-
-  openLegalNotice() {
-    this.showLegalNotice = true;
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-    this.updateModalHeight();
-  }
-
-  closeLegalNotice() {
-    this.showLegalNotice = false;
-    document.body.style.overflow = 'auto';
-    document.documentElement.style.overflow = 'auto';
-  }
-
-  private updateModalHeight() {
-    document.documentElement.style.setProperty('--footer-height', `${this.footerHeight}px`);
-  }
-
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapeKey(event: KeyboardEvent) {
-    if (this.showLegalNotice) {
-      this.closeLegalNotice();
-    }
-  }
-
   scrollToTop(): void {
-    // Check if we're on the home page
     if (this.router.url === '/') {
       this.scrollService.scrollToElement('headLine', 'start');
     } else {
-      // Navigate to home page
       this.router.navigate(['/']);
     }
   }

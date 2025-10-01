@@ -6,13 +6,12 @@
           (click)="scrollToTop()"
           class="logo-button"
           type="button"
-        >
+          [attr.aria-label]="'footer.logoAriaLabel' | translate">
           <img
-            [src]="(isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png')"
+            [src]="isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png'"
             (mouseenter)="isHovered = true"
             (mouseleave)="isHovered = false"
-            alt="logo"
-            class="footer-logo"
+            alt="Mihaela Melania Aghirculesei Logo"
           />
         </button>
         <div>
@@ -22,84 +21,43 @@
       </div>
       
       <div class="copyright">
-        <p>&copy; <span class="name-effect">Mihaela Melania Aghirculesei</span> <span class="year-highlight">2025</span></p>
+        <p>&copy; <span class="name-effect">Mihaela Melania Aghirculesei</span> <span class="year-highlight">{{ currentYear }}</span></p>
       </div>
-      
-<div class="linkDiv">
-  <a target="_blank" href="https://github.com/MihaelaAghirculesei" class="link-hover-dot-left">
-    {{ 'footer.links.github' | translate }}
-  </a>
-  <a target="_blank" href="https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/" class="link-hover-dot-left">
-    {{ 'footer.links.linkedin' | translate }}
-  </a>
-  <a href="mailto:kontakt&#64;mihaela-melania-aghirculesei.de" class="link-hover-dot-left">
-    {{ 'footer.links.email' | translate }}
-  </a>
-  <a routerLink="/legal-notice" class="link-hover-dot-left">
-    {{ 'footer.legalNotice' | translate }}
-  </a>
-  <a routerLink="/privacy-policy" class="link-hover-dot-left">
-    {{ 'footer.privacyPolicy' | translate }}
-  </a>
-</div>
-    </div>
-  </div>
 
-  <div *ngIf="showLegalNotice" class="modal-backdrop">
-    <div class="modal-overlay" (click)="closeLegalNotice()">
-      <div class="modal-content" (click)="$event.stopPropagation()">
-        <button class="close-btn" (click)="closeLegalNotice()">&times;</button>
-
-        <ng-container *ngIf="translate.currentLang === 'de'; else englishLegalNotice">
-          <h1>Impressum</h1>
-          <h2>Angaben gemäß § 5 TMG</h2>
-          <p>
-            <strong>Mihaela Melania Aghirculesei</strong><br />
-            Springwiesen, 29<br />
-            38446 Wolfsburg
-          </p>
-
-          <h2>Kontakt</h2>
-          <p>
-            Telefon: 01749627899<br />
-            E-Mail: kontakt&#64;mihaela-melania-aghirculesei.de
-          </p>
-
-          <h2>Verantwortlich für den Inhalt</h2>
-          <p>
-            Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:<br />
-            Mihaela Melania Aghirculesei (Anschrift wie oben)
-          </p>
-        </ng-container>
-
-        <ng-template #englishLegalNotice>
-          <h1>Legal Notice</h1>
-          <h2>Information according to § 5 TMG</h2>
-          <p>
-            <strong>Mihaela Melania Aghirculesei</strong><br />
-            Springwiesen, 29<br />
-            38446 Wolfsburg<br />
-            Germany
-          </p>
-
-          <h2>Contact</h2>
-          <p>
-            Phone: 01749627899<br />
-            Email: kontakt&#64;mihaela-melania-aghirculesei.de
-          </p>
-
-          <h2>Responsible for Content</h2>
-          <p>
-            Responsible for content according to § 55 Abs. 2 RStV:<br />
-            Mihaela Melania Aghirculesei (address as above)
-          </p>
-        </ng-template>
-
-        <div class="source-info">
-          <p><small><span *ngIf="translate.currentLang === 'de'; else legalSourceEn">Quelle</span><ng-template #legalSourceEn>Source</ng-template>: <a href="https://www.e-recht24.de/impressum-generator.html" target="_blank">e-recht24.de</a></small></p>
-        </div>
+      <div class="linkDiv">
+        <a
+          target="_blank"
+          href="https://github.com/MihaelaAghirculesei"
+          class="link-hover-dot-left"
+          [attr.aria-label]="'footer.links.githubAriaLabel' | translate">
+          {{ 'footer.links.github' | translate }}
+        </a>
+        <a
+          target="_blank"
+          href="https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/"
+          class="link-hover-dot-left"
+          [attr.aria-label]="'footer.links.linkedinAriaLabel' | translate">
+          {{ 'footer.links.linkedin' | translate }}
+        </a>
+        <a
+          href="mailto:kontakt&#64;mihaela-melania-aghirculesei.de"
+          class="link-hover-dot-left"
+          [attr.aria-label]="'footer.links.emailAriaLabel' | translate">
+          {{ 'footer.links.email' | translate }}
+        </a>
+        <a
+          routerLink="/legal-notice"
+          class="link-hover-dot-left"
+          [attr.aria-label]="'footer.legalNoticeAriaLabel' | translate">
+          {{ 'footer.legalNotice' | translate }}
+        </a>
+        <a
+          routerLink="/privacy-policy"
+          class="link-hover-dot-left"
+          [attr.aria-label]="'footer.privacyPolicyAriaLabel' | translate">
+          {{ 'footer.privacyPolicy' | translate }}
+        </a>
       </div>
     </div>
   </div>
-
 </section>
