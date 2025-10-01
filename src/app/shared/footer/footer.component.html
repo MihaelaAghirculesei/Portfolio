@@ -6,22 +6,30 @@
           (click)="scrollToTop()"
           class="logo-button"
           type="button"
-          [attr.aria-label]="'footer.logoAriaLabel' | translate">
+          [attr.aria-label]="'footer.logoAriaLabel' | translate"
+        >
           <img
-            [src]="isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png'"
+            [src]="
+              isHovered
+                ? 'assets/img/logo-hover.png'
+                : 'assets/img/logo-normal.png'
+            "
             (mouseenter)="isHovered = true"
             (mouseleave)="isHovered = false"
             alt="Mihaela Melania Aghirculesei Logo"
           />
         </button>
         <div>
-          <p>{{ 'footer.role' | translate }}</p>
-          <p>{{ 'footer.location' | translate }}</p>
+          <p>{{ "footer.role" | translate }}</p>
+          <p>{{ "footer.location" | translate }}</p>
         </div>
       </div>
-      
+
       <div class="copyright">
-        <p>&copy; <span class="name-effect">Mihaela Melania Aghirculesei</span> <span class="year-highlight">{{ currentYear }}</span></p>
+        <p>
+          &copy; <span class="name-effect">Mihaela Melania Aghirculesei</span>
+          <span class="year-highlight">{{ currentYear }}</span>
+        </p>
       </div>
 
       <div class="linkDiv">
@@ -29,33 +37,38 @@
           target="_blank"
           href="https://github.com/MihaelaAghirculesei"
           class="link-hover-dot-left"
-          [attr.aria-label]="'footer.links.githubAriaLabel' | translate">
-          {{ 'footer.links.github' | translate }}
+          [attr.aria-label]="'footer.links.githubAriaLabel' | translate"
+        >
+          {{ "footer.links.github" | translate }}
         </a>
         <a
           target="_blank"
           href="https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/"
           class="link-hover-dot-left"
-          [attr.aria-label]="'footer.links.linkedinAriaLabel' | translate">
-          {{ 'footer.links.linkedin' | translate }}
+          [attr.aria-label]="'footer.links.linkedinAriaLabel' | translate"
+        >
+          {{ "footer.links.linkedin" | translate }}
         </a>
         <a
           href="mailto:kontakt&#64;mihaela-melania-aghirculesei.de"
           class="link-hover-dot-left"
-          [attr.aria-label]="'footer.links.emailAriaLabel' | translate">
-          {{ 'footer.links.email' | translate }}
+          [attr.aria-label]="'footer.links.emailAriaLabel' | translate"
+        >
+          {{ "footer.links.email" | translate }}
         </a>
         <a
           routerLink="/legal-notice"
           class="link-hover-dot-left"
-          [attr.aria-label]="'footer.legalNoticeAriaLabel' | translate">
-          {{ 'footer.legalNotice' | translate }}
+          [attr.aria-label]="'footer.legalNoticeAriaLabel' | translate"
+        >
+          {{ "footer.legalNotice" | translate }}
         </a>
         <a
           routerLink="/privacy-policy"
           class="link-hover-dot-left"
-          [attr.aria-label]="'footer.privacyPolicyAriaLabel' | translate">
-          {{ 'footer.privacyPolicy' | translate }}
+          [attr.aria-label]="'footer.privacyPolicyAriaLabel' | translate"
+        >
+          {{ "footer.privacyPolicy" | translate }}
         </a>
       </div>
     </div>

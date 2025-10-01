@@ -8,16 +8,13 @@ import { ScrollService } from '../services/scroll.service';
   standalone: true,
   imports: [RouterLink, TranslatePipe],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
   isHovered = false;
   currentYear = new Date().getFullYear();
 
-  constructor(
-    private scrollService: ScrollService,
-    private router: Router
-  ) {}
+  constructor(private scrollService: ScrollService, private router: Router) {}
 
   scrollToTop(): void {
     if (this.router.url === '/') {
