@@ -283,7 +283,7 @@
   right: 0;
   bottom: 0;
   @include dFlex(center, center);
-  z-index: 999999;
+  z-index: $z-modal-overlay;
   padding-top: 0;
 }
 
@@ -296,7 +296,7 @@
   width: 100vw;
   height: 100vh;
   background-color: $modal-backdrop;
-  z-index: 999998;
+  z-index: $z-modal-backdrop;
 }
 
 .project-modal {
@@ -306,7 +306,7 @@
   max-height: 90vh;
   margin: auto;
   padding: 40px;
-  z-index: 999999;
+  z-index: $z-modal-content;
   overflow-y: auto;
   animation: modalFadeIn 0.3s ease-in-out;
   @include dFlex(flex-start, stretch);
@@ -477,8 +477,8 @@
       width: 100%;
 
       img {
-        width: 500px !important;
-        height: 350px !important;
+        width: 500px;
+        height: 350px;
         object-fit: cover;
         box-shadow: 0 4px 8px $shadow-light;
         position: relative;
@@ -632,10 +632,9 @@
 }
 
 @media (max-width: $tablet-max) and (min-width: $tablet-medium-min) {
-  .project-image-container .project-image .imageContainer img {
-    width: 500px !important;
-    height: 350px !important;
-    object-fit: cover !important;
+  .project-modal-content .project-image-container .project-image .imageContainer img {
+    width: 500px;
+    height: 350px;
   }
 }
 
@@ -679,14 +678,16 @@
 }
 
 @media (max-width: $tablet-large-max) {
-  .projects-hover-content .imageContainer img {
-    width: 220px !important;
-    height: 145px !important;
-  }
+  .projectWrapper .projects-hover-content .imageContainer {
+    img {
+      width: 220px;
+      height: 145px;
+    }
 
-  .projects-hover-content .imageContainer .lineDiv {
-    width: 220px !important;
-    height: 145px !important;
+    .lineDiv {
+      width: 220px;
+      height: 145px;
+    }
   }
 }
 
@@ -719,7 +720,7 @@
 
 @media (max-width: $tablet-medium-max) {
   .project-modal-overlay {
-    z-index: 99999999;
+    z-index: calc($z-modal-overlay + 10);
 
     &::before {
       content: "";
@@ -729,17 +730,17 @@
       right: 0;
       height: 120px;
       background: transparent;
-      z-index: 999999999;
+      z-index: calc($z-modal-overlay + 11);
       pointer-events: none;
     }
   }
 
   .project-modal-backdrop {
-    z-index: 99999998;
+    z-index: calc($z-modal-backdrop + 10);
   }
 
   .project-modal {
-    z-index: 99999999;
+    z-index: calc($z-modal-content + 10);
     @include modal-sizing(95%, 20px);
   }
 
@@ -755,8 +756,8 @@
   }
 
   .project-image-container {
-    width: 100% !important;
-    order: -1 !important;
+    width: 100%;
+    order: -1;
     padding: 8px;
 
     .imageContainer {
@@ -765,12 +766,12 @@
     }
 
     .project-image .imageContainer img {
-      width: 100% !important;
-      max-width: none !important;
-      height: auto !important;
-      max-height: 250px !important;
-      min-height: 150px !important;
-      object-fit: contain !important;
+      width: 100%;
+      max-width: none;
+      height: auto;
+      max-height: 250px;
+      min-height: 150px;
+      object-fit: contain;
     }
   }
 
@@ -914,8 +915,8 @@
 
     .project-image .imageContainer {
       img {
-        max-height: 200px !important;
-        min-height: 120px !important;
+        max-height: 200px;
+        min-height: 120px;
       }
 
       .lineDiv {
@@ -941,9 +942,9 @@
     gap: 12px;
   }
 
-  .project-image-container .project-image .imageContainer img {
-    max-height: 180px !important;
-    min-height: 100px !important;
+  .project-modal-content .project-image-container .project-image .imageContainer img {
+    max-height: 180px;
+    min-height: 100px;
   }
 
   #projects .contentWrapper > p,
@@ -951,8 +952,8 @@
   .project-modal-content p,
   .project-description,
   .project-button {
-    font-size: 16px !important;
-    line-height: 1.3 !important;
+    font-size: 16px;
+    line-height: 1.3;
   }
 }
 
@@ -965,9 +966,9 @@
     @include project-info-responsive(28px, 20px, 16px, null, 75px, 16px, 24px);
   }
 
-  .project-image-container .project-image .imageContainer img {
-    max-height: 160px !important;
-    min-height: 90px !important;
+  .project-modal-content .project-image-container .project-image .imageContainer img {
+    max-height: 160px;
+    min-height: 90px;
   }
 
   .link-button2 {

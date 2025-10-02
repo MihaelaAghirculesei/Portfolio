@@ -27,6 +27,11 @@ $shadow-light: rgba(0, 0, 0, 0.2);
 $shadow-medium: rgba(0, 0, 0, 0.3);
 $shadow-heavy: rgba(0, 0, 0, 0.5);
 
+// Z-index layers
+$z-modal-backdrop: 100;
+$z-modal-overlay: 101;
+$z-modal-content: 102;
+
 // Spacing
 $spacing-xs: 4px;
 $spacing-sm: 8px;
