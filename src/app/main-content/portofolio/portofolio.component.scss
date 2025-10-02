@@ -1,5 +1,132 @@
 @import "../../../styles/styles.scss";
 
+@mixin responsive-font($desktop, $tablet: null, $mobile: null, $small: null) {
+  font-size: $desktop;
+
+  @if $tablet {
+    @media (max-width: $desktop-max) {
+      font-size: $tablet;
+    }
+  }
+
+  @if $mobile {
+    @media (max-width: $tablet-max) {
+      font-size: $mobile;
+    }
+  }
+
+  @if $small {
+    @media (max-width: $mobile-max) {
+      font-size: $small;
+    }
+  }
+}
+
+@mixin modal-sizing($width, $padding, $max-height: 90vh, $margin: auto, $border-radius: 0) {
+  width: $width;
+  padding: $padding;
+  max-height: $max-height;
+  margin: $margin;
+  border-radius: $border-radius;
+}
+
+@mixin modal-with-content(
+  $modal-width,
+  $modal-padding,
+  $content-padding,
+  $modal-height: 90vh,
+  $modal-margin: auto,
+  $content-direction: column,
+  $other-props: ()
+) {
+  .project-modal {
+    @include modal-sizing($modal-width, $modal-padding, $modal-height, $modal-margin);
+    @each $prop, $value in $other-props {
+      #{$prop}: $value;
+    }
+  }
+
+  .project-modal-content {
+    flex-direction: $content-direction;
+    padding: $content-padding;
+  }
+}
+
+@mixin icon-size($size) {
+  width: $size;
+  height: $size;
+}
+
+@mixin tech-tag-responsive($font-size, $icon-size, $gap: null) {
+  font-size: $font-size;
+
+  .tech-icon {
+    @include icon-size($icon-size);
+  }
+
+  @if $gap {
+    gap: $gap;
+  }
+}
+
+@mixin project-info-responsive(
+  $number-size,
+  $title-size,
+  $description-size,
+  $long-desc-font: null,
+  $long-desc-height: null,
+  $tech-font: 16px,
+  $tech-icon: 16px,
+  $tech-gap: null
+) {
+  .project-number {
+    font-size: $number-size;
+  }
+
+  .project-title {
+    font-size: $title-size;
+  }
+
+  .project-description {
+    font-size: $description-size;
+  }
+
+  @if $long-desc-font or $long-desc-height {
+    .project-long-description p {
+      @if $long-desc-font {
+        font-size: $long-desc-font;
+      }
+      @if $long-desc-height {
+        max-height: $long-desc-height;
+      }
+    }
+  }
+
+  .project-technologies .tech-tags {
+    @if $tech-gap {
+      gap: $tech-gap;
+    }
+
+    .tech-tag {
+      @include tech-tag-responsive($tech-font, $tech-icon);
+    }
+  }
+}
+
+@mixin landscape-layout($info-width: 50%, $container-width: 50%) {
+  .project-info {
+    width: $info-width;
+  }
+
+  .project-image-container {
+    width: $container-width;
+
+    .project-image {
+      margin-top: 0;
+    }
+  }
+}
+
 #projects {
   padding: 0;
   background-color: $gradient-start;
@@ -14,59 +141,24 @@
 
     > h2 {
       color: $main-color;
-      font-size: 56px;
+      @include responsive-font(56px, 48px, 40px, 33px);
       @include primary-font;
       font-weight: 700;
       margin-bottom: 10px;
-
-      @media (max-width: $desktop-max) {
-        font-size: 48px;
-      }
-
-      @media (max-width: $tablet-max) {
-        font-size: 40px;
-      }
-
-      @media (max-width: $mobile-max) {
-        font-size: 33px;
-      }
     }
 
     > h3 {
       @include text("Fira Code", 42px, $main-color, 400);
-
-      @media (max-width: $desktop-max) {
-        font-size: 36px;
-      }
-
-      @media (max-width: $tablet-max) {
-        font-size: 30px;
-      }
-
-      @media (max-width: $mobile-max) {
-        font-size: 25px;
-      }
+      @include responsive-font(42px, 36px, 30px, 25px);
     }
 
     > p {
-      font-size: 20px;
+      @include responsive-font(20px, 18px, 17px, 16px);
       @include primary-font;
       width: 30%;
       margin: 0 0 10px 0;
       line-height: 120%;
       color: $white;
-
-      @media (max-width: $desktop-max) {
-        font-size: 18px;
-      }
-
-      @media (max-width: $tablet-max) {
-        font-size: 17px;
-      }
-
-      @media (max-width: $mobile-max) {
-        font-size: 16px;
-      }
     }
   }
 }
@@ -153,7 +245,6 @@
       width: 350px;
       height: 230px;
       object-fit: cover;
-      border-radius: 0;
       transform: translate(-20px, -20px);
       animation: fadeIn 0.3s ease-in-out;
       box-shadow: 0 8px 32px $shadow-medium;
@@ -167,14 +258,7 @@
       left: -10px;
       width: 350px;
       height: 230px;
-      background: repeating-linear-gradient(
-        135deg,
-        $main-color 0px,
-        $main-color 2px,
-        transparent 2px,
-        transparent 20px
-      );
-      border-radius: 0;
+      background: repeating-linear-gradient(135deg, $main-color 0px, $main-color 2px, transparent 2px, transparent 20px);
       opacity: 0.8;
       z-index: 1;
     }
@@ -201,26 +285,6 @@
   @include dFlex(center, center);
   z-index: 999999;
   padding-top: 0;
-
-  @media (max-width: $tablet-medium-max) {
-    z-index: 99999999;
-  }
-}
-
-@media (max-width: $tablet-medium-max) {
-  .project-modal-overlay {
-    &::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 120px;
-      background: transparent;
-      z-index: 999999999;
-      pointer-events: none;
-    }
-  }
 }
 
 .project-modal-backdrop {
@@ -233,15 +297,10 @@
   height: 100vh;
   background-color: $modal-backdrop;
   z-index: 999998;
-
-  @media (max-width: $tablet-medium-max) {
-    z-index: 99999998;
-  }
 }
 
 .project-modal {
   background: linear-gradient(45deg, $gradient-start 40%, $gradient-end 100%);
-  border-radius: 0;
   max-width: 1440px;
   width: 90%;
   max-height: 90vh;
@@ -252,41 +311,6 @@
   animation: modalFadeIn 0.3s ease-in-out;
   @include dFlex(flex-start, stretch);
   flex-direction: column;
-
-  @media (min-width: $tablet-medium-min) and (max-width: $tablet-max) {
-    max-height: fit-content;
-    height: auto;
-    overflow-y: visible;
-  }
-
-  @media (max-width: $tablet-medium-max) {
-    z-index: 99999999;
-    width: 95%;
-    max-height: 90vh;
-    padding: 20px;
-  }
-
-  @media (max-width: $mobile-max) {
-    width: 98%;
-    max-height: 90vh;
-    padding: 15px;
-    margin: 10px;
-    border-radius: 0;
-  }
-
-  @media (max-width: $mobile-medium-max) {
-    width: 100%;
-    max-height: 90vh;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 0;
-  }
-
-  @media (max-width: $mobile-small-max) {
-    max-height: 90vh;
-    padding: 8px;
-    margin: 2px;
-  }
 }
 
 @keyframes modalFadeIn {
@@ -304,46 +328,21 @@
   @include dFlex(flex-start, stretch);
   flex-direction: row;
   padding: 24px;
-
-  @media (max-width: $tablet-medium-max) {
-    flex-direction: column;
-    padding: 16px;
-  }
-
-  @media (max-width: $mobile-max) {
-    padding: 8px;
-    gap: 16px;
-  }
-
-  @media (max-width: $mobile-medium-max) {
-    padding: 4px;
-    gap: 12px;
-  }
 }
 
 .project-info {
   width: 50%;
   padding-right: 24px;
 
-  @media (max-width: $tablet-medium-max) {
-    width: 100% !important;
-    padding-right: 0;
-    order: 1 !important;
-  }
-
-  @media (max-width: $mobile-max) {
-    padding-right: 0;
-  }
-
   .project-number {
-    font-size: 128px;
+    @include responsive-font(128px, 64px);
     @include primary-font;
     color: $main-color;
     line-height: 1;
   }
 
   .project-title {
-    font-size: 64px;
+    @include responsive-font(64px, 32px);
     font-weight: 700;
     @include code-font;
     margin-bottom: 16px;
@@ -351,7 +350,7 @@
   }
 
   .project-description {
-    font-size: 24px;
+    @include responsive-font(24px, 18px);
     margin-bottom: 16px;
     @include code-font;
     font-weight: 700;
@@ -363,14 +362,12 @@
 
     p {
       @include primary-font;
-      font-size: 18px;
+      @include responsive-font(18px, 16px);
       color: $white;
-      height: auto;
       max-height: 80px;
       overflow-y: auto;
       line-height: 1.6;
       border: 1px solid $main-color-light;
-      border-radius: 0;
       padding: 12px 16px 12px 12px;
       @include customScrollbar(12px, $main-color-lighter, $main-color);
     }
@@ -388,14 +385,9 @@
         @include dFlex(flex-start, center);
         gap: 8px;
         color: $white;
-        font-size: 18px;
         font-weight: 500;
         @include primary-font;
-
-        .tech-icon {
-          width: 20px;
-          height: 20px;
-        }
+        @include tech-tag-responsive(18px, 20px);
       }
     }
   }
@@ -408,30 +400,14 @@
 
 .project-image-container {
   width: 50%;
-  border-radius: 0;
   padding: 16px;
   @include dFlex(flex-start, stretch);
   flex-direction: column;
 
-  @media (max-width: $tablet-medium-max) {
-    width: 100% !important;
-    order: -1 !important;
-    padding: 8px;
-  }
-
-  @media (max-width: $mobile-max) {
-    padding: 4px;
-  }
-
-  @media (max-width: $mobile-medium-max) {
-    padding: 2px;
-  }
-
   .close-button {
     align-self: flex-end;
     margin-bottom: 8px;
-    width: 32px;
-    height: 32px;
+    @include icon-size(32px);
     @include dFlex(center, center);
     border: none;
     cursor: pointer;
@@ -458,8 +434,7 @@
     .close-icon {
       position: relative;
       display: inline-block;
-      width: 50px;
-      height: 50px;
+      @include icon-size(50px);
 
       &::before,
       &::after {
@@ -501,58 +476,18 @@
       display: inline-block;
       width: 100%;
 
-      @media (max-width: $tablet-medium-max) {
-        display: block;
-        width: 100%;
-      }
-
       img {
-        width: 500px;
-        height: 350px;
+        width: 500px !important;
+        height: 350px !important;
         object-fit: cover;
-        border-radius: 0;
         box-shadow: 0 4px 8px $shadow-light;
         position: relative;
         z-index: 2;
-
-        @media (max-width: $tablet-max) and (min-width: $tablet-medium-min) {
-          width: 400px !important;
-          height: 280px !important;
-          object-fit: cover !important;
-        }
-
-        @media (max-width: $tablet-medium-max) {
-          width: 100% !important;
-          max-width: none !important;
-          height: auto !important;
-          max-height: 250px !important;
-          min-height: 150px !important;
-          object-fit: contain !important;
-        }
-
-        @media (max-width: $mobile-max) {
-          max-height: 200px !important;
-          min-height: 120px !important;
-        }
-
-        @media (max-width: $mobile-medium-max) {
-          max-height: 180px !important;
-          min-height: 100px !important;
-        }
-
-        @media (max-width: $mobile-small-max) {
-          max-height: 160px !important;
-          min-height: 90px !important;
-        }
       }
 
       .lineDiv {
         @include decorativeLine(5px, 10px);
         z-index: 1;
-
-        @media (max-width: $mobile-max) {
-          display: none;
-        }
       }
     }
   }
@@ -631,21 +566,58 @@
   }
 }
 
+@media only screen and (min-width: 1920px) {
+  #projects .projectWrapper .projects-hover-content .imageContainer {
+    margin-top: -20px !important;
+
+    img {
+      padding-right: 21px !important;
+      margin-top: -20px !important;
+    }
+
+    .lineDiv {
+      padding-right: 42px !important;
+      padding-bottom: 72px !important;
+    }
+  }
+}
+
+@media (min-width: $tablet-large-min) {
+  #projects .projectWrapper .projects-table {
+    width: 55% !important;
+  }
+
+  .project-modal {
+    @include modal-sizing(100%, 24px, 90vh, auto, 16px);
+  }
+
+  .project-modal-content {
+    padding: 16px;
+  }
+
+  .project-image-container {
+    padding: 8px;
+  }
+}
+
+@media (min-width: $tablet-min) and (max-width: $desktop-max) {
+  #projects .projectWrapper .projects-hover-content .imageContainer {
+    margin-top: -20px !important;
+
+    img {
+      margin-top: -20px !important;
+      padding-right: 15px !important;
+    }
+  }
+
+  #projects .projectWrapper .projects-hover-content[data-project-id="0"] .imageContainer {
+    margin-top: 20px !important;
+  }
+}
+
 @media (max-width: $desktop-medium-max) {
-  .project-info {
-    .project-number {
-      font-size: 64px;
-    }
-    .project-title {
-      font-size: 32px;
-    }
-    .project-description {
-      font-size: 18px;
-    }
-    .project-long-description p {
-      font-size: 16px;
-      max-height: 70px;
-    }
+  .project-info .project-long-description p {
+    max-height: 70px;
   }
 }
 
@@ -659,87 +631,30 @@
   }
 }
 
-@media (min-width: $tablet-large-min) {
-  #projects .projectWrapper .projects-table {
-    width: 55% !important;
-  }
-
-  .project-modal {
-    width: 100%;
-    max-height: 90vh;
-    border-radius: 16px;
-    padding: 24px;
-  }
-
-  .project-modal-content {
-    padding: 16px;
-  }
-
-  .project-image-container {
-    padding: 8px;
+@media (max-width: $tablet-max) and (min-width: $tablet-medium-min) {
+  .project-image-container .project-image .imageContainer img {
+    width: 500px !important;
+    height: 350px !important;
+    object-fit: cover !important;
   }
 }
 
 @media (max-width: $tablet-max) and (orientation: landscape) {
-  .project-modal {
-    width: 100%;
-    height: auto;
-    max-height: 100vh;
-    padding: 16px;
-    overflow-y: auto;
-  }
+  @include modal-with-content(100%, 16px, 12px, 100vh, auto, row, (height: auto, overflow-y: auto));
 
-  .project-modal-content {
-    flex-direction: row;
-    padding: 12px;
-  }
+  @include landscape-layout;
 
   .project-info {
-    width: 50%;
+    @include project-info-responsive(48px, 28px, 16px, 16px, 60px, 16px, 18px, 12px);
 
-    .project-number {
-      font-size: 48px;
-    }
-    .project-title {
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
+    .project-title,
     .project-description {
-      font-size: 16px;
       margin-bottom: 8px;
-    }
-    .project-long-description p {
-      font-size: 16px;
-      max-height: 60px;
-      overflow-y: auto;
-    }
-    .project-technologies .tech-tags {
-      gap: 12px;
-
-      .tech-tag {
-        font-size: 16px;
-
-        .tech-icon {
-          width: 18px;
-          height: 18px;
-        }
-      }
     }
   }
 
-  .project-image-container {
-    width: 50%;
-
-    .project-image {
-      margin-top: 0;
-
-      img {
-        border-radius: 0;
-      }
-    }
-    .close-button {
-      margin-bottom: 4px;
-    }
+  .project-image-container .close-button {
+    margin-bottom: 4px;
   }
 
   .project-modal-footer {
@@ -748,20 +663,30 @@
 
   .link-button2 {
     padding: 12px 20px;
-    font-size: 16px;
+  }
+}
+
+@media (max-width: $tablet-large-max) and (min-width: $tablet-small-min) {
+  .projectWrapper .projects-table {
+    width: 60% !important;
+  }
+
+  .projectWrapper .projects-table tbody tr .project-name,
+  .projectWrapper .projects-table tbody tr .project-tech {
+    display: table-cell !important;
+    vertical-align: middle;
   }
 }
 
 @media (max-width: $tablet-large-max) {
-  .projects-hover-content .imageContainer {
-    img {
-      width: 220px !important;
-      height: 145px !important;
-    }
-    .lineDiv {
-      width: 220px !important;
-      height: 145px !important;
-    }
+  .projects-hover-content .imageContainer img {
+    width: 220px !important;
+    height: 145px !important;
+  }
+
+  .projects-hover-content .imageContainer .lineDiv {
+    width: 220px !important;
+    height: 145px !important;
   }
 }
 
@@ -775,57 +700,96 @@
     border-bottom: 0.5px solid $main-color !important;
   }
 
-  .projectWrapper .projects-table tbody tr {
-    .project-name,
-    .project-tech {
-      display: block !important;
-      padding: 8px 0;
-    }
-
-    .project-name {
-      font-size: 22px;
-      padding-bottom: 4px !important;
-    }
-
-    .project-tech {
-      font-size: 16px;
-      padding-top: 4px !important;
-    }
-  }
-}
-
-@media (max-width: $tablet-large-max) and (min-width: $tablet-small-min) {
-  .projectWrapper .projects-table {
-    width: 60% !important;
+  .projectWrapper .projects-table tbody tr .project-name,
+  .projectWrapper .projects-table tbody tr .project-tech {
+    display: block !important;
+    padding: 8px 0;
   }
 
-  .projectWrapper .projects-table tbody tr {
-    .project-name,
-    .project-tech {
-      display: table-cell !important;
-      vertical-align: middle;
-    }
+  .projectWrapper .projects-table tbody tr .project-name {
+    font-size: 22px;
+    padding-bottom: 4px !important;
+  }
+
+  .projectWrapper .projects-table tbody tr .project-tech {
+    font-size: 16px;
+    padding-top: 4px !important;
   }
 }
 
 @media (max-width: $tablet-medium-max) {
-  .projectWrapper .projects-table tbody tr {
-    .project-name,
-    .project-tech {
-      display: block !important;
-      text-align: left !important;
-      padding: 20px 16px;
-    }
-    .project-name {
-      padding: 16px 0 4px 0 !important;
+  .project-modal-overlay {
+    z-index: 99999999;
 
-      font-size: 20px;
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: transparent;
+      z-index: 999999999;
+      pointer-events: none;
     }
-    .project-tech {
-      padding: 4px 0 16px 0 !important;
-      text-align: left !important;
-      font-size: 16px;
+  }
+
+  .project-modal-backdrop {
+    z-index: 99999998;
+  }
+
+  .project-modal {
+    z-index: 99999999;
+    @include modal-sizing(95%, 20px);
+  }
+
+  .project-modal-content {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .project-info {
+    width: 100% !important;
+    padding-right: 0;
+    order: 1 !important;
+  }
+
+  .project-image-container {
+    width: 100% !important;
+    order: -1 !important;
+    padding: 8px;
+
+    .imageContainer {
+      display: block;
+      width: 100%;
     }
+
+    .project-image .imageContainer img {
+      width: 100% !important;
+      max-width: none !important;
+      height: auto !important;
+      max-height: 250px !important;
+      min-height: 150px !important;
+      object-fit: contain !important;
+    }
+  }
+
+  .projectWrapper .projects-table tbody tr .project-name,
+  .projectWrapper .projects-table tbody tr .project-tech {
+    display: block !important;
+    text-align: left !important;
+    padding: 20px 16px;
+  }
+
+  .projectWrapper .projects-table tbody tr .project-name {
+    padding: 16px 0 4px 0 !important;
+    font-size: 20px;
+  }
+
+  .projectWrapper .projects-table tbody tr .project-tech {
+    padding: 4px 0 16px 0 !important;
+    text-align: left !important;
+    font-size: 16px;
   }
 }
 
@@ -839,20 +803,10 @@
 }
 
 @media (max-width: $tablet-medium-max) and (orientation: portrait) {
-  .project-modal {
-    width: 100%;
-    height: auto;
-    min-height: 100vh;
-    max-height: 100vh;
-    border-radius: 0;
-    padding: 16px;
-    overflow-y: auto;
-  }
+  @include modal-with-content(100%, 16px, 0, 100vh, auto, column, (height: auto, min-height: 100vh, overflow-y: auto));
 
   .project-modal-content {
-    flex-direction: column !important;
-    justify-content: flex-start;
-    padding: 0;
+    justify-content: flex-start !important;
     margin: 16px;
   }
 
@@ -860,28 +814,11 @@
     width: 100%;
     padding-right: 0;
     margin-top: 16px;
+    @include project-info-responsive(40px, 28px, 16px, null, 80px, 16px, 18px);
 
-    .project-number {
-      font-size: 40px;
-    }
-    .project-title {
-      font-size: 28px;
-    }
-    .project-description {
-      font-size: 16px;
-    }
     .project-long-description p {
       height: auto;
-      max-height: 80px;
       overflow-y: auto;
-    }
-    .project-technologies .tech-tags .tech-tag {
-      font-size: 16px;
-
-      .tech-icon {
-        width: 18px;
-        height: 18px;
-      }
     }
   }
 
@@ -892,12 +829,9 @@
     .close-button {
       margin-bottom: 0;
     }
+
     .project-image {
       margin-top: 0;
-
-      img {
-        border-radius: 0;
-      }
     }
   }
 
@@ -908,74 +842,34 @@
 }
 
 @media (max-width: $tablet-medium-max) and (orientation: landscape) {
-  .project-modal {
-    height: auto;
-    max-height: 100vh;
-    width: 100%;
-    border-radius: 0;
-    padding: 12px;
-    overflow-y: auto;
-  }
+  @include modal-with-content(100%, 12px, 8px, 100vh, auto, row, (height: auto, overflow-y: auto));
 
-  .project-modal-content {
-    flex-direction: row;
-    padding: 8px;
-  }
+  @include landscape-layout;
 
   .project-info {
-    width: 50%;
+    @include project-info-responsive(36px, 22px, 16px, 16px, 50px, 16px, 16px, 8px);
 
-    .project-number {
-      font-size: 36px;
-    }
-    .project-title {
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
+    .project-title,
     .project-description {
-      font-size: 16px;
       margin-bottom: 6px;
-    }
-    .project-long-description p {
-      font-size: 16px;
-      max-height: 50px;
-      overflow-y: auto;
-    }
-    .project-technologies .tech-tags {
-      gap: 8px;
-
-      .tech-tag {
-        font-size: 16px;
-
-        .tech-icon {
-          width: 16px;
-          height: 16px;
-        }
-      }
     }
   }
 
   .project-image-container {
-    width: 50%;
     padding: 4px;
 
     .close-button {
       margin-bottom: 4px;
-      width: 24px;
-      height: 24px;
+      @include icon-size(24px);
 
       .close-icon {
-        width: 24px;
-        height: 24px;
+        @include icon-size(24px);
 
         &::before,
         &::after {
           width: 18px;
         }
       }
-    }
-    .project-image {
-      margin-top: 0;
     }
   }
 
@@ -990,54 +884,44 @@
 
   .link-button2 {
     padding: 10px 16px;
-    font-size: 16px;
   }
 }
 
 @media (max-width: $tablet-small-max) {
-  #projects .contentWrapper > h2 {
-    font-size: 33px;
-  }
-
   .projectWrapper .projects-table tbody tr .project-name {
     font-size: 20px;
   }
 }
 
 @media (max-width: $mobile-max) {
+  @include modal-with-content(98%, 15px, 8px, 90vh, 10px);
+
   .project-modal-content {
+    gap: 16px;
     margin: 8px;
   }
 
   .project-info {
-    .project-number {
-      font-size: 32px;
-    }
-    .project-title {
-      font-size: 24px;
-    }
-    .project-description {
-      font-size: 16px;
-    }
-    .project-technologies .tech-tags {
-      gap: 8px;
-
-      .tech-tag {
-        font-size: 16px;
-
-        .tech-icon {
-          width: 16px;
-          height: 16px;
-        }
-      }
-    }
-    .project-long-description p {
-      max-height: 70px;
-    }
+    @include project-info-responsive(32px, 24px, 16px, null, 70px, 16px, 16px, 8px);
   }
 
-  .project-image-container .close-button {
-    margin-bottom: 0;
+  .project-image-container {
+    padding: 4px;
+
+    .close-button {
+      margin-bottom: 0;
+    }
+
+    .project-image .imageContainer {
+      img {
+        max-height: 200px !important;
+        min-height: 120px !important;
+      }
+
+      .lineDiv {
+        display: none;
+      }
+    }
   }
 
   .project-modal-footer .next-project-button {
@@ -1047,45 +931,21 @@
 
   .link-button2 {
     padding: 8px 14px;
-    font-size: 16px;
-  }
-}
-
-@media (max-width: $mobile-small-max) {
-  .project-modal {
-    padding: 8px;
-  }
-
-  .project-info {
-    .project-number {
-      font-size: 28px;
-    }
-    .project-title {
-      font-size: 20px;
-    }
-    .project-description {
-      font-size: 16px;
-    }
-    .project-long-description p {
-      max-height: 75px;
-    }
-    .project-technologies .tech-tags .tech-tag {
-      font-size: 16px;
-
-      .tech-icon {
-        width: 24px;
-        height: 24px;
-      }
-    }
-  }
-
-  .link-button2 {
-    padding: 6px 12px;
-    font-size: 16px;
   }
 }
 
 @media (max-width: $mobile-medium-max) {
+  @include modal-with-content(100%, 10px, 4px, 90vh, 5px);
+
+  .project-modal-content {
+    gap: 12px;
+  }
+
+  .project-image-container .project-image .imageContainer img {
+    max-height: 180px !important;
+    min-height: 100px !important;
+  }
+
   #projects .contentWrapper > p,
   .project-tech,
   .project-modal-content p,
@@ -1096,39 +956,27 @@
   }
 }
 
-@media (min-width: $tablet-min) and (max-width: $desktop-max) {
-  #projects .projectWrapper .projects-hover-content {
-    .imageContainer {
-      margin-top: -20px !important;
-
-      img {
-        margin-top: -20px !important;
-        padding-right: 15px !important;
-      }
-    }
+@media (max-width: $mobile-small-max) {
+  .project-modal {
+    @include modal-sizing(auto, 8px, 90vh, 2px);
   }
 
-  #projects .projectWrapper .projects-hover-content[data-project-id="0"] {
-    .imageContainer {
-      margin-top: 20px !important;
-    }
+  .project-info {
+    @include project-info-responsive(28px, 20px, 16px, null, 75px, 16px, 24px);
+  }
+
+  .project-image-container .project-image .imageContainer img {
+    max-height: 160px !important;
+    min-height: 90px !important;
+  }
+
+  .link-button2 {
+    padding: 6px 12px;
   }
 }
 
-@media only screen and (min-width: 1920px) {
-  #projects .projectWrapper .projects-hover-content {
-    .imageContainer {
-      margin-top: -20px !important;
-
-      img {
-        padding-right: 21px !important;
-        margin-top: -20px !important;
-      }
-
-      .lineDiv {
-        padding-right: 42px !important;
-        padding-bottom: 72px !important;
-      }
-    }
+@media (max-width: $tablet-max) {
+  .link-button2 {
+    font-size: 16px;
   }
 }
