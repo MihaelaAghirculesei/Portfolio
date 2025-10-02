@@ -10,7 +10,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 
 const TRANSLATION_CONFIG = {
-  prefix: './assets/i18n/',
+  prefix: '/assets/i18n/',
   suffix: '.json',
 } as const;
 
