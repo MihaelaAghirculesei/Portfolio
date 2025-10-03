@@ -70,6 +70,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   private readonly TOUCH_THRESHOLD: number = 10;
   private headerElement: HTMLElement | null = null;
   private originalHeaderDisplay: string = '';
+  private rafPending: boolean = false;
 
   constructor(
     private platformService: PlatformService,
@@ -122,7 +123,15 @@ export class PortofolioComponent implements OnInit, OnDestroy {
 
     const trElement = event.currentTarget as HTMLElement;
 
+    if (this.rafPending) {
+      return;
+    }
+
+    this.rafPending = true;
+
     requestAnimationFrame(() => {
+      this.rafPending = false;
+
       const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
       const trRect = trElement.getBoundingClientRect();
 

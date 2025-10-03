@@ -851,11 +851,11 @@
 }
 
 @media (max-width: 1070px) and (orientation: landscape) {
-  @include modal-with-content(100%, 12px, 8px, 100vh, auto, row, (height: auto, overflow-y: auto));
-
-  @include landscape-layout;
+  @include modal-with-content(100%, 12px, 8px, 100vh, auto, column, (height: auto, overflow-y: auto));
 
   .project-info {
+    width: 100% !important;
+    order: 1 !important;
     @include project-info-responsive(36px, 22px, 16px, 16px, 50px, 16px, 16px, 8px);
 
     .project-title,
@@ -865,6 +865,8 @@
   }
 
   .project-image-container {
+    width: 100%;
+    order: -1;
     padding: 4px;
 
     .close-button {
