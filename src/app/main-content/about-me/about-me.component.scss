@@ -174,22 +174,22 @@
   }
 }
 
-.icon-hover {
-  transform: scale(1.1) rotate(5deg) !important;
-  filter: brightness(1.4) drop-shadow(0 4px 8px rgba(61, 207, 182, 0.3)) !important;
+.iconWrapper img.icon-hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: brightness(1.4) drop-shadow(0 4px 8px rgba(61, 207, 182, 0.3));
 }
 
-.icon-normal {
+.iconWrapper img.icon-normal {
   transform: scale(1) rotate(0deg);
   filter: brightness(1.2);
 }
 
-.image-hover {
-  transform: scale(1.05) !important;
-  filter: brightness(1.2) contrast(1.1) !important;
+.imageContainer img.image-hover {
+  transform: scale(1.05);
+  filter: brightness(1.2) contrast(1.1);
 }
 
-.image-normal {
+.imageContainer img.image-normal {
   transform: scale(1);
   filter: brightness(1.1) contrast(1.05);
 }

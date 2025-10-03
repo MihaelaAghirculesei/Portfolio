@@ -19,6 +19,7 @@ export class HeaderComponent implements OnDestroy {
   isScrolled: boolean = false;
   isEnglish: boolean = false;
   isMenuOpen: boolean = false;
+  private boundCheckScroll = this.checkScroll.bind(this);
 
   constructor(
     private scrollService: ScrollService,
@@ -35,13 +36,13 @@ export class HeaderComponent implements OnDestroy {
 
     // Add passive scroll listener for better performance
     if (this.platformService.isWindowDefined()) {
-      window.addEventListener('scroll', this.checkScroll.bind(this), { passive: true });
+      window.addEventListener('scroll', this.boundCheckScroll, { passive: true });
     }
   }
 
   ngOnDestroy(): void {
     if (this.platformService.isWindowDefined()) {
-      window.removeEventListener('scroll', this.checkScroll.bind(this));
+      window.removeEventListener('scroll', this.boundCheckScroll);
     }
   }
 

@@ -441,7 +441,7 @@
   &::-webkit-scrollbar-thumb {
     background: $thumb-color;
     border-radius: 1px;
-    visibility: visible !important;
+    visibility: visible;
 
     @if $thumb-hover-color {
       &:hover {

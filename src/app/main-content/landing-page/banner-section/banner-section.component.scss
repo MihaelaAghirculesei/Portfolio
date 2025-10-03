@@ -62,8 +62,8 @@
 
 @media screen and (width: 1024px) and (height: 600px),
   screen and (width: 1280px) and (height: 800px) {
-  .banner-container {
-    position: static !important;
+  .banner-container.banner-container {
+    position: static;
     margin-top: auto;
     margin-bottom: 20px;
   }

@@ -132,11 +132,11 @@ app-banner-section {
 @media (max-height: 918px) {
   .edgeLine-right {
     .email-link {
-      .email-text {
-        display: none !important;
+      .email-text.email-text {
+        display: none;
       }
-      .email-icon {
-        display: block !important;
+      .email-icon.email-icon {
+        display: block;
         transform: scale(-1);
         width: $icon-size-sm;
         height: $icon-size-sm;

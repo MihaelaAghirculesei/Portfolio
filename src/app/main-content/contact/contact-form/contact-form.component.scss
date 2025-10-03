@@ -9,17 +9,19 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px $background-color inset !important;
-  -webkit-text-fill-color: $white !important;
+  -webkit-box-shadow: 0 0 0 30px $background-color inset;
+  -webkit-text-fill-color: $white;
   transition: background-color 5000s ease-in-out 0s;
+  caret-color: $white;
 }
 
 @-moz-document url-prefix() {
   input:-moz-autofill,
   input:-moz-autofill:focus {
     transition: background-color 5000s ease-in-out 0s;
-    background-color: $background-color !important;
-    color: $white !important;
+    background-color: $background-color;
+    color: $white;
+    filter: none;
   }
 }
 
@@ -378,8 +380,8 @@ input[type="submit"] {
 
 @media (max-width: 360px) {
   .formDiv form label,
-  .popup-content p,
-  .alert-text {
-    line-height: 1.2 !important;
+  .formDiv .popup-content p,
+  .formDiv .alert-text {
+    line-height: 1.2;
   }
 }
