@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -7,7 +7,8 @@ import { TranslatePipe } from '@ngx-translate/core';
   standalone: true,
   imports: [ContactFormComponent, TranslatePipe],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.scss'
+  styleUrl: './contact.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent {
 

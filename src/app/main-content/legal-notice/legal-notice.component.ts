@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -25,7 +25,8 @@ interface ExternalLink {
   standalone: true,
   imports: [TranslatePipe],
   templateUrl: './legal-notice.component.html',
-  styleUrl: './legal-notice.component.scss'
+  styleUrl: './legal-notice.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LegalNoticeComponent implements OnInit, OnDestroy {
 
@@ -52,14 +53,12 @@ export class LegalNoticeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Scroll to top on component load (only in browser)
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
   ngOnDestroy(): void {
-    // Cleanup if needed
   }
 
   goBack(): void {

@@ -16,8 +16,10 @@
             (mouseenter)="setActiveProject($index, $event)"
             (mouseleave)="clearActiveProject()"
             (click)="openProjectOverlay(project, $index)"
-            (touchstart)="handleTouchStart($event, $index)"
-            (touchend)="handleTouchEnd($event, $index)"
+            passiveTouchStart
+            (passiveTouchStart)="handleTouchStart($event, $index)"
+            passiveTouchEnd
+            (passiveTouchEnd)="handleTouchEnd($event, $index)"
           >
             <td class="project-name">
               {{ project.name }}

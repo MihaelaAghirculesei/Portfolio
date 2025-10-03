@@ -1,6 +1,6 @@
 <section id="aboutMe" class="aboutMeSection">
   <div class="contentWrapper">
-    <article class="imgDiv" #imgDiv data-aos="fade-right" [attr.data-aos-duration]="AOS_CONFIG.duration">
+    <article class="imgDiv" #imgDiv #animatedElement data-aos="fade-right" [attr.data-aos-duration]="AOS_CONFIG.duration">
       <div class="imageContainer" #imageContainer>
         <img
           [src]="ASSETS_PATH + 'mihaela-aghirculesei(2).jpg'"
@@ -14,6 +14,7 @@
 
     <article
       class="aboutMeWrapper"
+      #animatedElement
       data-aos="fade-left"
       [attr.data-aos-duration]="AOS_CONFIG.duration"
       data-aos-delay="200"
@@ -26,14 +27,15 @@
         <h3 class="mainTitle">{{ "aboutMe.mainTitle" | translate }}</h3>
         <span class="introText">{{ "aboutMe.introText" | translate }}</span>
 
+        @for (section of aboutSections; track section.icon; let i = $index) {
         <div
           class="aboutMePs"
-          *ngFor="let section of aboutSections; trackBy: trackByIcon"
+          #animatedElement
           data-aos="fade-up"
           data-aos-duration="600"
           [attr.data-aos-delay]="section.delay"
         >
-          <div class="iconWrapper">
+          <div class="iconWrapper" #iconWrapper>
             <img
               [src]="ASSETS_PATH + section.icon"
               [alt]="section.alt"
@@ -44,6 +46,7 @@
             {{ section.textKey | translate }}
           </p>
         </div>
+        }
       </div>
     </article>
   </div>

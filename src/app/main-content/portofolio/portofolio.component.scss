@@ -194,11 +194,6 @@
           }
         }
 
-        .project-tech {
-          padding: 40px 0;
-          text-align: center;
-        }
-
         .project-name {
           padding: 0 0 0 16px;
           font-size: 24px;
@@ -213,6 +208,7 @@
         }
 
         .project-tech {
+          padding: 40px 0;
           text-align: center;
           font-size: 18px;
           @include primary-font;
@@ -304,7 +300,7 @@
   max-width: 1440px;
   width: 90%;
   max-height: 90vh;
-  margin: auto;
+  margin: auto 5px;
   padding: 40px;
   z-index: $z-modal-content;
   overflow-y: auto;
@@ -473,21 +469,17 @@
 
     .imageContainer {
       position: relative;
-      display: inline-block;
-      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: auto;
 
       img {
         width: 500px;
         height: 350px;
         object-fit: cover;
         box-shadow: 0 4px 8px $shadow-light;
-        position: relative;
-        z-index: 2;
-      }
-
-      .lineDiv {
-        @include decorativeLine(5px, 10px);
-        z-index: 1;
+        display: block;
       }
     }
   }
@@ -515,7 +507,8 @@
       content: url("/assets/img/projects/next-arrow-icon.svg");
       position: absolute;
       right: -24px;
-      top: 0;
+      top: 50%;
+      transform: translateY(-50%);
       width: 16px;
       height: 24px;
       transition: all $transition-base;
@@ -527,6 +520,7 @@
 
       &::after {
         right: -32px;
+        transform: translateY(-50%);
       }
     }
   }
@@ -632,9 +626,14 @@
 }
 
 @media (max-width: $tablet-max) and (min-width: $tablet-medium-min) {
-  .project-modal-content .project-image-container .project-image .imageContainer img {
-    width: 500px;
-    height: 350px;
+  .project-modal-content .project-image-container .project-image .imageContainer {
+    width: auto;
+
+    img {
+      width: 500px;
+      height: 350px;
+      display: block;
+    }
   }
 }
 
@@ -718,7 +717,7 @@
   }
 }
 
-@media (max-width: $tablet-medium-max) {
+@media (max-width: 1070px) {
   .project-modal-overlay {
     z-index: calc($z-modal-overlay + 10);
 
@@ -759,19 +758,24 @@
     width: 100%;
     order: -1;
     padding: 8px;
+    @include dFlex(center, center);
 
-    .imageContainer {
-      display: block;
-      width: 100%;
-    }
+    .project-image {
+      @include dFlex(center, center);
+      width: auto;
 
-    .project-image .imageContainer img {
-      width: 100%;
-      max-width: none;
-      height: auto;
-      max-height: 250px;
-      min-height: 150px;
-      object-fit: contain;
+      .imageContainer {
+        width: auto;
+        display: block;
+
+        img {
+          width: 500px;
+          height: 350px;
+          max-width: 100%;
+          object-fit: cover;
+          display: block;
+        }
+      }
     }
   }
 
@@ -794,16 +798,7 @@
   }
 }
 
-@media (width: $tablet-medium-max) and (height: $tablet-max) and (orientation: portrait) {
-  .project-modal {
-    max-height: fit-content !important;
-    height: auto !important;
-    overflow-y: visible !important;
-    min-height: auto !important;
-  }
-}
-
-@media (max-width: $tablet-medium-max) and (orientation: portrait) {
+@media (max-width: 1070px) and (orientation: portrait) {
   @include modal-with-content(100%, 16px, 0, 100vh, auto, column, (height: auto, min-height: 100vh, overflow-y: auto));
 
   .project-modal-content {
@@ -826,6 +821,7 @@
   .project-image-container {
     width: 100%;
     padding: 8px;
+    @include dFlex(center, center);
 
     .close-button {
       margin-bottom: 0;
@@ -833,6 +829,18 @@
 
     .project-image {
       margin-top: 0;
+      @include dFlex(center, center);
+      width: 100%;
+
+      .imageContainer {
+        @include dFlex(center, center);
+        width: auto;
+
+        img {
+          margin: 0 auto;
+          display: block;
+        }
+      }
     }
   }
 
@@ -842,7 +850,7 @@
   }
 }
 
-@media (max-width: $tablet-medium-max) and (orientation: landscape) {
+@media (max-width: 1070px) and (orientation: landscape) {
   @include modal-with-content(100%, 12px, 8px, 100vh, auto, row, (height: auto, overflow-y: auto));
 
   @include landscape-layout;
@@ -895,7 +903,7 @@
 }
 
 @media (max-width: $mobile-max) {
-  @include modal-with-content(98%, 15px, 8px, 90vh, 10px);
+  @include modal-with-content(98%, 15px, 8px, 90vh, auto);
 
   .project-modal-content {
     gap: 16px;
@@ -908,19 +916,30 @@
 
   .project-image-container {
     padding: 4px;
+    @include dFlex(center, center);
 
     .close-button {
       margin-bottom: 0;
     }
 
-    .project-image .imageContainer {
-      img {
-        max-height: 200px;
-        min-height: 120px;
-      }
+    .project-image {
+      @include dFlex(center, center);
+      width: 100%;
 
-      .lineDiv {
-        display: none;
+      .imageContainer {
+        @include dFlex(center, center);
+        width: auto;
+
+        img {
+          max-height: 200px;
+          min-height: 120px;
+          margin: 0 auto;
+          display: block;
+        }
+
+        .lineDiv {
+          display: none;
+        }
       }
     }
   }
@@ -936,15 +955,21 @@
 }
 
 @media (max-width: $mobile-medium-max) {
-  @include modal-with-content(100%, 10px, 4px, 90vh, 5px);
+  @include modal-with-content(100%, 10px, 4px, 90vh, auto);
 
   .project-modal-content {
     gap: 12px;
   }
 
-  .project-modal-content .project-image-container .project-image .imageContainer img {
-    max-height: 180px;
-    min-height: 100px;
+  .project-modal-content .project-image-container .project-image .imageContainer {
+    width: auto;
+
+    img {
+      max-height: 180px;
+      min-height: 100px;
+      margin: 0 auto;
+      display: block;
+    }
   }
 
   #projects .contentWrapper > p,
@@ -959,16 +984,22 @@
 
 @media (max-width: $mobile-small-max) {
   .project-modal {
-    @include modal-sizing(auto, 8px, 90vh, 2px);
+    @include modal-sizing(auto, 8px, 90vh, auto);
   }
 
   .project-info {
     @include project-info-responsive(28px, 20px, 16px, null, 75px, 16px, 24px);
   }
 
-  .project-modal-content .project-image-container .project-image .imageContainer img {
-    max-height: 160px;
-    min-height: 90px;
+  .project-modal-content .project-image-container .project-image .imageContainer {
+    width: auto;
+
+    img {
+      max-height: 160px;
+      min-height: 90px;
+      margin: 0 auto;
+      display: block;
+    }
   }
 
   .link-button2 {

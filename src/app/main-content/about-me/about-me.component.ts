@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Inject, PLATFORM_ID, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Inject, PLATFORM_ID, QueryList, ViewChildren, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -30,11 +30,14 @@ declare global {
   standalone: true,
   imports: [CommonModule, TranslatePipe],
   templateUrl: './about-me.component.html',
-  styleUrl: './about-me.component.scss'
+  styleUrl: './about-me.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('imgDiv', { static: false }) imgDivRef!: ElementRef;
   @ViewChild('imageContainer', { static: false }) imageContainerRef!: ElementRef;
+  @ViewChildren('iconWrapper') iconWrappers!: QueryList<ElementRef>;
+  @ViewChildren('animatedElement') animatedElements!: QueryList<ElementRef>;
 
   private observer?: IntersectionObserver;
   private animationFrameId?: number;
@@ -115,7 +118,7 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private initIntersectionObserver(): void {
-    if ('IntersectionObserver' in window) {
+    if ('IntersectionObserver' in window && this.animatedElements) {
       this.observer = new IntersectionObserver(
         (entries) => {
           entries.forEach(entry => {
@@ -130,27 +133,27 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
 
-      const animatedElements = document.querySelectorAll('.aboutMePs, .imgDiv, .aboutMeWrapper');
-      animatedElements.forEach(el => {
-        this.observer?.observe(el);
+      this.animatedElements.forEach(el => {
+        this.observer?.observe(el.nativeElement);
       });
     }
   }
 
   private addHoverEffects(): void {
-    const iconWrappers = document.querySelectorAll('.iconWrapper');
-    iconWrappers.forEach(wrapper => {
-      const mouseEnterHandler = this.onIconHover.bind(this);
-      const mouseLeaveHandler = this.onIconLeave.bind(this);
+    if (this.iconWrappers) {
+      this.iconWrappers.forEach(wrapper => {
+        const mouseEnterHandler = this.onIconHover.bind(this);
+        const mouseLeaveHandler = this.onIconLeave.bind(this);
 
-      wrapper.addEventListener('mouseenter', mouseEnterHandler);
-      wrapper.addEventListener('mouseleave', mouseLeaveHandler);
+        wrapper.nativeElement.addEventListener('mouseenter', mouseEnterHandler);
+        wrapper.nativeElement.addEventListener('mouseleave', mouseLeaveHandler);
 
-      this.eventListeners.push(() => {
-        wrapper.removeEventListener('mouseenter', mouseEnterHandler);
-        wrapper.removeEventListener('mouseleave', mouseLeaveHandler);
+        this.eventListeners.push(() => {
+          wrapper.nativeElement.removeEventListener('mouseenter', mouseEnterHandler);
+          wrapper.nativeElement.removeEventListener('mouseleave', mouseLeaveHandler);
+        });
       });
-    });
+    }
 
     if (this.imgDivRef?.nativeElement) {
       const mouseEnterHandler = this.onImageHover.bind(this);

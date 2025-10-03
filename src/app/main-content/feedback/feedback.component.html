@@ -7,11 +7,14 @@
          (keydown)="onKeyDown($event)"
          (mouseenter)="pauseAutoPlay()"
          (mouseleave)="resumeAutoPlay()"
-         (touchstart)="onTouchStart($event)"
-         (touchend)="onTouchEnd($event)"
+         passiveTouchStart
+         (passiveTouchStart)="onTouchStart($event)"
+         passiveTouchEnd
+         (passiveTouchEnd)="onTouchEnd($event)"
          tabindex="0">
       @for (comment of feedbacks; track comment.name + comment.ref; let i = $index) {
       <div
+        #feedbackCard
         [ngClass]="getCardClass(i)"
         [class.active]="i === middleIndex"
         [attr.aria-hidden]="i !== middleIndex"

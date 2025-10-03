@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -13,6 +13,7 @@ interface SkillItem {
   imports: [TranslatePipe],
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsComponent {
   readonly skillItems: readonly SkillItem[] = [

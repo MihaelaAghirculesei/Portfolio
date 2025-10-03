@@ -1,12 +1,39 @@
 <app-header *ngIf="showHeaderFooter"></app-header>
 <main>
-  <app-landingpage *ngIf="showMainContent"></app-landingpage>
-  <app-aboutme *ngIf="showMainContent"></app-aboutme>
-  <app-skills *ngIf="showMainContent"></app-skills>
-  <app-portofolio *ngIf="showMainContent"></app-portofolio>
-  <app-feedbacks *ngIf="showMainContent"></app-feedbacks>
-  <app-contact *ngIf="showMainContent"></app-contact>
-  
+  @if (showMainContent) {
+    <app-landingpage></app-landingpage>
+
+    @defer (on idle; on viewport) {
+      <app-aboutme></app-aboutme>
+    } @placeholder {
+      <div style="min-height: 600px;"></div>
+    }
+
+    @defer (on idle; on viewport) {
+      <app-skills></app-skills>
+    } @placeholder {
+      <div style="min-height: 500px;"></div>
+    }
+
+    @defer (on idle; on viewport) {
+      <app-portofolio></app-portofolio>
+    } @placeholder {
+      <div style="min-height: 700px;"></div>
+    }
+
+    @defer (on idle; on viewport) {
+      <app-feedbacks></app-feedbacks>
+    } @placeholder {
+      <div style="min-height: 400px;"></div>
+    }
+
+    @defer (on idle; on viewport) {
+      <app-contact></app-contact>
+    } @placeholder {
+      <div style="min-height: 600px;"></div>
+    }
+  }
+
   <router-outlet></router-outlet>
 </main>
 <app-footer *ngIf="showHeaderFooter"></app-footer>

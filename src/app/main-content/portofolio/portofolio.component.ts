@@ -2,24 +2,29 @@ import {
   Component,
   ViewChild,
   ElementRef,
+  OnInit,
   OnDestroy,
   HostListener,
   Inject,
   PLATFORM_ID,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
 
 @Component({
   selector: 'app-portofolio',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
   templateUrl: './portofolio.component.html',
   styleUrl: './portofolio.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PortofolioComponent implements OnDestroy {
+export class PortofolioComponent implements OnInit, OnDestroy {
   @ViewChild('projectsTable') projectsTable!: ElementRef;
 
   projects: Projects[] = [
@@ -69,13 +74,24 @@ export class PortofolioComponent implements OnDestroy {
   constructor(
     private platformService: PlatformService,
     private translate: TranslateService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef
   ) {
     this.checkOrientation();
   }
 
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: true });
+    }
+  }
+
   ngOnDestroy(): void {
     this.platformService.enableScroll();
+
+    if (isPlatformBrowser(this.platformId)) {
+      document.removeEventListener('touchmove', this.onTouchMove.bind(this));
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -92,6 +108,7 @@ export class PortofolioComponent implements OnDestroy {
     const window = this.platformService.getWindow();
     if (window) {
       this.isLandscape = window.innerWidth > window.innerHeight;
+      this.cdr.markForCheck();
     }
   }
 
@@ -104,31 +121,36 @@ export class PortofolioComponent implements OnDestroy {
     this.activePreview = this.projects[projectIndex].previewImg;
 
     const trElement = event.currentTarget as HTMLElement;
-    const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
-    const trRect = trElement.getBoundingClientRect();
 
-    const basePosition = trRect.top - tableRect.top + trRect.height / 2 - 100;
+    requestAnimationFrame(() => {
+      const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
+      const trRect = trElement.getBoundingClientRect();
 
-    const isSmallPreview = window.innerWidth <= 860;
+      const basePosition = trRect.top - tableRect.top + trRect.height / 2 - 100;
 
-    if (projectIndex === 0) {
-      const extraOffset = isSmallPreview ? -10 : 0;
-      this.hoverPosition = basePosition + 70 + extraOffset;
-    } else if (projectIndex === 1) {
-      const extraOffset = isSmallPreview ? 30 : 0;
-      this.hoverPosition = basePosition + 15 + extraOffset;
-    } else if (projectIndex === 2) {
-      const extraOffset = isSmallPreview ? 70 : 0;
-      this.hoverPosition = basePosition - 40 + extraOffset;
-    } else {
-      this.hoverPosition = basePosition;
-    }
+      const isSmallPreview = window.innerWidth <= 860;
+
+      if (projectIndex === 0) {
+        const extraOffset = isSmallPreview ? -10 : 0;
+        this.hoverPosition = basePosition + 70 + extraOffset;
+      } else if (projectIndex === 1) {
+        const extraOffset = isSmallPreview ? 30 : 0;
+        this.hoverPosition = basePosition + 15 + extraOffset;
+      } else if (projectIndex === 2) {
+        const extraOffset = isSmallPreview ? 70 : 0;
+        this.hoverPosition = basePosition - 40 + extraOffset;
+      } else {
+        this.hoverPosition = basePosition;
+      }
+      this.cdr.markForCheck();
+    });
   }
 
   clearActiveProject(): void {
     this.activeProjectId = null;
     this.hoverPosition = null;
     this.activePreview = '';
+    this.cdr.markForCheck();
   }
 
   handleTouchStart(event: TouchEvent, projectIndex: number): void {
@@ -141,11 +163,15 @@ export class PortofolioComponent implements OnDestroy {
       this.activePreview = this.projects[projectIndex].previewImg;
 
       const trElement = event.currentTarget as HTMLElement;
-      const tableRect =
-        this.projectsTable.nativeElement.getBoundingClientRect();
-      const trRect = trElement.getBoundingClientRect();
 
-      this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - 100;
+      requestAnimationFrame(() => {
+        const tableRect =
+          this.projectsTable.nativeElement.getBoundingClientRect();
+        const trRect = trElement.getBoundingClientRect();
+
+        this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - 100;
+        this.cdr.markForCheck();
+      });
     }
   }
 
@@ -167,8 +193,7 @@ export class PortofolioComponent implements OnDestroy {
     }
   }
 
-  @HostListener('touchmove', ['$event'])
-  onTouchMove(event: TouchEvent): void {
+  private onTouchMove(event: TouchEvent): void {
     if (event.touches.length > 0) {
       const touchX = event.touches[0].clientX;
       const touchY = event.touches[0].clientY;
@@ -198,6 +223,7 @@ export class PortofolioComponent implements OnDestroy {
         this.headerElement.style.display = 'none';
       }
     }
+    this.cdr.markForCheck();
   }
 
   closeOverlay() {
@@ -208,6 +234,7 @@ export class PortofolioComponent implements OnDestroy {
     if (isPlatformBrowser(this.platformId) && this.headerElement) {
       this.headerElement.style.display = this.originalHeaderDisplay;
     }
+    this.cdr.markForCheck();
   }
 
   nextProject() {
@@ -217,6 +244,7 @@ export class PortofolioComponent implements OnDestroy {
       this.selectedIndex = 0;
     }
     this.selectedProject = this.projects[this.selectedIndex];
+    this.cdr.markForCheck();
   }
 
   getProjectScreenshotAlt(projectIndex: number | null): string {

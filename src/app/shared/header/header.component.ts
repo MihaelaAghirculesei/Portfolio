@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
@@ -12,8 +12,9 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
   imports: [CommonModule, TranslatePipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   isHovered: boolean = false;
   isScrolled: boolean = false;
   isEnglish: boolean = false;
@@ -23,20 +24,32 @@ export class HeaderComponent {
     private scrollService: ScrollService,
     private platformService: PlatformService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.checkScroll();
     this.translate.setDefaultLang('en');
     this.translate.use('en');
+
+    // Add passive scroll listener for better performance
+    if (this.platformService.isWindowDefined()) {
+      window.addEventListener('scroll', this.checkScroll.bind(this), { passive: true });
+    }
   }
 
-  @HostListener('window:scroll', [])
+  ngOnDestroy(): void {
+    if (this.platformService.isWindowDefined()) {
+      window.removeEventListener('scroll', this.checkScroll.bind(this));
+    }
+  }
+
   checkScroll(): void {
     this.isScrolled = this.scrollService.isScrolledBeyond(
       SCROLL_CONFIG.THRESHOLD
     );
+    this.cdr.markForCheck();
   }
 
   toggleLanguage(): void {

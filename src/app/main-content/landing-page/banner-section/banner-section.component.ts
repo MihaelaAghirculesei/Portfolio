@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 interface BannerItem {
@@ -12,6 +12,7 @@ interface BannerItem {
   imports: [TranslatePipe],
   templateUrl: './banner-section.component.html',
   styleUrl: './banner-section.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BannerSectionComponent implements OnInit, OnDestroy {
   readonly bannerItems: BannerItem[] = [

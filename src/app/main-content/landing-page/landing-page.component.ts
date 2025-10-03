@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { BannerSectionComponent } from './banner-section/banner-section.component';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -22,6 +22,7 @@ interface SocialLink {
   imports: [BannerSectionComponent, TranslatePipe],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingpageComponent implements OnInit, OnDestroy {
   readonly profileInfo = {

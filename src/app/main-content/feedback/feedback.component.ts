@@ -1,19 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PlatformService } from '../../shared/services/platform.service';
 import { SLIDER_CONFIG } from '../../shared/constants/app.constants';
+import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
 
 @Component({
   selector: 'app-feedbacks',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedbacksComponent implements OnInit, OnDestroy {
+  @ViewChildren('feedbackCard') feedbackCards!: QueryList<ElementRef>;
 
-  constructor(private platformService: PlatformService) {}
+  constructor(
+    private platformService: PlatformService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   private autoPlayInterval?: number;
   private touchStartX = 0;
@@ -75,6 +81,7 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
       this.middleIndex = 0;
     }
     this.updateCards();
+    this.cdr.markForCheck();
   }
   
   slideRight() {
@@ -86,23 +93,23 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
       this.middleIndex = this.feedbacks.length - 1;
     }
     this.updateCards();
+    this.cdr.markForCheck();
   }
   
   updateCards() {
-    const document = this.platformService.getDocument();
-    if (document) {
+    if (this.feedbackCards) {
       this.isTransitioning = true;
-      const feedbackCards = document.querySelectorAll('.feedback-card');
 
       const baseOffset = (2 - this.middleIndex) * SLIDER_CONFIG.FEEDBACK_OFFSET;
 
-      feedbackCards.forEach((card: any, index: number) => {
+      this.feedbackCards.forEach((card, index: number) => {
         let isActive: boolean = index === this.middleIndex;
-        card.style.transform = `translateX(${baseOffset}%) scale(${isActive ? 1.1 : 0.8})`;
+        card.nativeElement.style.transform = `translateX(${baseOffset}%) scale(${isActive ? 1.1 : 0.8})`;
       });
 
       setTimeout(() => {
         this.isTransitioning = false;
+        this.cdr.markForCheck();
       }, 500);
     }
   }
@@ -128,6 +135,7 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     this.middleIndex = index;
     this.updateCards();
     this.resetAutoPlay();
+    this.cdr.markForCheck();
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -213,6 +221,7 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     } else {
       this.stopAutoPlay();
     }
+    this.cdr.markForCheck();
   }
 
   private resetAutoPlay() {
