@@ -95,6 +95,7 @@
       "privacyTextEnd": "gelesen und stimme der Verarbeitung meiner Daten wie beschrieben zu.",
       "privacyError": "Die Zustimmung zur Datenschutzerklärung ist erforderlich.",
       "submitButton": "Hallo sagen :)",
+      "submitting": "Wird gesendet...",
       "successTitle": "Erfolg!",
       "successMessage": "Deine Nachricht wurde erfolgreich gesendet!",
       "errorTitle": "Fehler",

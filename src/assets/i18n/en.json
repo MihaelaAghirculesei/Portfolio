@@ -95,6 +95,7 @@
       "privacyTextEnd": "and agree to the processing of my data as outlined.",
       "privacyError": "Privacy policy acceptance is required.",
       "submitButton": "Say Hello :)",
+      "submitting": "Sending...",
       "successTitle": "Success!",
       "successMessage": "Your message has been sent successfully!",
       "errorTitle": "Error",

@@ -1,9 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { timeout, retry, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-contact-form',
@@ -16,6 +19,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 export class ContactFormComponent {
   http = inject(HttpClient);
   translate = inject(TranslateService);
+  cdr = inject(ChangeDetectorRef);
+  private destroyRef = takeUntilDestroyed();
 
   contactData = {
     name: '',
@@ -25,11 +30,15 @@ export class ContactFormComponent {
   };
 
   mailTest = false;
+  isSubmitting = false;
 
   submissionStatus: 'success' | 'error' | null = null;
   errorMessage = '';
 
   invalidFields: string[] = [];
+
+  private readonly HTTP_TIMEOUT = 10000;
+  private readonly HTTP_RETRY_ATTEMPTS = 2;
 
   post = {
     endPoint: 'https://mihaela-melania-aghirculesei.de/sendMail.php',
@@ -78,33 +87,77 @@ export class ContactFormComponent {
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid && !this.mailTest) {
+      this.isSubmitting = true;
+      this.cdr.markForCheck();
+
       this.http
         .post<any>(
           this.post.endPoint,
-          this.post.body(this.contactData),
+          this.post.body(this.sanitizeContactData()),
           this.post.options
         )
+        .pipe(
+          timeout(this.HTTP_TIMEOUT),
+          retry(this.HTTP_RETRY_ATTEMPTS),
+          catchError((error: HttpErrorResponse) => {
+            return of({ error: true, errorDetails: error } as const);
+          }),
+          this.destroyRef
+        )
         .subscribe({
-          next: (response) => {
-            this.submissionStatus = 'success';
-            ngForm.resetForm();
-            this.checkboxWasCheckedBefore = false;
-            this.invalidFields = [];
+          next: (response: any) => {
+            this.isSubmitting = false;
+
+            if (response?.error) {
+              this.handleError(response.errorDetails);
+            } else {
+              this.submissionStatus = 'success';
+              ngForm.resetForm();
+              this.checkboxWasCheckedBefore = false;
+              this.invalidFields = [];
+            }
+
+            this.cdr.markForCheck();
           },
-          error: (error) => {
-            this.submissionStatus = 'error';
-            this.errorMessage =
-              error.message || 'An error occurred while sending your message.';
+          error: (error: HttpErrorResponse) => {
+            this.isSubmitting = false;
+            this.handleError(error);
             this.checkboxWasCheckedBefore = false;
             ngForm.resetForm();
+            this.cdr.markForCheck();
           },
-          complete: () => {},
         });
     } else if (ngForm.submitted && ngForm.form.valid && this.mailTest) {
       this.submissionStatus = 'success';
       ngForm.resetForm();
       this.checkboxWasCheckedBefore = false;
       this.invalidFields = [];
+    }
+  }
+
+  private sanitizeContactData() {
+    return {
+      name: this.contactData.name.trim(),
+      email: this.contactData.email.trim().toLowerCase(),
+      message: this.contactData.message.trim(),
+      privacypolicy: this.contactData.privacypolicy,
+    };
+  }
+
+  private handleError(error: any) {
+    this.submissionStatus = 'error';
+
+    if (error?.name === 'TimeoutError') {
+      this.errorMessage = 'Request timeout. Please try again.';
+    } else if (error?.status === 0) {
+      this.errorMessage = 'Network error. Please check your connection.';
+    } else if (error?.status >= 500) {
+      this.errorMessage = 'Server error. Please try again later.';
+    } else if (error?.status >= 400) {
+      this.errorMessage = 'Bad request. Please check your input.';
+    } else {
+      this.errorMessage =
+        error?.message || 'An error occurred while sending your message.';
     }
   }
 

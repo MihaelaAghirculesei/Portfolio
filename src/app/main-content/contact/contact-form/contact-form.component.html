@@ -125,9 +125,10 @@
 
     <input
       type="submit"
-      [value]="'contact.form.submitButton' | translate"
-      [disabled]="!contactForm.form.valid"
+      [value]="isSubmitting ? ('contact.form.submitting' | translate) : ('contact.form.submitButton' | translate)"
+      [disabled]="!contactForm.form.valid || isSubmitting"
       [attr.aria-label]="'contact.form.submitButton' | translate"
+      [attr.aria-busy]="isSubmitting"
     />
   </form>
 </div>
