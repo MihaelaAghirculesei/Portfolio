@@ -1,9 +1,14 @@
-<div class="overlay">
+<div
+  class="overlay"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-labelledby]="'project-title-' + index"
+>
   <div class="contentWrapper" (click)="$event.stopPropagation()">
     <div class="contentLeft">
-      <h1>{{ (index + 1).toString().padStart(2, '0') }}</h1>
-      <h2>{{ singleProject.name }}</h2>
-      <h3>What is this project about?</h3>
+      <h1 aria-hidden="true">{{ (index + 1).toString().padStart(2, '0') }}</h1>
+      <h2 [id]="'project-title-' + index">{{ singleProject.name }}</h2>
+      <h3>{{ 'portfolio.aboutProject' | translate }}</h3>
       <span>{{ singleProject.description }}</span>
       <div class="techDiv">
         @for (skill of singleProject.technologies; track skill) {
@@ -14,22 +19,44 @@
         }
       </div>
       <div class="buttonDiv">
-        <a [href]="singleProject.githubUrl" target="_blank" rel="noopener noreferrer">
-          <button>GitHub</button>
+        <a
+          [href]="singleProject.githubUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'View ' + singleProject.name + ' source code on GitHub'"
+        >
+          <button type="button">{{ 'portfolio.github' | translate }}</button>
         </a>
-        <a [href]="singleProject.liveUrl" target="_blank" rel="noopener noreferrer">
-          <button>Live Test</button>
+        <a
+          [href]="singleProject.liveUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'View ' + singleProject.name + ' live demo'"
+        >
+          <button type="button">{{ 'portfolio.liveTest' | translate }}</button>
         </a>
       </div>
     </div>
     <div class="contentRight">
-      <p (click)="closeOverlay()">X</p>
+      <button
+        (click)="closeOverlay()"
+        type="button"
+        class="close-button"
+        [attr.aria-label]="'portfolio.closeModal' | translate"
+        title="Close (ESC)"
+      >
+        <span aria-hidden="true">X</span>
+      </button>
       <div class="imageContainer">
         <img src="../{{ singleProject.previewImg }}" [alt]="singleProject.name + ' project screenshot'">
       </div>
-      <button (click)="next.emit()">
-        Next Project
-        <img src="../../../assets/img/portfolio/arrow_right.svg" alt="Next project arrow">
+      <button
+        (click)="next.emit()"
+        type="button"
+        [attr.aria-label]="'portfolio.nextProject' | translate"
+      >
+        {{ 'portfolio.nextProject' | translate }}
+        <img src="../../../assets/img/portfolio/arrow_right.svg" alt="" aria-hidden="true">
       </button>
     </div>
   </div>

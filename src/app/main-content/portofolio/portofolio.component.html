@@ -16,10 +16,15 @@
             (mouseenter)="setActiveProject($index, $event)"
             (mouseleave)="clearActiveProject()"
             (click)="openProjectOverlay(project, $index)"
+            (keydown.enter)="openProjectOverlay(project, $index)"
+            (keydown.space)="openProjectOverlay(project, $index); $event.preventDefault()"
             passiveTouchStart
             (passiveTouchStart)="handleTouchStart($event, $index)"
             passiveTouchEnd
             (passiveTouchEnd)="handleTouchEnd($event, $index)"
+            role="button"
+            tabindex="0"
+            [attr.aria-label]="'View details for ' + project.name + ' project'"
           >
             <td class="project-name">
               {{ project.name }}
@@ -39,6 +44,7 @@
         class="projects-hover-content"
         [style.top.px]="hoverPosition"
         [attr.data-project-id]="activeProjectId"
+        aria-hidden="true"
       >
         <div class="imageContainer">
           <img
@@ -46,7 +52,7 @@
             [alt]="getProjectScreenshotAlt(activeProjectId)"
             loading="lazy"
           />
-          <div class="lineDiv"></div>
+          <div class="lineDiv" aria-hidden="true"></div>
         </div>
       </div>
       }
@@ -133,7 +139,7 @@
           <button
             class="close-button"
             (click)="closeOverlay()"
-            aria-label="Close project details modal"
+            [attr.aria-label]="'portfolio.closeModal' | translate"
             title="Close (ESC)"
           >
             <span class="close-icon" aria-hidden="true"></span>
@@ -155,7 +161,7 @@
         <button
           class="next-project-button"
           (click)="nextProject()"
-          aria-label="View next project"
+          [attr.aria-label]="'portfolio.nextProject' | translate"
           title="Next Project"
         >
           {{ "portfolio.nextProject" | translate }}

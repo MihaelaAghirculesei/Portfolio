@@ -13,7 +13,8 @@
     "logoAriaLabel": "Zurück zum Seitenanfang",
     "logoAlt": "Mihaela Melania Aghirculesei Logo",
     "openMenuAriaLabel": "Navigationsmenü öffnen",
-    "closeMenuAriaLabel": "Navigationsmenü schließen"
+    "closeMenuAriaLabel": "Navigationsmenü schließen",
+    "languageToggleAriaLabel": "Sprache zwischen Englisch und Deutsch wechseln"
   },
   "common": {
     "references": "Referenzen"
@@ -68,7 +69,9 @@
     "description": "Erkunden Sie hier eine Auswahl meiner Arbeiten. Interagieren Sie mit den Projekten, um meine Fähigkeiten in Aktion zu sehen.",
     "nextProject": "Nächstes Projekt",
     "github": "GitHub",
-    "liveTest": "Live Test"
+    "liveTest": "Live Test",
+    "aboutProject": "Worum geht es in diesem Projekt?",
+    "closeModal": "Projektdetails schließen"
   },
   "contact": {
     "title": "Kontaktiere mich",

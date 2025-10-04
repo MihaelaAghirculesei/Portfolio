@@ -9,10 +9,13 @@
             type="checkbox"
             [checked]="isEnglish"
             (click)="toggleLanguage()"
+            [attr.aria-label]="'header.languageToggleAriaLabel' | translate"
+            role="switch"
+            [attr.aria-checked]="isEnglish"
           />
           <label for="language-toggle"></label>
-          <span class="on">EN</span>
-          <span class="off">DE</span>
+          <span class="on" aria-hidden="true">EN</span>
+          <span class="off" aria-hidden="true">DE</span>
         </li>
         <li>
           <a
@@ -90,7 +93,11 @@
     </button>
   </div>
 
-  <div class="mobile-dropdown" [ngClass]="{ open: isMenuOpen }">
+  <div
+    class="mobile-dropdown"
+    [ngClass]="{ open: isMenuOpen }"
+    [attr.aria-hidden]="!isMenuOpen"
+  >
     <div class="dropdown-content">
       <ul>
         <li>
@@ -136,10 +143,13 @@
             type="checkbox"
             [checked]="isEnglish"
             (click)="toggleLanguage()"
+            [attr.aria-label]="'header.languageToggleAriaLabel' | translate"
+            role="switch"
+            [attr.aria-checked]="isEnglish"
           />
           <label for="mobile-language-toggle"></label>
-          <span class="on">EN</span>
-          <span class="off">DE</span>
+          <span class="on" aria-hidden="true">EN</span>
+          <span class="off" aria-hidden="true">DE</span>
         </li>
       </ul>
     </div>

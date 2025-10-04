@@ -13,7 +13,8 @@
     "logoAriaLabel": "Go to top of the page",
     "logoAlt": "Mihaela Melania Aghirculesei Logo",
     "openMenuAriaLabel": "Open navigation menu",
-    "closeMenuAriaLabel": "Close navigation menu"
+    "closeMenuAriaLabel": "Close navigation menu",
+    "languageToggleAriaLabel": "Toggle language between English and German"
   },
   "common": {
     "references": "References"
@@ -68,7 +69,9 @@
     "description": "Explore a selection of my work here. Interact with projects to see my skills in action.",
     "nextProject": "Next Project",
     "github": "GitHub",
-    "liveTest": "Live Test"
+    "liveTest": "Live Test",
+    "aboutProject": "What is this project about?",
+    "closeModal": "Close project details"
   },
   "contact": {
     "title": "Contact me",

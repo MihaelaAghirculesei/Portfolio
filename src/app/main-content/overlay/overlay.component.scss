@@ -102,13 +102,16 @@
   gap: $spacing-xxxl;
   padding-right: $content-margin-base;
 
-  > p {
+  .close-button {
     position: absolute;
     top: 7%;
     right: 50px;
     @include text("Fira Code", 48px, $white, 700);
     cursor: pointer;
     transition: color 0.3s ease;
+    background: transparent;
+    border: none;
+    padding: 0;
 
     &:hover {
       color: $main-color;
@@ -171,9 +174,6 @@
   }
 }
 
-// Mobile (320px-480px) - Base sizes already set above
-
-// Desktop (1025px-1919px)
 @media (min-width: 1025px) and (max-width: 1919px) {
   .contentLeft.contentLeft {
     > h1 {
@@ -194,7 +194,6 @@
   }
 }
 
-// Desktop 4K (1920px+)
 @media (min-width: 1920px) {
   .contentLeft.contentLeft {
     > h1 {
@@ -215,7 +214,6 @@
   }
 }
 
-// Tablet landscape / Small desktop (769px-1024px)
 @media (min-width: 769px) and (max-width: 1024px) {
 
   .contentLeft.contentLeft {
@@ -242,7 +240,6 @@
 }
 
 
-// Mobile landscape / Small tablet (481px-768px)
 @media (min-width: 481px) and (max-width: 768px) {
 
   .contentLeft.contentLeft {
@@ -268,7 +265,6 @@
   }
 }
 
-// Mobile (≤480px)
 @media (max-width: 480px) {
   .overlay.overlay {
     padding: $spacing-xs;
@@ -346,7 +342,7 @@
     gap: $spacing-sm;
     order: -1;
 
-    > p {
+    .close-button {
       position: static;
       font-size: 24px;
       margin-bottom: 0;
@@ -382,7 +378,6 @@
   }
 }
 
-// Very small screens (≤360px)
 @media (max-width: 360px) {
   .overlay.overlay {
     padding: 3px;
@@ -419,7 +414,7 @@
   }
 
   .contentRight.contentRight {
-    > p {
+    .close-button {
       width: 35px;
       height: 35px;
       font-size: 20px;
@@ -446,7 +441,6 @@
   }
 }
 
-// Ultra small screens (≤320px)
 @media (max-width: 320px) {
   .overlay.overlay {
     padding: 2px;
@@ -482,7 +476,7 @@
   }
 
   .contentRight.contentRight {
-    > p {
+    .close-button {
       width: 30px;
       height: 30px;
       font-size: 18px;

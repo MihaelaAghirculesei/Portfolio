@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Projects } from '../../interfaces/projects';
 
 @Component({
   selector: 'app-overlay',
   standalone: true,
+  imports: [TranslateModule],
   templateUrl: './overlay.component.html',
   styleUrl: './overlay.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
