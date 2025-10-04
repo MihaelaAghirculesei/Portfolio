@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PlatformService } from '../../shared/services/platform.service';
-import { SLIDER_CONFIG } from '../../shared/constants/app.constants';
+import { SLIDER_CONFIG, ANIMATION_CONFIG } from '../../shared/constants/app.constants';
 import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
 
 @Component({
@@ -24,8 +24,6 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
   private autoPlayInterval?: number;
   private touchStartX = 0;
   private touchEndX = 0;
-  private readonly SWIPE_THRESHOLD = 50;
-  private readonly AUTO_PLAY_INTERVAL = 5000;
 
   isTransitioning = false;
   isAutoPlaying = true;
@@ -104,13 +102,14 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
 
       this.feedbackCards.forEach((card, index: number) => {
         let isActive: boolean = index === this.middleIndex;
-        card.nativeElement.style.transform = `translateX(${baseOffset}%) scale(${isActive ? 1.1 : 0.8})`;
+        const scale = isActive ? ANIMATION_CONFIG.SCALE_ACTIVE : ANIMATION_CONFIG.SCALE_INACTIVE;
+        card.nativeElement.style.transform = `translateX(${baseOffset}%) scale(${scale})`;
       });
 
       setTimeout(() => {
         this.isTransitioning = false;
         this.cdr.markForCheck();
-      }, 500);
+      }, SLIDER_CONFIG.TRANSITION_DURATION);
     }
   }
   
@@ -176,7 +175,7 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
   private handleSwipe() {
     const swipeDistance = this.touchStartX - this.touchEndX;
 
-    if (Math.abs(swipeDistance) < this.SWIPE_THRESHOLD) return;
+    if (Math.abs(swipeDistance) < SLIDER_CONFIG.SWIPE_THRESHOLD) return;
 
     if (swipeDistance > 0) {
       this.slideLeft();
@@ -194,7 +193,7 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     this.stopAutoPlay();
     this.autoPlayInterval = document.defaultView.setInterval(() => {
       this.slideLeft();
-    }, this.AUTO_PLAY_INTERVAL);
+    }, SLIDER_CONFIG.AUTO_PLAY_INTERVAL);
   }
 
   stopAutoPlay() {

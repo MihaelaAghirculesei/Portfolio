@@ -15,6 +15,7 @@ import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
+import { BREAKPOINTS, PORTFOLIO_CONFIG } from '../../shared/constants/app.constants';
 
 @Component({
   selector: 'app-portofolio',
@@ -67,7 +68,6 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   private touchStartX: number = 0;
   private touchStartY: number = 0;
   private touchMoved: boolean = false;
-  private readonly TOUCH_THRESHOLD: number = 10;
   private headerElement: HTMLElement | null = null;
   private originalHeaderDisplay: string = '';
   private rafPending: boolean = false;
@@ -114,7 +114,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   }
 
   setActiveProject(projectIndex: number, event: MouseEvent): void {
-    if (window.innerWidth <= 480) {
+    if (window.innerWidth <= BREAKPOINTS.MOBILE_MAX) {
       return;
     }
 
@@ -135,19 +135,19 @@ export class PortofolioComponent implements OnInit, OnDestroy {
       const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
       const trRect = trElement.getBoundingClientRect();
 
-      const basePosition = trRect.top - tableRect.top + trRect.height / 2 - 100;
+      const basePosition = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
 
-      const isSmallPreview = window.innerWidth <= 860;
+      const isSmallPreview = window.innerWidth <= BREAKPOINTS.SMALL_PREVIEW_MAX;
 
       if (projectIndex === 0) {
-        const extraOffset = isSmallPreview ? -10 : 0;
-        this.hoverPosition = basePosition + 70 + extraOffset;
+        const extraOffset = isSmallPreview ? PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_0.SMALL_PREVIEW : 0;
+        this.hoverPosition = basePosition + PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_0.BASE + extraOffset;
       } else if (projectIndex === 1) {
-        const extraOffset = isSmallPreview ? 30 : 0;
-        this.hoverPosition = basePosition + 15 + extraOffset;
+        const extraOffset = isSmallPreview ? PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_1.SMALL_PREVIEW : 0;
+        this.hoverPosition = basePosition + PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_1.BASE + extraOffset;
       } else if (projectIndex === 2) {
-        const extraOffset = isSmallPreview ? 70 : 0;
-        this.hoverPosition = basePosition - 40 + extraOffset;
+        const extraOffset = isSmallPreview ? PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_2.SMALL_PREVIEW : 0;
+        this.hoverPosition = basePosition + PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_2.BASE + extraOffset;
       } else {
         this.hoverPosition = basePosition;
       }
@@ -178,7 +178,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
           this.projectsTable.nativeElement.getBoundingClientRect();
         const trRect = trElement.getBoundingClientRect();
 
-        this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - 100;
+        this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
         this.cdr.markForCheck();
       });
     }
@@ -210,7 +210,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
       const deltaX = Math.abs(touchX - this.touchStartX);
       const deltaY = Math.abs(touchY - this.touchStartY);
 
-      if (deltaX > this.TOUCH_THRESHOLD || deltaY > this.TOUCH_THRESHOLD) {
+      if (deltaX > PORTFOLIO_CONFIG.TOUCH_THRESHOLD || deltaY > PORTFOLIO_CONFIG.TOUCH_THRESHOLD) {
         this.touchMoved = true;
         this.clearActiveProject();
       }
