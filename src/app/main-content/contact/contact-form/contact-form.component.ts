@@ -1,17 +1,23 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { timeout, retry, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
+interface ContactData {
+  name: string;
+  email: string;
+  message: string;
+  privacypolicy: boolean;
+}
+
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [FormsModule, RouterModule, CommonModule, TranslatePipe],
+  imports: [FormsModule, CommonModule, TranslatePipe],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,7 +28,7 @@ export class ContactFormComponent {
   cdr = inject(ChangeDetectorRef);
   private destroyRef = takeUntilDestroyed();
 
-  contactData = {
+  contactData: ContactData = {
     name: '',
     email: '',
     message: '',
@@ -42,7 +48,7 @@ export class ContactFormComponent {
 
   post = {
     endPoint: 'https://mihaela-melania-aghirculesei.de/sendMail.php',
-    body: (payload: any) => JSON.stringify(payload),
+    body: (payload: ContactData) => JSON.stringify(payload),
     options: {
       headers: {
         'Content-Type': 'application/json',
