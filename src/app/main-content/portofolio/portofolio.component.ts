@@ -71,6 +71,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   private headerElement: HTMLElement | null = null;
   private originalHeaderDisplay: string = '';
   private rafPending: boolean = false;
+  private boundOnTouchMove = this.onTouchMove.bind(this);
 
   constructor(
     private platformService: PlatformService,
@@ -83,7 +84,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      document.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: true });
+      document.addEventListener('touchmove', this.boundOnTouchMove, { passive: true });
     }
   }
 
@@ -91,7 +92,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     this.platformService.enableScroll();
 
     if (isPlatformBrowser(this.platformId)) {
-      document.removeEventListener('touchmove', this.onTouchMove.bind(this));
+      document.removeEventListener('touchmove', this.boundOnTouchMove);
     }
   }
 
