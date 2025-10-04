@@ -34,7 +34,6 @@ export class HeaderComponent implements OnDestroy {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
 
-    // Add passive scroll listener for better performance
     if (this.platformService.isWindowDefined()) {
       window.addEventListener('scroll', this.boundCheckScroll, { passive: true });
     }
