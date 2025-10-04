@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { LandingpageComponent } from './landing-page.component';
 
 describe('LandingpageComponent', () => {
@@ -8,7 +8,7 @@ describe('LandingpageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LandingpageComponent],
+      imports: [LandingpageComponent, TranslateModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LandingpageComponent);

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { PortofolioComponent } from './portofolio.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PlatformService } from '../../shared/services/platform.service';
 
 describe('PortofolioComponent', () => {
@@ -10,7 +10,7 @@ describe('PortofolioComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PortofolioComponent, TranslateModule.forRoot()],
-      providers: [PlatformService, TranslateService],
+      providers: [PlatformService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PortofolioComponent);

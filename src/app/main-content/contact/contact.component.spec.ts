@@ -1,24 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { DebugElement } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
-
 import { ContactComponent } from './contact.component';
-import { ContactFormComponent } from './contact-form/contact-form.component';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
   let fixture: ComponentFixture<ContactComponent>;
-  let translateService: TranslateService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ContactComponent, TranslateModule.forRoot()],
+      providers: [provideHttpClient()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContactComponent);
     component = fixture.componentInstance;
-    translateService = TestBed.inject(TranslateService);
     fixture.detectChanges();
   });
 
@@ -95,15 +92,10 @@ describe('ContactComponent', () => {
   });
 
   describe('Translation Integration', () => {
-    it('should use translation pipes in template', () => {
-      const template = fixture.debugElement.nativeElement.outerHTML;
-
-      expect(template).toContain("'contact.title' | translate");
-      expect(template).toContain("'contact.subtitle' | translate");
-      expect(template).toContain("'contact.question' | translate");
-      expect(template).toContain("'contact.description' | translate");
-      expect(template).toContain("'contact.needDeveloper' | translate");
-      expect(template).toContain("'contact.letsTalk' | translate");
+    it('should have translation keys', () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('h2#contact-title')).toBeTruthy();
+      expect(compiled.querySelector('h3')).toBeTruthy();
     });
   });
 

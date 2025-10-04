@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { OverlayComponent } from './overlay.component';
 
 describe('OverlayComponent', () => {
@@ -8,10 +8,10 @@ describe('OverlayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OverlayComponent]
+      imports: [OverlayComponent, TranslateModule.forRoot()]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(OverlayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
