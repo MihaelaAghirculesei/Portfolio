@@ -72,6 +72,10 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   private originalHeaderDisplay: string = '';
   private rafPending: boolean = false;
   private boundOnTouchMove = this.onTouchMove.bind(this);
+  private previousFocusedElement: HTMLElement | null = null;
+  private focusableElements: HTMLElement[] = [];
+  private firstFocusableElement: HTMLElement | null = null;
+  private lastFocusableElement: HTMLElement | null = null;
 
   constructor(
     private platformService: PlatformService,
@@ -226,12 +230,24 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     this.platformService.disableScroll();
 
     if (isPlatformBrowser(this.platformId)) {
+      // Save current focus
+      this.previousFocusedElement = document.activeElement as HTMLElement;
+
       this.headerElement = document.querySelector('header');
       if (this.headerElement) {
         this.originalHeaderDisplay =
           this.headerElement.style.display || 'block';
         this.headerElement.style.display = 'none';
       }
+
+      // Set focus to modal after DOM update
+      setTimeout(() => {
+        this.setupFocusTrap();
+        const modal = document.querySelector('.project-modal') as HTMLElement;
+        if (modal) {
+          modal.focus();
+        }
+      }, 100);
     }
     this.cdr.markForCheck();
   }
@@ -241,8 +257,16 @@ export class PortofolioComponent implements OnInit, OnDestroy {
 
     this.platformService.enableScroll();
 
-    if (isPlatformBrowser(this.platformId) && this.headerElement) {
-      this.headerElement.style.display = this.originalHeaderDisplay;
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.headerElement) {
+        this.headerElement.style.display = this.originalHeaderDisplay;
+      }
+
+      // Restore focus to previously focused element
+      if (this.previousFocusedElement) {
+        this.previousFocusedElement.focus();
+        this.previousFocusedElement = null;
+      }
     }
     this.cdr.markForCheck();
   }
@@ -334,5 +358,47 @@ export class PortofolioComponent implements OnInit, OnDestroy {
 
   onLeave() {
     this.clearActiveProject();
+  }
+
+  private setupFocusTrap(): void {
+    const modal = document.querySelector('.project-modal');
+    if (!modal) return;
+
+    const focusableSelectors = [
+      'a[href]',
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(', ');
+
+    this.focusableElements = Array.from(modal.querySelectorAll(focusableSelectors));
+
+    if (this.focusableElements.length > 0) {
+      this.firstFocusableElement = this.focusableElements[0];
+      this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1];
+
+      // Add Tab key trap
+      modal.addEventListener('keydown', this.handleFocusTrap.bind(this));
+    }
+  }
+
+  private handleFocusTrap(event: Event): void {
+    if (!(event instanceof KeyboardEvent) || event.key !== 'Tab') return;
+
+    if (event.shiftKey) {
+      // Shift + Tab
+      if (document.activeElement === this.firstFocusableElement) {
+        event.preventDefault();
+        this.lastFocusableElement?.focus();
+      }
+    } else {
+      // Tab
+      if (document.activeElement === this.lastFocusableElement) {
+        event.preventDefault();
+        this.firstFocusableElement?.focus();
+      }
+    }
   }
 }

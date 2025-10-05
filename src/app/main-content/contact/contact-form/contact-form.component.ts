@@ -6,6 +6,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { timeout, retry, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.service';
 
 interface ContactData {
   name: string;
@@ -26,7 +27,9 @@ export class ContactFormComponent {
   http = inject(HttpClient);
   translate = inject(TranslateService);
   cdr = inject(ChangeDetectorRef);
+  private ariaAnnouncer = inject(AriaAnnouncerService);
   private destroyRef = takeUntilDestroyed();
+  private previousFocusedElement: HTMLElement | null = null;
 
   contactData: ContactData = {
     name: '',
@@ -121,6 +124,8 @@ export class ContactFormComponent {
               ngForm.resetForm();
               this.checkboxWasCheckedBefore = false;
               this.invalidFields = [];
+
+              this.showPopupWithAnnouncement('contact.form.successMessage');
             }
 
             this.cdr.markForCheck();
@@ -165,11 +170,40 @@ export class ContactFormComponent {
       this.errorMessage =
         error?.message || 'An error occurred while sending your message.';
     }
+
+    const errorMsg = `${this.translate.instant('contact.form.errorMessage')} ${this.errorMessage}`;
+    this.showPopupWithAnnouncement(errorMsg, false);
   }
 
   closePopup() {
     this.submissionStatus = null;
     this.errorMessage = '';
+
+    // Restore focus to previously focused element
+    if (this.previousFocusedElement) {
+      this.previousFocusedElement.focus();
+      this.previousFocusedElement = null;
+    }
+  }
+
+  private showPopupWithAnnouncement(message: string, translate: boolean = true): void {
+    // Announce to screen readers
+    const announcement = translate ? this.translate.instant(message) : message;
+    this.ariaAnnouncer.announce(announcement, 'assertive');
+
+    // Focus management
+    setTimeout(() => this.focusPopup(), 100);
+  }
+
+  private focusPopup(): void {
+    // Save current focus
+    this.previousFocusedElement = document.activeElement as HTMLElement;
+
+    // Focus the popup close button
+    const closeButton = document.querySelector('.popup-footer button') as HTMLElement;
+    if (closeButton) {
+      closeButton.focus();
+    }
   }
 
   checkboxWasCheckedBefore = false;

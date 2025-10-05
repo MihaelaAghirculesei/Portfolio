@@ -1,5 +1,6 @@
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <app-header *ngIf="showHeaderFooter"></app-header>
-<main>
+<main id="main-content" role="main" [attr.aria-label]="'Portfolio content'">
   @if (showMainContent) {
     <app-landingpage></app-landingpage>
 

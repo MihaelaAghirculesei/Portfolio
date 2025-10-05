@@ -18,12 +18,14 @@
         (input)="validateForm('name')"
         [class.invalid]="invalidFields.includes('name')"
         [attr.placeholder]="'contact.form.namePlaceholder' | translate"
+        [attr.aria-invalid]="invalidFields.includes('name')"
+        [attr.aria-describedby]="invalidFields.includes('name') ? 'name-error' : null"
         required
         minlength="3"
         autocomplete="name"
       />
       @if (invalidFields.includes('name')) {
-      <p class="alert-text" role="alert">
+      <p class="alert-text" id="name-error" role="alert" aria-live="polite">
         {{ "contact.form.nameError" | translate }}
       </p>
       }
@@ -44,12 +46,14 @@
         (input)="validateForm('email')"
         [class.invalid]="invalidFields.includes('email')"
         [attr.placeholder]="'contact.form.emailPlaceholder' | translate"
+        [attr.aria-invalid]="invalidFields.includes('email')"
+        [attr.aria-describedby]="invalidFields.includes('email') ? 'email-error' : null"
         required
         pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
         autocomplete="email"
       />
       @if (invalidFields.includes('email')) {
-      <p class="alert-text" role="alert">
+      <p class="alert-text" id="email-error" role="alert" aria-live="polite">
         {{ "contact.form.emailError" | translate }}
       </p>
       }
@@ -69,13 +73,15 @@
         (input)="validateForm('message')"
         [class.invalid]="invalidFields.includes('message')"
         [attr.placeholder]="'contact.form.messagePlaceholder' | translate"
+        [attr.aria-invalid]="invalidFields.includes('message')"
+        [attr.aria-describedby]="invalidFields.includes('message') ? 'message-error' : null"
+        [attr.aria-label]="'contact.form.messageLabel' | translate"
         required
         minlength="10"
         rows="4"
-        [attr.aria-label]="'contact.form.messageLabel' | translate"
       ></textarea>
       @if (invalidFields.includes('message')) {
-      <p class="alert-text" role="alert">
+      <p class="alert-text" id="message-error" role="alert" aria-live="polite">
         {{ "contact.form.messageError" | translate }}
       </p>
       }
@@ -137,9 +143,11 @@
 <div
   class="popup-overlay"
   (click)="closePopup()"
+  (keydown.escape)="closePopup()"
   role="dialog"
   aria-modal="true"
   [attr.aria-labelledby]="'popup-title'"
+  tabindex="-1"
 >
   <div
     class="popup"
