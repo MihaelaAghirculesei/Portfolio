@@ -59,8 +59,13 @@ export class AppComponent implements OnInit {
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((event: NavigationEnd) => {
-        this.showMainContent = event.url === '/';
+      .subscribe({
+        next: (event: NavigationEnd) => {
+          this.showMainContent = event.url === '/';
+        },
+        error: (error) => {
+          console.error('Router events error:', error);
+        }
       });
   }
 }

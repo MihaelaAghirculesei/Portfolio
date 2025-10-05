@@ -119,7 +119,8 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   }
 
   setActiveProject(projectIndex: number, event: MouseEvent): void {
-    if (window.innerWidth <= BREAKPOINTS.MOBILE_MAX) {
+    const windowObj = this.platformService.getWindow();
+    if (!windowObj || windowObj.innerWidth <= BREAKPOINTS.MOBILE_MAX) {
       return;
     }
 
@@ -142,7 +143,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
 
       const basePosition = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
 
-      const isSmallPreview = window.innerWidth <= BREAKPOINTS.SMALL_PREVIEW_MAX;
+      const isSmallPreview = windowObj && windowObj.innerWidth <= BREAKPOINTS.SMALL_PREVIEW_MAX;
 
       if (projectIndex === 0) {
         const extraOffset = isSmallPreview ? PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_0.SMALL_PREVIEW : 0;

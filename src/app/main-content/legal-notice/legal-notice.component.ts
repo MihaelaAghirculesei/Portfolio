@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -28,7 +28,7 @@ interface ExternalLink {
   styleUrl: './legal-notice.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LegalNoticeComponent implements OnInit, OnDestroy {
+export class LegalNoticeComponent implements OnInit {
 
   readonly contactInfo: ContactInfo = {
     name: 'Mihaela Melania Aghirculesei',
@@ -58,11 +58,10 @@ export class LegalNoticeComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-  }
-
   goBack(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/']).catch((error) => {
+      console.error('Navigation to home failed:', error);
+    });
   }
 
   get phoneLink(): string {

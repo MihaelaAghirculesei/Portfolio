@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
@@ -14,7 +14,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
   isHovered: boolean = false;
   isScrolled: boolean = false;
   isEnglish: boolean = false;
@@ -35,8 +35,6 @@ export class HeaderComponent implements OnDestroy {
 
   ngOnInit(): void {
     this.checkScroll();
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
 
     if (this.platformService.isWindowDefined()) {
       window.addEventListener('scroll', this.boundCheckScroll, { passive: true });
@@ -83,11 +81,16 @@ export class HeaderComponent implements OnDestroy {
     if (this.router.url === '/' || this.router.url === '') {
       this.scrollService.scrollToElement(sectionId, 'start');
     } else {
-      this.router.navigate(['/']).then(() => {
-        setTimeout(() => {
-          this.scrollService.scrollToElement(sectionId, 'start');
-        }, SCROLL_CONFIG.NAVIGATION_DELAY);
-      });
+      this.router.navigate(['/']).then(
+        () => {
+          setTimeout(() => {
+            this.scrollService.scrollToElement(sectionId, 'start');
+          }, SCROLL_CONFIG.NAVIGATION_DELAY);
+        },
+        (error) => {
+          console.error('Navigation to home failed:', error);
+        }
+      );
     }
   }
 
@@ -121,10 +124,8 @@ export class HeaderComponent implements OnDestroy {
       this.firstMenuFocusable = this.focusableMenuElements[0];
       this.lastMenuFocusable = this.focusableMenuElements[this.focusableMenuElements.length - 1];
 
-      // Focus first element in menu
       this.firstMenuFocusable?.focus();
 
-      // Add Tab trap listener
       mobileMenu.addEventListener('keydown', this.handleMenuFocusTrap.bind(this));
     }
   }
@@ -133,13 +134,11 @@ export class HeaderComponent implements OnDestroy {
     if (!(event instanceof KeyboardEvent) || event.key !== 'Tab' || !this.isMenuOpen) return;
 
     if (event.shiftKey) {
-      // Shift + Tab
       if (document.activeElement === this.firstMenuFocusable) {
         event.preventDefault();
         this.lastMenuFocusable?.focus();
       }
     } else {
-      // Tab
       if (document.activeElement === this.lastMenuFocusable) {
         event.preventDefault();
         this.firstMenuFocusable?.focus();

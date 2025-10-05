@@ -21,7 +21,9 @@ export class FooterComponent {
     if (this.router.url === '/') {
       this.scrollService.scrollToElement('headLine', 'start');
     } else {
-      this.router.navigate(['/']);
+      this.router.navigate(['/']).catch((error) => {
+        console.error('Navigation to home failed:', error);
+      });
     }
   }
 }

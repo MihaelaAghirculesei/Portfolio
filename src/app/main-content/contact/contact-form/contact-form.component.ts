@@ -158,6 +158,13 @@ export class ContactFormComponent {
   private handleError(error: any) {
     this.submissionStatus = 'error';
 
+    console.error('Contact form submission failed:', {
+      type: error?.name || 'Unknown',
+      status: error?.status,
+      message: error?.message,
+      timestamp: new Date().toISOString()
+    });
+
     if (error?.name === 'TimeoutError') {
       this.errorMessage = 'Request timeout. Please try again.';
     } else if (error?.status === 0) {
@@ -178,8 +185,6 @@ export class ContactFormComponent {
   closePopup() {
     this.submissionStatus = null;
     this.errorMessage = '';
-
-    // Restore focus to previously focused element
     if (this.previousFocusedElement) {
       this.previousFocusedElement.focus();
       this.previousFocusedElement = null;
@@ -187,19 +192,15 @@ export class ContactFormComponent {
   }
 
   private showPopupWithAnnouncement(message: string, translate: boolean = true): void {
-    // Announce to screen readers
     const announcement = translate ? this.translate.instant(message) : message;
     this.ariaAnnouncer.announce(announcement, 'assertive');
 
-    // Focus management
     setTimeout(() => this.focusPopup(), 100);
   }
 
   private focusPopup(): void {
-    // Save current focus
     this.previousFocusedElement = document.activeElement as HTMLElement;
 
-    // Focus the popup close button
     const closeButton = document.querySelector('.popup-footer button') as HTMLElement;
     if (closeButton) {
       closeButton.focus();
@@ -216,10 +217,13 @@ export class ContactFormComponent {
 
   openPrivacyPolicy() {
     const currentLang = this.translate.currentLang || 'en';
-    if (currentLang === 'de') {
-      window.open('/datenschutz', '_blank');
-    } else {
-      window.open('/privacy-policy', '_blank');
+    const url = currentLang === 'de' ? '/datenschutz' : '/privacy-policy';
+
+    const newWindow = window.open(url, '_blank');
+
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+      console.warn('Popup blocked. Navigating in current tab.');
+      window.location.href = url;
     }
   }
 }

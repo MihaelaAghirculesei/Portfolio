@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  ErrorHandler,
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -8,6 +9,7 @@ import { provideHttpClient, withFetch, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
+import { GlobalErrorHandler } from './shared/services/global-error-handler.service';
 
 const TRANSLATION_CONFIG = {
   prefix: '/assets/i18n/',
@@ -27,6 +29,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withFetch()),
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     importProvidersFrom([
       TranslateModule.forRoot({
         loader: {
