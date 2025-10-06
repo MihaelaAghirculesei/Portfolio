@@ -5,6 +5,17 @@ const angular = require("angular-eslint");
 
 module.exports = tseslint.config(
   {
+    ignores: [
+      "node_modules/**",
+      "dist/**",
+      "coverage/**",
+      ".angular/**",
+      "**/*.js",
+      "**/*.d.ts",
+      "!eslint.config.js"
+    ]
+  },
+  {
     files: ["**/*.ts"],
     extends: [
       eslint.configs.recommended,
@@ -30,7 +41,73 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      "@angular-eslint/no-empty-lifecycle-method": "error",
+      "@angular-eslint/prefer-on-push-component-change-detection": "error",
+      "@angular-eslint/use-lifecycle-interface": "error",
+      "@angular-eslint/no-output-native": "error",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ],
+      "@typescript-eslint/explicit-function-return-type": [
+        "error",
+        {
+          "allowExpressions": true,
+          "allowTypedFunctionExpressions": true
+        }
+      ],
+      "@typescript-eslint/no-inferrable-types": "error",
+      "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": "default",
+          "format": ["camelCase"]
+        },
+        {
+          "selector": "variable",
+          "format": ["camelCase", "UPPER_CASE"]
+        },
+        {
+          "selector": "parameter",
+          "format": ["camelCase"],
+          "leadingUnderscore": "allow"
+        },
+        {
+          "selector": "typeLike",
+          "format": ["PascalCase"]
+        },
+        {
+          "selector": "property",
+          "format": ["camelCase", "UPPER_CASE"],
+          "leadingUnderscore": "allow"
+        }
+      ],
+      "no-console": "error",
+      "prefer-const": "error",
+      "no-var": "error",
+      "eqeqeq": ["error", "always"],
+      "curly": "error",
+      "max-len": ["error", { "code": 140 }],
+      "quotes": ["error", "single", { "avoidEscape": true }],
+      "semi": ["error", "always"],
+      "no-debugger": "error",
+      "no-duplicate-imports": "error",
+      "prefer-template": "error"
     },
+  },
+  {
+    files: ["**/*.spec.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@angular-eslint/component-selector": "off"
+    }
   },
   {
     files: ["**/*.html"],
