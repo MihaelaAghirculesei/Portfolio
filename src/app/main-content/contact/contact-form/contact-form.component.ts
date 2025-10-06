@@ -67,12 +67,13 @@ export class ContactFormComponent {
     body: (payload: ContactData) => JSON.stringify(payload),
     options: {
       headers: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'Content-Type': 'application/json',
       },
     },
   };
 
-  validateForm(field: string) {
+  validateForm(field: string): void {
     this.invalidFields = this.invalidFields.filter((f) => f !== field);
 
     if (field === 'name') {
@@ -106,7 +107,7 @@ export class ContactFormComponent {
     }
   }
 
-  onSubmit(ngForm: NgForm) {
+  onSubmit(ngForm: NgForm): void {
     if (ngForm.submitted && ngForm.form.valid && !this.mailTest) {
       this.isSubmitting = true;
       this.cdr.markForCheck();
@@ -157,7 +158,7 @@ export class ContactFormComponent {
     }
   }
 
-  private sanitizeContactData() {
+  private sanitizeContactData(): ContactData {
     return {
       name: this.contactData.name.trim(),
       email: this.contactData.email.trim().toLowerCase(),
@@ -166,7 +167,7 @@ export class ContactFormComponent {
     };
   }
 
-  private handleError(error: unknown) {
+  private handleError(error: unknown): void {
     this.submissionStatus = 'error';
 
     const errorLike = error as ErrorLike;
@@ -202,7 +203,7 @@ export class ContactFormComponent {
     this.showPopupWithAnnouncement(errorMsg, false);
   }
 
-  closePopup() {
+  closePopup(): void {
     this.submissionStatus = null;
     this.errorMessage = '';
     if (this.previousFocusedElement) {
@@ -211,7 +212,7 @@ export class ContactFormComponent {
     }
   }
 
-  private showPopupWithAnnouncement(message: string, translate: boolean = true): void {
+  private showPopupWithAnnouncement(message: string, translate = true): void {
     const announcement = translate ? this.translate.instant(message) : message;
     this.ariaAnnouncer.announce(announcement, 'assertive');
 
@@ -229,13 +230,13 @@ export class ContactFormComponent {
 
   checkboxWasCheckedBefore = false;
 
-  checkboxChanged() {
+  checkboxChanged(): void {
     if (this.contactData.privacypolicy) {
       this.checkboxWasCheckedBefore = true;
     }
   }
 
-  openPrivacyPolicy() {
+  openPrivacyPolicy(): void {
     const currentLang = this.translate.currentLang || 'en';
     const url = currentLang === 'de' ? '/datenschutz' : '/privacy-policy';
 

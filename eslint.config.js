@@ -45,6 +45,7 @@ module.exports = tseslint.config(
       "@angular-eslint/prefer-on-push-component-change-detection": "error",
       "@angular-eslint/use-lifecycle-interface": "error",
       "@angular-eslint/no-output-native": "error",
+      "@angular-eslint/prefer-inject": "off",
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-unused-vars": [
         "error",
@@ -106,7 +107,8 @@ module.exports = tseslint.config(
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
-      "@angular-eslint/component-selector": "off"
+      "@angular-eslint/component-selector": "off",
+      "@angular-eslint/prefer-on-push-component-change-detection": "off"
     }
   },
   {

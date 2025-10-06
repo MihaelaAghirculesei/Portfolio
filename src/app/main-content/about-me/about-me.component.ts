@@ -1,4 +1,16 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Inject, PLATFORM_ID, QueryList, ViewChildren, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  Inject,
+  PLATFORM_ID,
+  QueryList,
+  ViewChildren,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AOS_CONFIG } from '../../shared/constants/app.constants';
@@ -71,7 +83,7 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -178,8 +190,8 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private onIconLeave(event: Event): void {
-    const target = event.target as HTMLElement;
+  private onIconLeave(_event: Event): void {
+    const target = _event.target as HTMLElement;
     const icon = target.querySelector('img');
     if (icon) {
       icon.classList.remove('icon-hover');
@@ -187,7 +199,7 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private onImageHover(event: Event): void {
+  private onImageHover(_event: Event): void {
     const img = this.imageContainerRef?.nativeElement.querySelector('img');
     if (img) {
       img.classList.remove('image-normal');
@@ -195,7 +207,7 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private onImageLeave(event: Event): void {
+  private onImageLeave(_event: Event): void {
     const img = this.imageContainerRef?.nativeElement.querySelector('img');
     if (img) {
       img.classList.remove('image-hover');
