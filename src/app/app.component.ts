@@ -12,6 +12,7 @@ import { PortofolioComponent } from './main-content/portofolio/portofolio.compon
 import { FeedbacksComponent } from './main-content/feedback/feedback.component';
 import { ContactComponent } from './main-content/contact/contact.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { LoggerService } from './shared/services/logger.service';
 
 @Component({
   selector: 'app-root',
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly logger = inject(LoggerService);
 
   ngOnInit(): void {
     this.initializeTranslation();
@@ -64,7 +66,7 @@ export class AppComponent implements OnInit {
           this.showMainContent = event.url === '/';
         },
         error: (error) => {
-          console.error('Router events error:', error);
+          this.logger.error('Router events error:', error);
         }
       });
   }

@@ -7,6 +7,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { timeout, retry, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.service';
+import { LoggerService } from '../../../shared/services/logger.service';
 import { VALIDATION_CONFIG, HTTP_CONFIG, TIMING_CONFIG } from '../../../shared/constants/app.constants';
 
 interface ContactData {
@@ -36,6 +37,7 @@ export class ContactFormComponent {
   translate = inject(TranslateService);
   cdr = inject(ChangeDetectorRef);
   private ariaAnnouncer = inject(AriaAnnouncerService);
+  private readonly logger = inject(LoggerService);
   private previousFocusedElement: HTMLElement | null = null;
 
   contactData: ContactData = {
@@ -163,7 +165,7 @@ export class ContactFormComponent {
     const errorName = error instanceof HttpErrorResponse ? 'HttpError' : error.name;
     const errorStatus = error instanceof HttpErrorResponse ? error.status : undefined;
 
-    console.error('Contact form submission failed:', {
+    this.logger.error('Contact form submission failed:', {
       type: errorName,
       status: errorStatus,
       message: error.message,
@@ -226,7 +228,7 @@ export class ContactFormComponent {
     const newWindow = window.open(url, '_blank');
 
     if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-      console.warn('Popup blocked. Navigating in current tab.');
+      this.logger.warn('Popup blocked. Navigating in current tab.');
       window.location.href = url;
     }
   }

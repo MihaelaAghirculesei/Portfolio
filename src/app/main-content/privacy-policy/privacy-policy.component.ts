@@ -1,7 +1,8 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -12,6 +13,8 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrivacyPolicyComponent implements OnInit {
+  private readonly logger = inject(LoggerService);
+
   constructor(
     public translateService: TranslateService,
     private router: Router,
@@ -26,7 +29,7 @@ export class PrivacyPolicyComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/']).catch((error) => {
-      console.error('Navigation to home failed:', error);
+      this.logger.error('Navigation to home failed:', error);
     });
   }
 }

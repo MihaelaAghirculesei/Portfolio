@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
+import { LoggerService } from '../services/logger.service';
 import { BREAKPOINTS, SCROLL_CONFIG, TIMING_CONFIG } from '../constants/app.constants';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private focusableMenuElements: HTMLElement[] = [];
   private firstMenuFocusable: HTMLElement | null = null;
   private lastMenuFocusable: HTMLElement | null = null;
+  private readonly logger = inject(LoggerService);
 
   constructor(
     private scrollService: ScrollService,
@@ -88,7 +90,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }, SCROLL_CONFIG.NAVIGATION_DELAY);
         },
         (error) => {
-          console.error('Navigation to home failed:', error);
+          this.logger.error('Navigation to home failed:', error);
         }
       );
     }

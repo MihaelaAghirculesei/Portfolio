@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScrollService } from './scroll.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
+  private readonly logger = inject(LoggerService);
+
   constructor(private router: Router) {}
 
   navigateToHome(): Promise<boolean> {
     return this.router.navigate(['/']).catch((error) => {
-      console.error('Navigation to home failed:', error);
+      this.logger.error('Navigation to home failed:', error);
       return false;
     });
   }
@@ -26,7 +29,7 @@ export class NavigationService {
           }, delay);
         },
         (error) => {
-          console.error('Navigation to home failed:', error);
+          this.logger.error('Navigation to home failed:', error);
         }
       );
     }

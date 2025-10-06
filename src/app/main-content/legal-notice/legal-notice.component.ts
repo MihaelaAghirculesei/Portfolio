@@ -1,7 +1,8 @@
-import { Component, OnInit, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
+import { LoggerService } from '../../shared/services/logger.service';
 
 interface ContactInfo {
   name: string;
@@ -29,6 +30,7 @@ interface ExternalLink {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LegalNoticeComponent implements OnInit {
+  private readonly logger = inject(LoggerService);
 
   readonly contactInfo: ContactInfo = {
     name: 'Mihaela Melania Aghirculesei',
@@ -60,7 +62,7 @@ export class LegalNoticeComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/']).catch((error) => {
-      console.error('Navigation to home failed:', error);
+      this.logger.error('Navigation to home failed:', error);
     });
   }
 
