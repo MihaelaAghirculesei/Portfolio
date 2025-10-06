@@ -19,15 +19,15 @@ export class ScrollService {
 
   scrollToElement(
     elementId: string,
-    block: 'start' | 'center' | 'end' = 'start'
+    _block: 'start' | 'center' | 'end' = 'start'
   ): void {
-    if (!this.isBrowser) return;
+    if (!this.isBrowser) {return;}
 
     const element = this.document.getElementById(elementId);
-    if (!element) return;
+    if (!element) {return;}
 
     const window = this.document.defaultView;
-    if (!window) return;
+    if (!window) {return;}
 
     const isMobile = window.innerWidth <= BREAKPOINTS.TABLET_MAX;
     const extraOffset = isMobile ? this.mobileOffsets[elementId] ?? 0 : 0;
@@ -41,7 +41,7 @@ export class ScrollService {
   }
 
   scrollToPosition(position: number): void {
-    if (!this.isBrowser) return;
+    if (!this.isBrowser) {return;}
 
     this.document.defaultView?.scrollTo({
       top: position,
@@ -54,7 +54,7 @@ export class ScrollService {
   }
 
   getCurrentScrollPosition(): number {
-    if (!this.isBrowser) return 0;
+    if (!this.isBrowser) {return 0;}
 
     const window = this.document.defaultView;
     return window?.scrollY ?? window?.pageYOffset ?? 0;

@@ -4,7 +4,13 @@
   aria-modal="true"
   [attr.aria-labelledby]="'project-title-' + index"
 >
-  <div class="contentWrapper" (click)="$event.stopPropagation()">
+  <div
+    class="contentWrapper"
+    role="document"
+    tabindex="0"
+    (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
+  >
     <div class="contentLeft">
       <h1 aria-hidden="true">{{ (index + 1).toString().padStart(2, '0') }}</h1>
       <h2 [id]="'project-title-' + index">{{ singleProject.name }}</h2>
@@ -39,7 +45,7 @@
     </div>
     <div class="contentRight">
       <button
-        (click)="closeOverlay()"
+        (click)="handleClose()"
         type="button"
         class="close-button"
         [attr.aria-label]="'portfolio.closeModal' | translate"
@@ -51,7 +57,7 @@
         <img src="../{{ singleProject.previewImg }}" [alt]="singleProject.name + ' project screenshot'" loading="lazy">
       </div>
       <button
-        (click)="next.emit()"
+        (click)="nextProject.emit()"
         type="button"
         [attr.aria-label]="'portfolio.nextProject' | translate"
       >

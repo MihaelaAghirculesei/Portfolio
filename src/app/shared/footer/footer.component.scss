@@ -1,8 +1,7 @@
 @import "../../../styles/styles.scss";
 
 $footer-padding: 30px;
-$footer-padding-mobile: 20px;
-$footer-padding-small: 15px;
+$footer-padding-compact: 15px;
 $footer-margin-top: -5px;
 $footer-content-padding: 20px;
 
@@ -48,6 +47,10 @@ section {
       top: $logo-top-offset;
       z-index: 10;
       cursor: pointer;
+
+      @media (max-width: $tablet-max) {
+        top: calc($logo-top-offset + 35px);
+      }
 
       > img {
         width: $logo-width;
@@ -219,27 +222,41 @@ section {
 
 @media (max-width: $tablet-max) {
   section {
+    padding: $footer-padding-compact 0;
+
     .footerWrapper {
       flex-wrap: wrap;
-      row-gap: 32px;
+      row-gap: 12px;
       flex-direction: row;
     }
 
     .logoDiv {
       width: 45%;
       order: 1;
+      gap: 4px;
+
+      div {
+        gap: 1px;
+
+        p {
+          line-height: 1.1;
+        }
+      }
     }
 
     .linkDiv {
       width: 45%;
       order: 2;
       align-items: flex-end;
+      margin-top: 35px;
+      gap: 3px;
     }
 
     .copyright {
       width: 100%;
       order: 3;
       text-align: center;
+      margin-top: 8px;
 
       p .name-effect {
         animation-duration: 4s;
@@ -254,71 +271,35 @@ section {
 
 @media (max-width: $mobile-max) {
   section {
-    padding: $footer-padding-mobile 0;
-
     .logoDiv,
     .linkDiv {
       width: 44%;
     }
 
-    .logoDiv {
-      gap: 12px;
+    .logoDiv div {
+      padding-top: 0;
+    }
 
-      div {
-        gap: 2px;
-        padding-top: 0;
+    .copyright p .name-effect {
+      animation-duration: 6s;
 
-        p {
-          line-height: 1.2;
-        }
+      &::after {
+        animation-duration: 7s;
       }
-    }
-
-    .linkDiv {
-      margin-top: 8px;
-      gap: 4px;
-    }
-
-    .copyright {
-      margin-top: 16px;
-
-      p .name-effect {
-        animation-duration: 6s;
-
-        &::after {
-          animation-duration: 7s;
-        }
-      }
-    }
-
-    .footerWrapper {
-      row-gap: 16px;
     }
   }
 }
 
 @media (max-width: $mobile-small-max) {
   section {
-    padding: $footer-padding-small 0;
-
-    .logoDiv {
-      gap: 8px;
-
-      div {
-        gap: 1px;
-
-        p {
-          line-height: 1.1;
-        }
-      }
-    }
+    padding: $footer-padding-compact 0;
 
     .linkDiv {
       gap: 2px;
     }
 
     .footerWrapper {
-      row-gap: 12px;
+      row-gap: 10px;
     }
   }
 }

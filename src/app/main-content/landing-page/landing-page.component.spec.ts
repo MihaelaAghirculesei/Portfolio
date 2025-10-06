@@ -113,15 +113,4 @@ describe('LandingpageComponent', () => {
     });
   });
 
-  describe('Lifecycle Hooks', () => {
-    it('should have ngOnInit method', () => {
-      expect(component.ngOnInit).toBeDefined();
-      component.ngOnInit();
-    });
-
-    it('should have ngOnDestroy method', () => {
-      expect(component.ngOnDestroy).toBeDefined();
-      component.ngOnDestroy();
-    });
-  });
 });

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { BannerSectionComponent } from './banner-section/banner-section.component';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -25,7 +25,7 @@ interface SocialLink {
   styleUrl: './landing-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingpageComponent implements OnInit, OnDestroy {
+export class LandingpageComponent {
   readonly profileInfo = {
     firstName: 'Mihaela Melania',
     lastName: 'Aghirculesei',
@@ -67,10 +67,6 @@ export class LandingpageComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private scrollService: ScrollService) {}
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {}
 
   scrollToAboutMe(): void {
     this.scrollService.scrollToElement('aboutMe', 'start');

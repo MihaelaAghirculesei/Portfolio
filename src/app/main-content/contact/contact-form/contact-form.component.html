@@ -113,6 +113,7 @@
             href="#"
             class="privacy-policy-link"
             (click)="openPrivacyPolicy(); $event.preventDefault()"
+            (keydown.enter)="openPrivacyPolicy(); $event.preventDefault()"
             [attr.aria-label]="'contact.form.privacyLink' | translate"
           >
             {{ "contact.form.privacyLink" | translate }}
@@ -151,9 +152,12 @@
 >
   <div
     class="popup"
+    role="document"
+    tabindex="0"
     [class.success]="submissionStatus === 'success'"
     [class.error]="submissionStatus === 'error'"
     (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
   >
     <div class="popup-header">
       <h3 id="popup-title">

@@ -6,7 +6,7 @@ import { FooterComponent } from './footer.component';
 import { ScrollService } from '../services/scroll.service';
 
 @Directive({
-  selector: '[routerLink]',
+  selector: '[appRouterLink]',
   standalone: true
 })
 class MockRouterLinkDirective {

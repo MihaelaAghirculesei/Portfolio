@@ -35,15 +35,19 @@ export class LoggerService {
 
     switch (level) {
       case 'error':
+        // eslint-disable-next-line no-console
         console.error(message, data);
         break;
       case 'warn':
+        // eslint-disable-next-line no-console
         console.warn(message, data);
         break;
       case 'info':
+        // eslint-disable-next-line no-console
         console.info(message, data);
         break;
       case 'debug':
+        // eslint-disable-next-line no-console
         console.debug(message, data);
         break;
     }

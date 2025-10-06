@@ -7,9 +7,9 @@
          (keydown)="onKeyDown($event)"
          (mouseenter)="pauseAutoPlay()"
          (mouseleave)="resumeAutoPlay()"
-         passiveTouchStart
+         appPassiveTouchStart
          (passiveTouchStart)="onTouchStart($event)"
-         passiveTouchEnd
+         appPassiveTouchEnd
          (passiveTouchEnd)="onTouchEnd($event)"
          tabindex="0">
       @for (comment of feedbacks; track comment.name + comment.ref; let i = $index) {

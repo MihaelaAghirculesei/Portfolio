@@ -17,7 +17,7 @@ type ApplicationError = Error | HttpErrorResponse | ErrorWithMessage | unknown;
 export class GlobalErrorHandler implements ErrorHandler {
   private readonly logger = inject(LoggerService);
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
   handleError(error: ApplicationError): void {
     const errorMessage = this.getErrorMessage(error);

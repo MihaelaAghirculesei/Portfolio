@@ -18,7 +18,7 @@ export class NavigationService {
     });
   }
 
-  navigateToHomeWithScroll(scrollService: ScrollService, sectionId: string, delay: number = 100): void {
+  navigateToHomeWithScroll(scrollService: ScrollService, sectionId: string, delay = 100): void {
     if (this.router.url === '/' || this.router.url === '') {
       scrollService.scrollToElement(sectionId, 'start');
     } else {

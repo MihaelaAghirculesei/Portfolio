@@ -137,12 +137,12 @@ describe('AboutmeComponent', () => {
 
   describe('Server-Side Rendering', () => {
     it('should handle SSR gracefully', () => {
-      const ssrComponent = new AboutmeComponent('server');
+      const ssrComponent = new AboutmeComponent({} as object);
       expect(ssrComponent['isBrowser']).toBe(false);
     });
 
     it('should not initialize animations on server', () => {
-      const ssrComponent = new AboutmeComponent('server');
+      const ssrComponent = new AboutmeComponent({} as object);
       spyOn<any>(ssrComponent, 'initScrollAnimations');
 
       ssrComponent.ngOnInit();

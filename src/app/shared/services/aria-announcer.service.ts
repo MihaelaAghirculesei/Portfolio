@@ -8,7 +8,7 @@ import { TIMING_CONFIG } from '../constants/app.constants';
 export class AriaAnnouncerService {
   private liveRegion: HTMLElement | null = null;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
     if (isPlatformBrowser(this.platformId)) {
       this.createLiveRegion();
     }
@@ -28,7 +28,7 @@ export class AriaAnnouncerService {
   }
 
   announce(message: string, priority: 'polite' | 'assertive' = 'polite'): void {
-    if (!this.liveRegion) return;
+    if (!this.liveRegion) {return;}
 
     this.liveRegion.setAttribute('aria-live', priority);
     this.liveRegion.textContent = '';

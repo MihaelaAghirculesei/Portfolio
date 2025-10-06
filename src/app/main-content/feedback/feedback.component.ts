@@ -1,14 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ViewChildren,
+  QueryList,
+  ElementRef
+} from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PlatformService } from '../../shared/services/platform.service';
-import { SLIDER_CONFIG, ANIMATION_CONFIG } from '../../shared/constants/app.constants';
+import {
+  SLIDER_CONFIG,
+  ANIMATION_CONFIG
+} from '../../shared/constants/app.constants';
 import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
 
 @Component({
   selector: 'app-feedbacks',
   standalone: true,
-  imports: [CommonModule, TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
+  imports: [
+    CommonModule,
+    TranslatePipe,
+    PassiveTouchStartDirective,
+    PassiveTouchEndDirective
+  ],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -70,16 +88,16 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     return this.feedbacks.length;
   }
   
-  slideLeft() {
+  slideLeft(): void {
     this.slide(1);
   }
 
-  slideRight() {
+  slideRight(): void {
     this.slide(-1);
   }
 
-  private slide(direction: 1 | -1) {
-    if (this.isTransitioning) return;
+  private slide(direction: 1 | -1): void {
+    if (this.isTransitioning) {return;}
 
     if (direction === 1) {
       this.middleIndex = this.middleIndex < this.feedbacks.length - 1 ? this.middleIndex + 1 : 0;
@@ -91,14 +109,14 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
   
-  updateCards() {
+  updateCards(): void {
     if (this.feedbackCards) {
       this.isTransitioning = true;
 
       const baseOffset = (2 - this.middleIndex) * SLIDER_CONFIG.FEEDBACK_OFFSET;
 
       this.feedbackCards.forEach((card, index: number) => {
-        let isActive: boolean = index === this.middleIndex;
+        const isActive: boolean = index === this.middleIndex;
         const scale = isActive ? ANIMATION_CONFIG.SCALE_ACTIVE : ANIMATION_CONFIG.SCALE_INACTIVE;
         card.nativeElement.style.transform = `translateX(${baseOffset}%) scale(${scale})`;
       });
@@ -112,21 +130,21 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
   
   
   getCardClass(index: number): string {
-    if (index < this.middleIndex) return 'left feedback-card';
-    if (index > this.middleIndex) return 'right feedback-card';
+    if (index < this.middleIndex) {return 'left feedback-card';}
+    if (index > this.middleIndex) {return 'right feedback-card';}
     return 'feedback-card';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.startAutoPlay();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.stopAutoPlay();
   }
 
-  goToSlide(index: number) {
-    if (this.isTransitioning || index === this.middleIndex) return;
+  goToSlide(index: number): void {
+    if (this.isTransitioning || index === this.middleIndex) {return;}
 
     this.middleIndex = index;
     this.updateCards();
@@ -134,7 +152,7 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  onKeyDown(event: KeyboardEvent) {
+  onKeyDown(event: KeyboardEvent): void {
     switch (event.key) {
       case 'ArrowLeft':
         event.preventDefault();
@@ -160,19 +178,19 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     }
   }
 
-  onTouchStart(event: TouchEvent) {
+  onTouchStart(event: TouchEvent): void {
     this.touchStartX = event.changedTouches[0].screenX;
   }
 
-  onTouchEnd(event: TouchEvent) {
+  onTouchEnd(event: TouchEvent): void {
     this.touchEndX = event.changedTouches[0].screenX;
     this.handleSwipe();
   }
 
-  private handleSwipe() {
+  private handleSwipe(): void {
     const swipeDistance = this.touchStartX - this.touchEndX;
 
-    if (Math.abs(swipeDistance) < SLIDER_CONFIG.SWIPE_THRESHOLD) return;
+    if (Math.abs(swipeDistance) < SLIDER_CONFIG.SWIPE_THRESHOLD) {return;}
 
     if (swipeDistance > 0) {
       this.slideLeft();
@@ -181,11 +199,11 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     }
   }
 
-  startAutoPlay() {
-    if (!this.isAutoPlaying) return;
+  startAutoPlay(): void {
+    if (!this.isAutoPlaying) {return;}
 
     const document = this.platformService.getDocument();
-    if (!document?.defaultView) return;
+    if (!document?.defaultView) {return;}
 
     this.stopAutoPlay();
     this.autoPlayInterval = document.defaultView.setInterval(() => {
@@ -193,24 +211,24 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     }, SLIDER_CONFIG.AUTO_PLAY_INTERVAL);
   }
 
-  stopAutoPlay() {
+  stopAutoPlay(): void {
     if (this.autoPlayInterval) {
       clearInterval(this.autoPlayInterval);
       this.autoPlayInterval = undefined;
     }
   }
 
-  pauseAutoPlay() {
+  pauseAutoPlay(): void {
     this.stopAutoPlay();
   }
 
-  resumeAutoPlay() {
+  resumeAutoPlay(): void {
     if (this.isAutoPlaying) {
       this.startAutoPlay();
     }
   }
 
-  toggleAutoPlay() {
+  toggleAutoPlay(): void {
     this.isAutoPlaying = !this.isAutoPlaying;
     if (this.isAutoPlaying) {
       this.startAutoPlay();
@@ -220,14 +238,14 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  private resetAutoPlay() {
+  private resetAutoPlay(): void {
     if (this.isAutoPlaying) {
       this.startAutoPlay();
     }
   }
 
   @HostListener('window:visibilitychange')
-  onVisibilityChange() {
+  onVisibilityChange(): void {
     const document = this.platformService.getDocument();
     if (document) {
       if (document.hidden) {

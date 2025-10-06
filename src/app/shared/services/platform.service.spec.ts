@@ -66,14 +66,14 @@ describe('PlatformService', () => {
 
   describe('Window Access', () => {
     it('should return window on browser', () => {
-      expect(service.window).toBe(mockWindow);
-      expect(service.getWindow()).toBe(mockWindow);
+      expect(service.window).toBe(mockWindow as unknown as Window);
+      expect(service.getWindow()).toBe(mockWindow as unknown as Window);
     });
   });
 
   describe('Document and Window Detection', () => {
     it('should return document and detect window on browser', () => {
-      expect(service.getDocument()).toBe(mockDocument);
+      expect(service.getDocument()).toBe(mockDocument as unknown as Document);
       expect(service.isWindowDefined()).toBe(true);
     });
   });

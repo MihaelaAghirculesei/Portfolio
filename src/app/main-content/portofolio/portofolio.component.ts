@@ -14,8 +14,15 @@ import { isPlatformBrowser } from '@angular/common';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
-import { BREAKPOINTS, PORTFOLIO_CONFIG, TIMING_CONFIG } from '../../shared/constants/app.constants';
+import {
+  PassiveTouchStartDirective,
+  PassiveTouchEndDirective
+} from '../../shared/directives/passive-listeners.directive';
+import {
+  BREAKPOINTS,
+  PORTFOLIO_CONFIG,
+  TIMING_CONFIG
+} from '../../shared/constants/app.constants';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -34,7 +41,15 @@ export class PortofolioComponent implements OnInit, OnDestroy {
       name: 'Join',
       technologies: ['Firebase', 'Angular', 'TypeScript', 'HTML', 'SCSS'],
       previewImg: 'assets/img/projects/join.png',
-      description: `Join Kanban Board is the project management revolution! An extraordinary application that transforms every project into a success through spectacular visual boards and real-time collaboration. With Join, you can easily organize tasks, track progress, and collaborate with your team in a dynamic and intuitive environment. Say goodbye to chaos and hello to productivity! Join Kanban Board is the perfect tool for teams of all sizes, from startups to large enterprises. Experience the future of project management with Join Kanban Board and take your projects to the next level. Your next big victory starts here.`,
+      description:
+        'Join Kanban Board is the project management revolution! ' +
+        'An extraordinary application that transforms every project into a success through ' +
+        'spectacular visual boards and real-time collaboration. With Join, you can easily ' +
+        'organize tasks, track progress, and collaborate with your team in a dynamic and ' +
+        'intuitive environment. Say goodbye to chaos and hello to productivity! ' +
+        'Join Kanban Board is the perfect tool for teams of all sizes, from startups to ' +
+        'large enterprises. Experience the future of project management with Join Kanban ' +
+        'Board and take your projects to the next level. Your next big victory starts here.',
       githubUrl: environment.projects.join.github,
       liveUrl: environment.projects.join.live,
     },
@@ -43,7 +58,9 @@ export class PortofolioComponent implements OnInit, OnDestroy {
       technologies: ['JavaScript', 'HTML', 'CSS'],
       previewImg: 'assets/img/projects/el-pollo-locco.png',
       description:
-        'An exciting game where courage meets chicken chaos! Built with JavaScript, HTML and CSS, it offers smooth gameplay with keyboard and touch controls, epic Endboss challenges, immersive sound effects and responsive design for all devices.',
+        'An exciting game where courage meets chicken chaos! Built with JavaScript, ' +
+        'HTML and CSS, it offers smooth gameplay with keyboard and touch controls, ' +
+        'epic Endboss challenges, immersive sound effects and responsive design for all devices.',
       githubUrl: environment.projects.elPolloLoco.github,
       liveUrl: environment.projects.elPolloLoco.live,
     },
@@ -52,7 +69,10 @@ export class PortofolioComponent implements OnInit, OnDestroy {
       technologies: ['Rest-Api', 'JavaScript', 'HTML', 'CSS'],
       previewImg: 'assets/img/projects/pokedex.png',
       description:
-        'An interactive portal into the magical world of Pokemon! Designed with passion, it offers a smooth and engaging experience built with modern technologies: PokeAPI for always up-to-date data, responsive design for all devices, performant JavaScript and captivating CSS animations.',
+        'An interactive portal into the magical world of Pokemon! Designed with passion, ' +
+        'it offers a smooth and engaging experience built with modern technologies: ' +
+        'PokeAPI for always up-to-date data, responsive design for all devices, ' +
+        'performant JavaScript and captivating CSS animations.',
       githubUrl: environment.projects.pokedex.github,
       liveUrl: environment.projects.pokedex.live,
     },
@@ -60,28 +80,47 @@ export class PortofolioComponent implements OnInit, OnDestroy {
 
   activeProjectId: number | null = null;
   hoverPosition: number | null = null;
-  activePreview: string = '';
+  activePreview = '';
 
   selectedProject: Projects | null = null;
-  selectedIndex: number = 0;
+  selectedIndex = 0;
   isLandscape = false;
 
-  private touchStartX: number = 0;
-  private touchStartY: number = 0;
-  private touchMoved: boolean = false;
+  private touchStartX = 0;
+  private touchStartY = 0;
+  private touchMoved = false;
   private headerElement: HTMLElement | null = null;
-  private originalHeaderDisplay: string = '';
-  private rafPending: boolean = false;
+  private originalHeaderDisplay = '';
+  private rafPending = false;
   private boundOnTouchMove = this.onTouchMove.bind(this);
   private previousFocusedElement: HTMLElement | null = null;
   private focusableElements: HTMLElement[] = [];
   private firstFocusableElement: HTMLElement | null = null;
   private lastFocusableElement: HTMLElement | null = null;
 
+  private readonly PROJECT_MAP = (() => {
+    const map: Record<string, string> = {};
+    map['Join'] = 'join';
+    map['El Pollo Loco'] = 'elPolloLoco';
+    map['Pokédex'] = 'pokedex';
+    return map;
+  })();
+
+  private readonly TECH_ICONS: Record<string, string> = {
+    angular: 'assets/img/projects/icons/angular.svg',
+    firebase: 'assets/img/projects/icons/firebase.svg',
+    typescript: 'assets/img/projects/icons/typescript.svg',
+    html: 'assets/img/projects/icons/html.svg',
+    css: 'assets/img/projects/icons/css.svg',
+    scss: 'assets/img/projects/icons/sass.svg',
+    javascript: 'assets/img/projects/icons/javascript.svg',
+    restapi: 'assets/img/projects/icons/rest-api.svg'
+  };
+
   constructor(
     private platformService: PlatformService,
     private translate: TranslateService,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     private cdr: ChangeDetectorRef
   ) {
     this.checkOrientation();
@@ -102,12 +141,12 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize() {
+  onResize(): void {
     this.checkOrientation();
   }
 
   @HostListener('window:orientationchange', ['$event'])
-  onOrientationChange() {
+  onOrientationChange(): void {
     this.checkOrientation();
   }
 
@@ -166,30 +205,26 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   }
 
   handleTouchStart(event: TouchEvent, projectIndex: number): void {
-    if (event.touches.length > 0) {
-      this.touchStartX = event.touches[0].clientX;
-      this.touchStartY = event.touches[0].clientY;
-      this.touchMoved = false;
-
-      this.activeProjectId = projectIndex;
-      this.activePreview = this.projects[projectIndex].previewImg;
-
-      const trElement = event.currentTarget as HTMLElement;
-
-      requestAnimationFrame(() => {
-        const tableRect =
-          this.projectsTable.nativeElement.getBoundingClientRect();
-        const trRect = trElement.getBoundingClientRect();
-
-        this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
-        this.cdr.markForCheck();
-      });
+    if (event.touches.length === 0) {
+      return;
     }
+
+    this.touchStartX = event.touches[0].clientX;
+    this.touchStartY = event.touches[0].clientY;
+    this.touchMoved = false;
+    this.activeProjectId = projectIndex;
+    this.activePreview = this.projects[projectIndex].previewImg;
+
+    const trElement = event.currentTarget as HTMLElement;
+    requestAnimationFrame(() => {
+      const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
+      const trRect = trElement.getBoundingClientRect();
+      this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
+      this.cdr.markForCheck();
+    });
   }
 
   handleTouchEnd(event: TouchEvent, index: number): void {
-    event.preventDefault();
-
     if (!this.touchMoved) {
       this.openProjectOverlay(this.projects[index], index);
     }
@@ -206,21 +241,20 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   }
 
   private onTouchMove(event: TouchEvent): void {
-    if (event.touches.length > 0) {
-      const touchX = event.touches[0].clientX;
-      const touchY = event.touches[0].clientY;
+    if (event.touches.length === 0) {
+      return;
+    }
 
-      const deltaX = Math.abs(touchX - this.touchStartX);
-      const deltaY = Math.abs(touchY - this.touchStartY);
+    const deltaX = Math.abs(event.touches[0].clientX - this.touchStartX);
+    const deltaY = Math.abs(event.touches[0].clientY - this.touchStartY);
 
-      if (deltaX > PORTFOLIO_CONFIG.TOUCH_THRESHOLD || deltaY > PORTFOLIO_CONFIG.TOUCH_THRESHOLD) {
-        this.touchMoved = true;
-        this.clearActiveProject();
-      }
+    if (deltaX > PORTFOLIO_CONFIG.TOUCH_THRESHOLD || deltaY > PORTFOLIO_CONFIG.TOUCH_THRESHOLD) {
+      this.touchMoved = true;
+      this.clearActiveProject();
     }
   }
 
-  openProjectOverlay(project: Projects, index: number) {
+  openProjectOverlay(project: Projects, index: number): void {
     this.selectedProject = project;
     this.selectedIndex = index;
     this.checkOrientation();
@@ -248,7 +282,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  closeOverlay() {
+  closeOverlay(): void {
     this.selectedProject = null;
 
     this.platformService.enableScroll();
@@ -266,26 +300,17 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  nextProject() {
-    if (this.selectedIndex < this.projects.length - 1) {
-      this.selectedIndex++;
-    } else {
-      this.selectedIndex = 0;
-    }
+  nextProject(): void {
+    this.selectedIndex = (this.selectedIndex + 1) % this.projects.length;
     this.selectedProject = this.projects[this.selectedIndex];
     this.cdr.markForCheck();
   }
 
   getProjectScreenshotAlt(projectIndex: number | null): string {
-    if (
-      projectIndex === null ||
-      projectIndex < 0 ||
-      projectIndex >= this.projects.length
-    ) {
+    if (projectIndex === null || projectIndex < 0 || projectIndex >= this.projects.length) {
       return 'Project screenshot';
     }
-    const project = this.projects[projectIndex];
-    const projectName = project ? project.name : 'Project';
+    const projectName = this.projects[projectIndex]?.name || 'Project';
     return `${projectName} screenshot`;
   }
 
@@ -294,107 +319,67 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   }
 
   getProjectDescription(project: Projects): string {
-    const projectMap: Record<string, string> = {
-      'Join': 'join',
-      'El Pollo Loco': 'elPolloLoco',
-      'Pokédex': 'pokedex'
-    };
-
-    const projectKey = projectMap[project.name];
-    return projectKey
-      ? this.translate.instant(`projects.${projectKey}.description`)
-      : project.description;
+    return this.getProjectTranslation(project, 'description');
   }
 
   private getProjectTranslation(project: Projects, type: 'shortDescription' | 'description'): string {
-    const projectMap: Record<string, string> = {
-      'Join': 'join',
-      'El Pollo Loco': 'elPolloLoco',
-      'Pokédex': 'pokedex'
-    };
-
-    const projectKey = projectMap[project.name];
-    return projectKey
-      ? this.translate.instant(`projects.${projectKey}.${type}`)
-      : this.translate.instant(`projects.default.${type}`);
+    const projectKey = this.PROJECT_MAP[project.name];
+    if (!projectKey) {
+      return type === 'description' ? project.description : this.translate.instant(`projects.default.${type}`);
+    }
+    return this.translate.instant(`projects.${projectKey}.${type}`);
   }
 
   hasTechIcon(technology: string): boolean {
-    const techIcons = [
-      'Angular',
-      'Firebase',
-      'TypeScript',
-      'HTML',
-      'CSS',
-      'SCSS',
-      'JavaScript',
-      'Rest-Api',
-    ];
-    return techIcons.includes(technology);
+    return this.getTechIconPath(technology) !== null;
   }
 
   getTechIconPath(technology: string): string | null {
-    const iconMap: { [key: string]: string } = {
-      Angular: 'assets/img/projects/icons/angular.svg',
-      Firebase: 'assets/img/projects/icons/firebase.svg',
-      TypeScript: 'assets/img/projects/icons/typescript.svg',
-      HTML: 'assets/img/projects/icons/html.svg',
-      CSS: 'assets/img/projects/icons/css.svg',
-      SCSS: 'assets/img/projects/icons/sass.svg',
-      JavaScript: 'assets/img/projects/icons/javascript.svg',
-      'Rest-Api': 'assets/img/projects/icons/rest-api.svg',
-    };
-
-    return iconMap[technology] || null;
+    const normalized = technology.replace(/[-\s]/g, '').toLowerCase();
+    return this.TECH_ICONS[normalized] || null;
   }
 
-  onHover(event: MouseEvent, project: Projects) {
+  onHover(event: MouseEvent, project: Projects): void {
     const index = this.projects.findIndex((p) => p.name === project.name);
     if (index !== -1) {
       this.setActiveProject(index, event);
     }
   }
 
-  onLeave() {
+  onLeave(): void {
     this.clearActiveProject();
   }
 
   private setupFocusTrap(): void {
     const modal = document.querySelector('.project-modal');
-    if (!modal) return;
+    if (!modal) {
+      return;
+    }
 
-    const focusableSelectors = [
-      'a[href]',
-      'button:not([disabled])',
-      'input:not([disabled])',
-      'select:not([disabled])',
-      'textarea:not([disabled])',
-      '[tabindex]:not([tabindex="-1"])'
+    const selectors = [
+      'a[href]', 'button:not([disabled])', 'input:not([disabled])',
+      'select:not([disabled])', 'textarea:not([disabled])', '[tabindex]:not([tabindex="-1"])'
     ].join(', ');
-
-    this.focusableElements = Array.from(modal.querySelectorAll(focusableSelectors));
+    this.focusableElements = Array.from(modal.querySelectorAll(selectors));
 
     if (this.focusableElements.length > 0) {
       this.firstFocusableElement = this.focusableElements[0];
       this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1];
-
       modal.addEventListener('keydown', this.handleFocusTrap.bind(this));
     }
   }
 
   private handleFocusTrap(event: Event): void {
-    if (!(event instanceof KeyboardEvent) || event.key !== 'Tab') return;
+    if (!(event instanceof KeyboardEvent) || event.key !== 'Tab') {
+      return;
+    }
 
-    if (event.shiftKey) {
-      if (document.activeElement === this.firstFocusableElement) {
-        event.preventDefault();
-        this.lastFocusableElement?.focus();
-      }
-    } else {
-      if (document.activeElement === this.lastFocusableElement) {
-        event.preventDefault();
-        this.firstFocusableElement?.focus();
-      }
+    if (event.shiftKey && document.activeElement === this.firstFocusableElement) {
+      event.preventDefault();
+      this.lastFocusableElement?.focus();
+    } else if (!event.shiftKey && document.activeElement === this.lastFocusableElement) {
+      event.preventDefault();
+      this.firstFocusableElement?.focus();
     }
   }
 }

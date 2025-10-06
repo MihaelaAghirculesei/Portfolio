@@ -16,10 +16,10 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  isHovered: boolean = false;
-  isScrolled: boolean = false;
-  isEnglish: boolean = false;
-  isMenuOpen: boolean = false;
+  isHovered = false;
+  isScrolled = false;
+  isEnglish = false;
+  isMenuOpen = false;
   private boundCheckScroll = this.checkScroll.bind(this);
   private menuToggleButton: HTMLElement | null = null;
   private focusableMenuElements: HTMLElement[] = [];
@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private setupMenuFocusTrap(): void {
     const mobileMenu = document.querySelector('.mobile-dropdown');
-    if (!mobileMenu) return;
+    if (!mobileMenu) {return;}
 
     const focusableSelectors = [
       'a[href]:not([tabindex="-1"])',
@@ -133,7 +133,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private handleMenuFocusTrap(event: Event): void {
-    if (!(event instanceof KeyboardEvent) || event.key !== 'Tab' || !this.isMenuOpen) return;
+    if (!(event instanceof KeyboardEvent) || event.key !== 'Tab' || !this.isMenuOpen) {return;}
 
     if (event.shiftKey) {
       if (document.activeElement === this.firstMenuFocusable) {

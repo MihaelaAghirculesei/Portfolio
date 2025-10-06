@@ -22,10 +22,10 @@ export class OverlayComponent {
 
   @Input() index = 0;
 
-  @Output() close = new EventEmitter<void>();
-  @Output() next = new EventEmitter<void>();
+  @Output() closeOverlay = new EventEmitter<void>();
+  @Output() nextProject = new EventEmitter<void>();
 
-  closeOverlay(): void {
-    this.close.emit();
+  handleClose(): void {
+    this.closeOverlay.emit();
   }
 }

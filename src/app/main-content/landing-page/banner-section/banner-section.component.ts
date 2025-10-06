@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 interface BannerItem {
@@ -14,7 +14,7 @@ interface BannerItem {
   styleUrl: './banner-section.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BannerSectionComponent implements OnInit, OnDestroy {
+export class BannerSectionComponent {
   readonly bannerItems: BannerItem[] = [
     { key: 'banner.remoteWork', priority: 1 },
     { key: 'banner.role', priority: 2 },
@@ -27,10 +27,6 @@ export class BannerSectionComponent implements OnInit, OnDestroy {
   readonly bannerTracks = Array(3).fill(0);
 
   private animationPaused = false;
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {}
 
   pauseAnimation(): void {
     this.animationPaused = true;

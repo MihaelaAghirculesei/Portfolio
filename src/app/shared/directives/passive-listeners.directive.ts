@@ -1,7 +1,7 @@
 import { Directive, ElementRef, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Directive({
-  selector: '[passiveTouchStart]',
+  selector: '[appPassiveTouchStart]',
   standalone: true,
 })
 export class PassiveTouchStartDirective implements OnInit, OnDestroy {
@@ -23,7 +23,7 @@ export class PassiveTouchStartDirective implements OnInit, OnDestroy {
 }
 
 @Directive({
-  selector: '[passiveTouchEnd]',
+  selector: '[appPassiveTouchEnd]',
   standalone: true,
 })
 export class PassiveTouchEndDirective implements OnInit, OnDestroy {

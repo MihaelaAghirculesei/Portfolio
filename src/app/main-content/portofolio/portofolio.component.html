@@ -18,9 +18,9 @@
             (click)="openProjectOverlay(project, $index)"
             (keydown.enter)="openProjectOverlay(project, $index)"
             (keydown.space)="openProjectOverlay(project, $index); $event.preventDefault()"
-            passiveTouchStart
+            appPassiveTouchStart
             (passiveTouchStart)="handleTouchStart($event, $index)"
-            passiveTouchEnd
+            appPassiveTouchEnd
             (passiveTouchEnd)="handleTouchEnd($event, $index)"
             role="button"
             tabindex="0"
@@ -69,7 +69,10 @@
   >
     <div
       class="project-modal-backdrop"
+      role="presentation"
+      tabindex="-1"
       (click)="closeOverlay()"
+      (keydown.escape)="closeOverlay()"
       aria-hidden="true"
     ></div>
 

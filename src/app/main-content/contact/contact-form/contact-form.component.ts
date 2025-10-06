@@ -1,11 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { timeout, retry, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { timeout, retry, catchError, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
 import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.service';
 import { LoggerService } from '../../../shared/services/logger.service';
 import { VALIDATION_CONFIG, HTTP_CONFIG, TIMING_CONFIG } from '../../../shared/constants/app.constants';
@@ -39,13 +38,14 @@ interface ErrorLike {
   styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactFormComponent {
+export class ContactFormComponent implements OnDestroy {
   http = inject(HttpClient);
   translate = inject(TranslateService);
   cdr = inject(ChangeDetectorRef);
   private ariaAnnouncer = inject(AriaAnnouncerService);
   private readonly logger = inject(LoggerService);
   private previousFocusedElement: HTMLElement | null = null;
+  private destroy$ = new Subject<void>();
 
   contactData: ContactData = {
     name: '',
@@ -124,7 +124,7 @@ export class ContactFormComponent {
           catchError((error: HttpErrorResponse) => {
             return of<ContactResponse>({ error: true, errorDetails: error });
           }),
-          takeUntilDestroyed()
+          takeUntil(this.destroy$)
         )
         .subscribe({
           next: (response: ContactResponse) => {
@@ -246,5 +246,10 @@ export class ContactFormComponent {
       this.logger.warn('Popup blocked. Navigating in current tab.');
       window.location.href = url;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

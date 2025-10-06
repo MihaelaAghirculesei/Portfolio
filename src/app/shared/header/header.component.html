@@ -19,7 +19,9 @@
         </li>
         <li>
           <a
-            (click)="scrollToSection('aboutMe')"
+            href="#aboutMe"
+            (click)="scrollToSection('aboutMe'); $event.preventDefault()"
+            (keydown.enter)="scrollToSection('aboutMe'); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.aboutAriaLabel' | translate"
           >
@@ -28,7 +30,9 @@
         </li>
         <li>
           <a
-            (click)="scrollToSection('skills')"
+            href="#skills"
+            (click)="scrollToSection('skills'); $event.preventDefault()"
+            (keydown.enter)="scrollToSection('skills'); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.skillsAriaLabel' | translate"
           >
@@ -37,7 +41,9 @@
         </li>
         <li>
           <a
-            (click)="scrollToSection('projects')"
+            href="#projects"
+            (click)="scrollToSection('projects'); $event.preventDefault()"
+            (keydown.enter)="scrollToSection('projects'); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
           >
@@ -46,7 +52,9 @@
         </li>
         <li>
           <a
-            (click)="scrollToSection('contact')"
+            href="#contact"
+            (click)="scrollToSection('contact'); $event.preventDefault()"
+            (keydown.enter)="scrollToSection('contact'); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.contactAriaLabel' | translate"
           >
@@ -103,7 +111,9 @@
       <ul>
         <li>
           <a
-            (click)="scrollToSection('aboutMe'); closeMenuIfMobile()"
+            href="#aboutMe"
+            (click)="scrollToSection('aboutMe'); closeMenuIfMobile(); $event.preventDefault()"
+            (keydown.enter)="scrollToSection('aboutMe'); closeMenuIfMobile(); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.aboutAriaLabel' | translate"
           >
@@ -112,7 +122,9 @@
         </li>
         <li>
           <a
-            (click)="scrollToSection('skills'); closeMenuIfMobile()"
+            href="#skills"
+            (click)="scrollToSection('skills'); closeMenuIfMobile(); $event.preventDefault()"
+            (keydown.enter)="scrollToSection('skills'); closeMenuIfMobile(); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.skillsAriaLabel' | translate"
           >
@@ -121,7 +133,9 @@
         </li>
         <li>
           <a
-            (click)="scrollToSection('projects'); closeMenuIfMobile()"
+            href="#projects"
+            (click)="scrollToSection('projects'); closeMenuIfMobile(); $event.preventDefault()"
+            (keydown.enter)="scrollToSection('projects'); closeMenuIfMobile(); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
           >
@@ -130,7 +144,9 @@
         </li>
         <li>
           <a
-            (click)="scrollToSection('contact'); closeMenuIfMobile()"
+            href="#contact"
+            (click)="scrollToSection('contact'); closeMenuIfMobile(); $event.preventDefault()"
+            (keydown.enter)="scrollToSection('contact'); closeMenuIfMobile(); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.contactAriaLabel' | translate"
           >

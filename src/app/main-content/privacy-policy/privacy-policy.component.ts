@@ -18,7 +18,7 @@ export class PrivacyPolicyComponent implements OnInit {
   constructor(
     public translateService: TranslateService,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
   ngOnInit(): void {
