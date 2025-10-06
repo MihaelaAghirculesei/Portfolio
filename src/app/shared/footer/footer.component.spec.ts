@@ -26,6 +26,7 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate'], { url: '/' });
+    mockRouter.navigate.and.returnValue(Promise.resolve(true));
     mockScrollService = jasmine.createSpyObj('ScrollService', ['scrollToElement']);
 
     await TestBed.configureTestingModule({

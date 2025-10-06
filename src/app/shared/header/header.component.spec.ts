@@ -72,14 +72,12 @@ describe('HeaderComponent', () => {
       );
     });
 
-    it('should set default language on init', () => {
-      spyOn(translateService, 'setDefaultLang');
-      spyOn(translateService, 'use');
+    it('should setup scroll listener on init', () => {
+      spyOn(window, 'addEventListener');
 
       component.ngOnInit();
 
-      expect(translateService.setDefaultLang).toHaveBeenCalledWith('en');
-      expect(translateService.use).toHaveBeenCalledWith('en');
+      expect(window.addEventListener).toHaveBeenCalledWith('scroll', jasmine.any(Function), { passive: true });
     });
 
     it('should check scroll on init', () => {
@@ -204,8 +202,9 @@ describe('HeaderComponent', () => {
 
       const mockWindow = { innerWidth: 1024 } as Window;
       mockPlatformService.getWindow.and.returnValue(mockWindow);
+      component.isMenuOpen = true;
       component.closeMenuIfMobile();
-      expect(component.isMenuOpen).toBe(false);
+      expect(component.isMenuOpen).toBe(true);
     });
   });
 

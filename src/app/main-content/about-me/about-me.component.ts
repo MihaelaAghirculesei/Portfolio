@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Inject, PLATFORM_ID, QueryList, ViewChildren, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AOS_CONFIG } from '../../shared/constants/app.constants';
 
 interface AboutSection {
   icon: string;
@@ -45,12 +46,6 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
   private eventListeners: (() => void)[] = [];
 
   readonly ASSETS_PATH = '../../assets/img/about-me/';
-  readonly AOS_CONFIG = {
-    duration: 800,
-    easing: 'ease-in-out' as const,
-    once: true,
-    offset: 100
-  };
 
   readonly aboutSections: AboutSection[] = [
     {
@@ -58,21 +53,21 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
       titleKey: 'aboutMe.visionTitle',
       textKey: 'aboutMe.visionText',
       alt: 'Brain Icon',
-      delay: 400
+      delay: AOS_CONFIG.DELAY_STEP_1
     },
     {
       icon: 'location.svg',
       titleKey: 'aboutMe.locationTitle',
       textKey: 'aboutMe.locationText',
       alt: 'Location Marker',
-      delay: 500
+      delay: AOS_CONFIG.DELAY_STEP_2
     },
     {
       icon: 'about_me_highlights.svg',
       titleKey: 'aboutMe.growthTitle',
       textKey: 'aboutMe.growthText',
       alt: 'Skills Icon',
-      delay: 600
+      delay: AOS_CONFIG.DELAY_STEP_3
     }
   ];
 
@@ -113,7 +108,12 @@ export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private initScrollAnimations(): void {
     if (window.AOS) {
-      window.AOS.init(this.AOS_CONFIG);
+      window.AOS.init({
+        duration: AOS_CONFIG.DURATION,
+        easing: 'ease-in-out',
+        once: true,
+        offset: AOS_CONFIG.OFFSET
+      });
     }
   }
 

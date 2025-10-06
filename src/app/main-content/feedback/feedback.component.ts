@@ -71,25 +71,22 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
   }
   
   slideLeft() {
-    if (this.isTransitioning) return;
-
-    if (this.middleIndex < this.feedbacks.length - 1) {
-      this.middleIndex++;
-    } else {
-      this.middleIndex = 0;
-    }
-    this.updateCards();
-    this.cdr.markForCheck();
+    this.slide(1);
   }
-  
+
   slideRight() {
+    this.slide(-1);
+  }
+
+  private slide(direction: 1 | -1) {
     if (this.isTransitioning) return;
 
-    if (this.middleIndex != 0) {
-      this.middleIndex--;
+    if (direction === 1) {
+      this.middleIndex = this.middleIndex < this.feedbacks.length - 1 ? this.middleIndex + 1 : 0;
     } else {
-      this.middleIndex = this.feedbacks.length - 1;
+      this.middleIndex = this.middleIndex > 0 ? this.middleIndex - 1 : this.feedbacks.length - 1;
     }
+
     this.updateCards();
     this.cdr.markForCheck();
   }

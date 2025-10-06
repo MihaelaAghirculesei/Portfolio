@@ -1,5 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { TIMING_CONFIG } from '../constants/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -26,29 +27,22 @@ export class AriaAnnouncerService {
     document.body.appendChild(this.liveRegion);
   }
 
-  /**
-   * Announce a message to screen readers
-   * @param message The message to announce
-   * @param priority 'polite' (default) or 'assertive'
-   */
   announce(message: string, priority: 'polite' | 'assertive' = 'polite'): void {
     if (!this.liveRegion) return;
 
     this.liveRegion.setAttribute('aria-live', priority);
     this.liveRegion.textContent = '';
 
-    // Small delay to ensure screen readers pick up the change
     setTimeout(() => {
       if (this.liveRegion) {
         this.liveRegion.textContent = message;
       }
-    }, 100);
+    }, TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
 
-    // Clear after 5 seconds
     setTimeout(() => {
       if (this.liveRegion) {
         this.liveRegion.textContent = '';
       }
-    }, 5000);
+    }, TIMING_CONFIG.ARIA_CLEAR_DELAY);
   }
 }

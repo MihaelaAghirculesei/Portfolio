@@ -19,7 +19,8 @@ describe('ScrollService', () => {
     mockDocument = {
       getElementById: jasmine.createSpy('getElementById'),
       defaultView: mockWindow,
-      body: document.body
+      body: document.body,
+      querySelectorAll: jasmine.createSpy('querySelectorAll').and.returnValue([])
     };
 
     TestBed.configureTestingModule({

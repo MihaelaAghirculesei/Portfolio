@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { AboutmeComponent } from './about-me.component';
+import { AOS_CONFIG } from '../../shared/constants/app.constants';
 
 describe('AboutmeComponent', () => {
   let component: AboutmeComponent;
@@ -85,11 +86,12 @@ describe('AboutmeComponent', () => {
       expect(component.ASSETS_PATH).toBe('../../assets/img/about-me/');
     });
 
-    it('should have AOS config', () => {
-      expect(component.AOS_CONFIG.duration).toBe(800);
-      expect(component.AOS_CONFIG.easing).toBe('ease-in-out');
-      expect(component.AOS_CONFIG.once).toBe(true);
-      expect(component.AOS_CONFIG.offset).toBe(100);
+    it('should have AOS config from constants', () => {
+      expect(AOS_CONFIG.DURATION).toBe(800);
+      expect(AOS_CONFIG.OFFSET).toBe(100);
+      expect(AOS_CONFIG.DELAY_STEP_1).toBe(400);
+      expect(AOS_CONFIG.DELAY_STEP_2).toBe(500);
+      expect(AOS_CONFIG.DELAY_STEP_3).toBe(600);
     });
   });
 

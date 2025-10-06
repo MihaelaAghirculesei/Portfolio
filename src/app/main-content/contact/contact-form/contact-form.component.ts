@@ -7,6 +7,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { timeout, retry, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.service';
+import { VALIDATION_CONFIG, HTTP_CONFIG, TIMING_CONFIG } from '../../../shared/constants/app.constants';
 
 interface ContactData {
   name: string;
@@ -46,9 +47,6 @@ export class ContactFormComponent {
 
   invalidFields: string[] = [];
 
-  private readonly HTTP_TIMEOUT = 10000;
-  private readonly HTTP_RETRY_ATTEMPTS = 2;
-
   post = {
     endPoint: 'https://mihaela-melania-aghirculesei.de/sendMail.php',
     body: (payload: ContactData) => JSON.stringify(payload),
@@ -63,16 +61,15 @@ export class ContactFormComponent {
     this.invalidFields = this.invalidFields.filter((f) => f !== field);
 
     if (field === 'name') {
-      if (!this.contactData.name || this.contactData.name.trim().length < 3) {
+      if (!this.contactData.name || this.contactData.name.trim().length < VALIDATION_CONFIG.MIN_NAME_LENGTH) {
         this.invalidFields.push('name');
       }
     }
 
     if (field === 'email') {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (
         !this.contactData.email ||
-        !emailRegex.test(this.contactData.email.trim())
+        !VALIDATION_CONFIG.EMAIL_PATTERN.test(this.contactData.email.trim())
       ) {
         this.invalidFields.push('email');
       }
@@ -81,7 +78,7 @@ export class ContactFormComponent {
     if (field === 'message') {
       if (
         !this.contactData.message ||
-        this.contactData.message.trim().length < 10
+        this.contactData.message.trim().length < VALIDATION_CONFIG.MIN_MESSAGE_LENGTH
       ) {
         this.invalidFields.push('message');
       }
@@ -106,8 +103,8 @@ export class ContactFormComponent {
           this.post.options
         )
         .pipe(
-          timeout(this.HTTP_TIMEOUT),
-          retry(this.HTTP_RETRY_ATTEMPTS),
+          timeout(HTTP_CONFIG.TIMEOUT),
+          retry(HTTP_CONFIG.RETRY_ATTEMPTS),
           catchError((error: HttpErrorResponse) => {
             return of({ error: true, errorDetails: error } as const);
           }),
@@ -121,13 +118,12 @@ export class ContactFormComponent {
               this.handleError(response.errorDetails);
             } else {
               this.submissionStatus = 'success';
-              ngForm.resetForm();
-              this.checkboxWasCheckedBefore = false;
               this.invalidFields = [];
-
               this.showPopupWithAnnouncement('contact.form.successMessage');
             }
 
+            this.checkboxWasCheckedBefore = false;
+            ngForm.resetForm();
             this.cdr.markForCheck();
           },
           error: (error: HttpErrorResponse) => {
@@ -169,9 +165,9 @@ export class ContactFormComponent {
       this.errorMessage = 'Request timeout. Please try again.';
     } else if (error?.status === 0) {
       this.errorMessage = 'Network error. Please check your connection.';
-    } else if (error?.status >= 500) {
+    } else if (error?.status >= HTTP_CONFIG.STATUS_SERVER_ERROR) {
       this.errorMessage = 'Server error. Please try again later.';
-    } else if (error?.status >= 400) {
+    } else if (error?.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) {
       this.errorMessage = 'Bad request. Please check your input.';
     } else {
       this.errorMessage =
@@ -195,7 +191,7 @@ export class ContactFormComponent {
     const announcement = translate ? this.translate.instant(message) : message;
     this.ariaAnnouncer.announce(announcement, 'assertive');
 
-    setTimeout(() => this.focusPopup(), 100);
+    setTimeout(() => this.focusPopup(), TIMING_CONFIG.FOCUS_DELAY);
   }
 
   private focusPopup(): void {

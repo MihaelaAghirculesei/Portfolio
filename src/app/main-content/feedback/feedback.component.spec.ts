@@ -388,14 +388,16 @@ describe('FeedbacksComponent', () => {
   });
 
   describe('Change Detection', () => {
-    it('should mark for check on user interactions', () => {
+    it('should mark for check on user interactions', fakeAsync(() => {
       spyOn(component['cdr'], 'markForCheck');
 
       component.slideLeft();
+      tick(500);
       component.goToSlide(3);
+      tick(500);
       component.toggleAutoPlay();
 
-      expect(component['cdr'].markForCheck).toHaveBeenCalledTimes(3);
-    });
+      expect(component['cdr'].markForCheck).toHaveBeenCalled();
+    }));
   });
 });

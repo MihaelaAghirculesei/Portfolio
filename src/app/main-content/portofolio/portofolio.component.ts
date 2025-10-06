@@ -15,7 +15,7 @@ import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
-import { BREAKPOINTS, PORTFOLIO_CONFIG } from '../../shared/constants/app.constants';
+import { BREAKPOINTS, PORTFOLIO_CONFIG, TIMING_CONFIG } from '../../shared/constants/app.constants';
 
 @Component({
   selector: 'app-portofolio',
@@ -124,14 +124,14 @@ export class PortofolioComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.rafPending) {
+      return;
+    }
+
     this.activeProjectId = projectIndex;
     this.activePreview = this.projects[projectIndex].previewImg;
 
     const trElement = event.currentTarget as HTMLElement;
-
-    if (this.rafPending) {
-      return;
-    }
 
     this.rafPending = true;
 
@@ -145,15 +145,11 @@ export class PortofolioComponent implements OnInit, OnDestroy {
 
       const isSmallPreview = windowObj && windowObj.innerWidth <= BREAKPOINTS.SMALL_PREVIEW_MAX;
 
-      if (projectIndex === 0) {
-        const extraOffset = isSmallPreview ? PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_0.SMALL_PREVIEW : 0;
-        this.hoverPosition = basePosition + PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_0.BASE + extraOffset;
-      } else if (projectIndex === 1) {
-        const extraOffset = isSmallPreview ? PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_1.SMALL_PREVIEW : 0;
-        this.hoverPosition = basePosition + PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_1.BASE + extraOffset;
-      } else if (projectIndex === 2) {
-        const extraOffset = isSmallPreview ? PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_2.SMALL_PREVIEW : 0;
-        this.hoverPosition = basePosition + PORTFOLIO_CONFIG.POSITION_OFFSETS.PROJECT_2.BASE + extraOffset;
+      const offsetConfig = PORTFOLIO_CONFIG.POSITION_OFFSETS[`PROJECT_${projectIndex}` as keyof typeof PORTFOLIO_CONFIG.POSITION_OFFSETS];
+
+      if (offsetConfig) {
+        const extraOffset = isSmallPreview ? offsetConfig.SMALL_PREVIEW : 0;
+        this.hoverPosition = basePosition + offsetConfig.BASE + extraOffset;
       } else {
         this.hoverPosition = basePosition;
       }
@@ -231,7 +227,6 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     this.platformService.disableScroll();
 
     if (isPlatformBrowser(this.platformId)) {
-      // Save current focus
       this.previousFocusedElement = document.activeElement as HTMLElement;
 
       this.headerElement = document.querySelector('header');
@@ -241,14 +236,13 @@ export class PortofolioComponent implements OnInit, OnDestroy {
         this.headerElement.style.display = 'none';
       }
 
-      // Set focus to modal after DOM update
       setTimeout(() => {
         this.setupFocusTrap();
         const modal = document.querySelector('.project-modal') as HTMLElement;
         if (modal) {
           modal.focus();
         }
-      }, 100);
+      }, TIMING_CONFIG.MODAL_FOCUS_DELAY);
     }
     this.cdr.markForCheck();
   }
@@ -263,7 +257,6 @@ export class PortofolioComponent implements OnInit, OnDestroy {
         this.headerElement.style.display = this.originalHeaderDisplay;
       }
 
-      // Restore focus to previously focused element
       if (this.previousFocusedElement) {
         this.previousFocusedElement.focus();
         this.previousFocusedElement = null;
@@ -296,29 +289,33 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   }
 
   getProjectShortDescription(project: Projects): string {
-    switch (project.name) {
-      case 'Join':
-        return this.translate.instant('projects.join.shortDescription');
-      case 'El Pollo Loco':
-        return this.translate.instant('projects.elPolloLoco.shortDescription');
-      case 'Pokédex':
-        return this.translate.instant('projects.pokedex.shortDescription');
-      default:
-        return this.translate.instant('projects.default.shortDescription');
-    }
+    return this.getProjectTranslation(project, 'shortDescription');
   }
 
   getProjectDescription(project: Projects): string {
-    switch (project.name) {
-      case 'Join':
-        return this.translate.instant('projects.join.description');
-      case 'El Pollo Loco':
-        return this.translate.instant('projects.elPolloLoco.description');
-      case 'Pokédex':
-        return this.translate.instant('projects.pokedex.description');
-      default:
-        return project.description;
-    }
+    const projectMap: Record<string, string> = {
+      'Join': 'join',
+      'El Pollo Loco': 'elPolloLoco',
+      'Pokédex': 'pokedex'
+    };
+
+    const projectKey = projectMap[project.name];
+    return projectKey
+      ? this.translate.instant(`projects.${projectKey}.description`)
+      : project.description;
+  }
+
+  private getProjectTranslation(project: Projects, type: 'shortDescription' | 'description'): string {
+    const projectMap: Record<string, string> = {
+      'Join': 'join',
+      'El Pollo Loco': 'elPolloLoco',
+      'Pokédex': 'pokedex'
+    };
+
+    const projectKey = projectMap[project.name];
+    return projectKey
+      ? this.translate.instant(`projects.${projectKey}.${type}`)
+      : this.translate.instant(`projects.default.${type}`);
   }
 
   hasTechIcon(technology: string): boolean {
@@ -380,7 +377,6 @@ export class PortofolioComponent implements OnInit, OnDestroy {
       this.firstFocusableElement = this.focusableElements[0];
       this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1];
 
-      // Add Tab key trap
       modal.addEventListener('keydown', this.handleFocusTrap.bind(this));
     }
   }
@@ -389,13 +385,11 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     if (!(event instanceof KeyboardEvent) || event.key !== 'Tab') return;
 
     if (event.shiftKey) {
-      // Shift + Tab
       if (document.activeElement === this.firstFocusableElement) {
         event.preventDefault();
         this.lastFocusableElement?.focus();
       }
     } else {
-      // Tab
       if (document.activeElement === this.lastFocusableElement) {
         event.preventDefault();
         this.firstFocusableElement?.focus();

@@ -42,8 +42,41 @@ export const PORTFOLIO_CONFIG = {
   }
 } as const;
 
+export const TIMING_CONFIG = {
+  FOCUS_DELAY: 100,
+  ARIA_ANNOUNCEMENT_DELAY: 100,
+  ARIA_CLEAR_DELAY: 5000,
+  MENU_SETUP_DELAY: 100,
+  MODAL_FOCUS_DELAY: 100
+} as const;
+
+export const VALIDATION_CONFIG = {
+  MIN_NAME_LENGTH: 3,
+  MIN_MESSAGE_LENGTH: 10,
+  EMAIL_PATTERN: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+} as const;
+
+export const HTTP_CONFIG = {
+  TIMEOUT: 10000,
+  RETRY_ATTEMPTS: 2,
+  STATUS_SERVER_ERROR: 500,
+  STATUS_CLIENT_ERROR: 400
+} as const;
+
+export const AOS_CONFIG = {
+  DURATION: 800,
+  OFFSET: 100,
+  DELAY_STEP_1: 400,
+  DELAY_STEP_2: 500,
+  DELAY_STEP_3: 600
+} as const;
+
 export type Breakpoints = typeof BREAKPOINTS;
 export type ScrollConfig = typeof SCROLL_CONFIG;
 export type SliderConfig = typeof SLIDER_CONFIG;
 export type AnimationConfig = typeof ANIMATION_CONFIG;
 export type PortfolioConfig = typeof PORTFOLIO_CONFIG;
+export type TimingConfig = typeof TIMING_CONFIG;
+export type ValidationConfig = typeof VALIDATION_CONFIG;
+export type HttpConfig = typeof HTTP_CONFIG;
+export type AosConfig = typeof AOS_CONFIG;

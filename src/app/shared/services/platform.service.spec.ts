@@ -22,7 +22,8 @@ describe('PlatformService', () => {
           position: '',
           width: ''
         }
-      }
+      },
+      querySelectorAll: jasmine.createSpy('querySelectorAll').and.returnValue([])
     };
 
     TestBed.configureTestingModule({

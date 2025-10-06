@@ -1,10 +1,11 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ContactFormComponent } from './contact-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
+import { HTTP_CONFIG } from '../../../shared/constants/app.constants';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -214,7 +215,7 @@ describe('ContactFormComponent', () => {
       expect(body.privacypolicy).toBe(true);
 
       req.flush({ success: true });
-      tick();
+      flush();
     }));
 
     it('should set isSubmitting to true during submission', fakeAsync(() => {
@@ -224,7 +225,7 @@ describe('ContactFormComponent', () => {
 
       const req = httpMock.expectOne(component.post.endPoint);
       req.flush({ success: true });
-      tick();
+      flush();
 
       expect(component.isSubmitting).toBe(false);
     }));
@@ -235,7 +236,7 @@ describe('ContactFormComponent', () => {
 
       const req = httpMock.expectOne(component.post.endPoint);
       req.flush({ success: true });
-      tick();
+      flush();
 
       expect(component.submissionStatus).toBe('success');
       expect(mockForm.resetForm).toHaveBeenCalled();
@@ -265,12 +266,16 @@ describe('ContactFormComponent', () => {
       } as any;
     });
 
-    it('should handle timeout error', fakeAsync(() => {
+    it('should handle HTTP error during submission', fakeAsync(() => {
       component.onSubmit(mockForm);
 
-      const req = httpMock.expectOne(component.post.endPoint);
-      req.flush(null, { status: 0, statusText: 'Timeout' });
-      tick(15000); // Wait for timeout and retries
+      // Handle original request + 2 retries
+      for (let i = 0; i < 3; i++) {
+        const req = httpMock.expectOne(component.post.endPoint);
+        req.flush(null, { status: 500, statusText: 'Server Error' });
+      }
+
+      flush();
 
       expect(component.submissionStatus).toBe('error');
       expect(component.isSubmitting).toBe(false);
@@ -279,58 +284,68 @@ describe('ContactFormComponent', () => {
     it('should handle network error (status 0)', fakeAsync(() => {
       const error = { name: 'NetworkError', status: 0 };
       component['handleError'](error);
+      flush();
 
       expect(component.submissionStatus).toBe('error');
       expect(component.errorMessage).toBe('Network error. Please check your connection.');
     }));
 
-    it('should handle server error (status >= 500)', () => {
+    it('should handle server error (status >= 500)', fakeAsync(() => {
       const error = { status: 500 };
       component['handleError'](error);
+      flush();
 
       expect(component.submissionStatus).toBe('error');
       expect(component.errorMessage).toBe('Server error. Please try again later.');
-    });
+    }));
 
-    it('should handle client error (status >= 400)', () => {
+    it('should handle client error (status >= 400)', fakeAsync(() => {
       const error = { status: 400 };
       component['handleError'](error);
+      flush();
 
       expect(component.submissionStatus).toBe('error');
       expect(component.errorMessage).toBe('Bad request. Please check your input.');
-    });
+    }));
 
-    it('should handle timeout error specifically', () => {
+    it('should handle timeout error specifically', fakeAsync(() => {
       const error = { name: 'TimeoutError' };
       component['handleError'](error);
+      flush();
 
       expect(component.submissionStatus).toBe('error');
       expect(component.errorMessage).toBe('Request timeout. Please try again.');
-    });
+    }));
 
-    it('should handle generic error with message', () => {
+    it('should handle generic error with message', fakeAsync(() => {
       const error = { message: 'Custom error message' };
       component['handleError'](error);
+      flush();
 
       expect(component.submissionStatus).toBe('error');
       expect(component.errorMessage).toBe('Custom error message');
-    });
+    }));
 
-    it('should handle generic error without message', () => {
+    it('should handle generic error without message', fakeAsync(() => {
       const error = {};
       component['handleError'](error);
+      flush();
 
       expect(component.submissionStatus).toBe('error');
       expect(component.errorMessage).toBe('An error occurred while sending your message.');
-    });
+    }));
 
     it('should reset form and checkbox on error', fakeAsync(() => {
       component.checkboxWasCheckedBefore = true;
       component.onSubmit(mockForm);
 
-      const req = httpMock.expectOne(component.post.endPoint);
-      req.flush(null, { status: 500, statusText: 'Server Error' });
-      tick(15000); // Wait for retries to complete
+      // Handle original request + 2 retries
+      for (let i = 0; i < 3; i++) {
+        const req = httpMock.expectOne(component.post.endPoint);
+        req.flush(null, { status: 500, statusText: 'Server Error' });
+      }
+
+      flush();
 
       expect(mockForm.resetForm).toHaveBeenCalled();
       expect(component.checkboxWasCheckedBefore).toBe(false);
@@ -368,7 +383,8 @@ describe('ContactFormComponent', () => {
 
   describe('Privacy Policy Navigation', () => {
     it('should open German privacy policy when language is German', () => {
-      spyOn(window, 'open');
+      const mockWindow = { closed: false } as Window;
+      spyOn(window, 'open').and.returnValue(mockWindow);
       translateService.currentLang = 'de';
 
       component.openPrivacyPolicy();
@@ -377,7 +393,8 @@ describe('ContactFormComponent', () => {
     });
 
     it('should open English privacy policy when language is English', () => {
-      spyOn(window, 'open');
+      const mockWindow = { closed: false } as Window;
+      spyOn(window, 'open').and.returnValue(mockWindow);
       translateService.currentLang = 'en';
 
       component.openPrivacyPolicy();
@@ -386,7 +403,8 @@ describe('ContactFormComponent', () => {
     });
 
     it('should open English privacy policy when language is undefined', () => {
-      spyOn(window, 'open');
+      const mockWindow = { closed: false } as Window;
+      spyOn(window, 'open').and.returnValue(mockWindow);
       translateService.currentLang = undefined as any;
 
       component.openPrivacyPolicy();
@@ -415,11 +433,11 @@ describe('ContactFormComponent', () => {
 
   describe('HTTP Configuration', () => {
     it('should have correct HTTP timeout', () => {
-      expect(component['HTTP_TIMEOUT']).toBe(10000);
+      expect(HTTP_CONFIG.TIMEOUT).toBe(10000);
     });
 
     it('should have correct retry attempts', () => {
-      expect(component['HTTP_RETRY_ATTEMPTS']).toBe(2);
+      expect(HTTP_CONFIG.RETRY_ATTEMPTS).toBe(2);
     });
 
     it('should have correct content-type header', () => {
@@ -428,11 +446,12 @@ describe('ContactFormComponent', () => {
   });
 
   describe('Change Detection', () => {
-    it('should mark for check after error', () => {
+    it('should mark for check after error', fakeAsync(() => {
       spyOn(component.cdr, 'markForCheck');
       component['handleError']({ status: 500 });
-      
+      flush();
+
       expect(component.submissionStatus).toBe('error');
-    });
+    }));
   });
 });

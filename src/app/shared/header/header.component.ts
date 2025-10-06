@@ -3,7 +3,7 @@ import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, On
 import { Router } from '@angular/router';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
-import { BREAKPOINTS, SCROLL_CONFIG } from '../constants/app.constants';
+import { BREAKPOINTS, SCROLL_CONFIG, TIMING_CONFIG } from '../constants/app.constants';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.isMenuOpen) {
       setTimeout(() => {
         this.setupMenuFocusTrap();
-      }, 100);
+      }, TIMING_CONFIG.MENU_SETUP_DELAY);
     }
   }
 
