@@ -1,5 +1,6 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 type LogLevel = 'error' | 'warn' | 'info' | 'debug';
 
@@ -9,7 +10,7 @@ type LogLevel = 'error' | 'warn' | 'info' | 'debug';
 export class LoggerService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
-  private readonly enableLogging = true;
+  private readonly enableLogging = environment.enableLogging;
 
   error(message: string, data?: unknown): void {
     this.log('error', message, data);

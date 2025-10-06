@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.service';
 import { LoggerService } from '../../../shared/services/logger.service';
 import { VALIDATION_CONFIG, HTTP_CONFIG, TIMING_CONFIG } from '../../../shared/constants/app.constants';
+import { environment } from '../../../../environments/environment';
 
 interface ContactData {
   name: string;
@@ -22,6 +23,12 @@ interface ContactResponse {
   message?: string;
   error?: boolean;
   errorDetails?: HttpErrorResponse;
+}
+
+interface ErrorLike {
+  name?: string;
+  status?: number;
+  message?: string;
 }
 
 @Component({
@@ -56,7 +63,7 @@ export class ContactFormComponent {
   invalidFields: string[] = [];
 
   post = {
-    endPoint: 'https://mihaela-melania-aghirculesei.de/sendMail.php',
+    endPoint: `${environment.apiUrl}${environment.endpoints.sendMail}`,
     body: (payload: ContactData) => JSON.stringify(payload),
     options: {
       headers: {
@@ -159,29 +166,36 @@ export class ContactFormComponent {
     };
   }
 
-  private handleError(error: HttpErrorResponse | Error) {
+  private handleError(error: unknown) {
     this.submissionStatus = 'error';
 
-    const errorName = error instanceof HttpErrorResponse ? 'HttpError' : error.name;
-    const errorStatus = error instanceof HttpErrorResponse ? error.status : undefined;
+    const errorLike = error as ErrorLike;
+    const errorName = error instanceof HttpErrorResponse ? 'HttpError' : errorLike.name;
+    const errorStatus = error instanceof HttpErrorResponse ? error.status : errorLike.status;
 
     this.logger.error('Contact form submission failed:', {
       type: errorName,
       status: errorStatus,
-      message: error.message,
+      message: errorLike.message,
       timestamp: new Date().toISOString()
     });
 
-    if (error.name === 'TimeoutError') {
+    if (errorLike.name === 'TimeoutError') {
       this.errorMessage = 'Request timeout. Please try again.';
     } else if (error instanceof HttpErrorResponse && error.status === 0) {
       this.errorMessage = 'Network error. Please check your connection.';
+    } else if (errorLike.status === 0) {
+      this.errorMessage = 'Network error. Please check your connection.';
     } else if (error instanceof HttpErrorResponse && error.status >= HTTP_CONFIG.STATUS_SERVER_ERROR) {
+      this.errorMessage = 'Server error. Please try again later.';
+    } else if (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_SERVER_ERROR) {
       this.errorMessage = 'Server error. Please try again later.';
     } else if (error instanceof HttpErrorResponse && error.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) {
       this.errorMessage = 'Bad request. Please check your input.';
+    } else if (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) {
+      this.errorMessage = 'Bad request. Please check your input.';
     } else {
-      this.errorMessage = error.message || 'An error occurred while sending your message.';
+      this.errorMessage = errorLike.message || 'An error occurred while sending your message.';
     }
 
     const errorMsg = `${this.translate.instant('contact.form.errorMessage')} ${this.errorMessage}`;

@@ -52,7 +52,7 @@ describe('ContactFormComponent', () => {
     });
 
     it('should have correct endpoint configuration', () => {
-      expect(component.post.endPoint).toBe('https://mihaela-melania-aghirculesei.de/sendMail.php');
+      expect(component.post.endPoint).toContain('sendMail.php');
     });
   });
 

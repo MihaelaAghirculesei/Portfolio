@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/
 import { BannerSectionComponent } from './banner-section/banner-section.component';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { environment } from '../../../environments/environment';
 
 interface ActionButton {
   labelKey: string;
@@ -52,13 +53,13 @@ export class LandingpageComponent implements OnInit, OnDestroy {
       isExternal: false,
     },
     {
-      url: 'https://github.com/MihaelaAghirculesei',
+      url: environment.social.github,
       iconSrc: '../../assets/img/github_green.svg',
       alt: 'GitHub',
       isExternal: true,
     },
     {
-      url: 'https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/',
+      url: environment.social.linkedin,
       iconSrc: '../../assets/img/linkedin_green.svg',
       alt: 'LinkedIn',
       isExternal: true,
