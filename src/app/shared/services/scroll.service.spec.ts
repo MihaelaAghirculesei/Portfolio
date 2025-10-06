@@ -3,10 +3,24 @@ import { PLATFORM_ID } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ScrollService } from './scroll.service';
 
+interface MockWindow {
+  scrollTo: jasmine.Spy;
+  scrollY: number | undefined;
+  pageYOffset: number | undefined;
+  innerWidth: number;
+}
+
+interface MockDocument {
+  getElementById: jasmine.Spy;
+  defaultView: MockWindow | null;
+  body: HTMLElement;
+  querySelectorAll: jasmine.Spy;
+}
+
 describe('ScrollService', () => {
   let service: ScrollService;
-  let mockDocument: any;
-  let mockWindow: any;
+  let mockDocument: MockDocument;
+  let mockWindow: MockWindow;
 
   beforeEach(() => {
     mockWindow = {

@@ -3,10 +3,27 @@ import { PLATFORM_ID } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { PlatformService } from './platform.service';
 
+interface MockWindow {
+  scrollTo: jasmine.Spy;
+  innerWidth: number;
+}
+
+interface MockDocument {
+  defaultView: MockWindow;
+  body: {
+    style: {
+      overflow: string;
+      position: string;
+      width: string;
+    };
+  };
+  querySelectorAll: jasmine.Spy;
+}
+
 describe('PlatformService', () => {
   let service: PlatformService;
-  let mockDocument: any;
-  let mockWindow: any;
+  let mockDocument: MockDocument;
+  let mockWindow: MockWindow;
 
   beforeEach(() => {
     mockWindow = {

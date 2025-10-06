@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScrollService } from './scroll.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class NavigationService {
     });
   }
 
-  navigateToHomeWithScroll(scrollService: any, sectionId: string, delay: number = 100): void {
+  navigateToHomeWithScroll(scrollService: ScrollService, sectionId: string, delay: number = 100): void {
     if (this.router.url === '/' || this.router.url === '') {
       scrollService.scrollToElement(sectionId, 'start');
     } else {

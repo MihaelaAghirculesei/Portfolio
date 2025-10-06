@@ -1,5 +1,14 @@
 import { ErrorHandler, Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+
+interface ErrorWithMessage {
+  message?: string;
+  stack?: string;
+  toString(): string;
+}
+
+type ApplicationError = Error | HttpErrorResponse | ErrorWithMessage | unknown;
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +16,9 @@ import { isPlatformBrowser } from '@angular/common';
 export class GlobalErrorHandler implements ErrorHandler {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  handleError(error: Error | any): void {
-    const errorMessage = error?.message || error?.toString() || 'Unknown error';
-    const errorStack = error?.stack || '';
+  handleError(error: ApplicationError): void {
+    const errorMessage = this.getErrorMessage(error);
+    const errorStack = this.getErrorStack(error);
 
     if (isPlatformBrowser(this.platformId)) {
       console.error('Global Error Handler:', {
@@ -23,19 +32,48 @@ export class GlobalErrorHandler implements ErrorHandler {
       return;
     }
 
-
-    
     throw error;
   }
 
-  private isNonCriticalError(error: any): boolean {
+  private getErrorMessage(error: ApplicationError): string {
+    if (error instanceof Error) {
+      return error.message;
+    }
+    if (error instanceof HttpErrorResponse) {
+      return error.message || `HTTP Error ${error.status}`;
+    }
+    if (this.isErrorWithMessage(error)) {
+      return error.message || error.toString();
+    }
+    return 'Unknown error';
+  }
+
+  private getErrorStack(error: ApplicationError): string {
+    if (error instanceof Error) {
+      return error.stack || '';
+    }
+    if (this.isErrorWithMessage(error)) {
+      return error.stack || '';
+    }
+    return '';
+  }
+
+  private isErrorWithMessage(error: unknown): error is ErrorWithMessage {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      ('message' in error || 'toString' in error)
+    );
+  }
+
+  private isNonCriticalError(error: ApplicationError): boolean {
     const nonCriticalErrors = [
       'ExpressionChangedAfterItHasBeenCheckedError',
       'Navigation cancelled',
       'ResizeObserver loop limit exceeded'
     ];
 
-    const errorMessage = error?.message || error?.toString() || '';
+    const errorMessage = this.getErrorMessage(error);
     return nonCriticalErrors.some(msg => errorMessage.includes(msg));
   }
 }

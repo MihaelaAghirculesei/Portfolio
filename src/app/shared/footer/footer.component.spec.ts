@@ -10,7 +10,7 @@ import { ScrollService } from '../services/scroll.service';
   standalone: true
 })
 class MockRouterLinkDirective {
-  @Input() routerLink: string | any[] = '';
+  @Input() routerLink: string | string[] = '';
 
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {

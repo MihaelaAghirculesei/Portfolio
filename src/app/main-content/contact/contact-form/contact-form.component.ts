@@ -16,6 +16,13 @@ interface ContactData {
   privacypolicy: boolean;
 }
 
+interface ContactResponse {
+  success?: boolean;
+  message?: string;
+  error?: boolean;
+  errorDetails?: HttpErrorResponse;
+}
+
 @Component({
   selector: 'app-contact-form',
   standalone: true,
@@ -29,7 +36,6 @@ export class ContactFormComponent {
   translate = inject(TranslateService);
   cdr = inject(ChangeDetectorRef);
   private ariaAnnouncer = inject(AriaAnnouncerService);
-  private destroyRef = takeUntilDestroyed();
   private previousFocusedElement: HTMLElement | null = null;
 
   contactData: ContactData = {
@@ -97,7 +103,7 @@ export class ContactFormComponent {
       this.cdr.markForCheck();
 
       this.http
-        .post<any>(
+        .post<ContactResponse>(
           this.post.endPoint,
           this.post.body(this.sanitizeContactData()),
           this.post.options
@@ -106,15 +112,15 @@ export class ContactFormComponent {
           timeout(HTTP_CONFIG.TIMEOUT),
           retry(HTTP_CONFIG.RETRY_ATTEMPTS),
           catchError((error: HttpErrorResponse) => {
-            return of({ error: true, errorDetails: error } as const);
+            return of<ContactResponse>({ error: true, errorDetails: error });
           }),
-          this.destroyRef
+          takeUntilDestroyed()
         )
         .subscribe({
-          next: (response: any) => {
+          next: (response: ContactResponse) => {
             this.isSubmitting = false;
 
-            if (response?.error) {
+            if (response?.error && response.errorDetails) {
               this.handleError(response.errorDetails);
             } else {
               this.submissionStatus = 'success';
@@ -151,27 +157,29 @@ export class ContactFormComponent {
     };
   }
 
-  private handleError(error: any) {
+  private handleError(error: HttpErrorResponse | Error) {
     this.submissionStatus = 'error';
 
+    const errorName = error instanceof HttpErrorResponse ? 'HttpError' : error.name;
+    const errorStatus = error instanceof HttpErrorResponse ? error.status : undefined;
+
     console.error('Contact form submission failed:', {
-      type: error?.name || 'Unknown',
-      status: error?.status,
-      message: error?.message,
+      type: errorName,
+      status: errorStatus,
+      message: error.message,
       timestamp: new Date().toISOString()
     });
 
-    if (error?.name === 'TimeoutError') {
+    if (error.name === 'TimeoutError') {
       this.errorMessage = 'Request timeout. Please try again.';
-    } else if (error?.status === 0) {
+    } else if (error instanceof HttpErrorResponse && error.status === 0) {
       this.errorMessage = 'Network error. Please check your connection.';
-    } else if (error?.status >= HTTP_CONFIG.STATUS_SERVER_ERROR) {
+    } else if (error instanceof HttpErrorResponse && error.status >= HTTP_CONFIG.STATUS_SERVER_ERROR) {
       this.errorMessage = 'Server error. Please try again later.';
-    } else if (error?.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) {
+    } else if (error instanceof HttpErrorResponse && error.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) {
       this.errorMessage = 'Bad request. Please check your input.';
     } else {
-      this.errorMessage =
-        error?.message || 'An error occurred while sending your message.';
+      this.errorMessage = error.message || 'An error occurred while sending your message.';
     }
 
     const errorMsg = `${this.translate.instant('contact.form.errorMessage')} ${this.errorMessage}`;
