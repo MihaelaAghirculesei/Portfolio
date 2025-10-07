@@ -25,9 +25,14 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
+            "assets": [ 
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": ".htaccess",
+                "input": ".",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles/styles.scss"
