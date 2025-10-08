@@ -1,5 +1,6 @@
 import { Component, OnInit, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit {
   private readonly translate = inject(TranslateService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly logger = inject(LoggerService);
+  private readonly titleService = inject(Title);
 
   ngOnInit(): void {
     this.initializeTranslation();
@@ -64,6 +66,9 @@ export class AppComponent implements OnInit {
       .subscribe({
         next: (event: NavigationEnd) => {
           this.showMainContent = event.url === '/';
+          if (this.showMainContent) {
+            this.titleService.setTitle('Mihaela Melania Aghirculesei');
+          }
         },
         error: (error) => {
           this.logger.error('Router events error:', error);
