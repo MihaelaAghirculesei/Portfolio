@@ -155,7 +155,24 @@
   }
 }
 
-@media (min-width: $large-screens-min) {
+@media (min-width: $large-screens-min) and (max-width: $desktop-max) {
+  .contentWrapper {
+    gap: calc($content-gap-base + 20px);
+    overflow: visible;
+  }
+  .aboutMeSection {
+    padding: calc($section-padding + 40px) 0 0 0;
+  }
+  .imgDiv {
+    @include imageContainer(620px);
+    transform: translateY(-40px) !important;
+    &:hover {
+      transform: translateY(-45px) !important;
+    }
+  }
+}
+
+@media (min-width: 1920px) {
   .contentWrapper {
     gap: calc($content-gap-base + 20px);
   }
