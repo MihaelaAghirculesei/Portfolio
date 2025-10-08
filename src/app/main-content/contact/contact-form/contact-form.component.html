@@ -110,10 +110,8 @@
         <span>
           {{ "contact.form.privacyText" | translate }}
           <a
-            href="#"
+            routerLink="/privacy-policy"
             class="privacy-policy-link"
-            (click)="openPrivacyPolicy(); $event.preventDefault()"
-            (keydown.enter)="openPrivacyPolicy(); $event.preventDefault()"
             [attr.aria-label]="'contact.form.privacyLink' | translate"
           >
             {{ "contact.form.privacyLink" | translate }}

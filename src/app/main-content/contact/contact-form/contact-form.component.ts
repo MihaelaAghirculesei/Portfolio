@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { timeout, retry, catchError, takeUntil } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
@@ -33,7 +34,7 @@ interface ErrorLike {
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [FormsModule, CommonModule, TranslatePipe],
+  imports: [FormsModule, CommonModule, RouterLink, TranslatePipe],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -233,18 +234,6 @@ export class ContactFormComponent implements OnDestroy {
   checkboxChanged(): void {
     if (this.contactData.privacypolicy) {
       this.checkboxWasCheckedBefore = true;
-    }
-  }
-
-  openPrivacyPolicy(): void {
-    const currentLang = this.translate.currentLang || 'en';
-    const url = currentLang === 'de' ? '/datenschutz' : '/privacy-policy';
-
-    const newWindow = window.open(url, '_blank');
-
-    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-      this.logger.warn('Popup blocked. Navigating in current tab.');
-      window.location.href = url;
     }
   }
 
