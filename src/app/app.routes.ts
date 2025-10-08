@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: '',
+    title: 'Mihaela Melania Aghirculesei',
+  },
+  {
     path: 'legal-notice',
     loadComponent: () =>
       import('./main-content/legal-notice/legal-notice.component').then(
