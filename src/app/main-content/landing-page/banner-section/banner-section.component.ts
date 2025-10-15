@@ -25,18 +25,4 @@ export class BannerSectionComponent {
   ];
 
   readonly bannerTracks = Array(3).fill(0);
-
-  private animationPaused = false;
-
-  pauseAnimation(): void {
-    this.animationPaused = true;
-  }
-
-  resumeAnimation(): void {
-    this.animationPaused = false;
-  }
-
-  get isAnimationPaused(): boolean {
-    return this.animationPaused;
-  }
 }

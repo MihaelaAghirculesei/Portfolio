@@ -521,16 +521,14 @@
     animation: scroll-left $duration linear infinite;
     white-space: nowrap;
     flex-shrink: 0;
-
-    &:hover {
-      animation-play-state: paused;
-    }
+    will-change: transform;
 
     span {
       @include primary-font;
       color: $main-color;
       line-height: 1;
       white-space: nowrap;
+      display: inline-block;
 
       &.separator {
         opacity: 0.7;

@@ -2,10 +2,11 @@
 
 .banner-container {
   @include scrollingBanner(-4deg, 60s);
-  padding: 25px 0;
+  padding: 30px 0;
   bottom: 100px;
   left: 0;
   right: 0;
+  pointer-events: none;
 
   .banner-track {
     gap: 0;
@@ -13,10 +14,15 @@
     span {
       font-size: 24px;
       font-weight: 400;
-      margin-right: $spacing-xxxl;
+      flex-shrink: 0;
+
+      &:not(.separator) {
+        margin-right: $spacing-xxxl;
+      }
 
       &.separator {
         font-size: 20px;
+        flex-shrink: 0;
         margin-right: $spacing-xxxl;
       }
     }
@@ -29,13 +35,13 @@
     padding: 20px 0;
 
     .banner-track {
+      gap: $spacing-xl;
+
       span {
         font-size: 20px;
-        margin-right: $spacing-xl;
 
         &.separator {
           font-size: 18px;
-          margin-right: $spacing-xl;
         }
       }
     }
@@ -47,13 +53,13 @@
     padding: 15px 0;
 
     .banner-track {
+      gap: $spacing-lg;
+
       span {
         font-size: 16px;
-        margin-right: $spacing-lg;
 
         &.separator {
           font-size: 16px;
-          margin-right: $spacing-lg;
         }
       }
     }
