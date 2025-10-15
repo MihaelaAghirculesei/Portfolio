@@ -11,15 +11,15 @@ export const environment = {
   projects: {
     join: {
       github: 'https://github.com/MihaelaAghirculesei/join-kanban-board',
-      live: 'https://mihaela-melania-aghirculesei.de/join'
+      live: 'https://join.mihaela-melania-aghirculesei.de'
     },
     elPolloLoco: {
       github: 'https://github.com/MihaelaAghirculesei/El-Pollo-Loco',
-      live: 'https://mihaela-melania-aghirculesei.de/el_pollo_loco'
+      live: 'https://el-pollo-loco.mihaela-melania-aghirculesei.de'
     },
     pokedex: {
       github: 'https://github.com/MihaelaAghirculesei/Pokedex',
-      live: 'https://mihaela-melania-aghirculesei.de/pokedex'
+      live: 'https://pokedex.mihaela-melania-aghirculesei.de'
     }
   },
   enableLogging: true
