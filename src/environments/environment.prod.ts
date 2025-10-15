@@ -22,5 +22,5 @@ export const environment = {
       live: 'https://pokedex.mihaela-melania-aghirculesei.de'
     }
   },
-  enableLogging: false
+  enableLogging: true
 };
