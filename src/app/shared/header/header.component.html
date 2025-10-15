@@ -106,6 +106,7 @@
     class="mobile-dropdown"
     [ngClass]="{ open: isMenuOpen }"
     [attr.aria-hidden]="!isMenuOpen"
+    [attr.inert]="!isMenuOpen ? '' : null"
   >
     <div class="dropdown-content">
       <ul>
