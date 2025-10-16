@@ -1,5 +1,5 @@
 <a href="#main-content" class="skip-link">Skip to main content</a>
-<app-header *ngIf="showHeaderFooter"></app-header>
+<app-header *ngIf="showMainContent"></app-header>
 <main id="main-content" role="main" [attr.aria-label]="'Portfolio content'">
   @if (showMainContent) {
     <app-landingpage></app-landingpage>
@@ -33,8 +33,9 @@
     } @placeholder {
       <div style="min-height: 600px;"></div>
     }
-  }
 
-  <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  } @else {
+    <router-outlet></router-outlet>
+  }
 </main>
-<app-footer *ngIf="showHeaderFooter"></app-footer>

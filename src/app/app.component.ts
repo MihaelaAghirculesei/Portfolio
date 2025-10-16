@@ -1,4 +1,4 @@
-import { Component, OnInit, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -35,8 +35,6 @@ import { LoggerService } from './shared/services/logger.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  readonly title = 'angular-portofolio';
-  readonly showHeaderFooter = true;
   showMainContent = true;
 
   private readonly router = inject(Router);
@@ -44,6 +42,7 @@ export class AppComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly logger = inject(LoggerService);
   private readonly titleService = inject(Title);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.initializeTranslation();
@@ -69,6 +68,7 @@ export class AppComponent implements OnInit {
           if (this.showMainContent) {
             this.titleService.setTitle('Mihaela Melania Aghirculesei');
           }
+          this.cdr.markForCheck();
         },
         error: (error) => {
           this.logger.error('Router events error:', error);
