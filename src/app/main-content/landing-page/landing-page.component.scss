@@ -116,6 +116,15 @@
   }
 }
 
+@media (min-width: 1441px) {
+  .headLine .contentWrapper {
+    .edgeLine-left .greenLineDown,
+    .edgeLine-right .hero-right-line {
+      height: 400px;
+    }
+  }
+}
+
 app-banner-section {
   z-index: 99;
   width: 100%;

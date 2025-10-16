@@ -485,6 +485,15 @@
   }
 }
 
+@media (min-width: 1200px) {
+  .project-modal-content .project-image-container .project-image .imageContainer {
+    img {
+      width: 530px !important;
+      height: 560px !important;
+    }
+  }
+}
+
 .project-modal-footer {
   padding: 16px;
   @include dFlex(flex-end, center);
