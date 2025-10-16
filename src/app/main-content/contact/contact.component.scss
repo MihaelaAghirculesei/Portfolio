@@ -4,6 +4,7 @@ section {
   padding: 0 0 $section-padding 0;
   @include responsive-section-layout;
   background-color: $gradient-start;
+  min-height: auto;
 }
 
 h3 {
@@ -43,11 +44,6 @@ h2 {
     margin: $spacing-sm 0;
     line-height: 1.6;
   }
-
-  @media (min-width: 769px) {
-    flex: 0 0 45%;
-    max-width: 600px;
-  }
 }
 
 .contact-cta {
@@ -74,23 +70,49 @@ h2 {
 .contentWrapper {
   @include content-wrapper-responsive;
   align-items: flex-start;
-
-  @media (min-width: 769px) {
-    justify-content: space-between;
-    gap: 60px;
-  }
-
-  @media (min-width: 1430px) {
-    padding-right: 0;
-  }
 }
 
 app-contact-form {
   flex: 1;
   width: 100%;
   max-width: 730px;
+}
 
-  @media (min-width: 769px) {
+
+@media (min-width: $desktop-4k-min) {
+  @include responsive-typography($typography-4k);
+}
+
+@media (min-width: 1430px) {
+  .contentWrapper {
+    padding-right: 0;
+  }
+}
+
+@media (min-width: $desktop-min) and (max-width: $desktop-max) {
+  @include responsive-typography($typography-desktop);
+}
+
+@media (min-width: $tablet-min) and (max-width: $tablet-max) {
+  @include responsive-typography($typography-tablet);
+}
+
+@media (min-width: 769px) {
+  h2 { 
+    padding: $spacing-lg 0;
+  }
+
+  .contactDiv {
+    flex: 0 0 45%;
+    max-width: 600px;
+  }
+
+  .contentWrapper {
+    justify-content: space-between;
+    gap: 60px;
+  }
+
+  app-contact-form {
     display: flex;
     justify-content: flex-end;
   }
@@ -113,7 +135,6 @@ app-contact-form {
   .contact-cta {
     span {
       width: 100%;
-      display: block;
       hyphens: auto;
       word-break: break-word;
       line-height: 1.4;
@@ -124,18 +145,6 @@ app-contact-form {
   h3 {
     word-break: break-word;
   }
-}
-
-@media (min-width: $tablet-min) and (max-width: $tablet-max) {
-  @include responsive-typography($typography-tablet);
-}
-
-@media (min-width: $desktop-min) and (max-width: $desktop-max) {
-  @include responsive-typography($typography-desktop);
-}
-
-@media (min-width: $desktop-4k-min) {
-  @include responsive-typography($typography-4k);
 }
 
 @media (max-width: 360px) {
