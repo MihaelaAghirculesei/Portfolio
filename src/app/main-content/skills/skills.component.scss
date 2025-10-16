@@ -23,11 +23,9 @@ $scale-hover: 1.1;
 $scale-hover-small: 1.05;
 
 .skillsSection {
-  background: radial-gradient(
-    circle at 0% 50%,
-    $gradient-end 0%,
-    $gradient-start 25%
-  );
+  background:
+    linear-gradient(to bottom, $background-color 0%, transparent 20%, transparent 80%, $background-color 100%),
+    radial-gradient(circle at 0% 50%, $gradient-end 0%, $gradient-start 25%);
   min-height: $section-min-height;
   width: 100%;
   padding: $section-padding 0 0 0;
@@ -42,7 +40,7 @@ $scale-hover-small: 1.05;
   margin: 0 40px;
   color: $white;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   @include dFlex(space-between, center);
 }
 
