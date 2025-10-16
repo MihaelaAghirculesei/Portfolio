@@ -1,11 +1,10 @@
 @import '../../../styles/styles.scss';
 
 .legal-notice-main {
-  min-height: 100vh;
   background-color: $background-color;
   @include dFlex(center, flex-start);
   width: 100%;
-  padding: 98px $spacing-md $spacing-sm;
+  padding: 74px $spacing-md $spacing-sm;
   box-sizing: border-box;
   position: relative;
 
@@ -22,15 +21,11 @@
   position: relative;
   @include dFlex(center, space-between);
   flex-direction: column;
-  min-height: 100%;
 
   @media (min-width: $tablet-min) {
     padding: $spacing-md;
   }
 
-  .content-wrapper {
-    flex: 1;
-  }
 
   .page-header {
     margin-bottom: $spacing-lg;
@@ -62,7 +57,7 @@
       .contact-address {
         @include primary-font;
         color: $white;
-        line-height: 1.6;
+        line-height: 1.4;
         margin-bottom: $spacing-lg;
       }
     }
@@ -77,7 +72,7 @@
     .contact-details {
       p {
         @include primary-font;
-        line-height: 1.6;
+        line-height: 1.4;
         margin-bottom: $spacing-lg;
         color: $white;
 

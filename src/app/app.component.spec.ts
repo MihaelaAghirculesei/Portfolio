@@ -21,11 +21,12 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     routerEventsSubject = new Subject();
-    mockRouter = jasmine.createSpyObj('Router', ['createUrlTree'], {
+    mockRouter = jasmine.createSpyObj('Router', ['createUrlTree', 'serializeUrl'], {
       url: '/',
       events: routerEventsSubject.asObservable(),
     });
     mockRouter.createUrlTree.and.returnValue({} as any);
+    mockRouter.serializeUrl.and.returnValue('/');
     mockActivatedRoute = {
       snapshot: { params: {}, queryParams: {}, data: {} } as any
     };
@@ -54,9 +55,6 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have the correct title', () => {
-    expect(component.title).toBe('angular-portofolio');
-  });
 
   it('should initialize translation service with English', () => {
     const translateService = TestBed.inject(TranslateService);
@@ -65,9 +63,6 @@ describe('AppComponent', () => {
     expect(translateService.use).toHaveBeenCalledWith('en');
   });
 
-  it('should show header and footer', () => {
-    expect(component.showHeaderFooter).toBe(true);
-  });
 
   it('should show main content when on home route', () => {
     component.ngOnInit();

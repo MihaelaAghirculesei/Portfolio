@@ -1,4 +1,13 @@
-// Skip navigation link for accessibility
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
 .skip-link {
   position: absolute;
   top: -40px;

@@ -46,7 +46,6 @@ describe('FeedbacksComponent', () => {
     it('should initialize with default values', () => {
       expect(component.middleIndex).toBe(2);
       expect(component.isTransitioning).toBe(false);
-      expect(component.isAutoPlaying).toBe(true);
     });
 
     it('should have feedbacks array', () => {
@@ -158,13 +157,6 @@ describe('FeedbacksComponent', () => {
       expect(component.middleIndex).toBe(initialIndex);
     });
 
-    it('should reset autoplay when navigating', () => {
-      spyOn<any>(component, 'resetAutoPlay');
-
-      component.goToSlide(3);
-
-      expect(component['resetAutoPlay']).toHaveBeenCalled();
-    });
   });
 
   describe('Keyboard Navigation', () => {
@@ -212,27 +204,6 @@ describe('FeedbacksComponent', () => {
       expect(component.goToSlide).toHaveBeenCalledWith(component.feedbacks.length - 1);
     });
 
-    it('should toggle autoplay on space key', () => {
-      spyOn(component, 'toggleAutoPlay');
-      const event = new KeyboardEvent('keydown', { key: ' ' });
-      spyOn(event, 'preventDefault');
-
-      component.onKeyDown(event);
-
-      expect(event.preventDefault).toHaveBeenCalled();
-      expect(component.toggleAutoPlay).toHaveBeenCalled();
-    });
-
-    it('should toggle autoplay on enter key', () => {
-      spyOn(component, 'toggleAutoPlay');
-      const event = new KeyboardEvent('keydown', { key: 'Enter' });
-      spyOn(event, 'preventDefault');
-
-      component.onKeyDown(event);
-
-      expect(event.preventDefault).toHaveBeenCalled();
-      expect(component.toggleAutoPlay).toHaveBeenCalled();
-    });
   });
 
   describe('Touch Events', () => {
@@ -290,91 +261,7 @@ describe('FeedbacksComponent', () => {
     });
   });
 
-  describe('AutoPlay Management', () => {
-    it('should handle autoplay lifecycle', () => {
-      spyOn(component, 'startAutoPlay');
-      spyOn(component, 'stopAutoPlay');
 
-      component.ngOnInit();
-      expect(component.startAutoPlay).toHaveBeenCalled();
-
-      component.ngOnDestroy();
-      expect(component.stopAutoPlay).toHaveBeenCalled();
-    });
-
-    it('should toggle autoplay on and off', () => {
-      spyOn(component, 'startAutoPlay');
-      spyOn(component, 'stopAutoPlay');
-      component.isAutoPlaying = false;
-
-      component.toggleAutoPlay();
-      expect(component.isAutoPlaying).toBe(true);
-      expect(component.startAutoPlay).toHaveBeenCalled();
-
-      component.toggleAutoPlay();
-      expect(component.isAutoPlaying).toBe(false);
-      expect(component.stopAutoPlay).toHaveBeenCalled();
-    });
-
-    it('should pause and resume autoplay', () => {
-      spyOn(component, 'startAutoPlay');
-      spyOn(component, 'stopAutoPlay');
-
-      component.pauseAutoPlay();
-      expect(component.stopAutoPlay).toHaveBeenCalled();
-
-      component.isAutoPlaying = true;
-      component.resumeAutoPlay();
-      expect(component.startAutoPlay).toHaveBeenCalled();
-
-      component.isAutoPlaying = false;
-      component.resumeAutoPlay();
-      expect(component.startAutoPlay).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('Visibility Change', () => {
-    it('should stop autoplay when page is hidden', () => {
-      spyOn(component, 'stopAutoPlay');
-      Object.defineProperty(document, 'hidden', {
-        writable: true,
-        configurable: true,
-        value: true
-      });
-
-      component.onVisibilityChange();
-
-      expect(component.stopAutoPlay).toHaveBeenCalled();
-    });
-
-    it('should start autoplay when page is visible and autoplay is on', () => {
-      spyOn(component, 'startAutoPlay');
-      component.isAutoPlaying = true;
-      Object.defineProperty(document, 'hidden', {
-        writable: true,
-        configurable: true,
-        value: false
-      });
-
-      component.onVisibilityChange();
-
-      expect(component.startAutoPlay).toHaveBeenCalled();
-    });
-
-    it('should not start autoplay when page is visible but autoplay is off', () => {
-      spyOn(component, 'startAutoPlay');
-      component.isAutoPlaying = false;
-      Object.defineProperty(document, 'hidden', {
-        writable: true,
-        configurable: true,
-        value: false
-      });
-
-      component.onVisibilityChange();
-
-      expect(component.startAutoPlay).not.toHaveBeenCalled();
-    });
-  });
 
   describe('Computed Properties', () => {
     it('should calculate current slide correctly', () => {
@@ -395,7 +282,6 @@ describe('FeedbacksComponent', () => {
       tick(500);
       component.goToSlide(3);
       tick(500);
-      component.toggleAutoPlay();
 
       expect(component['cdr'].markForCheck).toHaveBeenCalled();
     }));

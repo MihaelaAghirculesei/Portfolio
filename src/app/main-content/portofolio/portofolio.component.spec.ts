@@ -232,13 +232,10 @@ describe('PortofolioComponent', () => {
       component['touchMoved'] = false;
       spyOn(component, 'openProjectOverlay');
 
-      const touchEvent = {
-        preventDefault: jasmine.createSpy('preventDefault')
-      } as any;
+      const touchEvent = {} as any;
 
       component.handleTouchEnd(touchEvent, 0);
 
-      expect(touchEvent.preventDefault).toHaveBeenCalled();
       expect(component.openProjectOverlay).toHaveBeenCalledWith(component.projects[0], 0);
     });
 

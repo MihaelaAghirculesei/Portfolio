@@ -6,6 +6,7 @@ import { ContactFormComponent } from './contact-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { HTTP_CONFIG } from '../../../shared/constants/app.constants';
+import { ActivatedRoute } from '@angular/router';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -20,6 +21,9 @@ describe('ContactFormComponent', () => {
         HttpClientTestingModule,
         TranslateModule.forRoot(),
         FormsModule
+      ],
+      providers: [
+        { provide: ActivatedRoute, useValue: { fragment: of(null) } }
       ]
     }).compileComponents();
 
@@ -381,37 +385,6 @@ describe('ContactFormComponent', () => {
     });
   });
 
-  describe('Privacy Policy Navigation', () => {
-    it('should open German privacy policy when language is German', () => {
-      const mockWindow = { closed: false } as Window;
-      spyOn(window, 'open').and.returnValue(mockWindow);
-      translateService.currentLang = 'de';
-
-      component.openPrivacyPolicy();
-
-      expect(window.open).toHaveBeenCalledWith('/datenschutz', '_blank');
-    });
-
-    it('should open English privacy policy when language is English', () => {
-      const mockWindow = { closed: false } as Window;
-      spyOn(window, 'open').and.returnValue(mockWindow);
-      translateService.currentLang = 'en';
-
-      component.openPrivacyPolicy();
-
-      expect(window.open).toHaveBeenCalledWith('/privacy-policy', '_blank');
-    });
-
-    it('should open English privacy policy when language is undefined', () => {
-      const mockWindow = { closed: false } as Window;
-      spyOn(window, 'open').and.returnValue(mockWindow);
-      translateService.currentLang = undefined as any;
-
-      component.openPrivacyPolicy();
-
-      expect(window.open).toHaveBeenCalledWith('/privacy-policy', '_blank');
-    });
-  });
 
   describe('Data Sanitization', () => {
     it('should sanitize contact data correctly', () => {

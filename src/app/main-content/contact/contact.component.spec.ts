@@ -4,6 +4,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { ContactComponent } from './contact.component';
 
+import { ActivatedRoute } from '@angular/router';
+
 describe('ContactComponent', () => {
   let component: ContactComponent;
   let fixture: ComponentFixture<ContactComponent>;
@@ -11,7 +13,7 @@ describe('ContactComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ContactComponent, TranslateModule.forRoot()],
-      providers: [provideHttpClient()]
+      providers: [provideHttpClient(), { provide: ActivatedRoute, useValue: {} }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContactComponent);
