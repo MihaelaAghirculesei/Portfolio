@@ -5,8 +5,6 @@
          role="group"
          [attr.aria-label]="'references.carousel' | translate"
          (keydown)="onKeyDown($event)"
-         (mouseenter)="pauseAutoPlay()"
-         (mouseleave)="resumeAutoPlay()"
          appPassiveTouchStart
          (passiveTouchStart)="onTouchStart($event)"
          appPassiveTouchEnd

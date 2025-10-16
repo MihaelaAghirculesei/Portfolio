@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  OnInit,
-  OnDestroy,
-  HostListener,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   ViewChildren,
@@ -11,7 +8,6 @@ import {
   ElementRef
 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PlatformService } from '../../shared/services/platform.service';
 import {
   SLIDER_CONFIG,
   ANIMATION_CONFIG
@@ -31,20 +27,15 @@ import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shar
   styleUrl: './feedback.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FeedbacksComponent implements OnInit, OnDestroy {
+export class FeedbacksComponent {
   @ViewChildren('feedbackCard') feedbackCards!: QueryList<ElementRef>;
 
-  constructor(
-    private platformService: PlatformService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
-  private autoPlayInterval?: number;
   private touchStartX = 0;
   private touchEndX = 0;
 
   isTransitioning = false;
-  isAutoPlaying = true;
   feedbacks = [
     {
       name: 'Marvin Schneemann',
@@ -135,20 +126,11 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     return 'feedback-card';
   }
 
-  ngOnInit(): void {
-    this.startAutoPlay();
-  }
-
-  ngOnDestroy(): void {
-    this.stopAutoPlay();
-  }
-
   goToSlide(index: number): void {
     if (this.isTransitioning || index === this.middleIndex) {return;}
 
     this.middleIndex = index;
     this.updateCards();
-    this.resetAutoPlay();
     this.cdr.markForCheck();
   }
 
@@ -169,11 +151,6 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
       case 'End':
         event.preventDefault();
         this.goToSlide(this.feedbacks.length - 1);
-        break;
-      case ' ':
-      case 'Enter':
-        event.preventDefault();
-        this.toggleAutoPlay();
         break;
     }
   }
@@ -199,60 +176,4 @@ export class FeedbacksComponent implements OnInit, OnDestroy {
     }
   }
 
-  startAutoPlay(): void {
-    if (!this.isAutoPlaying) {return;}
-
-    const document = this.platformService.getDocument();
-    if (!document?.defaultView) {return;}
-
-    this.stopAutoPlay();
-    this.autoPlayInterval = document.defaultView.setInterval(() => {
-      this.slideLeft();
-    }, SLIDER_CONFIG.AUTO_PLAY_INTERVAL);
-  }
-
-  stopAutoPlay(): void {
-    if (this.autoPlayInterval) {
-      clearInterval(this.autoPlayInterval);
-      this.autoPlayInterval = undefined;
-    }
-  }
-
-  pauseAutoPlay(): void {
-    this.stopAutoPlay();
-  }
-
-  resumeAutoPlay(): void {
-    if (this.isAutoPlaying) {
-      this.startAutoPlay();
-    }
-  }
-
-  toggleAutoPlay(): void {
-    this.isAutoPlaying = !this.isAutoPlaying;
-    if (this.isAutoPlaying) {
-      this.startAutoPlay();
-    } else {
-      this.stopAutoPlay();
-    }
-    this.cdr.markForCheck();
-  }
-
-  private resetAutoPlay(): void {
-    if (this.isAutoPlaying) {
-      this.startAutoPlay();
-    }
-  }
-
-  @HostListener('window:visibilitychange')
-  onVisibilityChange(): void {
-    const document = this.platformService.getDocument();
-    if (document) {
-      if (document.hidden) {
-        this.stopAutoPlay();
-      } else if (this.isAutoPlaying) {
-        this.startAutoPlay();
-      }
-    }
-  }
 }
