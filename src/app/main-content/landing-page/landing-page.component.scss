@@ -4,7 +4,9 @@
   @include code-font;
   padding: 98px $spacing-lg 0 $spacing-lg;
   @include fullScreenSection();
-  background: linear-gradient(68deg, $gradient-start 23%, $gradient-end 100%);
+  background:
+    linear-gradient(to bottom, transparent 0%, transparent 97%, $background-color 100%),
+    linear-gradient(68deg, $gradient-start 23%, $gradient-end 100%);
 
   .contentWrapper {
     position: relative;
