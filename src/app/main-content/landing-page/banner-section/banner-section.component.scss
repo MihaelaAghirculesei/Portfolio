@@ -29,6 +29,21 @@
   }
 }
 
+@media screen and (width: 1024px) and (height: 600px),
+  screen and (width: 1280px) and (height: 800px) {
+  .banner-container.banner-container {
+    position: static;
+    margin-top: auto;
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 769px) {
+  .banner-container {
+    bottom: 50px;
+  }
+}
+
 @media (max-width: $tablet-max) {
   .banner-container {
     bottom: 20px;
@@ -63,14 +78,5 @@
         }
       }
     }
-  }
-}
-
-@media screen and (width: 1024px) and (height: 600px),
-  screen and (width: 1280px) and (height: 800px) {
-  .banner-container.banner-container {
-    position: static;
-    margin-top: auto;
-    margin-bottom: 20px;
   }
 }
