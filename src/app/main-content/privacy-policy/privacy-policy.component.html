@@ -1,7 +1,7 @@
 <section>
   <div class="content-width">
     <ng-container
-      *ngIf="translateService.currentLang === 'de'; else englishVersion"
+      *ngIf="isGerman; else englishVersion"
     >
       <div class="privacy-police-container">
         <button class="close-btn" (click)="goBack()" aria-label="Datenschutzerklärung schließen">&times;</button>
