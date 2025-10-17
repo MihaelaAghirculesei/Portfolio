@@ -106,7 +106,7 @@
     class="mobile-dropdown"
     [ngClass]="{ open: isMenuOpen }"
     [attr.aria-hidden]="!isMenuOpen"
-    [attr.inert]="!isMenuOpen ? '' : null"
+    [attr.inert]="!isMenuOpen ? true : null"
   >
     <div class="dropdown-content">
       <ul>
@@ -117,6 +117,7 @@
             (keydown.enter)="scrollToSection('aboutMe'); closeMenuIfMobile(); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.aboutAriaLabel' | translate"
+            [attr.tabindex]="isMenuOpen ? 0 : -1"
           >
             {{ "nav.about" | translate }}
           </a>
@@ -128,6 +129,7 @@
             (keydown.enter)="scrollToSection('skills'); closeMenuIfMobile(); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.skillsAriaLabel' | translate"
+            [attr.tabindex]="isMenuOpen ? 0 : -1"
           >
             {{ "nav.skills" | translate }}
           </a>
@@ -139,6 +141,7 @@
             (keydown.enter)="scrollToSection('projects'); closeMenuIfMobile(); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
+            [attr.tabindex]="isMenuOpen ? 0 : -1"
           >
             {{ "nav.portfolio" | translate }}
           </a>
@@ -150,6 +153,7 @@
             (keydown.enter)="scrollToSection('contact'); closeMenuIfMobile(); $event.preventDefault()"
             class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.contactAriaLabel' | translate"
+            [attr.tabindex]="isMenuOpen ? 0 : -1"
           >
             {{ "nav.contact" | translate }}
           </a>
@@ -164,6 +168,7 @@
             [attr.aria-label]="'header.languageToggleAriaLabel' | translate"
             role="switch"
             [attr.aria-checked]="isEnglish"
+            [attr.tabindex]="isMenuOpen ? 0 : -1"
           />
           <label for="mobile-language-toggle"></label>
           <span class="on" aria-hidden="true">EN</span>
