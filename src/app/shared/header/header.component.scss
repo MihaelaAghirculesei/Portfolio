@@ -388,6 +388,12 @@ button.logo-button {
   }
 }
 
+@media (min-width: 1024px) and (min-height: 1280px) {
+  .contact-nav-item {
+    display: none;
+  }
+}
+
 @media (max-width: $tablet-max) {
   .desktop-nav {
     display: none;

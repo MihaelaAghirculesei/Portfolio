@@ -1,6 +1,6 @@
 @import "../../../styles/styles.scss";
 
-$section-min-height: 900px;
+$section-min-height: 700px;
 $content-max-width: 1440px;
 $text-min-width: 580px;
 $skill-div-height: 108px;
@@ -28,7 +28,7 @@ $scale-hover-small: 1.05;
     radial-gradient(circle at 0% 50%, $gradient-end 0%, $gradient-start 25%);
   min-height: $section-min-height;
   width: 100%;
-  padding: $section-padding 0 0 0;
+  padding: 0;
   overflow: hidden;
   @include dFlex(center, center);
 }
@@ -413,6 +413,7 @@ $scale-hover-small: 1.05;
   }
   .skillButtons {
     gap: 12px;
+    padding-bottom: 20px;
   }
 }
 
@@ -460,6 +461,7 @@ $scale-hover-small: 1.05;
   }
   .skillButtons {
     gap: 12px;
+    padding-bottom: 20px;
   }
   .skillDiv {
     > img {

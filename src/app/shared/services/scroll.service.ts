@@ -30,7 +30,12 @@ export class ScrollService {
     if (!window) {return;}
 
     const isMobile = window.innerWidth <= BREAKPOINTS.TABLET_MAX;
-    const extraOffset = isMobile ? this.mobileOffsets[elementId] ?? 0 : 0;
+    let extraOffset = 0;
+
+    if (isMobile) {
+      extraOffset = this.mobileOffsets[elementId] ?? 0;
+    }
+
     const elementPosition =
       element.offsetTop - SCROLL_CONFIG.HEADER_HEIGHT - extraOffset;
 

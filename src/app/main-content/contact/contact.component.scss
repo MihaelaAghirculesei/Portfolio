@@ -98,7 +98,7 @@ app-contact-form {
 }
 
 @media (min-width: 769px) {
-  h2 { 
+  h2 {
     padding: $spacing-lg 0;
   }
 
@@ -115,6 +115,12 @@ app-contact-form {
   app-contact-form {
     display: flex;
     justify-content: flex-end;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1024px) and (min-height: 1366px) and (max-height: 1366px) {
+  section {
+    padding: 110px 0 $section-padding 0;
   }
 }
 
