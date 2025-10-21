@@ -23,7 +23,6 @@
     span {
       position: relative;
       z-index: 1;
-      transition: opacity 0.2s;
     }
 
     &:hover span {
@@ -41,39 +40,38 @@
       height: 100%;
       width: 100%;
       opacity: 0;
-      transition: opacity 0.2s;
       color: $main-color;
+      visibility: hidden;
     }
 
-    &:hover::before,
-    &:hover::after {
+    &:hover::before {
       opacity: 1;
-    }
-
-    &::before {
+      visibility: visible;
       animation: moveText1 2s linear infinite;
     }
 
-    &::after {
+    &:hover::after {
+      opacity: 1;
+      visibility: visible;
       animation: moveText2 2s linear infinite;
     }
   }
 }
 
 @keyframes moveText1 {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
+  to {
     transform: translateX(-100%);
   }
 }
 
 @keyframes moveText2 {
-  0% {
+  from {
     transform: translateX(100%);
   }
-  100% {
+  to {
     transform: translateX(0);
   }
 }
