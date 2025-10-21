@@ -42,10 +42,6 @@
         &.surname {
           animation-delay: 7s;
           padding-bottom: $spacing-sm + $spacing-xs;
-
-          &::before {
-            animation-delay: 10s;
-          }
         }
       }
     }
@@ -140,14 +136,27 @@ app-banner-section {
   }
 }
 
-@media (max-height: 918px) {
-  .edgeLine-right {
+@media (min-width: 581px) and (min-height: 919px) {
+  .headLine .contentWrapper .edgeLine-right {
     .email-link {
-      .email-text.email-text {
-        display: none;
+      .email-text {
+        display: block !important;
       }
-      .email-icon.email-icon {
-        display: block;
+      .email-icon {
+        display: none !important;
+      }
+    }
+  }
+}
+
+@media (max-height: 918px) and (min-width: 581px) {
+  .headLine .contentWrapper .edgeLine-right {
+    .email-link {
+      .email-text {
+        display: none !important;
+      }
+      .email-icon {
+        display: block !important;
         transform: scale(-1);
         width: $icon-size-sm;
         height: $icon-size-sm;
@@ -186,7 +195,7 @@ app-banner-section {
   }
 }
 
-@media (max-width: 545px) {
+@media (max-width: 580px) {
   .headLine .contentWrapper {
     p {
       font-size: $font-size-base;
