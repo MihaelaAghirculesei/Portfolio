@@ -216,32 +216,41 @@ app-banner-section {
 }
 
 @media (max-height: 918px) and (min-width: 581px) {
-  .headLine .contentWrapper .edgeLine-right {
-    .email-link {
-      .email-text {
-        display: none !important;
-      }
-      .email-icon {
-        display: block !important;
-        transform: scale(-1);
-        width: $icon-size-sm;
-        height: $icon-size-sm;
-      }
+  .headLine .contentWrapper {
+    .edgeLine-right {
+      .email-link {
+        .email-text {
+          display: none !important;
+        }
+        .email-icon {
+          display: block !important;
+          transform: scale(-1);
+          width: $icon-size-sm;
+          height: $icon-size-sm;
+        }
 
-      &::after {
-        left: -1px;
-        right: auto;
-      }
+        &::after {
+          left: -1px;
+          right: auto;
+        }
 
-      &:hover::after {
-        transform: translateY(-50%) translateX(-10px) scale(1);
+        &:hover::after {
+          transform: translateY(-50%) translateX(-10px) scale(1);
+        }
+      }
+      .hero-right-line {
+        height: $line-height-sm;
+      }
+      a img {
+        @include socialIcon($icon-size-sm);
       }
     }
-    .hero-right-line {
-      height: $line-height-sm;
-    }
-    a img {
-      @include socialIcon($icon-size-sm);
+
+    .edgeLine-left {
+      .arrowDown {
+        width: 40px;
+        height: 25px;
+      }
     }
   }
 }
@@ -304,6 +313,11 @@ app-banner-section {
 
       .greenLineDown {
         height: $line-height-sm;
+      }
+
+      .arrowDown {
+        width: 40px;
+        height: 25px;
       }
     }
 
