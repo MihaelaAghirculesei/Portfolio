@@ -60,6 +60,7 @@
 
         .arrowDownImg {
           transform: rotate(270deg);
+          animation: arrowBounce 2s ease-in-out infinite;
         }
       }
 
@@ -371,5 +372,15 @@ app-banner-section {
         padding: $spacing-xs $spacing-sm;
       }
     }
+  }
+}
+
+@keyframes arrowBounce {
+  0%,
+  100% {
+    transform: rotate(270deg) translateY(-5px);
+  }
+  50% {
+    transform: rotate(270deg) translateY(6px);
   }
 }
