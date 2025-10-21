@@ -78,22 +78,61 @@
 
       .email-link {
         position: relative;
-        color: $white;
+        color: $main-color;
         text-decoration: none;
         @include primary-font;
         font-size: $font-size-base + 2px;
         transition: all $transition-base;
 
+        &::after {
+          content: "";
+          position: absolute;
+          left: -1px;
+          top: 50%;
+          transform: translateY(-50%) translateX(0) scale(0);
+          width: 6px;
+          height: 6px;
+          background-color: $white;
+          border-radius: 50%;
+          transition: all $transition-base;
+          opacity: 0;
+          pointer-events: none;
+        }
+
         &:hover {
-          color: $main-color;
+          color: $white;
           .email-text {
-            color: $main-color;
+            color: $white;
+          }
+          .email-text::before {
+            transform: translateX(-10px) scale(1);
+            opacity: 1;
+          }
+
+          &::after {
+            transform: translateX(-10px) scale(1);
+            opacity: 1;
           }
         }
 
         .email-text {
-          color: $white;
+          color: $main-color;
           transition: all $transition-base;
+          position: relative;
+
+          &::before {
+            content: "";
+            position: absolute;
+            left: -1px;
+            top: 50%;
+            transform: translateY(-50%) translateX(0) scale(0);
+            width: 6px;
+            height: 6px;
+            background-color: $white;
+            border-radius: 50%;
+            transition: all $transition-base;
+            opacity: 0;
+          }
         }
 
         .email-icon {
@@ -101,8 +140,33 @@
         }
       }
 
-      a img {
-        @include socialIcon();
+      a {
+        position: relative;
+
+        &:not(.email-link) {
+          &::before {
+            content: "";
+            position: absolute;
+            right: -1px;
+            top: 50%;
+            transform: translateY(-50%) translateX(0) scale(0);
+            width: 6px;
+            height: 6px;
+            background-color: $white;
+            border-radius: 50%;
+            transition: all $transition-base;
+            opacity: 0;
+          }
+
+          &:hover::before {
+            transform: translateY(-50%) translateX(10px) scale(1);
+            opacity: 1;
+          }
+        }
+
+        img {
+          @include socialIcon();
+        }
       }
 
       .hero-right-line {
@@ -114,9 +178,11 @@
 
 @media (min-width: 1441px) {
   .headLine .contentWrapper {
-    .edgeLine-left .greenLineDown,
+    .edgeLine-left .greenLineDown {
+      height: 365px;
+    }
     .edgeLine-right .hero-right-line {
-      height: 400px;
+      height: 365px;
     }
   }
 }
@@ -160,6 +226,15 @@ app-banner-section {
         transform: scale(-1);
         width: $icon-size-sm;
         height: $icon-size-sm;
+      }
+
+      &::after {
+        left: -1px;
+        right: auto;
+      }
+
+      &:hover::after {
+        transform: translateY(-50%) translateX(-10px) scale(1);
       }
     }
     .hero-right-line {
@@ -242,6 +317,15 @@ app-banner-section {
           transform: scale(-1);
           width: $icon-size-sm;
           height: $icon-size-sm;
+        }
+
+        &::after {
+          left: -1px;
+          right: auto;
+        }
+
+        &:hover::after {
+          transform: translateY(-50%) translateX(-10px) scale(1);
         }
       }
       .hero-right-line {
