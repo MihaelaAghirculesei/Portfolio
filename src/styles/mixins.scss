@@ -480,26 +480,10 @@
   letter-spacing: 2px;
   text-shadow: none;
   will-change: transform;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba($main-color, 0.05) 30%,
-      rgba($main-color, 0.1) 50%,
-      rgba($main-color, 0.05) 70%,
-      transparent 100%
-    );
-    animation: spectacularGlow $glow-duration ease-in-out infinite;
-    border-radius: 8px;
-    z-index: -1;
-  }
+  cursor: default;
 
   &:hover {
-    animation-duration: 3s;
+    animation-duration: 8s;
     transform: scale(1.02) translateY(-2px);
     filter: drop-shadow(0 8px 25px $main-color-light);
     transition: all 0.6s ease;
