@@ -261,6 +261,15 @@ input.check-toggle-round-flat:checked + label:after {
   display: none;
   cursor: pointer;
   z-index: 200;
+  outline: none;
+  border: none;
+
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border: none;
+  }
 }
 
 button.logo-button {
