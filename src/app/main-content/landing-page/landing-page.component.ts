@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { BannerSectionComponent } from './banner-section/banner-section.component';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -7,14 +7,15 @@ import { environment } from '../../../environments/environment';
 interface ActionButton {
   labelKey: string;
   action: () => void;
-  primary?: boolean;
 }
 
 interface SocialLink {
   url: string;
   iconSrc: string;
   alt: string;
+  ariaLabel: string;
   isExternal: boolean;
+  isEmail?: boolean;
 }
 
 @Component({
@@ -32,16 +33,18 @@ export class LandingpageComponent {
     email: 'kontakt@mihaela-melania-aghirculesei.de',
   };
 
+  get fullName(): string {
+    return `${this.profileInfo.firstName} ${this.profileInfo.lastName}`;
+  }
+
   readonly actionButtons: ActionButton[] = [
     {
       labelKey: 'landingPage.checkWork',
-      action: () => this.scrollToProjects(),
-      primary: true,
+      action: () => this.scrollTo('projects'),
     },
     {
       labelKey: 'landingPage.contactMe',
-      action: () => this.scrollToContact(),
-      primary: false,
+      action: () => this.scrollTo('contact'),
     },
   ];
 
@@ -50,33 +53,29 @@ export class LandingpageComponent {
       url: `mailto:${this.profileInfo.email}`,
       iconSrc: '../../assets/img/landingPage/mail.svg',
       alt: 'Email',
+      ariaLabel: 'Email',
       isExternal: false,
+      isEmail: true,
     },
     {
       url: environment.social.github,
       iconSrc: '../../assets/img/github_green.svg',
       alt: 'GitHub',
+      ariaLabel: 'GitHub (opens in new tab)',
       isExternal: true,
     },
     {
       url: environment.social.linkedin,
       iconSrc: '../../assets/img/linkedin_green.svg',
       alt: 'LinkedIn',
+      ariaLabel: 'LinkedIn (opens in new tab)',
       isExternal: true,
     },
   ];
 
-  constructor(private scrollService: ScrollService) {}
+  private scrollService = inject(ScrollService);
 
-  scrollToAboutMe(): void {
-    this.scrollService.scrollToElement('aboutMe', 'start');
-  }
-
-  scrollToProjects(): void {
-    this.scrollService.scrollToElement('projects', 'start');
-  }
-
-  scrollToContact(): void {
-    this.scrollService.scrollToElement('contact', 'start');
+  scrollTo(elementId: string): void {
+    this.scrollService.scrollToElement(elementId, 'start');
   }
 }

@@ -4,7 +4,7 @@
   [attr.aria-label]="'banner.scrollingText' | translate"
 >
   @for (track of bannerTracks; track $index) {
-  <div class="banner-track" [attr.aria-hidden]="$index > 0" role="marquee">
+  <div class="banner-track" [attr.aria-hidden]="$index > 0" aria-live="off">
     @for (item of bannerItems; track item.key) {
     <span>{{ item.key | translate }}</span>
     <span class="separator" aria-hidden="true">•</span>

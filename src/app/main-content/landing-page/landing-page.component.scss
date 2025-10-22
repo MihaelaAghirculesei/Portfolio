@@ -1,8 +1,107 @@
 @import "../../../styles/styles.scss";
 
+// Landing page specific variables
+$header-padding-top: 98px;
+$dot-indicator-size: 6px;
+$dot-indicator-offset: -1px;
+$dot-hover-distance: 10px;
+$arrow-bounce-duration: 2s;
+$arrow-bounce-offset-start: -5px;
+$arrow-bounce-offset-end: 6px;
+$arrow-small-width: 40px;
+$arrow-small-height: 25px;
+$name-animation-duration: 40s;
+$surname-animation-delay: 7s;
+$hero-title-font-size: 40px;
+$hero-name-font-size: 90px;
+$email-font-size-offset: 2px;
+$banner-z-index: 99;
+$edge-line-height-large: 255px;
+
+// Spacing combinations
+$surname-padding-bottom: calc($spacing-sm + $spacing-xs);
+$button-gap: calc($spacing-xxxl + $spacing-lg);
+$button-margin-vertical: calc($spacing-xl * 2);
+
+@mixin dotIndicator($direction: left) {
+  content: "";
+  position: absolute;
+  @if $direction == left {
+    left: $dot-indicator-offset;
+  } @else {
+    right: $dot-indicator-offset;
+  }
+  top: 50%;
+  transform: translateY(-50%) translateX(0) scale(0);
+  width: $dot-indicator-size;
+  height: $dot-indicator-size;
+  background-color: $white;
+  border-radius: 50%;
+  transition: all $transition-base;
+  opacity: 0;
+}
+
+@mixin emailIconDot {
+  &::after {
+    @include dotIndicator(left);
+    pointer-events: none;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: translateY(-50%) translateX(-$dot-hover-distance) scale(1);
+    opacity: 1;
+  }
+}
+
+@mixin responsiveEmailIcon {
+  .email-text {
+    display: none;
+  }
+  .email-icon {
+    display: block;
+    transform: scale(-1);
+    width: $icon-size-sm;
+    height: $icon-size-sm;
+  }
+
+  @include emailIconDot;
+}
+
+@mixin smallArrowSize {
+  width: $arrow-small-width;
+  height: $arrow-small-height;
+}
+
+@mixin responsiveSmallIcons {
+  a img {
+    @include socialIcon($icon-size-sm);
+  }
+}
+
+@mixin responsiveEdgeRightIcons {
+  .email-link {
+    @include responsiveEmailIcon;
+  }
+  @include responsiveSmallIcons;
+}
+
+@mixin edgeLineHeight($height) {
+  .edgeLine-left .greenLineDown,
+  .edgeLine-right .hero-right-line {
+    height: $height;
+  }
+}
+
+@mixin responsiveH1FontSize($size) {
+  .headLine .contentWrapper h1 .name-spectacular {
+    font-size: $size;
+  }
+}
+
 .headLine {
   @include code-font;
-  padding: 98px $spacing-lg 0 $spacing-lg;
+  padding: $header-padding-top 0 0 0;
   @include fullScreenSection();
   background:
     linear-gradient(to bottom, transparent 0%, transparent 97%, $background-color 100%),
@@ -10,7 +109,7 @@
 
   .contentWrapper {
     position: relative;
-    height: calc(100vh - 98px);
+    height: calc(100vh - $header-padding-top);
     @include dFlex(center, center);
     flex-direction: column;
     max-width: 1440px;
@@ -21,35 +120,39 @@
     gap: 0;
 
     p {
-      font-size: 40px;
+      font-size: $hero-title-font-size;
       @include code-font;
       color: $white;
       margin: 0;
       font-weight: 900;
+      cursor: default;
     }
 
     h1 {
-      font-size: 90px;
+      font-size: $hero-name-font-size;
       @include primary-font;
       word-spacing: -0.1em;
       color: $white;
       margin: 0;
       line-height: 1.1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-      &.name-spectacular {
-        @include spectacularText(40s, 30s);
+      .name-spectacular {
+        @include spectacularText($name-animation-duration);
 
         &.surname {
-          animation-delay: 7s;
-          padding-bottom: $spacing-sm + $spacing-xs;
+          animation-delay: $surname-animation-delay;
+          padding-bottom: $surname-padding-bottom;
         }
       }
     }
 
     .buttonDiv {
       @include dFlex(center, center);
-      gap: $spacing-xxxl + $spacing-lg;
-      margin: $spacing-xl + $spacing-xl 0;
+      gap: $button-gap;
+      margin: $button-margin-vertical 0;
     }
 
     .edgeLine-left {
@@ -58,9 +161,14 @@
       .arrowDown {
         @include arrowButton();
 
+        &:focus-visible {
+          outline: 2px solid $main-color;
+          outline-offset: 4px;
+        }
+
         .arrowDownImg {
           transform: rotate(270deg);
-          animation: arrowBounce 2s ease-in-out infinite;
+          animation: arrowBounce $arrow-bounce-duration ease-in-out infinite;
         }
       }
 
@@ -72,67 +180,36 @@
     .edgeLine-right {
       @include edgeLine(right);
 
-      .vertical-text {
-        writing-mode: vertical-rl;
-        transform: scale(-1);
-      }
-
       .email-link {
         position: relative;
         color: $main-color;
         text-decoration: none;
         @include primary-font;
-        font-size: $font-size-base + 2px;
-        transition: all $transition-base;
+        font-size: calc($font-size-base + $email-font-size-offset);
+        writing-mode: vertical-rl;
+        transform: scale(-1);
 
-        &::after {
-          content: "";
-          position: absolute;
-          left: -1px;
-          top: 50%;
-          transform: translateY(-50%) translateX(0) scale(0);
-          width: 6px;
-          height: 6px;
-          background-color: $white;
-          border-radius: 50%;
-          transition: all $transition-base;
-          opacity: 0;
-          pointer-events: none;
+        &:hover,
+        &:focus-visible {
+          color: $white;
+
+          .email-text::before {
+            transform: translateX(-$dot-hover-distance) scale(1);
+            opacity: 1;
+          }
         }
 
-        &:hover {
-          color: $white;
-          .email-text {
-            color: $white;
-          }
-          .email-text::before {
-            transform: translateX(-10px) scale(1);
-            opacity: 1;
-          }
-
-          &::after {
-            transform: translateX(-10px) scale(1);
-            opacity: 1;
-          }
+        &:focus-visible {
+          outline: 2px solid $main-color;
+          outline-offset: 4px;
         }
 
         .email-text {
-          color: $main-color;
           transition: all $transition-base;
           position: relative;
 
           &::before {
-            content: "";
-            position: absolute;
-            left: -1px;
-            top: 50%;
-            transform: translateY(-50%) translateX(0) scale(0);
-            width: 6px;
-            height: 6px;
-            background-color: $white;
-            border-radius: 50%;
-            transition: all $transition-base;
-            opacity: 0;
+            @include dotIndicator(left);
           }
         }
 
@@ -146,22 +223,18 @@
 
         &:not(.email-link) {
           &::before {
-            content: "";
-            position: absolute;
-            right: -1px;
-            top: 50%;
-            transform: translateY(-50%) translateX(0) scale(0);
-            width: 6px;
-            height: 6px;
-            background-color: $white;
-            border-radius: 50%;
-            transition: all $transition-base;
-            opacity: 0;
+            @include dotIndicator(right);
           }
 
-          &:hover::before {
-            transform: translateY(-50%) translateX(10px) scale(1);
+          &:hover::before,
+          &:focus-visible::before {
+            transform: translateY(-50%) translateX($dot-hover-distance) scale(1);
             opacity: 1;
+          }
+
+          &:focus-visible {
+            outline: 2px solid $main-color;
+            outline-offset: 4px;
           }
         }
 
@@ -179,105 +252,59 @@
 
 @media (min-width: 1441px) {
   .headLine .contentWrapper {
-    .edgeLine-left .greenLineDown {
-      height: 365px;
-    }
-    .edgeLine-right .hero-right-line {
-      height: 365px;
-    }
+    @include edgeLineHeight($edge-line-height-large);
   }
 }
 
 app-banner-section {
-  z-index: 99;
-  width: 100%;
+  z-index: $banner-z-index;
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: auto 0 0 0;
 }
 
 @media (max-width: $content-max-width) {
-  .contentWrapper {
-    width: 100%;
-  }
-}
-
-@media (min-width: 581px) and (min-height: 919px) {
-  .headLine .contentWrapper .edgeLine-right {
-    .email-link {
-      .email-text {
-        display: block !important;
-      }
-      .email-icon {
-        display: none !important;
-      }
-    }
-  }
-}
-
-@media (max-height: 918px) and (min-width: 581px) {
   .headLine .contentWrapper {
+    width: 100%;
+
     .edgeLine-right {
-      .email-link {
-        .email-text {
-          display: none !important;
-        }
-        .email-icon {
-          display: block !important;
-          transform: scale(-1);
-          width: $icon-size-sm;
-          height: $icon-size-sm;
-        }
-
-        &::after {
-          left: -1px;
-          right: auto;
-        }
-
-        &:hover::after {
-          transform: translateY(-50%) translateX(-10px) scale(1);
-        }
-      }
-      .hero-right-line {
-        height: $line-height-sm;
-      }
-      a img {
-        @include socialIcon($icon-size-sm);
-      }
+      padding-right: 5px;
     }
+  }
+}
 
-    .edgeLine-left {
-      .arrowDown {
-        width: 40px;
-        height: 25px;
+@media (min-width: 581px) {
+  .headLine .contentWrapper .edgeLine-right .email-link {
+    .email-text {
+      display: block;
+    }
+    .email-icon {
+      display: none;
+    }
+  }
+
+  @media (max-height: 918px) and (max-width: 1440px) {
+    .headLine .contentWrapper {
+      .edgeLine-right {
+        @include responsiveEdgeRightIcons;
+      }
+
+      .edgeLine-left .arrowDown {
+        @include smallArrowSize;
       }
     }
   }
 }
 
 @media (min-width: 546px) and (max-width: 649px) {
-  .headLine .contentWrapper {
-    h1 {
-      font-size: 50px;
-    }
-  }
+  @include responsiveH1FontSize(50px);
 }
 
 @media (min-width: 650px) and (max-width: 770px) {
-  .headLine .contentWrapper {
-    h1 {
-      font-size: 60px;
-    }
-  }
+  @include responsiveH1FontSize(60px);
 }
 
 @media (min-width: 771px) and (max-width: $tablet-max) {
-  .headLine .contentWrapper {
-    h1 {
-      font-size: 80px;
-    }
-  }
+  @include responsiveH1FontSize(80px);
 }
 
 @media (max-width: 580px) {
@@ -285,23 +312,11 @@ app-banner-section {
     p {
       font-size: $font-size-base;
       padding-bottom: $spacing-xs;
-      font-weight: 900;
     }
-    h1 {
+
+    h1 .name-spectacular {
       font-size: $font-size-h1-mobile;
-      word-spacing: -0.1em;
       line-height: 1;
-      padding-bottom: 0;
-      margin: 0;
-
-      &:first-of-type {
-        margin-bottom: 0;
-      }
-
-      &:last-of-type {
-        margin-top: 0;
-        padding-bottom: 0;
-      }
     }
 
     .buttonDiv {
@@ -317,59 +332,32 @@ app-banner-section {
       }
 
       .arrowDown {
-        width: 40px;
-        height: 25px;
+        @include smallArrowSize;
       }
     }
 
     .edgeLine-right {
-      .email-link {
-        .email-text {
-          display: none;
-        }
-        .email-icon {
-          display: block;
-          transform: scale(-1);
-          width: $icon-size-sm;
-          height: $icon-size-sm;
-        }
+      @include responsiveEdgeRightIcons;
 
-        &::after {
-          left: -1px;
-          right: auto;
-        }
-
-        &:hover::after {
-          transform: translateY(-50%) translateX(-10px) scale(1);
-        }
-      }
       .hero-right-line {
         height: $line-height-sm;
       }
-      a img {
-        @include socialIcon($icon-size-sm);
-      }
     }
-  }
-}
 
-@media (max-width: $mobile-small-max) {
-  .headLine .contentWrapper {
-    h1 {
-      line-height: 0.9;
-
-      &.name-spectacular {
+    @media (max-width: $mobile-small-max) {
+      h1 .name-spectacular {
+        line-height: 0.9;
         letter-spacing: $letter-spacing-sm;
       }
-    }
 
-    .buttonDiv {
-      gap: $spacing-xs;
-      margin-top: $spacing-md;
+      .buttonDiv {
+        gap: $spacing-xs;
+        margin-top: $spacing-md;
 
-      .link-button {
-        font-size: $font-size-base;
-        padding: $spacing-xs $spacing-sm;
+        .link-button {
+          font-size: $font-size-base;
+          padding: $spacing-xs $spacing-sm;
+        }
       }
     }
   }
@@ -378,9 +366,9 @@ app-banner-section {
 @keyframes arrowBounce {
   0%,
   100% {
-    transform: rotate(270deg) translateY(-5px);
+    transform: rotate(270deg) translateY($arrow-bounce-offset-start);
   }
   50% {
-    transform: rotate(270deg) translateY(6px);
+    transform: rotate(270deg) translateY($arrow-bounce-offset-end);
   }
 }

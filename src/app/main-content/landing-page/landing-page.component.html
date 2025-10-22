@@ -1,20 +1,17 @@
-<section class="headLine" id="headLine" aria-label="Landing page hero section">
+<section class="headLine" id="headLine" [attr.aria-label]="'landingPage.heroSection' | translate">
   <div class="contentWrapper">
-    <p aria-label="Professional title">{{ "landingPage.title" | translate }}</p>
-    <h1 class="name-spectacular" aria-label="First name">
-      {{ profileInfo.firstName }}
-    </h1>
-    <h1 class="name-spectacular surname" aria-label="Last name">
-      {{ profileInfo.lastName }}
+    <p>{{ "landingPage.title" | translate }}</p>
+    <h1 [attr.aria-label]="fullName">
+      <span class="name-spectacular">{{ profileInfo.firstName }}</span>
+      <span class="name-spectacular surname">{{ profileInfo.lastName }}</span>
     </h1>
 
-    <div class="buttonDiv" role="group" aria-label="Main navigation buttons">
+    <div class="buttonDiv" role="group" [attr.aria-label]="'landingPage.mainNavigationButtons' | translate">
       @for (button of actionButtons; track button.labelKey) {
       <button
         (click)="button.action()"
         class="link-button animated"
         [attr.data-text]="button.labelKey | translate"
-        [attr.aria-label]="button.labelKey | translate"
         type="button"
       >
         <span>{{ button.labelKey | translate }}</span>
@@ -22,12 +19,12 @@
       }
     </div>
 
-    <aside class="edgeLine-left" aria-label="Navigation controls">
+    <nav class="edgeLine-left" [attr.aria-label]="'landingPage.navigationControls' | translate">
       <button
         class="arrowDown"
-        (click)="scrollToAboutMe()"
+        (click)="scrollTo('aboutMe')"
         type="button"
-        aria-label="Scroll to about me section"
+        [attr.aria-label]="'landingPage.scrollToAboutMe' | translate"
       >
         <img
           class="arrowDownImg"
@@ -37,40 +34,32 @@
           loading="eager"
         />
       </button>
-      <div class="greenLineDown" role="presentation"></div>
-    </aside>
+      <div class="greenLineDown" aria-hidden="true"></div>
+    </nav>
 
-    <aside class="edgeLine-right" aria-label="Social links">
+    <nav class="edgeLine-right" [attr.aria-label]="'landingPage.socialLinks' | translate">
       @for (social of socialLinks; track social.url) {
       <a
         [href]="social.url"
-        [class]="
-          social.iconSrc.includes('mail')
-            ? 'vertical-text link-hover-dot-left email-link'
-            : ''
-        "
-        [target]="social.isExternal ? '_blank' : '_self'"
-        [rel]="social.isExternal ? 'noopener noreferrer' : ''"
-        [attr.aria-label]="
-          social.alt + (social.isExternal ? ' (opens in new tab)' : '')
-        "
+        [class.email-link]="social.isEmail"
+        [attr.target]="social.isExternal ? '_blank' : null"
+        [attr.rel]="social.isExternal ? 'noopener noreferrer' : null"
+        [attr.aria-label]="social.ariaLabel"
       >
-        @if (social.iconSrc.includes('mail')) {
-        <span class="email-text" aria-hidden="true">{{
-          profileInfo.email
-        }}</span>
+        @if (social.isEmail) {
+        <span class="email-text" aria-hidden="true">{{ profileInfo.email }}</span>
         }
         <img
           [src]="social.iconSrc"
-          [alt]=""
-          [class]="social.iconSrc.includes('mail') ? 'email-icon' : ''"
+          [class.email-icon]="social.isEmail"
+          alt=""
           role="presentation"
           loading="eager"
         />
       </a>
       }
-      <div class="hero-right-line" role="presentation"></div>
-    </aside>
+      <div class="hero-right-line" aria-hidden="true"></div>
+    </nav>
   </div>
   <app-banner-section></app-banner-section>
 </section>

@@ -35,6 +35,10 @@ describe('LandingpageComponent', () => {
       expect(component.profileInfo.lastName).toBe('Aghirculesei');
       expect(component.profileInfo.email).toBe('kontakt@mihaela-melania-aghirculesei.de');
     });
+
+    it('should return full name', () => {
+      expect(component.fullName).toBe('Mihaela Melania Aghirculesei');
+    });
   });
 
   describe('Action Buttons', () => {
@@ -42,30 +46,30 @@ describe('LandingpageComponent', () => {
       expect(component.actionButtons.length).toBe(2);
     });
 
-    it('should have primary button for checking work', () => {
-      const primaryButton = component.actionButtons.find(btn => btn.primary);
-      expect(primaryButton).toBeDefined();
-      expect(primaryButton?.labelKey).toBe('landingPage.checkWork');
+    it('should have button for checking work', () => {
+      const checkWorkButton = component.actionButtons.find(btn => btn.labelKey === 'landingPage.checkWork');
+      expect(checkWorkButton).toBeDefined();
+      expect(checkWorkButton?.labelKey).toBe('landingPage.checkWork');
     });
 
-    it('should have secondary button for contact', () => {
-      const secondaryButton = component.actionButtons.find(btn => !btn.primary);
-      expect(secondaryButton).toBeDefined();
-      expect(secondaryButton?.labelKey).toBe('landingPage.contactMe');
+    it('should have button for contact', () => {
+      const contactButton = component.actionButtons.find(btn => btn.labelKey === 'landingPage.contactMe');
+      expect(contactButton).toBeDefined();
+      expect(contactButton?.labelKey).toBe('landingPage.contactMe');
     });
 
-    it('should execute correct action for check work button', () => {
-      spyOn(component, 'scrollToProjects');
+    it('should scroll to projects when check work button action is called', () => {
+      spyOn(component, 'scrollTo');
       const checkWorkButton = component.actionButtons[0];
       checkWorkButton.action();
-      expect(component.scrollToProjects).toHaveBeenCalled();
+      expect(component.scrollTo).toHaveBeenCalledWith('projects');
     });
 
-    it('should execute correct action for contact button', () => {
-      spyOn(component, 'scrollToContact');
+    it('should scroll to contact when contact button action is called', () => {
+      spyOn(component, 'scrollTo');
       const contactButton = component.actionButtons[1];
       contactButton.action();
-      expect(component.scrollToContact).toHaveBeenCalled();
+      expect(component.scrollTo).toHaveBeenCalledWith('contact');
     });
   });
 
@@ -79,6 +83,8 @@ describe('LandingpageComponent', () => {
       expect(emailLink).toBeDefined();
       expect(emailLink?.url).toContain('mailto:');
       expect(emailLink?.isExternal).toBe(false);
+      expect(emailLink?.isEmail).toBe(true);
+      expect(emailLink?.ariaLabel).toBe('Email');
     });
 
     it('should have GitHub link', () => {
@@ -86,6 +92,7 @@ describe('LandingpageComponent', () => {
       expect(githubLink).toBeDefined();
       expect(githubLink?.url).toContain('github.com');
       expect(githubLink?.isExternal).toBe(true);
+      expect(githubLink?.ariaLabel).toBe('GitHub (opens in new tab)');
     });
 
     it('should have LinkedIn link', () => {
@@ -93,22 +100,23 @@ describe('LandingpageComponent', () => {
       expect(linkedInLink).toBeDefined();
       expect(linkedInLink?.url).toContain('linkedin.com');
       expect(linkedInLink?.isExternal).toBe(true);
+      expect(linkedInLink?.ariaLabel).toBe('LinkedIn (opens in new tab)');
     });
   });
 
   describe('Scroll Methods', () => {
-    it('should scroll to about me section', () => {
-      component.scrollToAboutMe();
+    it('should scroll to specified element', () => {
+      component.scrollTo('aboutMe');
       expect(mockScrollService.scrollToElement).toHaveBeenCalledWith('aboutMe', 'start');
     });
 
     it('should scroll to projects section', () => {
-      component.scrollToProjects();
+      component.scrollTo('projects');
       expect(mockScrollService.scrollToElement).toHaveBeenCalledWith('projects', 'start');
     });
 
     it('should scroll to contact section', () => {
-      component.scrollToContact();
+      component.scrollTo('contact');
       expect(mockScrollService.scrollToElement).toHaveBeenCalledWith('contact', 'start');
     });
   });

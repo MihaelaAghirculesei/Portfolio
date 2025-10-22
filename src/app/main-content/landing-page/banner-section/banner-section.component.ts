@@ -3,7 +3,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 interface BannerItem {
   key: string;
-  priority: number;
 }
 
 @Component({
@@ -16,13 +15,14 @@ interface BannerItem {
 })
 export class BannerSectionComponent {
   readonly bannerItems: BannerItem[] = [
-    { key: 'banner.remoteWork', priority: 1 },
-    { key: 'banner.role', priority: 2 },
-    { key: 'banner.openToWork', priority: 3 },
-    { key: 'banner.location', priority: 4 },
-    { key: 'banner.skills', priority: 5 },
-    { key: 'banner.passion', priority: 6 },
+    { key: 'banner.remoteWork' },
+    { key: 'banner.role' },
+    { key: 'banner.openToWork' },
+    { key: 'banner.location' },
+    { key: 'banner.skills' },
+    { key: 'banner.passion' },
   ];
 
-  readonly bannerTracks = Array(3).fill(0);
+  private readonly numberOfTracks = 3;
+  readonly bannerTracks = Array(this.numberOfTracks).fill(0);
 }

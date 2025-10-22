@@ -1,11 +1,15 @@
 @import "../../../../styles/styles.scss";
 
+// Banner animation configuration
+$banner-rotation: -4deg;
+$banner-animation-duration: 60s;
+$banner-padding-vertical: 30px;
+$banner-bottom-offset: 100px;
+
 .banner-container {
-  @include scrollingBanner(-4deg, 60s);
-  padding: 30px 0;
-  bottom: 100px;
-  left: 0;
-  right: 0;
+  @include scrollingBanner($banner-rotation, $banner-animation-duration);
+  padding: $banner-padding-vertical 0;
+  inset: auto 0 $banner-bottom-offset 0;
   pointer-events: none;
 
   .banner-track {
@@ -15,15 +19,10 @@
       font-size: 24px;
       font-weight: 400;
       flex-shrink: 0;
-
-      &:not(.separator) {
-        margin-right: $spacing-xxxl;
-      }
+      margin-right: $spacing-xxxl;
 
       &.separator {
         font-size: 20px;
-        flex-shrink: 0;
-        margin-right: $spacing-xxxl;
       }
     }
   }
@@ -31,7 +30,7 @@
 
 @media screen and (width: 1024px) and (height: 600px),
   screen and (width: 1280px) and (height: 800px) {
-  .banner-container.banner-container {
+  .banner-container {
     position: static;
     margin-top: auto;
     margin-bottom: 20px;
@@ -40,13 +39,13 @@
 
 @media (min-width: 769px) {
   .banner-container {
-    bottom: 50px;
+    inset: auto 0 50px 0;
   }
 }
 
 @media (max-width: $tablet-max) {
   .banner-container {
-    bottom: 20px;
+    inset: auto 0 20px 0;
     padding: 20px 0;
 
     .banner-track {
@@ -72,10 +71,6 @@
 
       span {
         font-size: 16px;
-
-        &.separator {
-          font-size: 16px;
-        }
       }
     }
   }
