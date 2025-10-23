@@ -28,7 +28,7 @@
       "marvin1": "I want to express my sincere appreciation for Mihaela´s dedication to our project. Even though there may have been some challenges at the beginning, it was clear how much effort you put in and how quickly you learned. Your commitment and support were key factors in helping us complete the project so efficiently. Without your contribution, things wouldn't have gone as smoothly. I look forward to collaborating with you again on future projects.",
       "christian": "Mihaela has consistently shown initiative by independently identifying tasks and thoroughly testing features. She demonstrated a strong eye for detail, often catching issues others overlooked. Always motivated and proactive, she contributed meaningfully within her scope and helped move tasks forward with reliability and commitment.",
       "marvin2": "I had the pleasure of working with Mihaela on the Join project. During our collaboration, I found her to be an exceptionally reliable, committed, and goal-oriented colleague. She works in a structured manner, thinks in terms of solutions, and contributes actively to the team. Her professional approach and strong initiative made her a valuable asset to the project. She always completed her tasks diligently and on time. I truly appreciate Mihaela's work ethic and team spirit, and I can wholeheartedly recommend working with her.",
-      "soufiane": "Mihaela demonstrated great determination, ambition, and eagerness to learn. She was always motivated to dive into new topics and brought fresh perspectives to the team. Her dedication played an important role in driving the project forward. Working with Mehaila was a great experience.",
+      "soufiane": "Mihaela demonstrated great determination, ambition, and eagerness to learn. She was always motivated to dive into new topics and brought fresh perspectives to the team. Her dedication played an important role in driving the project forward. Working with Mihaela was a great experience.",
       "ha": "It was a real pleasure to work with Mihaela during our group project at Developer Akademie. Although programming was a challenge for her at first, she stayed committed, made remarkable progress, and often inspired others with her determination. She is extremely friendly, polite, and brings a great sense of humor to the team, creating a positive and motivating atmosphere. Mihaela is hardworking, focused, and approaches every task with precision and care."
     }
   },
@@ -49,19 +49,19 @@
     "title": "Frontend Developer",
     "checkWork": "Check my work",
     "contactMe": "Contact me",
-    "description": "I am a frontend developer based in Munich."
+    "description": "I am a frontend developer based in Wolfsburg."
   },
   "aboutMe": {
     "title": "About me",
     "subtitle": "Who I am",
     "mainTitle": "About me",
-    "introText": "Hi! I'm Mihaela, a Frontend Developer who believes technology should be beautiful, accessible, and empowering for everyone. I love creating intuitive and inclusive digital experiences that improve people's lives.",
+    "introText": "Hello! I’m Mihaela, a front-end developer who believes that technology should be beautiful, accessible and meaningful. I love turning ideas into intuitive interfaces that people enjoy using.",
     "visionTitle": "My vision:",
-    "visionText": "Code is poetry, design is storytelling, and user experience is everything. I love turning ideas into interactive realities that users can't help but love.",
+    "visionText": "For me, code is a form of creativity — every line tells a story and every interaction creates an experience.",
     "locationTitle": "Beyond borders:",
-    "locationText": "Wolfsburg is my base, but my ambition knows no limits - ready for remote projects that change the game.",
+    "locationText": "Based in Wolfsburg, I work on projects that combine design, innovation, and empathy.",
     "growthTitle": "Always evolving:",
-    "growthText": "In a field that never stops changing, I never stop learning. Every day brings new opportunities to grow, create, and make an impact. Ready to collaborate and create something amazing?"
+    "growthText": "In a constantly changing world, I learn new things every day, experiment and create experiences that touch people's hearts."
   },
   "portfolio": {
     "subtitle": "Portfolio",
@@ -112,7 +112,7 @@
   },
   "footer": {
     "logoAriaLabel": "Scroll to top of the page",
-    "role": "Web Developer",
+    "role": "Frontend Developer",
     "location": "Wolfsburg, Germany",
     "legalNotice": "Legal Notice",
     "legalNoticeAriaLabel": "View legal notice and imprint",

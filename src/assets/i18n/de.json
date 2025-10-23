@@ -53,15 +53,15 @@
   },
   "aboutMe": {
     "title": "Über mich",
-    "subtitle": "Wer ich bin",
+    "subtitle": "Wer bin ich?",
     "mainTitle": "Über mich",
-    "introText": "Hallo! Ich bin Mihaela, eine Frontend-Entwicklerin, die glaubt, dass Technologie schön, zugänglich und für jeden Menschen bereichernd sein sollte. Ich liebe es, intuitive und inklusive digitale Erlebnisse zu schaffen, die das Leben der Menschen verbessern.",
+    "introText": "Hallo! Ich bin Mihaela, eine Frontend-Entwicklerin, die davon überzeugt ist, dass Technologie schön, zugänglich und sinnvoll sein sollte. Ich liebe es, Ideen in intuitive Benutzeroberflächen zu verwandeln, die Menschen gerne nutzen.",
     "visionTitle": "Meine Vision:",
-    "visionText": "Code ist Poesie, Design ist Storytelling und User Experience ist alles. Ich liebe es, Ideen in interaktive Realitäten zu verwandeln, die Nutzer einfach lieben müssen.",
+    "visionText": "Für mich ist Code eine Form der Kreativität – jede Zeile erzählt eine Geschichte und jede Interaktion schafft eine Erfahrung.",
     "locationTitle": "Grenzenlos:",
-    "locationText": "Wolfsburg ist meine Basis, aber mein Ehrgeiz kennt keine Grenzen - bereit für Remote-Projekte, die alles verändern.",
-    "growthTitle": "Immer wachsend:",
-    "growthText": "In einem Bereich, der sich niemals aufhört zu verändern, höre ich niemals auf zu lernen. Jeder Tag bringt neue Möglichkeiten zu wachsen, zu erschaffen und Einfluss zu nehmen. Bereit zur Zusammenarbeit und etwas Außergewöhnliches zu schaffen?"
+    "locationText": "Von Wolfsburg aus arbeite ich an Projekten, die Design, Innovation und Empathie verbinden.",
+    "growthTitle": "Ständige Weiterentwicklung: ",
+    "growthText": " In einer sich ständig verändernden Welt lerne ich jeden Tag Neues, experimentiere und schaffe Erlebnisse, die die Herzen der Menschen berühren."
   },
   "portfolio": {
     "subtitle": "Portfolio",
@@ -112,7 +112,7 @@
   },
   "footer": {
     "logoAriaLabel": "Zum Seitenanfang scrollen",
-    "role": "Web-Entwicklerin",
+    "role": "Frontend-Entwicklerin",
     "location": "Wolfsburg, Deutschland",
     "legalNotice": "Impressum",
     "legalNoticeAriaLabel": "Impressum und rechtliche Hinweise anzeigen",
