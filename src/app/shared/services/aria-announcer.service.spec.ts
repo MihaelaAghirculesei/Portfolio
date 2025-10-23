@@ -204,6 +204,10 @@ describe('AriaAnnouncerService', () => {
 
   describe('Server Platform', () => {
     beforeEach(() => {
+      // Cleanup any leftover live regions from previous tests
+      const elements = document.querySelectorAll('.sr-only');
+      elements.forEach(el => el.remove());
+
       TestBed.configureTestingModule({
         providers: [
           AriaAnnouncerService,

@@ -157,6 +157,7 @@ $button-margin-vertical: calc($spacing-xl * 2);
 
     .edgeLine-left {
       @include edgeLine(left);
+      left: 10px;
 
       .arrowDown {
         @include arrowButton();
@@ -179,6 +180,7 @@ $button-margin-vertical: calc($spacing-xl * 2);
 
     .edgeLine-right {
       @include edgeLine(right);
+      right: 10px;
 
       .email-link {
         position: relative;
