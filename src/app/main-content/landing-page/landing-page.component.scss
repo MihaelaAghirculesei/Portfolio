@@ -4,7 +4,7 @@
 $header-padding-top: 98px;
 $dot-indicator-size: 6px;
 $dot-indicator-offset: -1px;
-$dot-hover-distance: 10px;
+$dot-hover-distance: 7px;
 $arrow-bounce-duration: 2s;
 $arrow-bounce-offset-start: -5px;
 $arrow-bounce-offset-end: 6px;
@@ -252,7 +252,7 @@ $button-margin-vertical: calc($spacing-xl * 2);
   }
 }
 
-@media (min-width: 1441px) {
+@media (min-width: 1440px) {
   .headLine .contentWrapper {
     @include edgeLineHeight($edge-line-height-large);
   }
