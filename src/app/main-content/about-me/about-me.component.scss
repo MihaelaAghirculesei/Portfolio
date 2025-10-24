@@ -108,7 +108,7 @@
   @include mobile-layout(min(60vw, 350px), 30px);
 }
 
-@media (min-width: $desktop-min) and (max-width: $desktop-max) {
+@media (min-width: $desktop-min) and (max-width: 1199px) {
   .aboutMeWrapper {
     @include responsive-typography($typography-desktop);
     margin-top: calc($about-wrapper-margin-top - 40px);
@@ -119,6 +119,21 @@
   }
   .imgDiv {
     @include imageContainer(460px);
+    padding-left: calc($content-margin-base - 10px);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .aboutMeWrapper {
+    @include responsive-typography($typography-desktop);
+    margin-top: calc($about-wrapper-margin-top - 40px);
+  }
+  .contentWrapper {
+    gap: calc($content-gap-base - 20px);
+    margin: 0 calc($content-margin-base - 10px);
+  }
+  .imgDiv {
+    @include imageContainer(650px);
     padding-left: calc($content-margin-base - 10px);
   }
 }
@@ -138,7 +153,7 @@
     gap: 40px;
   }
   .imgDiv {
-    @include imageContainer(300px);
+    @include imageContainer(500px);
     padding-left: 20px;
     transform: translateY(-10px);
     &:hover {
@@ -164,7 +179,7 @@
     padding: calc($section-padding + 40px) 0 0 0;
   }
   .imgDiv {
-    @include imageContainer(620px);
+    @include imageContainer(700px);
     transform: translateY(-40px) !important;
     &:hover {
       transform: translateY(-45px) !important;
@@ -177,7 +192,7 @@
     gap: calc($content-gap-base + 20px);
   }
   .imgDiv {
-    @include imageContainer(620px);
+    @include imageContainer(700px);
   }
 }
 
