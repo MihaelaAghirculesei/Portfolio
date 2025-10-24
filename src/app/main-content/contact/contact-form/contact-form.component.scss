@@ -70,19 +70,6 @@ input:-webkit-autofill:active {
         @include primary-font;
         color: $white;
         outline: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        cursor: pointer;
-
-        &:hover {
-          cursor: text;
-        }
-
-        &:focus {
-          cursor: text;
-        }
 
         &.invalid {
           border-color: $alert-text;

@@ -79,6 +79,19 @@ h3 {
   margin: 0;
   color: $main-color;
   @include primary-font;
+  cursor: default;
+  user-select: none;
+}
+
+p,
+span {
+  cursor: default;
+  user-select: none;
+}
+
+label:not(label[for]) {
+  cursor: default;
+  user-select: none;
 }
 
 button {
@@ -90,11 +103,21 @@ button {
   background-color: transparent;
   color: white;
   @include primary-font;
+  cursor: pointer;
 
   &:hover {
     border: 2px solid $main-color;
-    cursor: pointer;
   }
+}
+
+a {
+  cursor: pointer;
+}
+
+input,
+textarea {
+  cursor: text;
+  user-select: text;
 }
 
 @font-face {
