@@ -128,7 +128,7 @@
 }
 
 #projects {
-  padding: 0;
+  padding: 15px;
   background-color: $gradient-start;
   @include dFlex(center, center);
   scroll-margin-top: 150px;
@@ -137,19 +137,21 @@
     text-align: left;
     max-width: 1440px;
     width: 100%;
-    margin: 0 40px;
+    margin: 0;
+    padding: 0;
 
     > h2 {
       color: $main-color;
       @include responsive-font(56px, 48px, 40px, 33px);
       @include primary-font;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin: 0 0 10px 0;
     }
 
     > h3 {
       @include text("Fira Code", 42px, $main-color, 400);
       @include responsive-font(42px, 36px, 30px, 25px);
+      margin: 0;
     }
 
     > p {

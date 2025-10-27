@@ -3,14 +3,15 @@
 section {
   background-color: $gradient-start;
   text-align: center;
-  padding: 0 $spacing-md;
+  padding: 15px;
+  margin: 0;
 
   > h2 {
     color: $main-color;
     @include primary-font;
     font-weight: 700;
-    margin-bottom: $spacing-xl;
-    padding-top: $spacing-xxl;
+    margin: 0;
+    padding: $spacing-xxl 0 $spacing-xl 0;
   }
   .slider-container {
     position: relative;
@@ -215,7 +216,6 @@ padding: 0;
 
 @media (max-width: 768px) {
 section {
-padding: 0 $spacing-lg;
 .slider-container {
 padding: 0 $spacing-xxl;
 .feedback-wrapper .feedback-card {
@@ -245,7 +245,6 @@ width: 100px;
 }
 @media (max-width: 450px) {
 section {
-padding: 0 8px;
 .slider-container {
 padding: 0 20px;
 .feedback-wrapper {
