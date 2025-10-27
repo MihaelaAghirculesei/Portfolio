@@ -5,7 +5,7 @@
   min-height: 900px;
   width: 100%;
   @include dFlex(center, center);
-  padding: $section-padding 0 10px 0;
+  padding: 15px;
   overflow: hidden;
 }
 
@@ -13,7 +13,8 @@
   max-width: $content-max-width;
   width: 100%;
   gap: $content-gap-base;
-  margin: 0 $content-margin-base;
+  margin: 0;
+  padding: 0;
   color: white;
   @include dFlex(space-between, center);
   position: relative;
@@ -23,58 +24,76 @@
 
 .imgDiv {
   @include imageContainer();
-  padding-left: $content-margin-base;
+  padding: 0 0 25px 25px;
+  margin: 0;
 
   .lineDiv {
     @include decorativeLine();
+    left: -15px;
+    background: repeating-linear-gradient(
+      135deg,
+      $main-color 0px,
+      $main-color 2px,
+      transparent 2px,
+      transparent 12px
+    );
   }
 }
 
 .aboutMeWrapper {
   flex: 1;
-  margin-top: $about-wrapper-margin-top;
+  margin: 0;
+  padding: 0;
   text-align: left;
 
   h2 {
     @include primary-font;
-    margin-bottom: $h2-margin-bottom;
+    margin: 0;
+    padding: 0;
     font-size: map-get($typography-desktop, h2);
     font-weight: 700;
     opacity: 0.9;
   }
 
   .aboutMeDiv {
-    @include textBox(40px, 40px);
+    padding: 15px 0;
+    margin: 0;
 
     h3 {
       @include code-font;
       font-size: map-get($typography-desktop, h3);
       color: $main-color;
       font-weight: 400;
-      padding-left: 0;
-      margin-bottom: $h3-margin-bottom;
+      margin: 0;
+      padding: 0;
       text-align: left;
     }
 
     span {
       @include about-text-element;
       font-size: map-get($typography-desktop, text);
-      margin: $span-margin;
+      margin: 0;
+      padding: 0;
       display: block;
     }
 
     .aboutMePs {
       @include featureItem();
-      padding-left: 0;
       width: 100%;
       text-align: left;
-      margin-bottom: $feature-margin-bottom;
+      margin: 0;
+      padding: 0;
       font-size: map-get($typography-desktop, text);
       @include white-text-base;
+
+      .iconWrapper {
+        padding: 0;
+      }
 
       p {
         text-align: left;
         margin: 0;
+        padding: 15px 0;
         font-size: map-get($typography-desktop, text);
         @include white-text-base;
       }
@@ -89,52 +108,119 @@
 @media (max-width: $mobile-max) {
   .aboutMeWrapper {
     @include responsive-typography($typography-mobile);
-
-    .aboutMeDiv {
-      padding: 20px;
-    }
   }
   @include mobile-layout($small-icons: true);
+
+  .contentWrapper {
+    margin: 0;
+  }
+
+  .aboutMePs {
+    margin: 0;
+  }
+
+  .imgDiv {
+    padding-bottom: 0;
+
+    .lineDiv {
+      background: repeating-linear-gradient(
+        135deg,
+        $main-color 0px,
+        $main-color 2px,
+        transparent 2px,
+        transparent 8px
+      ) !important;
+    }
+  }
+
+  .lineDiv {
+    top: -10px;
+    height: 98%;
+  }
 }
 
 @media (min-width: $tablet-min) and (max-width: $tablet-max) {
   .aboutMeWrapper {
     @include responsive-typography($typography-tablet);
-
-    .aboutMeDiv {
-      padding: 30px;
-    }
   }
   @include mobile-layout(min(60vw, 350px), 30px);
+
+  .contentWrapper {
+    margin: 0;
+  }
+
+  .aboutMePs {
+    margin: 0;
+  }
+
+  .imgDiv {
+    padding-bottom: 0;
+
+    .imageContainer {
+      transform: translateX(10px);
+    }
+  }
+
+  .lineDiv {
+    top: -10px;
+    height: 98%;
+  }
 }
 
 @media (min-width: $desktop-min) and (max-width: 1199px) {
   .aboutMeWrapper {
     @include responsive-typography($typography-desktop);
-    margin-top: calc($about-wrapper-margin-top - 40px);
   }
   .contentWrapper {
-    gap: calc($content-gap-base - 20px);
-    margin: 0 calc($content-margin-base - 10px);
+    overflow: visible;
+    margin: 0;
+    padding: 0;
   }
   .imgDiv {
     @include imageContainer(460px);
-    padding-left: calc($content-margin-base - 10px);
+    padding-bottom: 0;
+    margin-top: -20px;
+    margin-left: 15px;
+  }
+  .lineDiv {
+    top: -15px;
+    left: -15px;
+    height: 98%;
   }
 }
 
 @media (min-width: 1200px) and (max-width: 1599px) {
   .aboutMeWrapper {
     @include responsive-typography($typography-desktop);
-    margin-top: calc($about-wrapper-margin-top - 40px);
   }
   .contentWrapper {
-    gap: calc($content-gap-base - 20px);
-    margin: 0 calc($content-margin-base - 10px);
+    overflow: visible;
+    margin: 0;
+    padding: 0;
   }
   .imgDiv {
     @include imageContainer(650px);
-    padding-left: calc($content-margin-base - 10px);
+    padding-bottom: 0;
+    margin-top: -20px;
+    margin-left: 15px;
+  }
+}
+
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .aboutMeSection {
+    min-height: 950px;
+  }
+  .contentWrapper {
+    overflow: visible;
+  }
+  .imgDiv {
+    padding-bottom: 0;
+    margin-top: -50px;
+    margin-left: 15px;
+  }
+  .lineDiv {
+    height: 95%;
+    left: -10px;
   }
 }
 
@@ -147,50 +233,34 @@
 @media (min-width: 1200px) and (max-height: 900px) {
   .aboutMeSection {
     min-height: 700px;
-    padding: 40px 0;
-  }
-  .contentWrapper {
-    gap: 40px;
   }
   .imgDiv {
     @include imageContainer(500px);
-    padding-left: 20px;
     transform: translateY(-10px);
+    margin-left: 15px;
     &:hover {
       transform: translateY(-15px);
     }
   }
   .aboutMeWrapper {
-    margin-top: 20px;
     flex: 2;
-  }
-  .lineDiv {
-    top: 20px;
-    left: -8px;
   }
 }
 
 @media (min-width: $large-screens-min) and (max-width: $desktop-max) {
   .contentWrapper {
-    gap: calc($content-gap-base + 20px);
     overflow: visible;
-  }
-  .aboutMeSection {
-    padding: calc($section-padding + 40px) 0 0 0;
   }
   .imgDiv {
     @include imageContainer(700px);
-    transform: translateY(-40px) !important;
+    transform: translateY(-40px);
     &:hover {
-      transform: translateY(-45px) !important;
+      transform: translateY(-45px);
     }
   }
 }
 
 @media (min-width: 1920px) {
-  .contentWrapper {
-    gap: calc($content-gap-base + 20px);
-  }
   .imgDiv {
     @include imageContainer(700px);
   }
@@ -198,7 +268,6 @@
 
 @media (min-width: $ultra-wide-min) {
   .contentWrapper {
-    gap: calc($content-gap-base + 40px);
     max-width: $content-max-width;
   }
   .imgDiv {

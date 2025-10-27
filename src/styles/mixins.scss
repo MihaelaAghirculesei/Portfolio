@@ -6,6 +6,18 @@
   font-family: "Fira Code", monospace;
 }
 
+// Uniform spacing mixin - centralizes margin and padding
+@mixin uniform-spacing($padding: 15px, $margin: 0) {
+  margin: $margin;
+  padding: $padding;
+}
+
+// Reset all spacing
+@mixin reset-spacing {
+  margin: 0;
+  padding: 0;
+}
+
 @mixin responsive-typography($typography-map) {
   h1 {
     font-size: map-get($typography-map, h1);

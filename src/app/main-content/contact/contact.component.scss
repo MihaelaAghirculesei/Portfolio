@@ -1,7 +1,7 @@
 @import "../../../styles/styles.scss";
 
 section {
-  padding: 0 $spacing-lg $section-padding $spacing-lg;
+  padding: 15px;
   @include responsive-section-layout;
   background-color: $gradient-start;
   min-height: auto;
@@ -12,7 +12,8 @@ h3 {
   font-size: 36px;
   color: $main-color;
   font-weight: 400;
-  margin: $spacing-lg 0;
+  margin: 0;
+  padding: 15px 0;
   text-align: left;
   text-decoration: none;
 }
@@ -22,7 +23,8 @@ h2 {
   font-size: 48px;
   color: $main-color;
   font-weight: 700;
-  padding: $spacing-xl 0;
+  margin: 0;
+  padding: 15px 0;
   text-align: center;
 }
 
@@ -34,6 +36,8 @@ h2 {
   text-align: left;
   max-width: 100%;
   word-wrap: break-word;
+  margin: 0;
+  padding: 0;
 
   p {
     @include primary-font;
@@ -41,13 +45,15 @@ h2 {
     font-weight: 400;
     max-width: 100%;
     word-wrap: break-word;
-    margin: $spacing-sm 0;
+    margin: 0;
+    padding: 15px 0;
     line-height: 1.6;
   }
 }
 
 .contact-cta {
-  margin-top: $spacing-lg;
+  margin: 0;
+  padding: 15px 0;
 
   span {
     @include primary-font;
@@ -57,18 +63,27 @@ h2 {
     word-wrap: break-word;
     display: block;
     line-height: 1.5;
+    margin: 0;
+    padding: 0;
   }
 
   p {
     color: $main-color;
     font-weight: 700;
-    margin: $spacing-sm 0;
+    margin: 0;
+    padding: 15px 0;
     line-height: 1.5;
   }
 }
 
 .contentWrapper {
-  @include content-wrapper-responsive;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  @include dFlex(center, stretch);
+  gap: 60px;
+  flex-wrap: wrap;
   align-items: flex-start;
 }
 
@@ -85,7 +100,7 @@ app-contact-form {
 
 @media (min-width: 1430px) {
   .contentWrapper {
-    padding-right: 0;
+    padding: 0;
   }
 }
 
@@ -99,7 +114,7 @@ app-contact-form {
 
 @media (min-width: 769px) {
   h2 {
-    padding: $spacing-lg 0;
+    padding: 15px 0;
   }
 
   .contactDiv {
@@ -110,6 +125,8 @@ app-contact-form {
   .contentWrapper {
     justify-content: space-between;
     gap: 60px;
+    margin: 0;
+    padding: 0;
   }
 
   app-contact-form {
@@ -120,7 +137,7 @@ app-contact-form {
 
 @media (min-width: 1024px) and (max-width: 1024px) and (min-height: 1366px) and (max-height: 1366px) {
   section {
-    padding: 110px 0 $section-padding 0;
+    padding: 110px 15px 15px 15px;
   }
 }
 
@@ -130,7 +147,8 @@ app-contact-form {
   .contactDiv {
     flex: unset;
     width: 100%;
-    padding: 0 $spacing-md;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 
     p {
@@ -139,6 +157,9 @@ app-contact-form {
   }
 
   .contact-cta {
+    margin: 0;
+    padding: 15px 0;
+
     span {
       width: 100%;
       hyphens: auto;
@@ -155,6 +176,7 @@ app-contact-form {
 
 @media (max-width: 360px) {
   .contactDiv {
+    margin: 0;
     padding: 0;
 
     p {
@@ -162,7 +184,12 @@ app-contact-form {
     }
   }
 
-  .contact-cta span {
-    line-height: 1.2;
+  .contact-cta {
+    margin: 0;
+    padding: 15px 0;
+
+    span {
+      line-height: 1.2;
+    }
   }
 }
