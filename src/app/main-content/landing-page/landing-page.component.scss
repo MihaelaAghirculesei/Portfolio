@@ -266,13 +266,6 @@ app-banner-section {
 @media (max-width: $content-max-width) {
   .headLine .contentWrapper {
     width: 100%;
-    margin: 0;
-    padding: 0;
-
-    .edgeLine-right {
-      margin: 0;
-      padding: 0;
-    }
   }
 }
 
@@ -313,13 +306,8 @@ app-banner-section {
 
 @media (max-width: 580px) {
   .headLine .contentWrapper {
-    margin: 0;
-    padding: 0;
-
     p {
       font-size: $font-size-base;
-      margin: 0;
-      padding: 0;
       transform: translateY(-40px);
     }
 
@@ -335,14 +323,10 @@ app-banner-section {
     .buttonDiv {
       gap: 15px;
       flex-direction: column;
-      margin: 0;
-      padding: 15px 0;
     }
 
     .edgeLine-left {
       left: 0;
-      margin: 0;
-      padding: 0;
 
       .greenLineDown {
         height: calc($line-height-sm - 20px);
@@ -355,8 +339,6 @@ app-banner-section {
 
     .edgeLine-right {
       @include responsiveEdgeRightIcons;
-      margin: 0;
-      padding: 0;
       gap: 12px;
 
       .hero-right-line {
@@ -372,12 +354,9 @@ app-banner-section {
 
       .buttonDiv {
         gap: 15px;
-        margin: 0;
-        padding: 15px 0;
 
         .link-button {
           font-size: $font-size-base;
-          margin: 0;
           padding: 15px;
         }
       }

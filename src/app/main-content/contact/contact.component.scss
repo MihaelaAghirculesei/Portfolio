@@ -93,15 +93,8 @@ app-contact-form {
   max-width: 730px;
 }
 
-
 @media (min-width: $desktop-4k-min) {
   @include responsive-typography($typography-4k);
-}
-
-@media (min-width: 1430px) {
-  .contentWrapper {
-    padding: 0;
-  }
 }
 
 @media (min-width: $desktop-min) and (max-width: $desktop-max) {
@@ -113,10 +106,6 @@ app-contact-form {
 }
 
 @media (min-width: 769px) {
-  h2 {
-    padding: 15px 0;
-  }
-
   .contactDiv {
     flex: 0 0 45%;
     max-width: 600px;
@@ -125,8 +114,6 @@ app-contact-form {
   .contentWrapper {
     justify-content: space-between;
     gap: 60px;
-    margin: 0;
-    padding: 0;
   }
 
   app-contact-form {
@@ -147,8 +134,6 @@ app-contact-form {
   .contactDiv {
     flex: unset;
     width: 100%;
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 
     p {
@@ -157,9 +142,6 @@ app-contact-form {
   }
 
   .contact-cta {
-    margin: 0;
-    padding: 15px 0;
-
     span {
       width: 100%;
       hyphens: auto;
@@ -176,18 +158,12 @@ app-contact-form {
 
 @media (max-width: 360px) {
   .contactDiv {
-    margin: 0;
-    padding: 0;
-
     p {
       line-height: 1.2;
     }
   }
 
   .contact-cta {
-    margin: 0;
-    padding: 15px 0;
-
     span {
       line-height: 1.2;
     }

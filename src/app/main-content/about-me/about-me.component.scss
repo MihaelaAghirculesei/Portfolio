@@ -111,15 +111,8 @@
   }
   @include mobile-layout($small-icons: true);
 
-  .contentWrapper {
-    margin: 0;
-  }
-
-  .aboutMePs {
-    margin: 0;
-  }
-
   .imgDiv {
+    padding-left: 15px;
     padding-bottom: 0;
 
     .lineDiv {
@@ -145,14 +138,6 @@
   }
   @include mobile-layout(min(60vw, 350px), 30px);
 
-  .contentWrapper {
-    margin: 0;
-  }
-
-  .aboutMePs {
-    margin: 0;
-  }
-
   .imgDiv {
     padding-bottom: 0;
 
@@ -173,8 +158,6 @@
   }
   .contentWrapper {
     overflow: visible;
-    margin: 0;
-    padding: 0;
   }
   .imgDiv {
     @include imageContainer(460px);
@@ -195,8 +178,6 @@
   }
   .contentWrapper {
     overflow: visible;
-    margin: 0;
-    padding: 0;
   }
   .imgDiv {
     @include imageContainer(650px);
