@@ -324,10 +324,6 @@
   transition: transform $transition-base;
   will-change: transform;
 
-  &:hover {
-    transform: translateY(-20px);
-  }
-
   .imageContainer {
     position: relative;
     height: 100%;
