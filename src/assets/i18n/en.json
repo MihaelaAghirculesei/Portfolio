@@ -93,7 +93,7 @@
       "privacyText": "I've read the",
       "privacyLink": "privacy policy",
       "privacyTextEnd": "and agree to the processing of my data as outlined.",
-      "privacyError": "Privacy policy acceptance is required.",
+      "privacyError": "Please accept the privacy policy.",
       "submitButton": "Say Hello :)",
       "submitting": "Sending...",
       "successTitle": "Success!",

@@ -2,6 +2,7 @@
 
 section {
   padding: 15px;
+  margin: 0;
   @include responsive-section-layout;
   background-color: $gradient-start;
   min-height: auto;

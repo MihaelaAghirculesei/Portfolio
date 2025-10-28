@@ -30,6 +30,8 @@ input:-webkit-autofill:active {
   flex: 1;
   max-height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 
   form {
     @include dFlex(center, flex-start);
@@ -37,7 +39,8 @@ input:-webkit-autofill:active {
     height: auto;
     width: 100%;
     max-width: 730px;
-    padding: calc($content-margin-base / 2);
+    margin: 0;
+    padding: 0;
 
     .inputText {
       @include dFlex(center, start);
@@ -86,14 +89,16 @@ input:-webkit-autofill:active {
     }
 
     .checkboxDiv {
-      @include dFlex(center, center);
+      @include dFlex(center, flex-start);
+      flex-direction: column;
       width: 100%;
       padding: 16px 0;
+      position: relative;
+      min-height: 60px;
 
       .checkbox-container {
         @include dFlex(flex-start, center);
         position: relative;
-        cursor: pointer;
         user-select: none;
         gap: 16px;
 
@@ -101,12 +106,15 @@ input:-webkit-autofill:active {
           position: absolute;
           opacity: 0;
           cursor: pointer;
-          height: 0;
-          width: 0;
+          height: 22px;
+          width: 22px;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          margin: 0;
           &:hover {
             ~ {
               .checkmark {
-                border: 2px solid $main-color;
                 box-shadow: 0 0 20px $main-color-rgba;
               }
             }
@@ -115,7 +123,6 @@ input:-webkit-autofill:active {
             ~ {
               .checkmark {
                 box-shadow: 0 0 20px $main-color-rgba;
-                border: 2px solid $main-color;
                 &:after {
                   display: block;
                 }
@@ -135,14 +142,13 @@ input:-webkit-autofill:active {
           display: inline-block;
           width: 22px;
           height: 22px;
-          margin-right: 16px;
+          margin: 0;
           position: relative;
-          top: 0;
-          left: 0;
           border: 2px solid $main-color;
           border-radius: 5px;
           transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
           flex-shrink: 0;
+          pointer-events: none;
           &:after {
             content: "";
             position: absolute;
@@ -161,7 +167,11 @@ input:-webkit-autofill:active {
           @include primary-font;
           color: $white;
           padding: 0;
+          pointer-events: none;
+          cursor: default;
           a.privacy-policy-link {
+            pointer-events: auto;
+            cursor: pointer;
             color: $main-color;
             &:hover {
               text-decoration: underline;
@@ -176,8 +186,12 @@ input:-webkit-autofill:active {
       .alert-text {
         @include primary-font;
         color: $alert-text;
-        margin: $content-margin-base 0;
-        padding: 0 $content-margin-base;
+        margin: 0;
+        padding: 0 0 0 38px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
       }
     }
   }
@@ -342,11 +356,9 @@ input[type="submit"] {
   @include responsive-typography($typography-mobile);
 
   .formDiv {
-    padding: 20px;
-
     form {
-      padding: 0;
       .inputText {
+        padding: 10px 0;
         label {
           padding: 0 16px;
         }
@@ -356,13 +368,6 @@ input[type="submit"] {
         }
         .alert-text {
           padding: 0 16px;
-        }
-      }
-      .checkboxDiv {
-        .checkbox-container {
-          .alert-text {
-            padding: 0;
-          }
         }
       }
     }
@@ -375,6 +380,11 @@ input[type="submit"] {
 
   .popup-footer button {
     padding: 6px 16px;
+  }
+
+  input[type="submit"] {
+    display: block;
+    margin: 45px auto 24px auto;
   }
 }
 

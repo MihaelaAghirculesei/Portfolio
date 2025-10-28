@@ -90,7 +90,7 @@
     <hr />
 
     <div class="checkboxDiv">
-      <label class="checkbox-container" for="data-privacy-checkbox">
+      <div class="checkbox-container">
         <input
           (change)="checkboxChanged(); validateForm('checkbox')"
           #privacypolicy="ngModel"
@@ -118,7 +118,7 @@
           </a>
           {{ "contact.form.privacyTextEnd" | translate }}
         </span>
-      </label>
+      </div>
       @if ((privacypolicy.invalid && (privacypolicy.dirty ||
       privacypolicy.touched)) || checkboxWasCheckedBefore &&
       !contactData.privacypolicy) {

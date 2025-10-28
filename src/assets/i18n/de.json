@@ -93,7 +93,7 @@
       "privacyText": "Ich habe die",
       "privacyLink": "Datenschutzerklärung",
       "privacyTextEnd": "gelesen und stimme der Verarbeitung meiner Daten wie beschrieben zu.",
-      "privacyError": "Die Zustimmung zur Datenschutzerklärung ist erforderlich.",
+      "privacyError": "Bitte stimme der Datenschutzerklärung zu.",
       "submitButton": "Hallo sagen :)",
       "submitting": "Wird gesendet...",
       "successTitle": "Erfolg!",
