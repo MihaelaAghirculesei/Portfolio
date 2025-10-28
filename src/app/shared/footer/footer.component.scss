@@ -1,14 +1,15 @@
 @import "../../../styles/styles.scss";
 
-$footer-padding: 30px;
-$footer-padding-compact: 15px;
+$footer-padding: 12px;
+$footer-padding-compact: 8px;
 $footer-margin-top: -5px;
 $footer-content-padding: 20px;
+$footer-section-gap: 12px;
 
 $logo-width: 120px;
 $logo-height: 100px;
 $logo-margin-left: -25px;
-$logo-top-offset: -30px;
+$logo-top-offset: 0px;
 $logo-scale: 1.15;
 
 section {
@@ -23,38 +24,44 @@ section {
     max-width: $content-max-width;
     margin: 0 auto;
     padding: 0 $footer-content-padding;
+    display: flex;
+    flex-direction: column;
+    gap: $footer-section-gap;
   }
 
-  .footerWrapper {
+  .footer-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    min-height: 50px;
+    height: 50px;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px solid rgba($main-color, 0.2);
   }
 
   .logoDiv {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
+    align-items: center;
 
     button.logo-button {
       all: unset;
-      display: block;
+      display: flex;
       margin-left: $logo-margin-left;
-      padding-left: 20px;
-      position: relative;
-      top: $logo-top-offset;
-      z-index: 10;
       cursor: pointer;
-
-      @media (max-width: $tablet-max) {
-        top: calc($logo-top-offset + 35px);
-      }
+      align-items: center;
+      padding: 5px 0;
 
       > img {
         width: $logo-width;
-        height: $logo-height;
+        height: auto;
         cursor: pointer;
         transition: all $transition-base;
 
@@ -66,13 +73,29 @@ section {
         }
       }
     }
+  }
+
+  .location-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .location-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+
+      @media (min-width: $desktop-min) {
+        width: 28px;
+        height: 28px;
+      }
+    }
 
     div {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 4px;
-      padding-top: 5px;
+      gap: 2px;
 
       p {
         @include primary-font;
@@ -107,6 +130,10 @@ section {
       color: $main-color;
       font-weight: 400;
       margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
 
       @media (max-width: $mobile-max) {
         font-size: map-get($typography-mobile, text);
@@ -137,21 +164,8 @@ section {
         letter-spacing: 1px;
         position: relative;
         display: inline-block;
-        margin-right: 12px;
         overflow: hidden;
         contain: layout style paint;
-        vertical-align: baseline;
-        line-height: inherit;
-
-        @media (min-width: $tablet-min) {
-          vertical-align: text-bottom;
-          margin-top: -1px;
-        }
-
-        @media (min-width: $desktop-min) {
-          vertical-align: text-bottom;
-          margin-top: -2px;
-        }
 
         &::after {
           content: "";
@@ -187,34 +201,66 @@ section {
     }
   }
 
-  .linkDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
+  .legal-notice-link,
+  .privacy-policy-link {
+    @include primary-font;
+    font-size: map-get($typography-tablet, text);
+    color: $white;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all $transition-base;
 
-    > a {
-      @include primary-font;
-      font-size: map-get($typography-tablet, text);
-      color: $white;
-      font-weight: 400;
+    @media (max-width: $mobile-max) {
+      font-size: map-get($typography-mobile, text);
+    }
+
+    @media (min-width: $desktop-min) {
+      font-size: map-get($typography-desktop, text);
+    }
+
+    @media (min-width: $desktop-4k-min) {
+      font-size: map-get($typography-4k, text);
+    }
+
+    &:hover {
+      color: $main-color;
+      transform: translateY(-2px);
+    }
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .link-item {
+      display: flex;
+      align-items: center;
       cursor: pointer;
       text-decoration: none;
+      transition: all $transition-base;
 
-      @media (max-width: $mobile-max) {
-        font-size: map-get($typography-mobile, text);
-      }
+      .link-icon {
+        width: 28px;
+        height: 28px;
+        transition: all $transition-base;
 
-      @media (min-width: $desktop-min) {
-        font-size: map-get($typography-desktop, text);
-      }
-
-      @media (min-width: $desktop-4k-min) {
-        font-size: map-get($typography-4k, text);
+        @media (min-width: $desktop-min) {
+          width: 32px;
+          height: 32px;
+        }
       }
 
       &:hover {
-        color: $main-color;
+        transform: translateY(-2px);
+
+        .link-icon {
+          filter: brightness(1.3) drop-shadow(0 0 8px $main-color);
+        }
       }
     }
   }
@@ -224,39 +270,35 @@ section {
   section {
     padding: $footer-padding-compact 0;
 
-    .footerWrapper {
+    .content-width {
+      gap: 10px;
+    }
+
+    .footer-top {
       flex-wrap: wrap;
-      row-gap: 12px;
-      flex-direction: row;
+      row-gap: 8px;
+      height: auto;
+      min-height: auto;
     }
 
     .logoDiv {
-      width: 45%;
       order: 1;
-      gap: 4px;
 
-      div {
-        gap: 1px;
+      button.logo-button {
+        height: 45px;
 
-        p {
-          line-height: 1.1;
+        > img {
+          width: 100px;
+          height: auto;
+          top: -5px;
         }
       }
     }
 
-    .linkDiv {
-      width: 45%;
-      order: 2;
-      align-items: flex-end;
-      margin-top: 35px;
-      gap: 3px;
-    }
-
     .copyright {
-      width: 100%;
       order: 3;
-      text-align: center;
-      margin-top: 8px;
+      width: 100%;
+      margin-top: 0;
 
       p .name-effect {
         animation-duration: 4s;
@@ -266,18 +308,61 @@ section {
         }
       }
     }
+
+    .location-info {
+      order: 2;
+      gap: 8px;
+
+      .location-icon {
+        width: 22px;
+        height: 22px;
+      }
+
+      div p {
+        line-height: 1.2;
+      }
+    }
+
+    .footer-bottom {
+      padding-top: 8px;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .legal-notice-link,
+    .privacy-policy-link {
+      order: 2;
+    }
+
+    .social-links {
+      gap: 20px;
+      position: static;
+      transform: none;
+      order: 1;
+    }
   }
 }
 
 @media (max-width: $mobile-max) {
   section {
-    .logoDiv,
-    .linkDiv {
-      width: 44%;
+    .logoDiv button.logo-button {
+      height: 40px;
+
+      > img {
+        width: 85px;
+        height: auto;
+        top: -5px;
+      }
     }
 
-    .logoDiv div {
-      padding-top: 0;
+    .location-info {
+      gap: 6px;
+
+      .location-icon {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     .copyright p .name-effect {
@@ -287,6 +372,15 @@ section {
         animation-duration: 7s;
       }
     }
+
+    .social-links {
+      gap: 16px;
+
+      .link-item .link-icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
   }
 }
 
@@ -294,12 +388,51 @@ section {
   section {
     padding: $footer-padding-compact 0;
 
-    .linkDiv {
-      gap: 2px;
+    .content-width {
+      gap: 8px;
     }
 
-    .footerWrapper {
-      row-gap: 10px;
+    .footer-top {
+      row-gap: 6px;
+      height: auto;
+      min-height: auto;
+    }
+
+    .logoDiv button.logo-button {
+      height: 36px;
+
+      > img {
+        width: 75px;
+        top: -4px;
+      }
+    }
+
+    .location-info {
+      gap: 6px;
+
+      .location-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .footer-bottom {
+      padding-top: 6px;
+      gap: 8px;
+    }
+
+    .social-links {
+      gap: 12px;
+
+      .link-item .link-icon {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    .legal-notice-link,
+    .privacy-policy-link {
+      font-size: 14px;
     }
   }
 }

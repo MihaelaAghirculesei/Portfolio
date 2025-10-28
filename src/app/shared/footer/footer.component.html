@@ -1,6 +1,6 @@
 <section>
   <div class="content-width">
-    <div class="footerWrapper">
+    <div class="footer-top">
       <div class="logoDiv">
         <button
           (click)="scrollToTop()"
@@ -20,58 +20,87 @@
             loading="lazy"
           />
         </button>
+      </div>
+
+      <div class="copyright">
+        <p>
+          <span>&copy;</span>
+          <span class="name-effect">Mihaela Melania Aghirculesei</span>
+          <span class="year-highlight">{{ currentYear }}</span>
+        </p>
+      </div>
+
+      <div class="location-info">
+        <img
+          src="assets/img/about-me/location.svg"
+          alt="Location"
+          class="location-icon"
+          loading="lazy"
+        />
         <div>
           <p>{{ "footer.role" | translate }}</p>
           <p>{{ "footer.location" | translate }}</p>
         </div>
       </div>
+    </div>
 
-      <div class="copyright">
-        <p>
-          &copy; <span class="name-effect">Mihaela Melania Aghirculesei</span>
-          <span class="year-highlight">{{ currentYear }}</span>
-        </p>
-      </div>
+    <div class="footer-bottom">
+      <a
+        routerLink="/legal-notice"
+        class="legal-notice-link"
+        [attr.aria-label]="'footer.legalNoticeAriaLabel' | translate"
+      >
+        {{ "footer.legalNotice" | translate }}
+      </a>
 
-      <div class="linkDiv">
+      <div class="social-links">
         <a
           target="_blank"
           href="https://github.com/MihaelaAghirculesei"
-          class="link-hover-dot-left"
+          class="link-item"
           [attr.aria-label]="'footer.links.githubAriaLabel' | translate"
         >
-          {{ "footer.links.github" | translate }}
+          <img
+            src="assets/img/landingPage/github_green.svg"
+            alt="GitHub"
+            class="link-icon"
+            loading="lazy"
+          />
         </a>
         <a
           target="_blank"
           href="https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/"
-          class="link-hover-dot-left"
+          class="link-item"
           [attr.aria-label]="'footer.links.linkedinAriaLabel' | translate"
         >
-          {{ "footer.links.linkedin" | translate }}
+          <img
+            src="assets/img/landingPage/linkedin_green.svg"
+            alt="LinkedIn"
+            class="link-icon"
+            loading="lazy"
+          />
         </a>
         <a
           href="mailto:kontakt&#64;mihaela-melania-aghirculesei.de"
-          class="link-hover-dot-left"
+          class="link-item"
           [attr.aria-label]="'footer.links.emailAriaLabel' | translate"
         >
-          {{ "footer.links.email" | translate }}
-        </a>
-        <a
-          routerLink="/legal-notice"
-          class="link-hover-dot-left"
-          [attr.aria-label]="'footer.legalNoticeAriaLabel' | translate"
-        >
-          {{ "footer.legalNotice" | translate }}
-        </a>
-        <a
-          routerLink="/privacy-policy"
-          class="link-hover-dot-left"
-          [attr.aria-label]="'footer.privacyPolicyAriaLabel' | translate"
-        >
-          {{ "footer.privacyPolicy" | translate }}
+          <img
+            src="assets/img/landingPage/mail.svg"
+            alt="Email"
+            class="link-icon"
+            loading="lazy"
+          />
         </a>
       </div>
+
+      <a
+        routerLink="/privacy-policy"
+        class="privacy-policy-link"
+        [attr.aria-label]="'footer.privacyPolicyAriaLabel' | translate"
+      >
+        {{ "footer.privacyPolicy" | translate }}
+      </a>
     </div>
   </div>
 </section>
