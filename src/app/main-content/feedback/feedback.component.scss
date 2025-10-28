@@ -86,9 +86,13 @@ position: absolute;
 top: -16px;
 left: 22%;
 z-index: 10;
-filter: brightness(0) invert(1);
-pointer-events: none;
-}
+  filter: brightness(0) invert(1);
+    pointer-events: none;
+    transition: opacity 0.3s ease;  }
+  
+  .quotes-overlay.hidden {
+    opacity: 0;
+  }
 .dots.dots {
 display: flex;
 justify-content: center;

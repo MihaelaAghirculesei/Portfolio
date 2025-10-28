@@ -340,9 +340,7 @@ section {
     }
 
     .footer-top {
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
+      row-gap: 6px;
       height: auto;
       min-height: auto;
     }

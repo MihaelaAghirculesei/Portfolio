@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { AriaAnnouncerService } from './aria-announcer.service';
 import { TIMING_CONFIG } from '../constants/app.constants';
@@ -184,6 +184,7 @@ describe('AriaAnnouncerService', () => {
         expect(liveRegionElement?.textContent).toBe(message);
 
         tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        flush();
       }));
 
       it('should use configured clear delay', fakeAsync(() => {
