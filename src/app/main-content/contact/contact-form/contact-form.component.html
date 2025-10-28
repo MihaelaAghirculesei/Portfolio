@@ -115,6 +115,7 @@
           {{ "contact.form.privacyText" | translate }}
           <a
             routerLink="/privacy-policy"
+            (click)="saveScrollPosition()"
             class="privacy-policy-link"
             [attr.aria-label]="'contact.form.privacyLink' | translate"
           >

@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, Location } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ export class PrivacyPolicyComponent implements OnInit {
   constructor(
     public translateService: TranslateService,
     private router: Router,
+    private location: Location,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
@@ -33,9 +34,7 @@ export class PrivacyPolicyComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/']).catch((error) => {
-      this.logger.error('Navigation to home failed:', error);
-    });
+    this.location.back();
   }
 
   get isGerman(): boolean {

@@ -41,6 +41,7 @@ interface ErrorLike {
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   private readonly FORM_STORAGE_KEY = 'contact-form-data';
+  private readonly SCROLL_STORAGE_KEY = 'contact-scroll-position';
   http = inject(HttpClient);
   translate = inject(TranslateService);
   cdr = inject(ChangeDetectorRef);
@@ -77,6 +78,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadFormData();
+    setTimeout(() => this.restoreScrollPosition(), 100);
   }
 
   private saveFormData(): void {
@@ -110,6 +112,27 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   onFormDataChange(): void {
     this.saveFormData();
+  }
+
+  saveScrollPosition(): void {
+    try {
+      const scrollY = window.scrollY || window.pageYOffset;
+      sessionStorage.setItem(this.SCROLL_STORAGE_KEY, scrollY.toString());
+    } catch (error) {
+      this.logger.error('Failed to save scroll position', error);
+    }
+  }
+
+  private restoreScrollPosition(): void {
+    try {
+      const savedPosition = sessionStorage.getItem(this.SCROLL_STORAGE_KEY);
+      if (savedPosition) {
+        window.scrollTo(0, parseInt(savedPosition, 10));
+        sessionStorage.removeItem(this.SCROLL_STORAGE_KEY);
+      }
+    } catch (error) {
+      this.logger.error('Failed to restore scroll position', error);
+    }
   }
 
   validateForm(field: string): void {
