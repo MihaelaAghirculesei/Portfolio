@@ -340,13 +340,16 @@ section {
     }
 
     .footer-top {
-      row-gap: 6px;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
       height: auto;
       min-height: auto;
     }
 
     .logoDiv button.logo-button {
       height: 36px;
+      margin-left: 0;
 
       > img {
         width: 75px;
