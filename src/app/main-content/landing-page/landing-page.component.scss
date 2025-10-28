@@ -189,10 +189,13 @@ $edge-line-height-large: 255px;
         font-size: calc($font-size-base + $email-font-size-offset);
         writing-mode: vertical-rl;
         transform: scale(-1);
+        transition: transform 0.6s ease-out, color 0.3s ease;
 
         &:hover,
         &:focus-visible {
           color: $white;
+          transform: scale(-1.1);
+          transition: transform 0.3s ease-in, color 0.3s ease;
 
           .email-text::before {
             transform: translateX(-$dot-hover-distance) scale(1);

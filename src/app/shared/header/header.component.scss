@@ -122,34 +122,7 @@ header {
   width: auto;
   height: $logo-width;
   cursor: pointer;
-  transition: all $transition-base;
-
-  &:hover {
-    transform: scale($logo-scale) translateY($logo-translate-y);
-    filter: drop-shadow(0 10px 20px $shadow-medium)
-      drop-shadow(0 0 20px $main-color-60);
-    animation: shakeFloat 0.6s ease-in-out;
-  }
-}
-
-@keyframes shakeFloat {
-  0% {
-    transform: scale($logo-scale) translateY($logo-translate-y) translateX(0);
-  }
-  25% {
-    transform: scale($logo-scale) translateY($logo-translate-y-md)
-      translateX(-$logo-translate-x);
-  }
-  50% {
-    transform: scale($logo-scale) translateY($logo-translate-y-lg) translateX(0);
-  }
-  75% {
-    transform: scale($logo-scale) translateY($logo-translate-y-md)
-      translateX($logo-translate-x);
-  }
-  100% {
-    transform: scale($logo-scale) translateY($logo-translate-y) translateX(0);
-  }
+  @include smoothHoverEffect();
 }
 
 @keyframes pulse {
