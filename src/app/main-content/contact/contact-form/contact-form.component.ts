@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -39,7 +39,8 @@ interface ErrorLike {
   styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactFormComponent implements OnDestroy {
+export class ContactFormComponent implements OnInit, OnDestroy {
+  private readonly FORM_STORAGE_KEY = 'contact-form-data';
   http = inject(HttpClient);
   translate = inject(TranslateService);
   cdr = inject(ChangeDetectorRef);
@@ -73,6 +74,43 @@ export class ContactFormComponent implements OnDestroy {
       },
     },
   };
+
+  ngOnInit(): void {
+    this.loadFormData();
+  }
+
+  private saveFormData(): void {
+    try {
+      sessionStorage.setItem(this.FORM_STORAGE_KEY, JSON.stringify(this.contactData));
+    } catch (error) {
+      this.logger.error('Failed to save form data to sessionStorage', error);
+    }
+  }
+
+  private loadFormData(): void {
+    try {
+      const savedData = sessionStorage.getItem(this.FORM_STORAGE_KEY);
+      if (savedData) {
+        const parsedData = JSON.parse(savedData) as ContactData;
+        this.contactData = parsedData;
+        this.cdr.markForCheck();
+      }
+    } catch (error) {
+      this.logger.error('Failed to load form data from sessionStorage', error);
+    }
+  }
+
+  private clearFormData(): void {
+    try {
+      sessionStorage.removeItem(this.FORM_STORAGE_KEY);
+    } catch (error) {
+      this.logger.error('Failed to clear form data from sessionStorage', error);
+    }
+  }
+
+  onFormDataChange(): void {
+    this.saveFormData();
+  }
 
   validateForm(field: string): void {
     this.invalidFields = this.invalidFields.filter((f) => f !== field);
@@ -136,6 +174,7 @@ export class ContactFormComponent implements OnDestroy {
             } else {
               this.submissionStatus = 'success';
               this.invalidFields = [];
+              this.clearFormData();
               this.showPopupWithAnnouncement('contact.form.successMessage');
             }
 
@@ -153,6 +192,7 @@ export class ContactFormComponent implements OnDestroy {
         });
     } else if (ngForm.submitted && ngForm.form.valid && this.mailTest) {
       this.submissionStatus = 'success';
+      this.clearFormData();
       ngForm.resetForm();
       this.checkboxWasCheckedBefore = false;
       this.invalidFields = [];
