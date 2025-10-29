@@ -535,6 +535,7 @@
         width: 500px;
         height: 350px;
         object-fit: cover;
+        object-position: left center;
         box-shadow: 0 4px 8px $shadow-light;
         display: block;
       }
@@ -547,6 +548,7 @@
     img {
       width: 530px !important;
       height: 560px !important;
+      object-position: left center;
     }
   }
 }
@@ -749,6 +751,7 @@
     img {
       width: 500px;
       height: 350px;
+      object-position: left center;
       display: block;
     }
   }
@@ -890,6 +893,7 @@
           height: 350px;
           max-width: 100%;
           object-fit: cover;
+          object-position: left center;
           display: block;
         }
       }
@@ -955,6 +959,7 @@
 
         img {
           margin: 0 auto;
+          object-position: left center;
           display: block;
         }
       }
@@ -1052,6 +1057,7 @@
         img {
           max-height: 200px;
           min-height: 120px;
+          object-position: left center;
           margin: 0 auto;
           display: block;
         }
@@ -1086,6 +1092,7 @@
     img {
       max-height: 180px;
       min-height: 100px;
+      object-position: left center;
       margin: 0 auto;
       display: block;
     }
@@ -1116,6 +1123,7 @@
     img {
       max-height: 160px;
       min-height: 90px;
+      object-position: left center;
       margin: 0 auto;
       display: block;
     }
