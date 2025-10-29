@@ -231,10 +231,15 @@
   display: block;
   position: absolute;
   right: -25px;
-  top: 50% !important;
-  transform: translateY(-50%);
   transition: opacity $transition-base;
   opacity: 1;
+
+  &[data-project-id="0"],
+  &[data-project-id="1"],
+  &[data-project-id="2"] {
+    top: 50% !important;
+    transform: translateY(-50%);
+  }
 
   .imageContainer {
     position: relative;
@@ -260,7 +265,6 @@
       background: repeating-linear-gradient(135deg, $main-color 0px, $main-color 2px, transparent 2px, transparent 12px);
       opacity: 0.8;
       z-index: 1;
-      transition: opacity 0.4s ease-in-out;
     }
   }
 }
@@ -622,7 +626,47 @@
   }
 }
 
+@media only screen and (min-width: 1440px) and (max-width: 1919px) {
+  #projects .projectWrapper .projects-hover-content {
+    &[data-project-id="0"],
+    &[data-project-id="1"],
+    &[data-project-id="2"] {
+      top: 50% !important;
+      transform: translateY(-50%);
+    }
+  }
+
+  #projects .projectWrapper .projects-hover-content .imageContainer.imageContainer {
+    margin-top: -20px;
+
+    img {
+      width: 420px;
+      height: 300px;
+      padding-right: 21px;
+      margin-top: -20px;
+      transform: translate(-30px, -20px);
+    }
+
+    .lineDiv {
+      width: 420px;
+      height: 300px;
+      padding-right: 42px;
+      padding-bottom: 72px;
+      left: -20px;
+    }
+  }
+}
+
 @media only screen and (min-width: 1920px) {
+  #projects .projectWrapper .projects-hover-content {
+    &[data-project-id="0"],
+    &[data-project-id="1"],
+    &[data-project-id="2"] {
+      top: 50% !important;
+      transform: translateY(-50%);
+    }
+  }
+
   #projects .projectWrapper .projects-hover-content .imageContainer.imageContainer {
     margin-top: -20px;
 
@@ -663,6 +707,15 @@
 }
 
 @media (min-width: $tablet-min) and (max-width: $desktop-max) {
+  #projects .projectWrapper .projects-hover-content {
+    &[data-project-id="0"],
+    &[data-project-id="1"],
+    &[data-project-id="2"] {
+      top: 50% !important;
+      transform: translateY(-50%);
+    }
+  }
+
   #projects .projectWrapper .projects-hover-content .imageContainer.imageContainer {
     margin-top: -20px;
 
@@ -670,10 +723,6 @@
       margin-top: -20px;
       padding-right: 15px;
     }
-  }
-
-  #projects .projectWrapper .projects-hover-content[data-project-id="0"] .imageContainer.imageContainer {
-    margin-top: 20px;
   }
 }
 
