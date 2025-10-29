@@ -231,9 +231,10 @@
   display: block;
   position: absolute;
   right: -25px;
-  transition: top $transition-base;
+  top: 50% !important;
+  transform: translateY(-50%);
+  transition: opacity $transition-base;
   opacity: 1;
-  transform: translateY(0);
 
   .imageContainer {
     position: relative;
@@ -243,8 +244,8 @@
       width: 350px;
       height: 230px;
       object-fit: cover;
+      object-position: left center;
       transform: translate(-20px, -20px);
-      animation: fadeIn 0.3s ease-in-out;
       box-shadow: 0 8px 32px $shadow-medium;
       position: relative;
       z-index: 2;
@@ -259,6 +260,7 @@
       background: repeating-linear-gradient(135deg, $main-color 0px, $main-color 2px, transparent 2px, transparent 12px);
       opacity: 0.8;
       z-index: 1;
+      transition: opacity 0.4s ease-in-out;
     }
   }
 }
@@ -271,6 +273,55 @@
   to {
     opacity: 1;
     transform: translate(-20px, -20px) scale(1);
+  }
+}
+
+@keyframes softFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-20px, -20px) scale(0.98);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-20px, -20px) scale(1);
+  }
+}
+
+@keyframes delicateFade {
+  0% {
+    opacity: 0;
+    filter: blur(2px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes simpleFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleDown {
+  0% {
+    transform: translate(-20px, -20px) scale(1.08);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-20px, -20px) scale(1);
+    opacity: 1;
   }
 }
 
@@ -576,13 +627,19 @@
     margin-top: -20px;
 
     img {
+      width: 480px;
+      height: 360px;
       padding-right: 21px;
       margin-top: -20px;
+      transform: translate(-30px, -20px);
     }
 
     .lineDiv {
+      width: 480px;
+      height: 360px;
       padding-right: 42px;
       padding-bottom: 72px;
+      left: -20px;
     }
   }
 }
