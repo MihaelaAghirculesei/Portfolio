@@ -498,29 +498,67 @@ $scale-hover-small: 1.05;
   }
 }
 
+@media (min-width: 1025px) and (max-width: 1250px) {
+  .tooltip {
+    left: auto;
+    right: 100%;
+    margin-right: -80px;
+    top: -155px;
+    &::after {
+      left: auto;
+      right: 40px;
+      transform: none;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .tooltip {
+    left: auto;
+    right: 100%;
+    margin-right: -80px;
+    width: 180px;
+    height: 120px;
+    padding: 16px;
+    font-size: 14px;
+    top: -110px;
+    &::after {
+      left: auto;
+      right: 20px;
+      transform: none;
+      border-width: 8px;
+    }
+
+    > span {
+      font-size: 14px;
+    }
+  }
+
+  .future-skills {
+    gap: 12px;
+  }
+
+  .skillItem {
+    img {
+      width: 32px;
+      height: 32px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+
 @media (max-width: 420px) {
   .skillButtons {
     gap: 8px;
-  }
-  .tooltip {
-    left: 40px;
-    right: auto;
-    &::after {
-      left: 32px;
-      transform: none;
-    }
   }
 }
 
 @media (max-width: 340px) {
   .skillButtons {
     gap: 6px;
-  }
-  .tooltip {
-    left: 10px;
-    &::after {
-      left: 100px;
-    }
   }
 }
 
