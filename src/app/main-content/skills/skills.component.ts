@@ -33,7 +33,7 @@ export class SkillsComponent {
 
   readonly futureSkills: readonly SkillItem[] = [
     { url: 'assets/img/skills/react.svg', name: 'React' },
-    { url: 'assets/img/skills/vuejs.svg', name: 'Vue.js' },
+    { url: 'assets/img/skills/python.svg', name: 'Python' },
   ];
 
   constructor(private scrollService: ScrollService) {}

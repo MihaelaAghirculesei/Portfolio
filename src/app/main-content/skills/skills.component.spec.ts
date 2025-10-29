@@ -69,10 +69,10 @@ describe('SkillsComponent', () => {
       expect(component.futureSkills.length).toBe(2);
     });
 
-    it('should include React and Vue.js', () => {
+    it('should include React and Python', () => {
       const skillNames = component.futureSkills.map(item => item.name);
       expect(skillNames).toContain('React');
-      expect(skillNames).toContain('Vue.js');
+      expect(skillNames).toContain('Python');
     });
 
     it('should have correct React icon path', () => {
@@ -80,9 +80,9 @@ describe('SkillsComponent', () => {
       expect(react?.url).toBe('assets/img/skills/react.svg');
     });
 
-    it('should have correct Vue.js icon path', () => {
-      const vue = component.futureSkills.find(s => s.name === 'Vue.js');
-      expect(vue?.url).toBe('assets/img/skills/vuejs.svg');
+    it('should have correct Python icon path', () => {
+      const python = component.futureSkills.find(s => s.name === 'Python');
+      expect(python?.url).toBe('assets/img/skills/python.svg');
     });
   });
 
