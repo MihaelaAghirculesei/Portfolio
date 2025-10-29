@@ -276,21 +276,22 @@ section {
 
     .footer-bottom {
       padding-top: 8px;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .legal-notice-link,
     .privacy-policy-link {
-      order: 2;
+      white-space: nowrap;
+      font-size: 14px;
     }
 
     .social-links {
-      gap: 20px;
-      position: static;
-      transform: none;
-      order: 1;
+      gap: 16px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 }
