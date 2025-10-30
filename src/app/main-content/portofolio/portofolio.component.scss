@@ -230,7 +230,7 @@
 .projects-hover-content {
   display: block;
   position: absolute;
-  right: -25px;
+  right: 15px;
   transition: opacity $transition-base;
   opacity: 1;
 
@@ -246,8 +246,8 @@
     display: inline-block;
 
     img {
-      width: 350px;
-      height: 230px;
+      width: 370px;
+      height: 250px;
       object-fit: cover;
       object-position: left center;
       transform: translate(-20px, -20px);
@@ -260,8 +260,8 @@
       position: absolute;
       top: -15px;
       left: -10px;
-      width: 350px;
-      height: 230px;
+      width: 370px;
+      height: 250px;
       background: repeating-linear-gradient(135deg, $main-color 0px, $main-color 2px, transparent 2px, transparent 12px);
       opacity: 0.8;
       z-index: 1;
@@ -837,7 +837,25 @@
   }
 }
 
+@media (max-width: 1123px) {
+  .projects-hover-content {
+    &[data-project-id="0"],
+    &[data-project-id="1"],
+    &[data-project-id="2"] {
+      top: calc(50% + 40px) !important;
+    }
+  }
+}
+
 @media (max-width: 1070px) {
+  #projects .projectWrapper .projects-hover-content {
+    &[data-project-id="0"],
+    &[data-project-id="1"],
+    &[data-project-id="2"] {
+      top: calc(50% + 60px) !important;
+    }
+  }
+
   .project-modal-overlay {
     z-index: calc($z-modal-overlay + 10);
 

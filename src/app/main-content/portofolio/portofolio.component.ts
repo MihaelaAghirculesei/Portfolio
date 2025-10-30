@@ -14,15 +14,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import {
-  PassiveTouchStartDirective,
-  PassiveTouchEndDirective
-} from '../../shared/directives/passive-listeners.directive';
-import {
-  BREAKPOINTS,
-  PORTFOLIO_CONFIG,
-  TIMING_CONFIG
-} from '../../shared/constants/app.constants';
+import {PassiveTouchStartDirective, PassiveTouchEndDirective} from '../../shared/directives/passive-listeners.directive';
+import {BREAKPOINTS, PORTFOLIO_CONFIG, TIMING_CONFIG} from '../../shared/constants/app.constants';
 import { environment } from '../../../environments/environment';
 
 @Component({
