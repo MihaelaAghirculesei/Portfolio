@@ -16,6 +16,7 @@ export class FooterComponent {
   isHovered = false;
   currentYear = new Date().getFullYear();
   private readonly logger = inject(LoggerService);
+  private readonly SCROLL_STORAGE_KEY = 'contact-scroll-position';
 
   constructor(private scrollService: ScrollService, private router: Router) {}
 
@@ -26,6 +27,15 @@ export class FooterComponent {
       this.router.navigate(['/']).catch((error) => {
         this.logger.error('Navigation to home failed:', error);
       });
+    }
+  }
+
+  saveScrollPosition(): void {
+    try {
+      const scrollY = window.scrollY || window.pageYOffset;
+      sessionStorage.setItem(this.SCROLL_STORAGE_KEY, scrollY.toString());
+    } catch (error) {
+      this.logger.error('Failed to save scroll position', error);
     }
   }
 }

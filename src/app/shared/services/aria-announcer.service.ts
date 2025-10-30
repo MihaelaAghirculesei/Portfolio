@@ -7,6 +7,8 @@ import { TIMING_CONFIG } from '../constants/app.constants';
 })
 export class AriaAnnouncerService {
   private liveRegion: HTMLElement | null = null;
+  private announcementTimer?: ReturnType<typeof setTimeout>;
+  private clearTimer?: ReturnType<typeof setTimeout>;
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {
     if (isPlatformBrowser(this.platformId)) {
@@ -30,16 +32,19 @@ export class AriaAnnouncerService {
   announce(message: string, priority: 'polite' | 'assertive' = 'polite'): void {
     if (!this.liveRegion) {return;}
 
+    clearTimeout(this.announcementTimer);
+    clearTimeout(this.clearTimer);
+
     this.liveRegion.setAttribute('aria-live', priority);
     this.liveRegion.textContent = '';
 
-    setTimeout(() => {
+    this.announcementTimer = setTimeout(() => {
       if (this.liveRegion) {
         this.liveRegion.textContent = message;
       }
     }, TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
 
-    setTimeout(() => {
+    this.clearTimer = setTimeout(() => {
       if (this.liveRegion) {
         this.liveRegion.textContent = '';
       }

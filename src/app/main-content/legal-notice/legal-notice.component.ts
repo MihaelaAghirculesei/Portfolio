@@ -1,7 +1,7 @@
 import { Component, OnInit, PLATFORM_ID, Inject, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { LoggerService } from '../../shared/services/logger.service';
 
 interface ContactInfo {
@@ -51,7 +51,8 @@ export class LegalNoticeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: object
+    @Inject(PLATFORM_ID) private platformId: object,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -61,9 +62,7 @@ export class LegalNoticeComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/']).catch((error) => {
-      this.logger.error('Navigation to home failed:', error);
-    });
+    this.location.back();
   }
 
   get phoneLink(): string {

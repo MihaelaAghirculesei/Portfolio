@@ -47,6 +47,7 @@
         routerLink="/legal-notice"
         class="legal-notice-link"
         [attr.aria-label]="'footer.legalNoticeAriaLabel' | translate"
+        (click)="saveScrollPosition()"
       >
         {{ "footer.legalNotice" | translate }}
       </a>
@@ -96,6 +97,7 @@
         routerLink="/privacy-policy"
         class="privacy-policy-link"
         [attr.aria-label]="'footer.privacyPolicyAriaLabel' | translate"
+        (click)="saveScrollPosition()"
       >
         {{ "footer.privacyPolicy" | translate }}
       </a>
