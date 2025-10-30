@@ -798,11 +798,15 @@
   }
 }
 
-@media (max-width: $tablet-large-max) {
+@media (max-width: 944px) {
+  .projectWrapper .projects-hover-content {
+    right: 0;
+  }
   .projectWrapper .projects-hover-content .imageContainer {
     img {
       width: 220px;
       height: 145px;
+      transform: translate(-15px, -15px);
     }
 
     .lineDiv {
@@ -812,8 +816,7 @@
   }
 }
 
-@media (min-width: $tablet-medium-min) and (max-width: $tablet-small-min) {
-  .projectWrapper .projects-table.projects-table {
+@media (min-width: $tablet-medium-min) and (max-width: $tablet-small-min) {  .projectWrapper .projects-table.projects-table {
     width: 50%;
   }
 
