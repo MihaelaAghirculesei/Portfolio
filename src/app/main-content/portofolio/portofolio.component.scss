@@ -189,6 +189,7 @@
           .project-name {
             &::after {
               content: "↗";
+              position: absolute;
               margin-left: 8px;
               font-size: 18px;
               color: $main-color;
@@ -202,6 +203,7 @@
           @include code-font;
           font-weight: 700;
           color: $white;
+          position: relative;
 
           .arrow-icon {
             display: inline-block;
