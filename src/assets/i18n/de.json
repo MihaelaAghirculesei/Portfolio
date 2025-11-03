@@ -39,7 +39,7 @@
     "additionalSkillsTitle": "Sie benötigen",
     "additionalSkillsHighlight": "eine andere Fähigkeit?",
     "additionalSkillsText": "Sehen Sie die Technologie, die Ihr Projekt benötigt, nicht? Kein Problem! Meine Neugier und Entschlossenheit ermöglichen es mir, neue technologische Herausforderungen anzunehmen. Jedes Projekt ist eine Gelegenheit zu wachsen und maßgeschneiderte Lösungen für Ihre Bedürfnisse zu liefern.",
-    "ctaText": "Lass uns reden",
+    "ctaText": "Lassen Sie uns reden",
     "ctaAriaLabel": "Kontaktieren Sie mich, um Ihr Projekt zu besprechen",
     "tooltipText": "Ich habe besonderes Interesse am Lernen:"
   },
@@ -48,7 +48,7 @@
     "role": "Frontend Entwicklerin",
     "title": "Frontend Entwicklerin",
     "checkWork": "Meine Projekte",
-    "contactMe": "Kontaktiere mich",
+    "contactMe": "Kontaktieren Sie mich",
     "description": "Ich bin eine Frontend-Entwicklerin mit Sitz in Wolfsburg."
   },
   "aboutMe": {
@@ -74,32 +74,32 @@
     "closeModal": "Projektdetails schließen"
   },
   "contact": {
-    "title": "Kontaktiere mich",
-    "subtitle": "Lass uns zusammenarbeiten",
-    "question": "Hast du ein Problem zu lösen?",
+    "title": "Kontaktieren Sie mich",
+    "subtitle": "Lassen Sie uns zusammenarbeiten",
+    "question": "Haben Sie ein Problem zu lösen?",
     "description": "Ich suche aktiv nach Möglichkeiten, bei denen ich meine Angular-, TypeScript- und JavaScript-Expertise einsetzen kann, um außergewöhnliche Benutzererfahrungen zu schaffen, die den Geschäftserfolg vorantreiben.",
-    "needDeveloper": "Brauchst du eine Frontend-Entwicklerin?",
-    "letsTalk": "Lass uns sprechen!",
+    "needDeveloper": "Brauchen Sie eine Frontend-Entwicklerin?",
+    "letsTalk": "Lassen Sie uns sprechen!",
     "form": {
-      "nameLabel": "Wie ist dein Name?",
-      "namePlaceholder": "Dein Name kommt hierher",
-      "nameError": "Bitte gib mindestens 3 Buchstaben ein",
-      "emailLabel": "Wie ist deine E-Mail?",
-      "emailPlaceholder": "deineemail@email.com",
-      "emailError": "Deine E-Mail scheint ungültig zu sein",
-      "messageLabel": "Wie kann ich dir helfen?",
+      "nameLabel": "Wie ist Ihr Name?",
+      "namePlaceholder": "Ihr Name kommt hierher",
+      "nameError": "Bitte geben Sie mindestens 3 Buchstaben ein",
+      "emailLabel": "Wie ist Ihre E-Mail?",
+      "emailPlaceholder": "ihreemail@email.com",
+      "emailError": "Ihre E-Mail scheint ungültig zu sein",
+      "messageLabel": "Wie kann ich Ihnen helfen?",
       "messagePlaceholder": "Hallo Mihaela, ich interessiere mich für...",
-      "messageError": "Bitte gib mindestens 10 Zeichen ein",
+      "messageError": "Bitte geben Sie mindestens 10 Zeichen ein",
       "privacyText": "Ich habe die",
       "privacyLink": "Datenschutzerklärung",
       "privacyTextEnd": "gelesen und stimme der Verarbeitung meiner Daten wie beschrieben zu.",
-      "privacyError": "Bitte stimme der Datenschutzerklärung zu.",
-      "submitButton": "Hallo sagen :)",
+      "privacyError": "Bitte stimmen Sie der Datenschutzerklärung zu.",
+      "submitButton": "Nachricht senden",
       "submitting": "Wird gesendet...",
       "successTitle": "Erfolg!",
-      "successMessage": "Deine Nachricht wurde erfolgreich gesendet!",
+      "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!",
       "errorTitle": "Fehler",
-      "errorMessage": "Beim Senden deiner Nachricht ist ein Fehler aufgetreten.",
+      "errorMessage": "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten.",
       "closeButton": "Schließen"
     }
   },
@@ -129,7 +129,7 @@
   },
   "projects": {
     "join": {
-      "description": "Join Kanban Board ist die Projektmanagement-Revolution! Eine außergewöhnliche Anwendung, die jedes Projekt durch spektakuläre visuelle Boards und Echtzeit-Kollaboration zum Erfolg führt. Mit Join kannst du Aufgaben einfach organisieren, Fortschritte verfolgen und mit deinem Team in einer dynamischen und intuitiven Umgebung zusammenarbeiten. Verabschiede dich vom Chaos und begrüße die Produktivität! Join Kanban Board ist das perfekte Tool für Teams jeder Größe, von Startups bis zu großen Unternehmen. Erlebe die Zukunft des Projektmanagements mit Join Kanban Board und bringe deine Projekte auf die nächste Stufe. Dein nächster großer Sieg beginnt hier.",
+      "description": "Join Kanban Board ist die Projektmanagement-Revolution! Eine außergewöhnliche Anwendung, die jedes Projekt durch spektakuläre visuelle Boards und Echtzeit-Kollaboration zum Erfolg führt. Mit Join können Sie Aufgaben einfach organisieren, Fortschritte verfolgen und mit Ihrem Team in einer dynamischen und intuitiven Umgebung zusammenarbeiten. Verabschieden Sie sich vom Chaos und begrüßen Sie die Produktivität! Join Kanban Board ist das perfekte Tool für Teams jeder Größe, von Startups bis zu großen Unternehmen. Erleben Sie die Zukunft des Projektmanagements mit Join Kanban Board und bringen Sie Ihre Projekte auf die nächste Stufe. Ihr nächster großer Sieg beginnt hier.",
       "shortDescription": "Kanban Board Anwendung"
     },
     "elPolloLoco": {
