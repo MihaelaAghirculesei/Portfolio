@@ -407,7 +407,6 @@
     flex-shrink: 0;
     padding: 8px;
     border-radius: 12px;
-    background: $main-color-lighter;
     transition: transform $transition-base;
     @include dFlex(center, center);
 
