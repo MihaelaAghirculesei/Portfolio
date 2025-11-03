@@ -117,6 +117,7 @@
     "legalNotice": "Impressum",
     "legalNoticeAriaLabel": "Impressum und rechtliche Hinweise anzeigen",
     "privacyPolicy": "Datenschutzerklärung",
+    "privacyPolicyShort": "Datenschutz",
     "privacyPolicyAriaLabel": "Datenschutzerklärung anzeigen",
     "links": {
       "github": "GitHub",

@@ -95,11 +95,19 @@
 
       <a
         routerLink="/privacy-policy"
-        class="privacy-policy-link"
+        class="privacy-policy-link privacy-policy-full"
         [attr.aria-label]="'footer.privacyPolicyAriaLabel' | translate"
         (click)="saveScrollPosition()"
       >
         {{ "footer.privacyPolicy" | translate }}
+      </a>
+      <a
+        routerLink="/privacy-policy"
+        class="privacy-policy-link privacy-policy-short"
+        [attr.aria-label]="'footer.privacyPolicyAriaLabel' | translate"
+        (click)="saveScrollPosition()"
+      >
+        {{ "footer.privacyPolicyShort" | translate }}
       </a>
     </div>
   </div>

@@ -117,6 +117,7 @@
     "legalNotice": "Legal Notice",
     "legalNoticeAriaLabel": "View legal notice and imprint",
     "privacyPolicy": "Privacy Policy",
+    "privacyPolicyShort": "Privacy Policy",
     "privacyPolicyAriaLabel": "View privacy policy",
     "links": {
       "github": "GitHub",

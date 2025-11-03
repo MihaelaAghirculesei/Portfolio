@@ -198,6 +198,20 @@ section {
     }
   }
 
+  .privacy-policy-short {
+    display: none;
+  }
+
+  @media (max-width: 417px) {
+    .privacy-policy-full {
+      display: none;
+    }
+
+    .privacy-policy-short {
+      display: inline;
+    }
+  }
+
   .social-links {
     display: flex;
     align-items: center;
