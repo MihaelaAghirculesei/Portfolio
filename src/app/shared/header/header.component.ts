@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnInit, inject, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
@@ -32,7 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private platformService: PlatformService,
     private translate: TranslateService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -104,6 +105,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
       target.innerWidth > BREAKPOINTS.TABLET_MAX
     ) {
       this.isMenuOpen = false;
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.isMenuOpen) {
+      return;
+    }
+
+    const clickedInside = this.elementRef.nativeElement.contains(event.target);
+
+    if (!clickedInside) {
+      this.isMenuOpen = false;
+      this.cdr.markForCheck();
     }
   }
 
