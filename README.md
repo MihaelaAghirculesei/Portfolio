@@ -1,7 +1,7 @@
 # 🚀 Portfolio - Mihaela Melania Aghirculesei
 
-[![CI](https://github.com/MihaelaAghirculesei/angular-portofolio/actions/workflows/ci.yml/badge.svg)](https://github.com/MihaelaAghirculesei/angular-portofolio/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/MihaelaAghirculesei/angular-portofolio/actions/workflows/codeql.yml/badge.svg)](https://github.com/MihaelaAghirculesei/angular-portofolio/actions/workflows/codeql.yml)
+[![CI](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Angular](https://img.shields.io/badge/Angular-17.3-DD0031?logo=angular)](https://angular.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?logo=typescript)](https://www.typescriptlang.org/)
@@ -67,6 +67,22 @@
 
 ---
 
+## 💡 What Makes This Project Special
+
+This portfolio demonstrates **production-ready Angular development** with enterprise-level best practices:
+
+- **🎯 Type Safety:** Zero `any` types throughout the entire codebase
+- **♿ Accessibility First:** WCAG 2.1 AA compliant with full keyboard navigation and screen reader support
+- **⚡ Performance:** OnPush change detection strategy, lazy loading, and optimized bundle sizes
+- **🛡️ Security:** CSP headers, automated CodeQL scanning, and input sanitization
+- **🧪 Quality Assurance:** Comprehensive test coverage with automated CI/CD pipeline
+- **🌍 Internationalization:** Full English and German language support
+- **📱 Responsive:** Mobile-first design approach ensuring perfect rendering on all devices
+
+Built with **clean architecture principles** and **modern Angular patterns**, this project showcases skills in creating maintainable, scalable, and user-friendly web applications.
+
+---
+
 ## 🛠️ Tech Stack
 
 ### **Core**
@@ -100,10 +116,10 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/MihaelaAghirculesei/angular-portofolio.git
+git clone https://github.com/MihaelaAghirculesei/Portfolio.git
 
 # Navigate to project directory
-cd angular-portofolio
+cd Portfolio
 
 # Install dependencies
 npm install
@@ -317,6 +333,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 💼 LinkedIn: [mihaela-aghirculesei](https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/)
 - 📧 Email: kontakt@mihaela-melania-aghirculesei.de
 - 💻 GitHub: [@MihaelaAghirculesei](https://github.com/MihaelaAghirculesei)
+
+---
+
+## 📊 Project Statistics
+
+- **Components:** 20+ standalone components
+- **Services:** 10+ specialized services (Navigation, Logger, Translation, etc.)
+- **Test Coverage:** Comprehensive unit tests with Karma/Jasmine
+- **TypeScript:** 100% type-safe code (zero `any` types)
+- **Accessibility:** WCAG 2.1 Level AA compliant
+- **Languages:** 2 (English, German)
+- **Build Size:** Optimized production bundles with tree-shaking
+- **CI/CD:** Automated testing, linting, and security scanning
 
 ---
 
