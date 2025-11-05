@@ -7,9 +7,6 @@ $footer-content-padding: 20px;
 $footer-section-gap: 12px;
 
 $logo-width: 120px;
-$logo-height: 100px;
-$logo-top-offset: 0px;
-$logo-scale: 1.15;
 
 section {
   background-color: $gradient-start;
@@ -49,6 +46,7 @@ section {
   .logoDiv {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 
     button.logo-button {
       all: unset;
@@ -61,7 +59,6 @@ section {
       > img {
         width: $logo-width;
         height: auto;
-        cursor: pointer;
         @include smoothHoverEffect();
       }
     }
@@ -116,6 +113,7 @@ section {
 
   .copyright {
     flex: 1;
+    min-width: 0;
     text-align: center;
 
     p {
@@ -192,10 +190,6 @@ section {
     @media (min-width: $desktop-4k-min) {
       font-size: map-get($typography-4k, text);
     }
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 
   .privacy-policy-short {
@@ -225,12 +219,11 @@ section {
       align-items: center;
       cursor: pointer;
       text-decoration: none;
-      @include smoothHoverEffect();
 
       .link-icon {
         width: 28px;
         height: 28px;
-        transition: all $transition-base;
+        @include smoothHoverEffect(1.20);
 
         @media (min-width: $desktop-min) {
           width: 32px;
@@ -272,10 +265,6 @@ section {
     .copyright {
       flex: 1;
       margin-top: 0;
-
-      p .name-effect {
-        animation: shimmerSmooth 8s linear infinite;
-      }
     }
 
     .location-info {
@@ -286,9 +275,15 @@ section {
         height: 20px;
       }
 
-      div p {
-        line-height: 1.2;
-        font-size: 14px;
+      div {
+        max-width: 80px;
+
+        p {
+          line-height: 1.2;
+          font-size: 14px;
+          word-wrap: break-word;
+          max-width: 100%;
+        }
       }
     }
 
@@ -307,9 +302,6 @@ section {
 
     .social-links {
       gap: 16px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
     }
   }
 }
@@ -342,8 +334,14 @@ section {
         height: 20px;
       }
 
-      div p {
-        font-size: 13px;
+      div {
+        max-width: 70px;
+
+        p {
+          font-size: 13px;
+          word-wrap: break-word;
+          max-width: 100%;
+        }
       }
     }
 
@@ -402,6 +400,15 @@ section {
       .location-icon {
         width: 16px;
         height: 16px;
+      }
+
+      div {
+        max-width: 64px;
+
+        p {
+          word-wrap: break-word;
+          max-width: 100%;
+        }
       }
     }
 
