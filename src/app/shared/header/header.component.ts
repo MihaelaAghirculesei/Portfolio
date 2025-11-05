@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isEnglish = false;
   isMenuOpen = false;
   private boundCheckScroll = this.checkScroll.bind(this);
-  private menuToggleButton: HTMLElement | null = null;
   private focusableMenuElements: HTMLElement[] = [];
   private firstMenuFocusable: HTMLElement | null = null;
   private lastMenuFocusable: HTMLElement | null = null;

@@ -22,7 +22,6 @@
             href="#aboutMe"
             (click)="scrollToSection('aboutMe'); $event.preventDefault()"
             (keydown.enter)="scrollToSection('aboutMe'); $event.preventDefault()"
-            class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.aboutAriaLabel' | translate"
           >
             {{ "nav.about" | translate }}
@@ -33,7 +32,6 @@
             href="#skills"
             (click)="scrollToSection('skills'); $event.preventDefault()"
             (keydown.enter)="scrollToSection('skills'); $event.preventDefault()"
-            class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.skillsAriaLabel' | translate"
           >
             {{ "nav.skills" | translate }}
@@ -44,7 +42,6 @@
             href="#projects"
             (click)="scrollToSection('projects'); $event.preventDefault()"
             (keydown.enter)="scrollToSection('projects'); $event.preventDefault()"
-            class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
           >
             {{ "nav.portfolio" | translate }}
@@ -55,7 +52,6 @@
             href="#contact"
             (click)="scrollToSection('contact'); $event.preventDefault()"
             (keydown.enter)="scrollToSection('contact'); $event.preventDefault()"
-            class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.contactAriaLabel' | translate"
           >
             {{ "nav.contact" | translate }}
@@ -115,7 +111,6 @@
             href="#aboutMe"
             (click)="scrollToSection('aboutMe'); closeMenuIfMobile(); $event.preventDefault()"
             (keydown.enter)="scrollToSection('aboutMe'); closeMenuIfMobile(); $event.preventDefault()"
-            class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.aboutAriaLabel' | translate"
             [attr.tabindex]="isMenuOpen ? 0 : -1"
           >
@@ -127,7 +122,6 @@
             href="#skills"
             (click)="scrollToSection('skills'); closeMenuIfMobile(); $event.preventDefault()"
             (keydown.enter)="scrollToSection('skills'); closeMenuIfMobile(); $event.preventDefault()"
-            class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.skillsAriaLabel' | translate"
             [attr.tabindex]="isMenuOpen ? 0 : -1"
           >
@@ -139,7 +133,6 @@
             href="#projects"
             (click)="scrollToSection('projects'); closeMenuIfMobile(); $event.preventDefault()"
             (keydown.enter)="scrollToSection('projects'); closeMenuIfMobile(); $event.preventDefault()"
-            class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
             [attr.tabindex]="isMenuOpen ? 0 : -1"
           >
@@ -151,7 +144,6 @@
             href="#contact"
             (click)="scrollToSection('contact'); closeMenuIfMobile(); $event.preventDefault()"
             (keydown.enter)="scrollToSection('contact'); closeMenuIfMobile(); $event.preventDefault()"
-            class="link-hover-dot-bottom"
             [attr.aria-label]="'nav.contactAriaLabel' | translate"
             [attr.tabindex]="isMenuOpen ? 0 : -1"
           >

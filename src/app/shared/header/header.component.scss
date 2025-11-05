@@ -29,12 +29,6 @@ $nav-link-gap: 20px;
 $nav-dot-size: 28px;
 $nav-dot-bottom: -25px;
 
-$logo-scale: 1.15;
-$logo-translate-y: -10px;
-$logo-translate-y-md: -12px;
-$logo-translate-y-lg: -15px;
-$logo-translate-x: 5px;
-
 $main-color-60: rgba(61, 207, 182, 0.6);
 $main-color-90: rgba(61, 207, 182, 0.9);
 
@@ -166,14 +160,12 @@ input.check-toggle-round-flat:checked ~ .on {
   left: 0;
   padding-left: $switch-padding;
   color: $white;
-  @include code-font;
 }
 
 .switch > span.off {
   right: 0;
   padding-right: $switch-padding;
   color: $main-color-60;
-  @include code-font;
 }
 
 .check-toggle {
@@ -188,7 +180,6 @@ input.check-toggle-round-flat:checked ~ .on {
   cursor: pointer;
   outline: none;
   user-select: none;
-  @include code-font;
 }
 
 input.check-toggle-round-flat + label {
