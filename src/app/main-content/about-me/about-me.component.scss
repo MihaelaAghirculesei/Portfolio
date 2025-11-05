@@ -42,14 +42,9 @@
 
 .aboutMeWrapper {
   flex: 1;
-  margin: 0;
-  padding: 0;
-  text-align: left;
 
   h2 {
     @include primary-font;
-    margin: 0;
-    padding: 0;
     font-size: map-get($typography-desktop, h2);
     font-weight: 700;
     opacity: 0.9;
@@ -57,51 +52,63 @@
 
   .aboutMeDiv {
     padding: 15px 0;
-    margin: 0;
+    text-align: left;
 
     h3 {
       @include code-font;
       font-size: map-get($typography-desktop, h3);
       color: $main-color;
       font-weight: 400;
-      margin: 0;
-      padding: 0;
-      text-align: left;
     }
 
     span {
       @include about-text-element;
       font-size: map-get($typography-desktop, text);
-      margin: 0;
-      padding: 0;
       display: block;
+      padding: 4px 0;
     }
 
     .aboutMePs {
-      @include featureItem();
+      @include dFlex(flex-start, center);
+      @include primary-font;
       width: 100%;
-      text-align: left;
-      margin: 0;
-      padding: 0;
       font-size: map-get($typography-desktop, text);
-      @include white-text-base;
-
-      .iconWrapper {
-        padding: 0;
-      }
+      color: white;
+      margin-bottom: 8px;
+      gap: 20px;
 
       p {
-        text-align: left;
-        margin: 0;
-        padding: 15px 0;
-        font-size: map-get($typography-desktop, text);
-        @include white-text-base;
-      }
+        padding: 4px 0;
 
-      strong {
-        @include white-text-base;
+        strong {
+          color: $main-color;
+        }
       }
     }
+  }
+}
+
+@media (max-width: $tablet-max) {
+  .aboutMeSection,
+  .contentWrapper {
+    overflow: visible;
+  }
+
+  .aboutMeWrapper .aboutMeDiv {
+    text-align: left;
+
+    h3, span, p, strong {
+      text-align: left;
+    }
+  }
+
+  .imgDiv {
+    padding-bottom: 0;
+  }
+
+  .lineDiv {
+    top: -10px;
+    height: 98%;
   }
 }
 
@@ -113,9 +120,9 @@
 
   .imgDiv {
     padding-left: 15px;
-    padding-bottom: 0;
 
     .lineDiv {
+      left: 0;
       background: repeating-linear-gradient(
         135deg,
         $main-color 0px,
@@ -125,11 +132,6 @@
       ) !important;
     }
   }
-
-  .lineDiv {
-    top: -10px;
-    height: 98%;
-  }
 }
 
 @media (min-width: $tablet-min) and (max-width: $tablet-max) {
@@ -138,21 +140,19 @@
   }
   @include mobile-layout(min(60vw, 350px), 30px);
 
-  .imgDiv {
-    padding-bottom: 0;
-
-    .imageContainer {
-      transform: translateX(10px);
-    }
-  }
-
-  .lineDiv {
-    top: -10px;
-    height: 98%;
+  .imgDiv .imageContainer {
+    transform: translateX(10px);
   }
 }
 
-@media (min-width: $desktop-min) and (max-width: 1199px) {
+@media (min-width: $desktop-min) {
+  .imgDiv {
+    padding-bottom: 0;
+    margin-left: 15px;
+  }
+}
+
+@media (min-width: $desktop-min) and (max-width: 1599px) {
   .aboutMeWrapper {
     @include responsive-typography($typography-desktop);
   }
@@ -160,10 +160,13 @@
     overflow: visible;
   }
   .imgDiv {
-    @include imageContainer(460px);
-    padding-bottom: 0;
     margin-top: -20px;
-    margin-left: 15px;
+  }
+}
+
+@media (min-width: $desktop-min) and (max-width: 1199px) {
+  .imgDiv {
+    @include imageContainer(460px);
   }
   .lineDiv {
     top: -15px;
@@ -173,17 +176,8 @@
 }
 
 @media (min-width: 1200px) and (max-width: 1599px) {
-  .aboutMeWrapper {
-    @include responsive-typography($typography-desktop);
-  }
-  .contentWrapper {
-    overflow: visible;
-  }
   .imgDiv {
     @include imageContainer(650px);
-    padding-bottom: 0;
-    margin-top: -20px;
-    margin-left: 15px;
   }
 }
 
@@ -191,13 +185,8 @@
   .aboutMeSection {
     min-height: 950px;
   }
-  .contentWrapper {
-    overflow: visible;
-  }
   .imgDiv {
-    padding-bottom: 0;
     margin-top: -50px;
-    margin-left: 15px;
   }
   .lineDiv {
     height: 95%;
@@ -218,7 +207,6 @@
   .imgDiv {
     @include imageContainer(500px);
     transform: translateY(-10px);
-    margin-left: 15px;
     &:hover {
       transform: translateY(-15px);
     }
@@ -228,12 +216,19 @@
   }
 }
 
-@media (min-width: $large-screens-min) and (max-width: $desktop-max) {
+@media (min-width: $large-screens-min) {
+  .aboutMeSection,
   .contentWrapper {
     overflow: visible;
   }
+
   .imgDiv {
     @include imageContainer(700px);
+  }
+}
+
+@media (min-width: $large-screens-min) and (max-width: $desktop-max) {
+  .imgDiv {
     transform: translateY(-40px);
     &:hover {
       transform: translateY(-45px);
@@ -241,50 +236,36 @@
   }
 }
 
-@media (min-width: 1920px) {
-  .imgDiv {
-    @include imageContainer(700px);
-  }
-}
-
 @media (min-width: $ultra-wide-min) {
-  .contentWrapper {
-    max-width: $content-max-width;
-  }
   .imgDiv {
     @include imageContainer(720px);
   }
 }
 
-.iconWrapper img.icon-hover {
-  transform: scale(1.1) rotate(5deg);
-  filter: brightness(1.4) drop-shadow(0 4px 8px rgba(61, 207, 182, 0.3));
-}
-
-.iconWrapper img.icon-normal {
-  transform: scale(1) rotate(0deg);
-  filter: brightness(1.2);
-}
-
-.imageContainer img.image-hover {
-  transform: scale(1.05);
-  filter: brightness(1.2) contrast(1.1);
-}
-
-.imageContainer img.image-normal {
-  transform: scale(1);
-  filter: brightness(1.1) contrast(1.05);
-}
-
-.animate-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .iconWrapper img {
   transition: all 0.3s ease;
+
+  &.icon-hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: brightness(1.4) drop-shadow(0 4px 8px rgba(61, 207, 182, 0.3));
+  }
+
+  &.icon-normal {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1.2);
+  }
 }
 
 .imageContainer img {
   transition: all 0.3s ease;
+
+  &.image-hover {
+    transform: scale(1.05);
+    filter: brightness(1.2) contrast(1.1);
+  }
+
+  &.image-normal {
+    transform: scale(1);
+    filter: brightness(1.1) contrast(1.05);
+  }
 }

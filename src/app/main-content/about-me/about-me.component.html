@@ -28,13 +28,7 @@
         <span class="introText">{{ "aboutMe.introText" | translate }}</span>
 
         @for (section of aboutSections; track section.icon; let i = $index) {
-        <div
-          class="aboutMePs"
-          #animatedElement
-          data-aos="fade-up"
-          data-aos-duration="600"
-          [attr.data-aos-delay]="section.delay"
-        >
+        <div class="aboutMePs">
           <div class="iconWrapper" #iconWrapper>
             <img
               [src]="ASSETS_PATH + section.icon"
