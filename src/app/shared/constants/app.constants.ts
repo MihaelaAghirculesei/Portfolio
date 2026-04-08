@@ -38,6 +38,10 @@ export const PORTFOLIO_CONFIG = {
     PROJECT_2: {
       BASE: -40,
       SMALL_PREVIEW: 70
+    },
+    PROJECT_3: {
+      BASE: -40,
+      SMALL_PREVIEW: 70
     }
   }
 } as const;
