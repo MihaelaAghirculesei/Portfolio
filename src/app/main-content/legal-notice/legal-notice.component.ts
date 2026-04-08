@@ -40,7 +40,7 @@ export class LegalNoticeComponent implements OnInit {
       city: 'Wolfsburg'
     },
     phone: '+49 174 9627899',
-    email: 'kontakt@mihaela-melania-aghirculesei.de'
+    email: 'aghirculesei@gmail.com'
   };
 
   readonly sourceLink: ExternalLink = {

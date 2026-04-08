@@ -1,9 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://mihaela-melania-aghirculesei.de',
-  endpoints: {
-    sendMail: '/sendMail.php'
-  },
+  emailWorkerUrl: 'https://api.aghirculesei.workers.dev',
   social: {
     github: 'https://github.com/MihaelaAghirculesei',
     linkedin: 'https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/'

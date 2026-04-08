@@ -66,7 +66,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   invalidFields: string[] = [];
 
   post = {
-    endPoint: `${environment.apiUrl}${environment.endpoints.sendMail}`,
+    endPoint: environment.emailWorkerUrl,
     body: (payload: ContactData) => JSON.stringify(payload),
     options: {
       headers: {
