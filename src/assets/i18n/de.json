@@ -71,7 +71,8 @@
     "github": "GitHub",
     "liveTest": "Live Test",
     "aboutProject": "Worum geht es in diesem Projekt?",
-    "closeModal": "Projektdetails schließen"
+    "closeModal": "Projektdetails schließen",
+    "personalProject": "Persönliches Projekt"
   },
   "contact": {
     "title": "Kontaktieren Sie mich",
@@ -140,6 +141,10 @@
     "pokedex": {
       "description": "Ein interaktives Portal in die magische Welt der Pokemon! Mit Leidenschaft entwickelt bietet es eine reibungslose und fesselnde Erfahrung mit modernen Technologien: PokeAPI für immer aktuelle Daten, responsives Design für alle Geräte, performantes JavaScript und fesselnde CSS-Animationen.",
       "shortDescription": "Pokemon Datenbank"
+    },
+    "birthdayReminder": {
+      "description": "Eine moderne Birthday Reminder App mit NgRx State Management für vorhersagbaren Datenfluss, Offline-First Architektur mit IndexedDB, Google Calendar-Synchronisation über OAuth 2.0, Cross-Platform-Unterstützung (Web PWA + Android mit Capacitor), Push-Benachrichtigungen (Web + Nativ) und Material Design UI. Gebaut mit Angular 17, demonstriert die App Enterprise-Grade-Architektur mit Effects für Seiteneffekte, Entity Adapters für normalisierten State und ein umfassendes Benachrichtigungssystem mit anpassbaren Erinnerungen.",
+      "shortDescription": "Geburtstags-Management App"
     },
     "default": {
       "shortDescription": "Web Anwendung"
