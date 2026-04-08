@@ -28,6 +28,8 @@ export class SkillsComponent {
     { url: 'assets/img/skills/materialDesign.svg', name: 'Material Design' },
     { url: 'assets/img/skills/rest-api.svg', name: 'Rest-API' },
     { url: 'assets/img/skills/scrum.svg', name: 'Scrum' },
+    { url: 'assets/img/skills/ngrx.svg', name: 'NgRx' },
+    { url: 'assets/img/skills/rxjs.svg', name: 'RxJS' },
     { url: 'assets/img/skills/mindset.svg', name: 'Growth Mindset' },
   ];
 
