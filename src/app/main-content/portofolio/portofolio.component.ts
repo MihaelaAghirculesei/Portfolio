@@ -130,7 +130,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     materialdesign: 'assets/img/projects/icons/material-design.svg',
     capacitor: 'assets/img/projects/icons/capacitor.svg',
     indexeddb: 'assets/img/projects/icons/indexeddb.svg',
-    'oauth2.0': 'assets/img/projects/icons/oauth.svg'
+    oauth20: 'assets/img/projects/icons/oauth.svg'
   };
 
   constructor(
@@ -350,7 +350,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   }
 
   getTechIconPath(technology: string): string | null {
-    const normalized = technology.replace(/[-\s]/g, '').toLowerCase();
+    const normalized = technology.replace(/[-\s.]/g, '').toLowerCase();
     return this.TECH_ICONS[normalized] || null;
   }
 
