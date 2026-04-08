@@ -31,6 +31,22 @@ export class PortofolioComponent implements OnInit, OnDestroy {
 
   projects: Projects[] = [
     {
+  name: 'Birthday Reminder Pro',
+  technologies: ['Angular', 'TypeScript', 'NgRx', 'RxJS', 'Material Design', 'Capacitor', 'Firebase', 'OAuth 2.0', 'PWA', 'SSR'],
+  previewImg: 'assets/img/projects/birthday-reminder.png',
+  description:
+    'Enterprise-grade Birthday Reminder App built with Angular 19. Implements NgRx for predictable state management ' +
+    'with effects for side effects and entity adapters for normalized state. Features Firebase backend with Google OAuth 2.0 ' +
+    'authentication and Firestore for cloud synchronization with offline-first capabilities. Cross-platform support includes ' +
+    'Web PWA with Service Worker for offline access and Android native via Capacitor with local push notifications. ' +
+    'Server-Side Rendering (SSR) ensures optimal performance and SEO. Material Design UI with custom theming provides ' +
+    'a responsive, accessible interface. Comprehensive testing strategy includes Cypress e2e tests and Karma unit tests, ' +
+    'with CI/CD pipeline ready. Features bundle optimization, Git hooks with Husky, and lint-staged for code quality.',
+  githubUrl: environment.projects.birthdayReminder.github,
+  liveUrl: environment.projects.birthdayReminder.live,
+  isPersonal: true,
+},
+    {
       name: 'Join',
       technologies: ['Firebase', 'Angular', 'TypeScript', 'HTML', 'SCSS'],
       previewImg: 'assets/img/projects/join.png',
@@ -96,6 +112,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     map['Join'] = 'join';
     map['El Pollo Loco'] = 'elPolloLoco';
     map['Pokédex'] = 'pokedex';
+    map['Birthday Reminder'] = 'birthdayReminder';
     return map;
   })();
 
@@ -107,7 +124,13 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     css: 'assets/img/projects/icons/css.svg',
     scss: 'assets/img/projects/icons/sass.svg',
     javascript: 'assets/img/projects/icons/javascript.svg',
-    restapi: 'assets/img/projects/icons/rest-api.svg'
+    restapi: 'assets/img/projects/icons/rest-api.svg',
+    ngrx: 'assets/img/projects/icons/ngrx.svg',
+    rxjs: 'assets/img/projects/icons/rxjs.svg',
+    materialdesign: 'assets/img/projects/icons/material-design.svg',
+    capacitor: 'assets/img/projects/icons/capacitor.svg',
+    indexeddb: 'assets/img/projects/icons/indexeddb.svg',
+    'oauth2.0': 'assets/img/projects/icons/oauth.svg'
   };
 
   constructor(
@@ -133,12 +156,12 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     this.checkOrientation();
   }
 
-  @HostListener('window:orientationchange', ['$event'])
+  @HostListener('window:orientationchange')
   onOrientationChange(): void {
     this.checkOrientation();
   }
@@ -217,7 +240,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleTouchEnd(event: TouchEvent, index: number): void {
+  handleTouchEnd(_event: TouchEvent, index: number): void {
     if (!this.touchMoved) {
       this.openProjectOverlay(this.projects[index], index);
     }
@@ -225,10 +248,9 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     this.clearActiveProject();
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapeKey(event: KeyboardEvent): void {
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
     if (this.selectedProject) {
-      event.preventDefault();
       this.closeOverlay();
     }
   }
@@ -330,17 +352,6 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   getTechIconPath(technology: string): string | null {
     const normalized = technology.replace(/[-\s]/g, '').toLowerCase();
     return this.TECH_ICONS[normalized] || null;
-  }
-
-  onHover(event: MouseEvent, project: Projects): void {
-    const index = this.projects.findIndex((p) => p.name === project.name);
-    if (index !== -1) {
-      this.setActiveProject(index, event);
-    }
-  }
-
-  onLeave(): void {
-    this.clearActiveProject();
   }
 
   private setupFocusTrap(): void {

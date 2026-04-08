@@ -28,6 +28,9 @@
           >
             <td class="project-name">
               {{ project.name }}
+              @if (project.isPersonal) {
+              <span class="personal-badge">{{ "portfolio.personalProject" | translate }}</span>
+              }
             </td>
             <td class="project-tech">
               @for (tech of project.technologies; track tech; let last = $last)
