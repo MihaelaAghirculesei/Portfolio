@@ -20,6 +20,10 @@ export const environment = {
     pokedex: {
       github: 'https://github.com/MihaelaAghirculesei/Pokedex',
       live: 'https://pokedex.mihaela-melania-aghirculesei.de'
+    },
+    birthdayReminder: {
+      github: 'https://github.com/MihaelaAghirculesei/birthday-reminder-app',
+      live: 'https://birthday-reminder.mihaela-melania-aghirculesei.de'
     }
   },
   enableLogging: true
