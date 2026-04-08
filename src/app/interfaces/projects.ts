@@ -3,6 +3,7 @@ export interface Projects {
     technologies: string [];
     previewImg: string;
     description: string;
-    githubUrl: string;   
-    liveUrl: string;   
+    githubUrl: string;
+    liveUrl: string;
+    isPersonal?: boolean;
 }
