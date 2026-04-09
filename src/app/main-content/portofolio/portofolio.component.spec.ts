@@ -46,9 +46,9 @@ describe('PortofolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have projects array with 3 projects', () => {
+    it('should have projects array with 4 projects', () => {
       expect(component.projects).toBeDefined();
-      expect(component.projects.length).toBe(3);
+      expect(component.projects.length).toBe(4);
     });
 
     it('should have correct project data structure', () => {
@@ -311,7 +311,7 @@ describe('PortofolioComponent', () => {
 
   describe('Helper Methods', () => {
     it('should get project screenshot alt text', () => {
-      const alt = component.getProjectScreenshotAlt(0);
+      const alt = component.getProjectScreenshotAlt(1);
       expect(alt).toBe('Join screenshot');
     });
 
@@ -339,8 +339,9 @@ describe('PortofolioComponent', () => {
 
     it('should get project short description with translation', () => {
       spyOn(translateService, 'instant').and.returnValue('Test description');
+      const joinProject = component.projects.find(p => p.name === 'Join')!;
 
-      const desc = component.getProjectShortDescription(component.projects[0]);
+      const desc = component.getProjectShortDescription(joinProject);
 
       expect(translateService.instant).toHaveBeenCalledWith('projects.join.shortDescription');
       expect(desc).toBe('Test description');
@@ -348,8 +349,9 @@ describe('PortofolioComponent', () => {
 
     it('should get project description with translation', () => {
       spyOn(translateService, 'instant').and.returnValue('Test description');
+      const joinProject = component.projects.find(p => p.name === 'Join')!;
 
-      const desc = component.getProjectDescription(component.projects[0]);
+      const desc = component.getProjectDescription(joinProject);
 
       expect(translateService.instant).toHaveBeenCalledWith('projects.join.description');
       expect(desc).toBe('Test description');

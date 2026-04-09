@@ -56,7 +56,7 @@ describe('ContactFormComponent', () => {
     });
 
     it('should have correct endpoint configuration', () => {
-      expect(component.post.endPoint).toContain('sendMail.php');
+      expect(component.post.endPoint).toContain('workers.dev');
     });
   });
 
