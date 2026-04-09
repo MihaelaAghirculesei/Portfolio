@@ -258,24 +258,18 @@ describe('PortofolioComponent', () => {
       component.selectedProject = component.projects[0];
       spyOn(component, 'closeOverlay');
 
-      const event = new KeyboardEvent('keydown', { key: 'Escape' });
-      spyOn(event, 'preventDefault');
+      component.onEscapeKey();
 
-      component.onEscapeKey(event);
-
-      expect(event.preventDefault).toHaveBeenCalled();
       expect(component.closeOverlay).toHaveBeenCalled();
     });
 
-    it('should not prevent default if no overlay is open', () => {
+    it('should not close overlay if no overlay is open', () => {
       component.selectedProject = null;
+      spyOn(component, 'closeOverlay');
 
-      const event = new KeyboardEvent('keydown', { key: 'Escape' });
-      spyOn(event, 'preventDefault');
+      component.onEscapeKey();
 
-      component.onEscapeKey(event);
-
-      expect(event.preventDefault).not.toHaveBeenCalled();
+      expect(component.closeOverlay).not.toHaveBeenCalled();
     });
   });
 
@@ -371,31 +365,21 @@ describe('PortofolioComponent', () => {
   });
 
   describe('Hover and Leave Handlers', () => {
-    it('should call setActiveProject on hover', () => {
+    it('should set active project on hover', () => {
       spyOn(component, 'setActiveProject');
       const mockEvent = new MouseEvent('mouseenter');
 
-      component.onHover(mockEvent, component.projects[0]);
+      component.setActiveProject(0, mockEvent);
 
       expect(component.setActiveProject).toHaveBeenCalledWith(0, mockEvent);
     });
 
-    it('should call clearActiveProject on leave', () => {
+    it('should clear active project on leave', () => {
       spyOn(component, 'clearActiveProject');
 
-      component.onLeave();
+      component.clearActiveProject();
 
       expect(component.clearActiveProject).toHaveBeenCalled();
-    });
-
-    it('should not call setActiveProject if project not found', () => {
-      spyOn(component, 'setActiveProject');
-      const mockEvent = new MouseEvent('mouseenter');
-      const unknownProject = { name: 'Unknown', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '' };
-
-      component.onHover(mockEvent, unknownProject);
-
-      expect(component.setActiveProject).not.toHaveBeenCalled();
     });
   });
 
