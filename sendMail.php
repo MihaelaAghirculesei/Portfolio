@@ -34,7 +34,7 @@ if (empty($name) || !$email || empty($message) || !$privacyAccepted) {
     exit();
 }
 
-$to = 'kontakt@mihaela-melania-aghirculesei.de';
+$to = 'aghirculesei@gmail.com';
 $subject = 'Neue Nachricht von Portfolio Website - ' . $name;
 
 $emailBody = "Neue Nachricht von der Portfolio Website:\n\n";
@@ -44,7 +44,7 @@ $emailBody .= "Nachricht:\n" . $message . "\n\n";
 $emailBody .= "Datenschutz akzeptiert: " . ($privacyAccepted ? 'Ja' : 'Nein') . "\n";
 $emailBody .= "Gesendet am: " . date('Y-m-d H:i:s') . "\n";
 
-$headers = "From: kontakt@mihaela-melania-aghirculesei.de\r\n";
+$headers = "From: aghirculesei@gmail.com\r\n";
 $headers .= "Reply-To: " . $email . "\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
