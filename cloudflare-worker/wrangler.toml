@@ -1,0 +1,7 @@
+name = "api"
+main = "email-worker.js"
+compatibility_date = "2026-04-08"
+
+# Variabili d'ambiente SEGRETE (RESEND_API_KEY, TO_EMAIL):
+# NON metterle qui — impostale nel Cloudflare Dashboard:
+# Workers & Pages → api → Settings → Variables and Secrets
