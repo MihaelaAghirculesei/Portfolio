@@ -44,3 +44,4 @@ Thumbs.db
 # Cloudflare Worker
 cloudflare-worker/.dev.vars
 cloudflare-worker/.wrangler/
+cloudflare-worker/test.ps1
