@@ -30,7 +30,7 @@ export class LandingpageComponent {
   readonly profileInfo = {
     firstName: 'Mihaela Melania',
     lastName: 'Aghirculesei',
-    email: 'kontakt@mihaela-melania-aghirculesei.de',
+    email: 'aghirculesei@gmail.com',
   };
 
   get fullName(): string {
