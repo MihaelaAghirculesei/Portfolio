@@ -45,4 +45,6 @@ Thumbs.db
 cloudflare-worker/.dev.vars
 cloudflare-worker/.wrangler/
 cloudflare-worker/test.ps1
-cloudflare-worker/wrangler.jsonc
+
+# Test output
+test-results.txt
