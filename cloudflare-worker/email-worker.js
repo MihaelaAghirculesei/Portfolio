@@ -9,6 +9,7 @@
 const ALLOWED_ORIGINS = [
   'https://aghirculesei.pages.dev',           // production
   /^https:\/\/[a-z0-9]+\.aghirculesei\.pages\.dev$/, // preview deployments
+  'http://localhost:4200',                    // local development
 ];
 
 function getAllowedOrigin(request) {
