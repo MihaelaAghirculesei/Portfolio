@@ -8,7 +8,7 @@
 
 > A modern, performant, and fully accessible portfolio website built with Angular 17, showcasing best practices in web development.
 
-[🌐 Live Demo](https://mihaela-melania-aghirculesei.de) • [📧 Contact](mailto:aghirculesei@gmail.com)
+[🌐 Live Demo](https://aghirculesei.pages.dev) • [📧 Contact](mailto:aghirculesei@gmail.com)
 
 ---
 
@@ -228,7 +228,7 @@ The project uses environment-based configuration for different deployment stages
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: 'https://mihaela-melania-aghirculesei.de',
+  apiUrl: 'https://aghirculesei.pages.dev',
   enableLogging: true
 };
 ```
@@ -237,7 +237,7 @@ export const environment = {
 ```typescript
 export const environment = {
   production: true,
-  apiUrl: 'https://mihaela-melania-aghirculesei.de',
+  apiUrl: 'https://aghirculesei.pages.dev',
   enableLogging: false
 };
 ```
@@ -329,7 +329,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Mihaela Melania Aghirculesei**
 
-- 🌐 Website: [mihaela-melania-aghirculesei.de](https://mihaela-melania-aghirculesei.de)
+- 🌐 Website: [aghirculesei.pages.dev](https://aghirculesei.pages.dev)
 - 💼 LinkedIn: [mihaela-aghirculesei](https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/)
 - 📧 Email: aghirculesei@gmail.com
 - 💻 GitHub: [@MihaelaAghirculesei](https://github.com/MihaelaAghirculesei)
