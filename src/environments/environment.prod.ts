@@ -8,19 +8,19 @@ export const environment = {
   projects: {
     join: {
       github: 'https://github.com/MihaelaAghirculesei/join-kanban-board',
-      live: 'https://join.mihaela-melania-aghirculesei.de'
+      live: 'https://join-aghirculesei.pages.dev'
     },
     elPolloLoco: {
       github: 'https://github.com/MihaelaAghirculesei/El-Pollo-Loco',
-      live: 'https://el-pollo-loco.mihaela-melania-aghirculesei.de'
+      live: 'https://el-pollo-loco-aghirculesei.pages.dev'
     },
     pokedex: {
       github: 'https://github.com/MihaelaAghirculesei/Pokedex',
-      live: 'https://pokedex.mihaela-melania-aghirculesei.de'
+      live: 'https://pokedex-aghirculesei.pages.dev'
     },
     birthdayReminder: {
       github: 'https://github.com/MihaelaAghirculesei/birthday-reminder-app',
-      live: 'https://birthday-reminder.mihaela-melania-aghirculesei.de'
+      live: 'https://birthday-reminder-aghirculesei.pages.dev'
     }
   },
   enableLogging: false
