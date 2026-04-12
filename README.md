@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Angular](https://img.shields.io/badge/Angular-17.3-DD0031?logo=angular)](https://angular.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Deployed on Cloudflare Pages](https://img.shields.io/badge/Deployed-Cloudflare%20Pages-F38020?logo=cloudflare)](https://aghirculesei.pages.dev)
 
 > A modern, performant, and fully accessible portfolio website built with Angular 17, showcasing best practices in web development.
 
