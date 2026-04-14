@@ -1,3 +1,6 @@
+@use './variables' as *;
+@use './mixins' as *;
+
 .link-button {
   @include dFlex(center, center);
   @include primary-font;

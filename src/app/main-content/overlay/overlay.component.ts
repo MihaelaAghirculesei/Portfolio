@@ -3,12 +3,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Projects } from '../../interfaces/projects';
 
 @Component({
-  selector: 'app-overlay',
-  standalone: true,
-  imports: [TranslateModule],
-  templateUrl: './overlay.component.html',
-  styleUrl: './overlay.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-overlay',
+    imports: [TranslateModule],
+    templateUrl: './overlay.component.html',
+    styleUrl: './overlay.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OverlayComponent {
   @Input() singleProject: Projects = {

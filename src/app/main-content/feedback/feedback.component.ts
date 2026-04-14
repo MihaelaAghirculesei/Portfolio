@@ -15,17 +15,16 @@ import {
 import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
 
 @Component({
-  selector: 'app-feedbacks',
-  standalone: true,
-  imports: [
-    CommonModule,
-    TranslatePipe,
-    PassiveTouchStartDirective,
-    PassiveTouchEndDirective
-  ],
-  templateUrl: './feedback.component.html',
-  styleUrl: './feedback.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-feedbacks',
+    imports: [
+        CommonModule,
+        TranslatePipe,
+        PassiveTouchStartDirective,
+        PassiveTouchEndDirective
+    ],
+    templateUrl: './feedback.component.html',
+    styleUrl: './feedback.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeedbacksComponent {
   @ViewChildren('feedbackCard') feedbackCards!: QueryList<ElementRef>;

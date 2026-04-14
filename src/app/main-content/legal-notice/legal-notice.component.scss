@@ -1,94 +1,96 @@
-@import '../../../styles/styles.scss';
+@use 'sass:map';
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 .legal-notice-main {
-  background-color: $background-color;
-  @include dFlex(center, flex-start);
+  background-color: variables.$background-color;
+  @include mixins.dFlex(center, flex-start);
   width: 100%;
-  padding: 74px $spacing-md $spacing-sm;
+  padding: 74px variables.$spacing-md variables.$spacing-sm;
   box-sizing: border-box;
   position: relative;
 
-  @media (max-width: $mobile-max) {
-    padding: 120px $spacing-md 40px;
+  @media (max-width: variables.$mobile-max) {
+    padding: 120px variables.$spacing-md 40px;
   }
 }
 
 .legal-notice-container {
-  padding: $spacing-sm;
+  padding: variables.$spacing-sm;
   text-align: left;
   width: 100%;
-  max-width: $content-max-width;
+  max-width: variables.$content-max-width;
   position: relative;
-  @include dFlex(center, space-between);
+  @include mixins.dFlex(center, space-between);
   flex-direction: column;
 
-  @media (min-width: $tablet-min) {
-    padding: $spacing-md;
+  @media (min-width: variables.$tablet-min) {
+    padding: variables.$spacing-md;
   }
 
 
   .page-header {
-    margin-bottom: $spacing-lg;
+    margin-bottom: variables.$spacing-lg;
 
     h1 {
-      color: $main-color;
-      @include primary-font;
+      color: variables.$main-color;
+      @include mixins.primary-font;
       font-size: 2.2rem;
-      margin-bottom: $spacing-lg + $spacing-sm;
-      border-bottom: 2px solid $main-color;
-      padding-bottom: $spacing-sm;
+      margin-bottom: variables.$spacing-lg + variables.$spacing-sm;
+      border-bottom: 2px solid variables.$main-color;
+      padding-bottom: variables.$spacing-sm;
     }
   }
 
   .contact-section {
-    margin-bottom: $spacing-xl + $spacing-lg;
+    margin-bottom: variables.$spacing-xl + variables.$spacing-lg;
 
     .contact-info {
       font-style: normal;
-      margin-bottom: $spacing-xl;
+      margin-bottom: variables.$spacing-xl;
 
       .contact-name {
-        @include primary-font;
-        color: $white;
+        @include mixins.primary-font;
+        color: variables.$white;
         font-weight: 600;
-        margin-bottom: $spacing-sm;
+        margin-bottom: variables.$spacing-sm;
       }
 
       .contact-address {
-        @include primary-font;
-        color: $white;
+        @include mixins.primary-font;
+        color: variables.$white;
         line-height: 1.4;
-        margin-bottom: $spacing-lg;
+        margin-bottom: variables.$spacing-lg;
       }
     }
 
     h2 {
-      @include code-font;
-      color: $main-color;
+      @include mixins.code-font;
+      color: variables.$main-color;
       font-size: 1.5rem;
-      margin: $spacing-xl 0 $spacing-lg;
+      margin: variables.$spacing-xl 0 variables.$spacing-lg;
     }
 
     .contact-details {
       p {
-        @include primary-font;
+        @include mixins.primary-font;
         line-height: 1.4;
-        margin-bottom: $spacing-lg;
-        color: $white;
+        margin-bottom: variables.$spacing-lg;
+        color: variables.$white;
 
         .contact-label {
-          color: $white-dimmed;
+          color: variables.$white-dimmed;
         }
 
         .contact-link {
-          color: $main-color;
+          color: variables.$main-color;
           text-decoration: none;
-          transition: all $transition-base;
+          transition: all variables.$transition-base;
 
           &:hover {
-            color: $white;
+            color: variables.$white;
             text-decoration: underline;
-            text-decoration-color: $main-color;
+            text-decoration-color: variables.$main-color;
             text-underline-offset: 4px;
           }
         }
@@ -97,26 +99,26 @@
   }
 
   .source-footer {
-    margin-top: $spacing-md;
-    padding-top: $spacing-sm;
-    border-top: 1px solid $main-color;
+    margin-top: variables.$spacing-md;
+    padding-top: variables.$spacing-sm;
+    border-top: 1px solid variables.$main-color;
     margin-bottom: 0;
 
     p {
-      @include primary-font;
+      @include mixins.primary-font;
       font-size: 0.85rem;
-      color: $white-dimmed;
+      color: variables.$white-dimmed;
       margin: 0;
 
       .source-link {
-        color: $main-color;
+        color: variables.$main-color;
         text-decoration: none;
-        transition: all $transition-base;
+        transition: all variables.$transition-base;
 
         &:hover {
-          color: $white;
+          color: variables.$white;
           text-decoration: underline;
-          text-decoration-color: $main-color;
+          text-decoration-color: variables.$main-color;
           text-underline-offset: 4px;
         }
       }
@@ -125,72 +127,72 @@
 
   .close-btn {
     position: absolute;
-    top: $spacing-sm + $spacing-xs;
-    right: $spacing-md;
+    top: variables.$spacing-sm + variables.$spacing-xs;
+    right: variables.$spacing-md;
     background: none;
     border: none;
     font-size: 28px;
-    color: $main-color;
+    color: variables.$main-color;
     cursor: pointer;
     width: 40px;
     height: 40px;
-    @include dFlex(center, center);
+    @include mixins.dFlex(center, center);
     border-radius: 50%;
-    transition: all $transition-base;
+    transition: all variables.$transition-base;
     z-index: 10;
 
     &:hover {
-      background-color: rgba($gradient-end, 0.2);
+      background-color: rgba(variables.$gradient-end, 0.2);
       transform: scale(1.1);
     }
 
     &:focus-visible {
-      outline: 2px solid $main-color;
+      outline: 2px solid variables.$main-color;
       outline-offset: 2px;
     }
   }
 }
 
 // Responsive design using standard breakpoints
-@include responsive-typography($typography-mobile);
+@include mixins.responsive-typography(variables.$typography-mobile);
 
-@media (min-width: $tablet-min) and (max-width: $tablet-max) {
-  @include responsive-typography($typography-tablet);
+@media (min-width: variables.$tablet-min) and (max-width: variables.$tablet-max) {
+  @include mixins.responsive-typography(variables.$typography-tablet);
 
   .legal-notice-container {
     .page-header h1 {
-      font-size: map-get($typography-tablet, h2);
+      font-size: map.get(variables.$typography-tablet, h2);
     }
   }
 }
 
-@media (min-width: $desktop-min) and (max-width: $desktop-max) {
-  @include responsive-typography($typography-desktop);
+@media (min-width: variables.$desktop-min) and (max-width: variables.$desktop-max) {
+  @include mixins.responsive-typography(variables.$typography-desktop);
 
   .legal-notice-container {
     .page-header h1 {
-      font-size: map-get($typography-desktop, h2) + 8px;
+      font-size: map.get(variables.$typography-desktop, h2) + 8px;
     }
   }
 }
 
-@media (min-width: $desktop-4k-min) {
-  @include responsive-typography($typography-4k);
+@media (min-width: variables.$desktop-4k-min) {
+  @include mixins.responsive-typography(variables.$typography-4k);
 
   .legal-notice-container {
     .page-header h1 {
-      font-size: map-get($typography-4k, h2) + 12px;
+      font-size: map.get(variables.$typography-4k, h2) + 12px;
     }
   }
 }
 
-@media (max-width: $mobile-max) {
+@media (max-width: variables.$mobile-max) {
   .legal-notice-container {
-    padding: $spacing-lg;
+    padding: variables.$spacing-lg;
 
     .close-btn {
-      top: $spacing-sm;
-      right: $spacing-sm;
+      top: variables.$spacing-sm;
+      right: variables.$spacing-sm;
       width: 36px;
       height: 36px;
       font-size: 24px;

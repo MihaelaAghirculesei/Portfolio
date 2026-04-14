@@ -8,12 +8,11 @@ import { BREAKPOINTS, SCROLL_CONFIG, TIMING_CONFIG } from '../constants/app.cons
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [CommonModule, TranslatePipe],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-header',
+    imports: [CommonModule, TranslatePipe],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isHovered = false;

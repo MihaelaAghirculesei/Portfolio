@@ -1,7 +1,8 @@
-@import "../../../../styles/styles.scss";
+@use "../../../../styles/variables";
+@use "../../../../styles/mixins";
 
 ::placeholder {
-  color: $placeholder-color;
+  color: variables.$placeholder-color;
   opacity: 1;
 }
 
@@ -9,24 +10,24 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px $background-color inset;
-  -webkit-text-fill-color: $white;
+  -webkit-box-shadow: 0 0 0 30px variables.$background-color inset;
+  -webkit-text-fill-color: variables.$white;
   transition: background-color 5000s ease-in-out 0s;
-  caret-color: $white;
+  caret-color: variables.$white;
 }
 
 @-moz-document url-prefix() {
   input:-moz-autofill,
   input:-moz-autofill:focus {
     transition: background-color 5000s ease-in-out 0s;
-    background-color: $background-color;
-    color: $white;
+    background-color: variables.$background-color;
+    color: variables.$white;
     filter: none;
   }
 }
 
 .formDiv {
-  @include dFlex(center, center);
+  @include mixins.dFlex(center, center);
   flex: 1;
   max-height: 100%;
   width: 100%;
@@ -34,7 +35,7 @@ input:-webkit-autofill:active {
   padding: 0;
 
   form {
-    @include dFlex(center, flex-start);
+    @include mixins.dFlex(center, flex-start);
     flex-direction: column;
     height: auto;
     width: 100%;
@@ -43,17 +44,17 @@ input:-webkit-autofill:active {
     padding: 0;
 
     .inputText {
-      @include dFlex(center, start);
+      @include mixins.dFlex(center, start);
       flex-direction: column;
       width: 100%;
       gap: 15px;
       padding: 16px 0;
 
       label {
-        @include code-font;
-        color: $main-color;
+        @include mixins.code-font;
+        color: variables.$main-color;
         font-weight: 500;
-        padding: 0 $content-margin-base;
+        padding: 0 variables.$content-margin-base;
         text-align: left;
         width: 100%;
       }
@@ -62,34 +63,34 @@ input:-webkit-autofill:active {
       textarea {
         width: 100%;
         height: 47px;
-        padding: 0 $content-margin-base;
-        border: 0 solid $white;
+        padding: 0 variables.$content-margin-base;
+        border: 0 solid variables.$white;
         border-radius: 4px;
         box-sizing: border-box;
         margin-top: 16px;
         margin-bottom: 8px;
         resize: none;
         background-color: transparent;
-        @include primary-font;
-        color: $white;
+        @include mixins.primary-font;
+        color: variables.$white;
         outline: none;
 
         &.invalid {
-          border-color: $alert-text;
+          border-color: variables.$alert-text;
         }
       }
 
       .alert-text {
-        @include primary-font;
-        color: $alert-text;
+        @include mixins.primary-font;
+        color: variables.$alert-text;
         margin: 8px 0 0 0;
-        padding: 0 $content-margin-base;
+        padding: 0 variables.$content-margin-base;
         width: 100%;
       }
     }
 
     .checkboxDiv {
-      @include dFlex(center, flex-start);
+      @include mixins.dFlex(center, flex-start);
       flex-direction: column;
       width: 100%;
       padding: 16px 0;
@@ -97,7 +98,7 @@ input:-webkit-autofill:active {
       min-height: 60px;
 
       .checkbox-container {
-        @include dFlex(flex-start, center);
+        @include mixins.dFlex(flex-start, center);
         position: relative;
         user-select: none;
         gap: 16px;
@@ -115,14 +116,14 @@ input:-webkit-autofill:active {
           &:hover {
             ~ {
               .checkmark {
-                box-shadow: 0 0 20px $main-color-rgba;
+                box-shadow: 0 0 20px variables.$main-color-rgba;
               }
             }
           }
           &:checked {
             ~ {
               .checkmark {
-                box-shadow: 0 0 20px $main-color-rgba;
+                box-shadow: 0 0 20px variables.$main-color-rgba;
                 &:after {
                   display: block;
                 }
@@ -132,7 +133,7 @@ input:-webkit-autofill:active {
           &.invalid {
             ~ {
               .checkmark {
-                border: 2px solid $alert-text;
+                border: 2px solid variables.$alert-text;
               }
             }
           }
@@ -144,7 +145,7 @@ input:-webkit-autofill:active {
           height: 22px;
           margin: 0;
           position: relative;
-          border: 2px solid $main-color;
+          border: 2px solid variables.$main-color;
           border-radius: 5px;
           transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
           flex-shrink: 0;
@@ -157,35 +158,35 @@ input:-webkit-autofill:active {
             top: 50%;
             width: 5px;
             height: 10px;
-            border: solid $main-color;
+            border: solid variables.$main-color;
             border-width: 0 2.5px 2.5px 0;
             transform: translate(-50%, -60%) rotate(45deg);
           }
         }
 
         span {
-          @include primary-font;
-          color: $white;
+          @include mixins.primary-font;
+          color: variables.$white;
           padding: 0;
           pointer-events: none;
           cursor: default;
           a.privacy-policy-link {
             pointer-events: auto;
             cursor: pointer;
-            color: $main-color;
+            color: variables.$main-color;
             &:hover {
               text-decoration: underline;
-              text-decoration-color: $main-color;
+              text-decoration-color: variables.$main-color;
               text-underline-offset: 8px;
-              color: $white;
+              color: variables.$white;
             }
           }
         }
       }
 
       .alert-text {
-        @include primary-font;
-        color: $alert-text;
+        @include mixins.primary-font;
+        color: variables.$alert-text;
         margin: 0;
         padding: 0 0 0 38px;
         position: absolute;
@@ -201,19 +202,19 @@ hr {
   margin: 24px 0;
   width: 100%;
   border: none;
-  border-top: 1px solid $main-color;
+  border-top: 1px solid variables.$main-color;
   height: 1px;
 }
 
 input[type="submit"] {
-  @include primary-font;
+  @include mixins.primary-font;
   background-color: transparent;
   color: white;
   padding: 12px 20px;
-  border: 1px solid $white;
+  border: 1px solid variables.$white;
   border-radius: 24px;
   cursor: pointer;
-  transition: all $transition-base;
+  transition: all variables.$transition-base;
   margin: 74px 0;
   &:disabled {
     opacity: 0.5;
@@ -226,8 +227,8 @@ input[type="submit"] {
     }
   }
   &:hover {
-    background-color: $main-color;
-    border: 1px solid $main-color;
+    background-color: variables.$main-color;
+    border: 1px solid variables.$main-color;
   }
 }
 
@@ -238,41 +239,41 @@ input[type="submit"] {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  @include dFlex(center, center);
+  @include mixins.dFlex(center, center);
   z-index: 1000;
   backdrop-filter: blur(3px);
 }
 
 .popup {
-  background: linear-gradient(45deg, $gradient-start 40%, $gradient-end 100%);
+  background: linear-gradient(45deg, variables.$gradient-start 40%, variables.$gradient-end 100%);
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   animation: popup-appear 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  border: 1px solid $white;
+  border: 1px solid variables.$white;
 
   &.success {
-    border: 1px solid $main-color;
-    box-shadow: 0 0 25px $main-color-light;
+    border: 1px solid variables.$main-color;
+    box-shadow: 0 0 25px variables.$main-color-light;
   }
 
   &.error {
-    border: 1px solid $alert-text;
-    box-shadow: 0 0 25px $alert-shadow;
+    border: 1px solid variables.$alert-text;
+    box-shadow: 0 0 25px variables.$alert-shadow;
   }
 }
 
 .popup-header {
   padding: 15px 20px;
-  @include dFlex(space-between, center);
+  @include mixins.dFlex(space-between, center);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
   h3 {
     margin: 0;
-    @include code-font;
-    color: $white;
+    @include mixins.code-font;
+    color: variables.$white;
   }
 }
 
@@ -282,37 +283,37 @@ input[type="submit"] {
   p {
     margin: 0 0 12px;
     line-height: 1.5;
-    @include primary-font;
-    color: $white;
+    @include mixins.primary-font;
+    color: variables.$white;
   }
 
   .error-details {
-    color: $alert-text;
+    color: variables.$alert-text;
     margin-top: 12px;
     padding: 8px;
-    background-color: $alert-light;
+    background-color: variables.$alert-light;
     border-radius: 4px;
   }
 }
 
 .popup-footer {
   padding: 15px 20px;
-  @include dFlex(flex-end, center);
+  @include mixins.dFlex(flex-end, center);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   button {
-    @include primary-font;
+    @include mixins.primary-font;
     background-color: transparent;
     color: white;
     padding: 8px 20px;
-    border: 1px solid $white;
+    border: 1px solid variables.$white;
     border-radius: 24px;
     cursor: pointer;
-    transition: all $transition-base;
+    transition: all variables.$transition-base;
 
     &:hover {
-      background-color: $main-color;
-      border: 1px solid $main-color;
+      background-color: variables.$main-color;
+      border: 1px solid variables.$main-color;
     }
   }
 }
@@ -328,12 +329,12 @@ input[type="submit"] {
   }
 }
 
-@media (min-width: $desktop-4k-min) {
-  @include responsive-typography($typography-4k);
+@media (min-width: variables.$desktop-4k-min) {
+  @include mixins.responsive-typography(variables.$typography-4k);
 }
 
-@media (min-width: $desktop-min) and (max-width: $desktop-max) {
-  @include responsive-typography($typography-desktop);
+@media (min-width: variables.$desktop-min) and (max-width: variables.$desktop-max) {
+  @include mixins.responsive-typography(variables.$typography-desktop);
 }
 
 @media (min-width: 1024px) and (max-width: 1024px) and (min-height: 1366px) and (max-height: 1366px) {
@@ -342,8 +343,8 @@ input[type="submit"] {
   }
 }
 
-@media (min-width: $tablet-min) and (max-width: $tablet-max) {
-  @include responsive-typography($typography-tablet);
+@media (min-width: variables.$tablet-min) and (max-width: variables.$tablet-max) {
+  @include mixins.responsive-typography(variables.$typography-tablet);
 }
 
 @media (min-width: 769px) {
@@ -352,8 +353,8 @@ input[type="submit"] {
   }
 }
 
-@media (max-width: $mobile-max) {
-  @include responsive-typography($typography-mobile);
+@media (max-width: variables.$mobile-max) {
+  @include mixins.responsive-typography(variables.$typography-mobile);
 
   .formDiv {
     form {

@@ -1,4 +1,5 @@
-@import "../../../styles/styles.scss";
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 // Landing page specific variables
 $header-padding-top: 98px;
@@ -30,9 +31,9 @@ $edge-line-height-large: 255px;
   transform: translateY(-50%) translateX(0) scale(0);
   width: $dot-indicator-size;
   height: $dot-indicator-size;
-  background-color: $white;
+  background-color: variables.$white;
   border-radius: 50%;
-  transition: all $transition-base;
+  transition: all variables.$transition-base;
   opacity: 0;
 }
 
@@ -56,8 +57,8 @@ $edge-line-height-large: 255px;
   .email-icon {
     display: block;
     transform: scale(-1);
-    width: $icon-size-sm;
-    height: $icon-size-sm;
+    width: variables.$icon-size-sm;
+    height: variables.$icon-size-sm;
   }
 
   @include emailIconDot;
@@ -70,7 +71,7 @@ $edge-line-height-large: 255px;
 
 @mixin responsiveSmallIcons {
   a img {
-    @include socialIcon($icon-size-sm);
+    @include mixins.socialIcon(variables.$icon-size-sm);
   }
 }
 
@@ -95,18 +96,18 @@ $edge-line-height-large: 255px;
 }
 
 .headLine {
-  @include code-font;
+  @include mixins.code-font;
   padding: 15px;
   padding-top: $header-padding-top;
-  @include fullScreenSection();
+  @include mixins.fullScreenSection();
   background:
-    linear-gradient(to bottom, transparent 0%, transparent 97%, $background-color 100%),
-    linear-gradient(68deg, $gradient-start 23%, $gradient-end 100%);
+    linear-gradient(to bottom, transparent 0%, transparent 97%, variables.$background-color 100%),
+    linear-gradient(68deg, variables.$gradient-start 23%, variables.$gradient-end 100%);
 
   .contentWrapper {
     position: relative;
     height: calc(100vh - $header-padding-top);
-    @include dFlex(center, center);
+    @include mixins.dFlex(center, center);
     flex-direction: column;
     max-width: 1440px;
     width: 100%;
@@ -117,8 +118,8 @@ $edge-line-height-large: 255px;
 
     p {
       font-size: $hero-title-font-size;
-      @include code-font;
-      color: $white;
+      @include mixins.code-font;
+      color: variables.$white;
       margin: 0;
       padding: 0;
       font-weight: 900;
@@ -127,9 +128,9 @@ $edge-line-height-large: 255px;
 
     h1 {
       font-size: $hero-name-font-size;
-      @include primary-font;
+      @include mixins.primary-font;
       word-spacing: -0.1em;
-      color: $white;
+      color: variables.$white;
       margin: 0;
       padding: 5px 0;
       line-height: 1.1;
@@ -138,7 +139,7 @@ $edge-line-height-large: 255px;
       align-items: center;
 
       .name-spectacular {
-        @include spectacularText($name-animation-duration);
+        @include mixins.spectacularText($name-animation-duration);
 
         &.surname {
           animation-delay: $surname-animation-delay;
@@ -148,21 +149,21 @@ $edge-line-height-large: 255px;
     }
 
     .buttonDiv {
-      @include dFlex(center, center);
+      @include mixins.dFlex(center, center);
       gap: 15px;
       margin: 0;
       padding: 15px 0;
     }
 
     .edgeLine-left {
-      @include edgeLine(left);
+      @include mixins.edgeLine(left);
       left: 10px;
 
       .arrowDown {
-        @include arrowButton();
+        @include mixins.arrowButton();
 
         &:focus-visible {
-          outline: 2px solid $main-color;
+          outline: 2px solid variables.$main-color;
           outline-offset: 4px;
         }
 
@@ -173,27 +174,27 @@ $edge-line-height-large: 255px;
       }
 
       .greenLineDown {
-        @include verticalLine();
+        @include mixins.verticalLine();
       }
     }
 
     .edgeLine-right {
-      @include edgeLine(right);
+      @include mixins.edgeLine(right);
       right: 10px;
 
       .email-link {
         position: relative;
-        color: $main-color;
+        color: variables.$main-color;
         text-decoration: none;
-        @include primary-font;
-        font-size: calc($font-size-base + $email-font-size-offset);
+        @include mixins.primary-font;
+        font-size: calc(variables.$font-size-base + $email-font-size-offset);
         writing-mode: vertical-rl;
         transform: scale(-1);
         transition: transform 0.6s ease-out, color 0.3s ease;
 
         &:hover,
         &:focus-visible {
-          color: $white;
+          color: variables.$white;
           transform: scale(-1.1);
           transition: transform 0.3s ease-in, color 0.3s ease;
 
@@ -204,12 +205,12 @@ $edge-line-height-large: 255px;
         }
 
         &:focus-visible {
-          outline: 2px solid $main-color;
+          outline: 2px solid variables.$main-color;
           outline-offset: 4px;
         }
 
         .email-text {
-          transition: all $transition-base;
+          transition: all variables.$transition-base;
           position: relative;
 
           &::before {
@@ -237,18 +238,18 @@ $edge-line-height-large: 255px;
           }
 
           &:focus-visible {
-            outline: 2px solid $main-color;
+            outline: 2px solid variables.$main-color;
             outline-offset: 4px;
           }
         }
 
         img {
-          @include socialIcon();
+          @include mixins.socialIcon();
         }
       }
 
       .hero-right-line {
-        @include verticalLine();
+        @include mixins.verticalLine();
       }
     }
   }
@@ -266,7 +267,7 @@ app-banner-section {
   inset: auto 0 0 0;
 }
 
-@media (max-width: $content-max-width) {
+@media (max-width: variables.$content-max-width) {
   .headLine .contentWrapper {
     width: 100%;
   }
@@ -303,14 +304,14 @@ app-banner-section {
   @include responsiveH1FontSize(60px);
 }
 
-@media (min-width: 771px) and (max-width: $tablet-max) {
+@media (min-width: 771px) and (max-width: variables.$tablet-max) {
   @include responsiveH1FontSize(80px);
 }
 
 @media (max-width: 580px) {
   .headLine .contentWrapper {
     p {
-      font-size: $font-size-base;
+      font-size: variables.$font-size-base;
       transform: translateY(-40px);
     }
 
@@ -318,7 +319,7 @@ app-banner-section {
       transform: translateY(-40px);
 
       .name-spectacular {
-        font-size: $font-size-h1-mobile;
+        font-size: variables.$font-size-h1-mobile;
         line-height: 1;
       }
     }
@@ -332,7 +333,7 @@ app-banner-section {
       left: 0;
 
       .greenLineDown {
-        height: calc($line-height-sm - 20px);
+        height: calc(variables.$line-height-sm - 20px);
       }
 
       .arrowDown {
@@ -345,21 +346,21 @@ app-banner-section {
       gap: 12px;
 
       .hero-right-line {
-        height: calc($line-height-sm - 20px);
+        height: calc(variables.$line-height-sm - 20px);
       }
     }
 
-    @media (max-width: $mobile-small-max) {
+    @media (max-width: variables.$mobile-small-max) {
       h1 .name-spectacular {
         line-height: 0.9;
-        letter-spacing: $letter-spacing-sm;
+        letter-spacing: variables.$letter-spacing-sm;
       }
 
       .buttonDiv {
         gap: 15px;
 
         .link-button {
-          font-size: $font-size-base;
+          font-size: variables.$font-size-base;
           padding: 15px;
         }
       }
