@@ -6,12 +6,11 @@ interface BannerItem {
 }
 
 @Component({
-  selector: 'app-banner-section',
-  standalone: true,
-  imports: [TranslatePipe],
-  templateUrl: './banner-section.component.html',
-  styleUrl: './banner-section.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-banner-section',
+    imports: [TranslatePipe],
+    templateUrl: './banner-section.component.html',
+    styleUrl: './banner-section.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BannerSectionComponent {
   readonly bannerItems: BannerItem[] = [

@@ -1,24 +1,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { ContactComponent } from './contact.component';
-
 import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
   let fixture: ComponentFixture<ContactComponent>;
+  let httpMock: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ContactComponent, TranslateModule.forRoot()],
-      providers: [provideHttpClient(), { provide: ActivatedRoute, useValue: {} }]
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        { provide: ActivatedRoute, useValue: { fragment: of(null) } }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContactComponent);
     component = fixture.componentInstance;
+    httpMock = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
+    await fixture.whenStable();
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   describe('Component Creation', () => {

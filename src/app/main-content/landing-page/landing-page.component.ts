@@ -19,12 +19,11 @@ interface SocialLink {
 }
 
 @Component({
-  selector: 'app-landingpage',
-  standalone: true,
-  imports: [BannerSectionComponent, TranslatePipe],
-  templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-landingpage',
+    imports: [BannerSectionComponent, TranslatePipe],
+    templateUrl: './landing-page.component.html',
+    styleUrl: './landing-page.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingpageComponent {
   readonly profileInfo = {

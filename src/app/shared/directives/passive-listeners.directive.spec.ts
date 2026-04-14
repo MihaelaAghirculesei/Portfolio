@@ -20,9 +20,8 @@ function createTouch(target: HTMLElement, x = 100, y = 100, id = 1): Touch {
 }
 
 @Component({
-  template: '<div appPassiveTouchStart (passiveTouchStart)="onTouchStart($event)"></div>',
-  standalone: true,
-  imports: [PassiveTouchStartDirective]
+    template: '<div appPassiveTouchStart (passiveTouchStart)="onTouchStart($event)"></div>',
+    imports: [PassiveTouchStartDirective]
 })
 class TestTouchStartComponent {
   touchStartEvent: TouchEvent | null = null;
@@ -32,9 +31,8 @@ class TestTouchStartComponent {
 }
 
 @Component({
-  template: '<div appPassiveTouchEnd (passiveTouchEnd)="onTouchEnd($event)"></div>',
-  standalone: true,
-  imports: [PassiveTouchEndDirective]
+    template: '<div appPassiveTouchEnd (passiveTouchEnd)="onTouchEnd($event)"></div>',
+    imports: [PassiveTouchEndDirective]
 })
 class TestTouchEndComponent {
   touchEndEvent: TouchEvent | null = null;

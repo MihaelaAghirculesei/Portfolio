@@ -39,12 +39,11 @@ declare global {
 }
 
 @Component({
-  selector: 'app-aboutme',
-  standalone: true,
-  imports: [CommonModule, TranslatePipe],
-  templateUrl: './about-me.component.html',
-  styleUrl: './about-me.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-aboutme',
+    imports: [CommonModule, TranslatePipe],
+    templateUrl: './about-me.component.html',
+    styleUrl: './about-me.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('imgDiv', { static: false }) imgDivRef!: ElementRef;

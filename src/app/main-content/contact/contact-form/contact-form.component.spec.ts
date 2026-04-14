@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ContactFormComponent } from './contact-form.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
+import { HttpErrorResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { of } from 'rxjs';
 import { HTTP_CONFIG } from '../../../shared/constants/app.constants';
 import { ActivatedRoute } from '@angular/router';
+import { LoggerService } from '../../../shared/services/logger.service';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -16,22 +17,23 @@ describe('ContactFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ContactFormComponent,
-        HttpClientTestingModule,
+    imports: [ContactFormComponent,
         TranslateModule.forRoot(),
-        FormsModule
-      ],
-      providers: [
-        { provide: ActivatedRoute, useValue: { fragment: of(null) } }
-      ]
-    }).compileComponents();
+        FormsModule],
+    providers: [
+        { provide: ActivatedRoute, useValue: { fragment: of(null) } },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ContactFormComponent);
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
     translateService = TestBed.inject(TranslateService);
+    spyOn(TestBed.inject(LoggerService), 'error');
     fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   afterEach(() => {

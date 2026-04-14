@@ -32,12 +32,11 @@ interface ErrorLike {
 }
 
 @Component({
-  selector: 'app-contact-form',
-  standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink, TranslatePipe],
-  templateUrl: './contact-form.component.html',
-  styleUrl: './contact-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-contact-form',
+    imports: [FormsModule, CommonModule, RouterLink, TranslatePipe],
+    templateUrl: './contact-form.component.html',
+    styleUrl: './contact-form.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   private readonly FORM_STORAGE_KEY = 'contact-form-data';
@@ -235,13 +234,16 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     this.submissionStatus = 'error';
 
     const errorLike = error as ErrorLike;
-    const errorName = error instanceof HttpErrorResponse ? 'HttpError' : errorLike.name;
-    const errorStatus = error instanceof HttpErrorResponse ? error.status : errorLike.status;
+    const isHttpError = error instanceof HttpErrorResponse;
+    const errorName = isHttpError
+      ? 'HttpError'
+      : (errorLike.name ?? (error as { constructor?: { name?: string } })?.constructor?.name ?? 'UnknownError');
+    const errorStatus = isHttpError ? error.status : errorLike.status;
 
     this.logger.error('Contact form submission failed:', {
       type: errorName,
       status: errorStatus,
-      message: errorLike.message,
+      message: isHttpError ? error.message : (errorLike.message ?? 'No message'),
       timestamp: new Date().toISOString()
     });
 
