@@ -1,22 +1,23 @@
-@import "../../../styles/styles.scss";
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 @mixin responsive-font($desktop, $tablet: null, $mobile: null, $small: null) {
   font-size: $desktop;
 
   @if $tablet {
-    @media (max-width: $desktop-max) {
+    @media (max-width: variables.$desktop-max) {
       font-size: $tablet;
     }
   }
 
   @if $mobile {
-    @media (max-width: $tablet-max) {
+    @media (max-width: variables.$tablet-max) {
       font-size: $mobile;
     }
   }
 
   @if $small {
-    @media (max-width: $mobile-max) {
+    @media (max-width: variables.$mobile-max) {
       font-size: $small;
     }
   }
@@ -129,8 +130,8 @@
 
 #projects {
   padding: 15px;
-  background-color: $gradient-start;
-  @include dFlex(center, center);
+  background-color: variables.$gradient-start;
+  @include mixins.dFlex(center, center);
   scroll-margin-top: 150px;
 
   .contentWrapper {
@@ -141,26 +142,26 @@
     padding: 0;
 
     > h2 {
-      color: $main-color;
-      @include responsive-font(56px, 48px, 40px, 33px);
-      @include primary-font;
+      color: variables.$main-color;
       font-weight: 700;
       margin: 0 0 10px 0;
+      @include mixins.primary-font;
+      @include responsive-font(56px, 48px, 40px, 33px);
     }
 
     > h3 {
-      @include text("Fira Code", 42px, $main-color, 400);
-      @include responsive-font(42px, 36px, 30px, 25px);
+      @include mixins.text("Fira Code", 42px, variables.$main-color, 400);
       margin: 0;
+      @include responsive-font(42px, 36px, 30px, 25px);
     }
 
     > p {
-      @include responsive-font(20px, 18px, 17px, 16px);
-      @include primary-font;
+      @include mixins.primary-font;
       width: 30%;
       margin: 0 0 10px 0;
       line-height: 120%;
-      color: $white;
+      color: variables.$white;
+      @include responsive-font(20px, 18px, 17px, 16px);
     }
   }
 }
@@ -175,16 +176,16 @@
 
     tbody {
       tr.project-row {
-        border-top: 1px solid $main-color;
-        border-bottom: 1px solid $main-color;
-        transition: all $transition-base;
+        border-top: 1px solid variables.$main-color;
+        border-bottom: 1px solid variables.$main-color;
+        transition: all variables.$transition-base;
         cursor: pointer;
-        -webkit-tap-highlight-color: $main-color-light;
+        -webkit-tap-highlight-color: variables.$main-color-light;
 
         &:hover,
         &:active,
         &.active-touch {
-          background-color: $main-color-light;
+          background-color: variables.$main-color-light;
 
           .project-name {
             &::after {
@@ -192,7 +193,7 @@
               position: absolute;
               margin-left: 8px;
               font-size: 18px;
-              color: $main-color;
+              color: variables.$main-color;
             }
           }
         }
@@ -200,9 +201,9 @@
         .project-name {
           padding: 0 0 0 16px;
           font-size: 24px;
-          @include code-font;
+          @include mixins.code-font;
           font-weight: 700;
-          color: $white;
+          color: variables.$white;
           position: relative;
 
           .arrow-icon {
@@ -216,9 +217,9 @@
             padding: 4px 12px;
             font-size: 12px;
             font-weight: 500;
-            color: $main-color;
-            background-color: rgba($main-color, 0.1);
-            border: 1px solid $main-color;
+            color: variables.$main-color;
+            background-color: rgba(variables.$main-color, 0.1);
+            border: 1px solid variables.$main-color;
             border-radius: 16px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -231,12 +232,12 @@
           padding: 40px 0;
           text-align: center;
           font-size: 18px;
-          @include primary-font;
+          @include mixins.primary-font;
           font-weight: 400;
-          color: $white;
+          color: variables.$white;
 
           .tech-separator {
-            color: $main-color;
+            color: variables.$main-color;
             margin: 0 4px;
           }
         }
@@ -249,7 +250,7 @@
   display: block;
   position: absolute;
   right: 15px;
-  transition: opacity $transition-base;
+  transition: opacity variables.$transition-base;
   opacity: 1;
 
   &[data-project-id="0"],
@@ -270,7 +271,7 @@
       object-fit: cover;
       object-position: left center;
       transform: translate(-20px, -20px);
-      box-shadow: 0 8px 32px $shadow-medium;
+      box-shadow: 0 8px 32px variables.$shadow-medium;
       position: relative;
       z-index: 2;
     }
@@ -281,7 +282,7 @@
       left: -10px;
       width: 370px;
       height: 250px;
-      background: repeating-linear-gradient(135deg, $main-color 0px, $main-color 2px, transparent 2px, transparent 12px);
+      background: repeating-linear-gradient(135deg, variables.$main-color 0px, variables.$main-color 2px, transparent 2px, transparent 12px);
       opacity: 0.8;
       z-index: 1;
     }
@@ -354,8 +355,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  @include dFlex(center, center);
-  z-index: $z-modal-overlay;
+  @include mixins.dFlex(center, center);
+  z-index: variables.$z-modal-overlay;
   padding-top: 0;
 }
 
@@ -367,21 +368,21 @@
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  background-color: $modal-backdrop;
-  z-index: $z-modal-backdrop;
+  background-color: variables.$modal-backdrop;
+  z-index: variables.$z-modal-backdrop;
 }
 
 .project-modal {
-  background: linear-gradient(45deg, $gradient-start 40%, $gradient-end 100%);
+  background: linear-gradient(45deg, variables.$gradient-start 40%, variables.$gradient-end 100%);
   max-width: 1440px;
   width: 90%;
   max-height: 90vh;
   margin: auto 5px;
   padding: 40px;
-  z-index: $z-modal-content;
+  z-index: variables.$z-modal-content;
   overflow-y: auto;
   animation: modalFadeIn 0.3s ease-in-out;
-  @include dFlex(flex-start, stretch);
+  @include mixins.dFlex(flex-start, stretch);
   flex-direction: column;
 }
 
@@ -397,7 +398,7 @@
 }
 
 .project-modal-content {
-  @include dFlex(flex-start, stretch);
+  @include mixins.dFlex(flex-start, stretch);
   flex-direction: row;
   padding: 24px;
 }
@@ -407,41 +408,41 @@
   padding-right: 24px;
 
   .project-number {
-    @include responsive-font(128px, 64px);
-    @include primary-font;
-    color: $main-color;
+    color: variables.$main-color;
     line-height: 1;
+    @include mixins.primary-font;
+    @include responsive-font(128px, 64px);
   }
 
   .project-title {
-    @include responsive-font(64px, 32px);
     font-weight: 700;
-    @include code-font;
     margin-bottom: 16px;
-    color: $white;
+    @include mixins.code-font;
+    color: variables.$white;
+    @include responsive-font(64px, 32px);
   }
 
   .project-description {
-    @include responsive-font(24px, 18px);
     margin-bottom: 16px;
-    @include code-font;
+    @include mixins.code-font;
     font-weight: 700;
-    color: $main-color;
+    color: variables.$main-color;
+    @include responsive-font(24px, 18px);
   }
 
   .project-long-description {
     margin-bottom: 16px;
 
-    p {
-      @include primary-font;
-      @include responsive-font(18px, 16px);
-      color: $white;
+   p {
       max-height: 80px;
       overflow-y: auto;
       line-height: 1.6;
-      border: 1px solid $main-color-light;
+      border: 1px solid variables.$main-color-light;
       padding: 12px 16px 12px 12px;
-      @include customScrollbar(12px, $main-color-lighter, $main-color);
+      @include mixins.primary-font;
+      color: variables.$white;
+      @include responsive-font(18px, 16px);
+      @include mixins.customScrollbar(12px, variables.$main-color-lighter, variables.$main-color);
     }
   }
 
@@ -449,23 +450,23 @@
     margin-bottom: 24px;
 
     .tech-tags {
-      @include dFlex(flex-start, center);
+      @include mixins.dFlex(flex-start, center);
       flex-wrap: wrap;
       gap: 24px;
 
       .tech-tag {
-        @include dFlex(flex-start, center);
+        @include mixins.dFlex(flex-start, center);
         gap: 8px;
-        color: $white;
+        color: variables.$white;
         font-weight: 500;
-        @include primary-font;
+        @include mixins.primary-font;
         @include tech-tag-responsive(18px, 20px);
       }
     }
   }
 
   .project-buttons {
-    @include dFlex(flex-start, center);
+    @include mixins.dFlex(flex-start, center);
     gap: 16px;
   }
 }
@@ -473,29 +474,29 @@
 .project-image-container {
   width: 50%;
   padding: 16px;
-  @include dFlex(flex-start, stretch);
+  @include mixins.dFlex(flex-start, stretch);
   flex-direction: column;
 
   .close-button {
     align-self: flex-end;
     margin-bottom: 8px;
     @include icon-size(32px);
-    @include dFlex(center, center);
+    @include mixins.dFlex(center, center);
     border: none;
     cursor: pointer;
-    transition: all $transition-base;
+    transition: all variables.$transition-base;
     background-color: transparent;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     border-radius: 50%;
 
     &:hover {
-      background-color: $white-transparent-light;
+      background-color: variables.$white-transparent-light;
       transform: scale(1.1);
     }
 
     &:focus-visible {
-      outline: 2px solid $main-color;
+      outline: 2px solid variables.$main-color;
       outline-offset: 2px;
     }
 
@@ -514,11 +515,11 @@
         position: absolute;
         width: 24px;
         height: 2px;
-        background-color: $white;
+        background-color: variables.$white;
         top: 50%;
         left: 50%;
         transform-origin: center;
-        transition: all $transition-base;
+        transition: all variables.$transition-base;
       }
 
       &::before {
@@ -533,7 +534,7 @@
     &:hover .close-icon {
       &::before,
       &::after {
-        background-color: $main-color;
+        background-color: variables.$main-color;
         width: 26px;
       }
     }
@@ -541,7 +542,7 @@
 
   .project-image {
     height: 100%;
-    @include dFlex(center, center);
+    @include mixins.dFlex(center, center);
 
     .imageContainer {
       position: relative;
@@ -555,7 +556,7 @@
         height: 350px;
         object-fit: cover;
         object-position: left center;
-        box-shadow: 0 4px 8px $shadow-light;
+        box-shadow: 0 4px 8px variables.$shadow-light;
         display: block;
       }
     }
@@ -574,19 +575,19 @@
 
 .project-modal-footer {
   padding: 16px;
-  @include dFlex(flex-end, center);
+  @include mixins.dFlex(flex-end, center);
 
   .next-project-button {
-    @include dFlex(center, center);
+    @include mixins.dFlex(center, center);
     background: none;
     border: none;
-    color: $main-color;
+    color: variables.$main-color;
     font-size: 18px;
     font-weight: 500;
     cursor: pointer;
     margin-right: 80px;
     position: relative;
-    @include primary-font;
+    @include mixins.primary-font;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
 
@@ -598,12 +599,12 @@
       transform: translateY(-50%);
       width: 16px;
       height: 24px;
-      transition: all $transition-base;
+      transition: all variables.$transition-base;
     }
 
     &:hover,
     &:active {
-      color: $white;
+      color: variables.$white;
 
       &::after {
         right: -32px;
@@ -617,32 +618,32 @@
   display: inline-flex;
   align-items: center;
   background-color: transparent;
-  border: 1px solid $white;
+  border: 1px solid variables.$white;
   padding: 18px 28px;
   border-radius: 32px;
-  color: $white;
+  color: variables.$white;
   text-decoration: none;
-  @include primary-font;
+  @include mixins.primary-font;
   font-size: 16px;
   font-weight: 500;
-  transition: all $transition-base;
-  -webkit-tap-highlight-color: $main-color-light;
+  transition: all variables.$transition-base;
+  -webkit-tap-highlight-color: variables.$main-color-light;
 
   &::after {
     content: "↗";
     margin-left: 8px;
-    transition: all $transition-base;
-    color: $main-color;
+    transition: all variables.$transition-base;
+    color: variables.$main-color;
     font-size: 16px;
   }
 
   &:hover,
   &:active {
-    border: 1px solid $main-color;
+    border: 1px solid variables.$main-color;
 
     &::after {
       transform: translate(4px, -4px);
-      color: $main-color;
+      color: variables.$main-color;
     }
   }
 }
@@ -711,7 +712,7 @@
   }
 }
 
-@media (min-width: $tablet-large-min) {
+@media (min-width: variables.$tablet-large-min) {
   #projects .projectWrapper .projects-table.projects-table {
     width: 55%;
   }
@@ -729,7 +730,7 @@
   }
 }
 
-@media (min-width: $tablet-min) and (max-width: $desktop-max) {
+@media (min-width: variables.$tablet-min) and (max-width: variables.$desktop-max) {
   #projects .projectWrapper .projects-hover-content {
     &[data-project-id="0"],
     &[data-project-id="1"],
@@ -750,13 +751,13 @@
   }
 }
 
-@media (max-width: $desktop-medium-max) {
+@media (max-width: variables.$desktop-medium-max) {
   .project-info .project-long-description p {
     max-height: 70px;
   }
 }
 
-@media (max-width: $desktop-small-max) {
+@media (max-width: variables.$desktop-small-max) {
   #projects .contentWrapper > p {
     width: 100%;
   }
@@ -766,7 +767,7 @@
   }
 }
 
-@media (max-width: $tablet-max) and (min-width: $tablet-medium-min) {
+@media (max-width: variables.$tablet-max) and (min-width: variables.$tablet-medium-min) {
   .project-modal-content .project-image-container .project-image .imageContainer {
     width: auto;
 
@@ -779,22 +780,24 @@
   }
 }
 
-@media (max-width: $tablet-max) and (orientation: landscape) {
+.project-info {
+  .project-title,
+  .project-description {
+    margin-bottom: 8px;
+  }
+}
+
+.project-image-container .close-button {
+  margin-bottom: 4px;
+}
+
+@media (max-width: variables.$tablet-max) and (orientation: landscape) {
   @include modal-with-content(100%, 16px, 12px, 100vh, auto, row, (height: auto, overflow-y: auto));
 
   @include landscape-layout;
 
   .project-info {
     @include project-info-responsive(48px, 28px, 16px, 16px, 60px, 16px, 18px, 12px);
-
-    .project-title,
-    .project-description {
-      margin-bottom: 8px;
-    }
-  }
-
-  .project-image-container .close-button {
-    margin-bottom: 4px;
   }
 
   .project-modal-footer {
@@ -806,7 +809,7 @@
   }
 }
 
-@media (max-width: $tablet-large-max) and (min-width: $tablet-small-min) {
+@media (max-width: variables.$tablet-large-max) and (min-width: variables.$tablet-small-min) {
   .projectWrapper .projects-table.projects-table {
     width: 60%;
   }
@@ -836,13 +839,13 @@
   }
 }
 
-@media (min-width: $tablet-medium-min) and (max-width: $tablet-small-min) {  .projectWrapper .projects-table.projects-table {
+@media (min-width: variables.$tablet-medium-min) and (max-width: variables.$tablet-small-min) {  .projectWrapper .projects-table.projects-table {
     width: 50%;
   }
 
   .projectWrapper .projects-table tbody tr.project-row.project-row {
-    border-top: 0.5px solid $main-color;
-    border-bottom: 0.5px solid $main-color;
+    border-top: 0.5px solid variables.$main-color;
+    border-bottom: 0.5px solid variables.$main-color;
   }
 
   .projectWrapper .projects-table tbody tr .project-name,
@@ -884,7 +887,7 @@
   }
 
   .project-modal-overlay {
-    z-index: calc($z-modal-overlay + 10);
+    z-index: calc(variables.$z-modal-overlay + 10);
 
     &::before {
       content: "";
@@ -894,17 +897,17 @@
       right: 0;
       height: 120px;
       background: transparent;
-      z-index: calc($z-modal-overlay + 11);
+      z-index: calc(variables.$z-modal-overlay + 11);
       pointer-events: none;
     }
   }
 
   .project-modal-backdrop {
-    z-index: calc($z-modal-backdrop + 10);
+    z-index: calc(variables.$z-modal-backdrop + 10);
   }
 
   .project-modal {
-    z-index: calc($z-modal-content + 10);
+    z-index: calc(variables.$z-modal-content + 10);
     @include modal-sizing(95%, 20px);
   }
 
@@ -923,10 +926,10 @@
     width: 100%;
     order: -1;
     padding: 8px;
-    @include dFlex(center, center);
+    @include mixins.dFlex(center, center);
 
     .project-image {
-      @include dFlex(center, center);
+      @include mixins.dFlex(center, center);
       width: auto;
 
       .imageContainer {
@@ -964,6 +967,10 @@
   }
 }
 
+.project-image-container .close-button {
+  margin-bottom: 0;
+}
+
 @media (max-width: 1070px) and (orientation: portrait) {
   @include modal-with-content(100%, 16px, 0, 100vh, auto, column, (height: auto, min-height: 100vh, overflow-y: auto));
 
@@ -987,19 +994,15 @@
   .project-image-container {
     width: 100%;
     padding: 8px;
-    @include dFlex(center, center);
-
-    .close-button {
-      margin-bottom: 0;
-    }
+    @include mixins.dFlex(center, center);
 
     .project-image {
       margin-top: 0;
-      @include dFlex(center, center);
+      @include mixins.dFlex(center, center);
       width: 100%;
 
       .imageContainer {
-        @include dFlex(center, center);
+        @include mixins.dFlex(center, center);
         width: auto;
 
         img {
@@ -1024,11 +1027,6 @@
     width: 100%;
     order: 1;
     @include project-info-responsive(36px, 22px, 16px, 16px, 50px, 16px, 16px, 8px);
-
-    .project-title,
-    .project-description {
-      margin-bottom: 6px;
-    }
   }
 
   .project-image-container {
@@ -1037,7 +1035,6 @@
     padding: 4px;
 
     .close-button {
-      margin-bottom: 4px;
       @include icon-size(24px);
 
       .close-icon {
@@ -1065,7 +1062,7 @@
   }
 }
 
-@media (max-width: $tablet-small-max) {
+@media (max-width: variables.$tablet-small-max) {
   .projectWrapper .projects-table tbody tr .project-name {
     font-size: 20px;
 
@@ -1077,7 +1074,7 @@
   }
 }
 
-@media (max-width: $mobile-max) {
+@media (max-width: variables.$mobile-max) {
   @include modal-with-content(98%, 15px, 8px, 90vh, auto);
 
   .project-modal-content {
@@ -1091,18 +1088,14 @@
 
   .project-image-container {
     padding: 4px;
-    @include dFlex(center, center);
-
-    .close-button {
-      margin-bottom: 0;
-    }
+    @include mixins.dFlex(center, center);
 
     .project-image {
-      @include dFlex(center, center);
+      @include mixins.dFlex(center, center);
       width: 100%;
 
       .imageContainer {
-        @include dFlex(center, center);
+        @include mixins.dFlex(center, center);
         width: auto;
 
         img {
@@ -1130,7 +1123,7 @@
   }
 }
 
-@media (max-width: $mobile-medium-max) {
+@media (max-width: variables.$mobile-medium-max) {
   @include modal-with-content(100%, 10px, 4px, 90vh, auto);
 
   .project-modal-content {
@@ -1166,7 +1159,7 @@
   }
 }
 
-@media (max-width: $mobile-small-max) {
+@media (max-width: variables.$mobile-small-max) {
   .project-modal {
     @include modal-sizing(auto, 8px, 90vh, auto);
   }
@@ -1192,7 +1185,7 @@
   }
 }
 
-@media (max-width: $tablet-max) {
+@media (max-width: variables.$tablet-max) {
   .link-button2 {
     font-size: 16px;
   }

@@ -1,4 +1,6 @@
-@import "../../../styles/styles.scss";
+@use 'sass:map';
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 $footer-padding: 12px;
 $footer-padding-compact: 8px;
@@ -9,7 +11,7 @@ $footer-section-gap: 12px;
 $logo-width: 120px;
 
 section {
-  background-color: $gradient-start;
+  background-color: variables.$gradient-start;
   padding: $footer-padding 0;
   margin-top: $footer-margin-top;
   position: relative;
@@ -17,7 +19,7 @@ section {
 
   .content-width {
     width: 100%;
-    max-width: $content-max-width;
+    max-width: variables.$content-max-width;
     margin: 0 auto;
     padding: 0 $footer-content-padding;
     display: flex;
@@ -40,7 +42,7 @@ section {
     align-items: center;
     width: 100%;
     padding-top: 10px;
-    border-top: 1px solid rgba($main-color, 0.2);
+    border-top: 1px solid rgba(variables.$main-color, 0.2);
   }
 
   .logoDiv {
@@ -59,7 +61,7 @@ section {
       > img {
         width: $logo-width;
         height: auto;
-        @include smoothHoverEffect();
+        @include mixins.smoothHoverEffect();
       }
     }
   }
@@ -69,14 +71,14 @@ section {
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    @include smoothHoverEffect();
+    @include mixins.smoothHoverEffect();
 
     .location-icon {
       width: 24px;
       height: 24px;
       flex-shrink: 0;
 
-      @media (min-width: $desktop-min) {
+      @media (min-width: variables.$desktop-min) {
         width: 28px;
         height: 28px;
       }
@@ -89,23 +91,23 @@ section {
       gap: 2px;
 
       p {
-        @include primary-font;
-        font-size: map-get($typography-tablet, text);
-        color: $white;
+        @include mixins.primary-font;
+        font-size: map.get(variables.$typography-tablet, text);
+        color: variables.$white;
         font-weight: 400;
         margin: 0;
         line-height: 1.4;
 
-        @media (max-width: $mobile-max) {
-          font-size: map-get($typography-mobile, text);
+        @media (max-width: variables.$mobile-max) {
+          font-size: map.get(variables.$typography-mobile, text);
         }
 
-        @media (min-width: $desktop-min) {
-          font-size: map-get($typography-desktop, text);
+        @media (min-width: variables.$desktop-min) {
+          font-size: map.get(variables.$typography-desktop, text);
         }
 
-        @media (min-width: $desktop-4k-min) {
-          font-size: map-get($typography-4k, text);
+        @media (min-width: variables.$desktop-4k-min) {
+          font-size: map.get(variables.$typography-4k, text);
         }
       }
     }
@@ -117,35 +119,35 @@ section {
     text-align: center;
 
     p {
-      @include code-font;
-      font-size: map-get($typography-tablet, text);
-      color: $main-color;
+      @include mixins.code-font;
+      font-size: map.get(variables.$typography-tablet, text);
+      color: variables.$main-color;
       font-weight: 400;
       margin: 0;
       display: flex;
       align-items: center;
       justify-content: center;
 
-      @media (max-width: $mobile-max) {
-        font-size: map-get($typography-mobile, text);
+      @media (max-width: variables.$mobile-max) {
+        font-size: map.get(variables.$typography-mobile, text);
       }
 
-      @media (min-width: $desktop-min) {
-        font-size: map-get($typography-desktop, text);
+      @media (min-width: variables.$desktop-min) {
+        font-size: map.get(variables.$typography-desktop, text);
       }
 
-      @media (min-width: $desktop-4k-min) {
-        font-size: map-get($typography-4k, text);
+      @media (min-width: variables.$desktop-4k-min) {
+        font-size: map.get(variables.$typography-4k, text);
       }
 
       .name-effect {
         background: linear-gradient(
           90deg,
-          $main-color,
-          $white,
-          $main-color,
-          $white,
-          $main-color
+          variables.$main-color,
+          variables.$white,
+          variables.$main-color,
+          variables.$white,
+          variables.$main-color
         );
         background-size: 200% 100%;
         -webkit-background-clip: text;
@@ -156,7 +158,7 @@ section {
         letter-spacing: 1px;
         position: relative;
         display: inline-block;
-        @include smoothHoverEffect();
+        @include mixins.smoothHoverEffect();
 
         &::first-letter {
           font-size: 1.3em;
@@ -170,25 +172,25 @@ section {
 
   .legal-notice-link,
   .privacy-policy-link {
-    @include primary-font;
-    font-size: map-get($typography-tablet, text);
-    color: $main-color;
+    @include mixins.primary-font;
+    font-size: map.get(variables.$typography-tablet, text);
+    color: variables.$main-color;
     font-weight: 400;
     cursor: pointer;
     text-decoration: underline;
     text-underline-offset: 4px;
-    @include smoothHoverEffect();
+    @include mixins.smoothHoverEffect();
 
-    @media (max-width: $mobile-max) {
-      font-size: map-get($typography-mobile, text);
+    @media (max-width: variables.$mobile-max) {
+      font-size: map.get(variables.$typography-mobile, text);
     }
 
-    @media (min-width: $desktop-min) {
-      font-size: map-get($typography-desktop, text);
+    @media (min-width: variables.$desktop-min) {
+      font-size: map.get(variables.$typography-desktop, text);
     }
 
-    @media (min-width: $desktop-4k-min) {
-      font-size: map-get($typography-4k, text);
+    @media (min-width: variables.$desktop-4k-min) {
+      font-size: map.get(variables.$typography-4k, text);
     }
   }
 
@@ -223,9 +225,9 @@ section {
       .link-icon {
         width: 28px;
         height: 28px;
-        @include smoothHoverEffect(1.20);
+        @include mixins.smoothHoverEffect(1.20);
 
-        @media (min-width: $desktop-min) {
+        @media (min-width: variables.$desktop-min) {
           width: 32px;
           height: 32px;
         }
@@ -234,7 +236,7 @@ section {
   }
 }
 
-@media (max-width: $tablet-max) {
+@media (max-width: variables.$tablet-max) {
   section {
     padding: $footer-padding-compact 0;
 
@@ -306,7 +308,7 @@ section {
   }
 }
 
-@media (max-width: $mobile-max) {
+@media (max-width: variables.$mobile-max) {
   section {
     .footer-top {
       gap: 8px;
@@ -370,7 +372,7 @@ section {
   }
 }
 
-@media (max-width: $mobile-small-max) {
+@media (max-width: variables.$mobile-small-max) {
   section {
     padding: $footer-padding-compact 0;
 
