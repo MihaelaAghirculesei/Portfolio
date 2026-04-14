@@ -1,42 +1,44 @@
-@import "../../../styles/styles.scss";
+@use 'sass:map';
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 .aboutMeSection {
-  background: $gradient-start;
+  background: variables.$gradient-start;
   min-height: 900px;
   width: 100%;
-  @include dFlex(center, center);
+  @include mixins.dFlex(center, center);
   padding: 15px;
   overflow: hidden;
 }
 
 .contentWrapper {
-  max-width: $content-max-width;
+  max-width: variables.$content-max-width;
   width: 100%;
-  gap: $content-gap-base;
+  gap: variables.$content-gap-base;
   margin: 0;
   padding: 0;
   color: white;
-  @include dFlex(space-between, center);
+  @include mixins.dFlex(space-between, center);
   position: relative;
   z-index: 1;
   overflow: hidden;
 }
 
 .imgDiv {
-  @include imageContainer();
+  @include mixins.imageContainer();
   padding: 0 0 25px 25px;
   margin: 0;
 
   .lineDiv {
-    @include decorativeLine();
     left: -15px;
     background: repeating-linear-gradient(
       135deg,
-      $main-color 0px,
-      $main-color 2px,
+      variables.$main-color 0px,
+      variables.$main-color 2px,
       transparent 2px,
       transparent 12px
     );
+    @include mixins.decorativeLine();
   }
 }
 
@@ -44,8 +46,8 @@
   flex: 1;
 
   h2 {
-    @include primary-font;
-    font-size: map-get($typography-desktop, h2);
+    @include mixins.primary-font;
+    font-size: map.get(variables.$typography-desktop, h2);
     font-weight: 700;
     opacity: 0.9;
   }
@@ -55,24 +57,24 @@
     text-align: left;
 
     h3 {
-      @include code-font;
-      font-size: map-get($typography-desktop, h3);
-      color: $main-color;
+      @include mixins.code-font;
+      font-size: map.get(variables.$typography-desktop, h3);
+      color: variables.$main-color;
       font-weight: 400;
     }
 
     span {
-      @include about-text-element;
-      font-size: map-get($typography-desktop, text);
+      @include mixins.about-text-element;
+      font-size: map.get(variables.$typography-desktop, text);
       display: block;
       padding: 4px 0;
     }
 
     .aboutMePs {
-      @include dFlex(flex-start, center);
-      @include primary-font;
+      @include mixins.dFlex(flex-start, center);
+      @include mixins.primary-font;
       width: 100%;
-      font-size: map-get($typography-desktop, text);
+      font-size: map.get(variables.$typography-desktop, text);
       color: white;
       margin-bottom: 8px;
       gap: 20px;
@@ -81,14 +83,14 @@
         padding: 4px 0;
 
         strong {
-          color: $main-color;
+          color: variables.$main-color;
         }
       }
     }
   }
 }
 
-@media (max-width: $tablet-max) {
+@media (max-width: variables.$tablet-max) {
   .aboutMeSection,
   .contentWrapper {
     overflow: visible;
@@ -112,11 +114,11 @@
   }
 }
 
-@media (max-width: $mobile-max) {
+@media (max-width: variables.$mobile-max) {
   .aboutMeWrapper {
-    @include responsive-typography($typography-mobile);
+    @include mixins.responsive-typography(variables.$typography-mobile);
   }
-  @include mobile-layout($small-icons: true);
+  @include mixins.mobile-layout($small-icons: true);
 
   .imgDiv {
     padding-left: 15px;
@@ -125,8 +127,8 @@
       left: 0;
       background: repeating-linear-gradient(
         135deg,
-        $main-color 0px,
-        $main-color 2px,
+        variables.$main-color 0px,
+        variables.$main-color 2px,
         transparent 2px,
         transparent 8px
       ) !important;
@@ -134,27 +136,27 @@
   }
 }
 
-@media (min-width: $tablet-min) and (max-width: $tablet-max) {
+@media (min-width: variables.$tablet-min) and (max-width: variables.$tablet-max) {
   .aboutMeWrapper {
-    @include responsive-typography($typography-tablet);
+    @include mixins.responsive-typography(variables.$typography-tablet);
   }
-  @include mobile-layout(min(60vw, 350px), 30px);
+  @include mixins.mobile-layout(min(60vw, 350px), 30px);
 
   .imgDiv .imageContainer {
     transform: translateX(10px);
   }
 }
 
-@media (min-width: $desktop-min) {
+@media (min-width: variables.$desktop-min) {
   .imgDiv {
     padding-bottom: 0;
     margin-left: 15px;
   }
 }
 
-@media (min-width: $desktop-min) and (max-width: 1599px) {
+@media (min-width: variables.$desktop-min) and (max-width: 1599px) {
   .aboutMeWrapper {
-    @include responsive-typography($typography-desktop);
+    @include mixins.responsive-typography(variables.$typography-desktop);
   }
   .contentWrapper {
     overflow: visible;
@@ -164,9 +166,9 @@
   }
 }
 
-@media (min-width: $desktop-min) and (max-width: 1199px) {
+@media (min-width: variables.$desktop-min) and (max-width: 1199px) {
   .imgDiv {
-    @include imageContainer(460px);
+    @include mixins.imageContainer(460px);
   }
   .lineDiv {
     top: -15px;
@@ -177,7 +179,7 @@
 
 @media (min-width: 1200px) and (max-width: 1599px) {
   .imgDiv {
-    @include imageContainer(650px);
+    @include mixins.imageContainer(650px);
   }
 }
 
@@ -194,9 +196,9 @@
   }
 }
 
-@media (min-width: $desktop-4k-min) {
+@media (min-width: variables.$desktop-4k-min) {
   .aboutMeWrapper {
-    @include responsive-typography($typography-4k);
+    @include mixins.responsive-typography(variables.$typography-4k);
   }
 }
 
@@ -205,7 +207,7 @@
     min-height: 700px;
   }
   .imgDiv {
-    @include imageContainer(500px);
+    @include mixins.imageContainer(500px);
     transform: translateY(-10px);
     &:hover {
       transform: translateY(-15px);
@@ -216,18 +218,18 @@
   }
 }
 
-@media (min-width: $large-screens-min) {
+@media (min-width: variables.$large-screens-min) {
   .aboutMeSection,
   .contentWrapper {
     overflow: visible;
   }
 
   .imgDiv {
-    @include imageContainer(700px);
+    @include mixins.imageContainer(700px);
   }
 }
 
-@media (min-width: $large-screens-min) and (max-width: $desktop-max) {
+@media (min-width: variables.$large-screens-min) and (max-width: variables.$desktop-max) {
   .imgDiv {
     transform: translateY(-40px);
     &:hover {
@@ -236,9 +238,9 @@
   }
 }
 
-@media (min-width: $ultra-wide-min) {
+@media (min-width: variables.$ultra-wide-min) {
   .imgDiv {
-    @include imageContainer(720px);
+    @include mixins.imageContainer(720px);
   }
 }
 

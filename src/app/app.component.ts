@@ -16,23 +16,22 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { LoggerService } from './shared/services/logger.service';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    HeaderComponent,
-    FooterComponent,
-    LandingpageComponent,
-    AboutmeComponent,
-    SkillsComponent,
-    PortofolioComponent,
-    FeedbacksComponent,
-    ContactComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-root',
+    imports: [
+        CommonModule,
+        RouterOutlet,
+        HeaderComponent,
+        FooterComponent,
+        LandingpageComponent,
+        AboutmeComponent,
+        SkillsComponent,
+        PortofolioComponent,
+        FeedbacksComponent,
+        ContactComponent,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   showMainContent = true;

@@ -22,12 +22,11 @@ interface ExternalLink {
 }
 
 @Component({
-  selector: 'app-legal-notice',
-  standalone: true,
-  imports: [TranslatePipe],
-  templateUrl: './legal-notice.component.html',
-  styleUrl: './legal-notice.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-legal-notice',
+    imports: [TranslatePipe],
+    templateUrl: './legal-notice.component.html',
+    styleUrl: './legal-notice.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LegalNoticeComponent implements OnInit {
   private readonly logger = inject(LoggerService);

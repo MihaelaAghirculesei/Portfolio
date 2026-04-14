@@ -5,12 +5,11 @@ import { Router } from '@angular/router';
 import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
-  selector: 'app-privacy-policy',
-  standalone: true,
-  imports: [CommonModule, TranslateModule],
-  templateUrl: './privacy-policy.component.html',
-  styleUrl: './privacy-policy.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-privacy-policy',
+    imports: [CommonModule, TranslateModule],
+    templateUrl: './privacy-policy.component.html',
+    styleUrl: './privacy-policy.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrivacyPolicyComponent implements OnInit {
   private readonly logger = inject(LoggerService);

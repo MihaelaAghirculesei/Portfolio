@@ -1,4 +1,6 @@
-@import "../../../styles/styles.scss";
+@use 'sass:map';
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 $section-min-height: 700px;
 $text-min-width: 580px;
@@ -23,26 +25,26 @@ $scale-hover-small: 1.05;
 
 .skillsSection {
   background:
-    linear-gradient(to bottom, $background-color 0%, transparent 20%, transparent 80%, $background-color 100%),
-    radial-gradient(circle at 0% 50%, $gradient-end 0%, $gradient-start 25%);
+    linear-gradient(to bottom, variables.$background-color 0%, transparent 20%, transparent 80%, variables.$background-color 100%),
+    radial-gradient(circle at 0% 50%, variables.$gradient-end 0%, variables.$gradient-start 25%);
   min-height: $section-min-height;
   width: 100%;
   padding: 15px;
   margin: 0;
   overflow: hidden;
-  @include dFlex(center, center);
+  @include mixins.dFlex(center, center);
 }
 
 .contentWrapper {
-  max-width: $content-max-width;
+  max-width: variables.$content-max-width;
   width: 100%;
   gap: 60px;
   margin: 0;
   padding: 0;
-  color: $white;
+  color: variables.$white;
   position: relative;
   z-index: 2;
-  @include dFlex(space-between, center);
+  @include mixins.dFlex(space-between, center);
 }
 
 .textWrapper {
@@ -50,113 +52,113 @@ $scale-hover-small: 1.05;
   flex-direction: column;
   margin: 0;
   padding: 0;
-  @include dFlex(flex-start, flex-start);
+  @include mixins.dFlex(flex-start, flex-start);
 
   .overContent {
-    @include primary-font;
+    @include mixins.primary-font;
     margin: 0;
     padding: 0;
-    font-size: map-get($typography-desktop, h2);
+    font-size: map.get(variables.$typography-desktop, h2);
     font-weight: 700;
     opacity: $opacity-overlay;
-    color: $main-color;
+    color: variables.$main-color;
     text-align: left;
 
-    @media (max-width: $tablet-max) {
-      font-size: map-get($typography-tablet, h2);
+    @media (max-width: variables.$tablet-max) {
+      font-size: map.get(variables.$typography-tablet, h2);
     }
 
-    @media (max-width: $mobile-max) {
-      font-size: map-get($typography-mobile, h2);
+    @media (max-width: variables.$mobile-max) {
+      font-size: map.get(variables.$typography-mobile, h2);
     }
 
-    @media (min-width: $desktop-4k-min) {
-      font-size: map-get($typography-4k, h2);
+    @media (min-width: variables.$desktop-4k-min) {
+      font-size: map.get(variables.$typography-4k, h2);
     }
   }
 
   .textDiv {
     margin: 0;
     padding: 15px;
-    border: 1px solid $main-color;
-    border-radius: #{$border-radius-base * 2};
-    background: rgba($gradient-end, 0.9);
+    border: 1px solid variables.$main-color;
+    border-radius: #{variables.$border-radius-base * 2};
+    background: rgba(variables.$gradient-end, 0.9);
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     width: 100%;
     min-width: $text-min-width;
 
     strong {
-      color: $white;
+      color: variables.$white;
     }
 
     h3 {
-      @include code-font;
-      font-size: map-get($typography-tablet, h3);
-      color: $main-color;
+      @include mixins.code-font;
+      font-size: map.get(variables.$typography-tablet, h3);
+      color: variables.$main-color;
       font-weight: 400;
       margin: 0;
       padding: 0;
       text-align: left;
 
-      @media (max-width: $mobile-max) {
-        font-size: map-get($typography-mobile, h3);
+      @media (max-width: variables.$mobile-max) {
+        font-size: map.get(variables.$typography-mobile, h3);
       }
 
-      @media (min-width: $desktop-min) {
-        font-size: map-get($typography-desktop, h3);
+      @media (min-width: variables.$desktop-min) {
+        font-size: map.get(variables.$typography-desktop, h3);
       }
 
-      @media (min-width: $desktop-4k-min) {
-        font-size: map-get($typography-4k, h3);
+      @media (min-width: variables.$desktop-4k-min) {
+        font-size: map.get(variables.$typography-4k, h3);
       }
     }
 
     h3:not(:first-of-type) {
-      @include primary-font;
+      @include mixins.primary-font;
       font-size: 24px;
-      color: $white;
+      color: variables.$white;
       font-weight: 700;
       margin: 0;
       padding: 0;
       text-align: left;
 
       span {
-        color: $main-color;
+        color: variables.$main-color;
       }
     }
 
     h2 {
-      @include primary-font;
-      font-size: map-get($typography-desktop, h2);
-      color: $white;
+      @include mixins.primary-font;
+      font-size: map.get(variables.$typography-desktop, h2);
+      color: variables.$white;
       font-weight: 700;
       margin: 0;
       padding: 0;
       text-align: left;
 
-      @media (max-width: $tablet-max) {
-        font-size: map-get($typography-tablet, h2);
+      @media (max-width: variables.$tablet-max) {
+        font-size: map.get(variables.$typography-tablet, h2);
       }
 
-      @media (max-width: $mobile-max) {
-        font-size: map-get($typography-mobile, h2);
+      @media (max-width: variables.$mobile-max) {
+        font-size: map.get(variables.$typography-mobile, h2);
       }
 
-      @media (min-width: $desktop-4k-min) {
-        font-size: map-get($typography-4k, h2);
+      @media (min-width: variables.$desktop-4k-min) {
+        font-size: map.get(variables.$typography-4k, h2);
       }
 
       span {
-        color: $main-color;
+        color: variables.$main-color;
       }
     }
 
     .skillIntroduction,
     > span:last-of-type {
-      @include primary-font;
-      font-size: map-get($typography-tablet, text);
-      color: $white;
+      @include mixins.primary-font;
+      font-size: map.get(variables.$typography-tablet, text);
+      color: variables.$white;
       font-weight: 400;
       max-width: 100%;
       width: 100%;
@@ -166,20 +168,20 @@ $scale-hover-small: 1.05;
       line-height: 1.4;
       text-align: left;
 
-      @media (max-width: $mobile-max) {
-        font-size: map-get($typography-mobile, text);
+      @media (max-width: variables.$mobile-max) {
+        font-size: map.get(variables.$typography-mobile, text);
       }
 
-      @media (min-width: $desktop-min) {
-        font-size: map-get($typography-desktop, text);
+      @media (min-width: variables.$desktop-min) {
+        font-size: map.get(variables.$typography-desktop, text);
       }
 
-      @media (min-width: $desktop-4k-min) {
-        font-size: map-get($typography-4k, text);
+      @media (min-width: variables.$desktop-4k-min) {
+        font-size: map.get(variables.$typography-4k, text);
       }
 
       strong {
-        color: $white;
+        color: variables.$white;
       }
     }
 
@@ -209,7 +211,7 @@ $scale-hover-small: 1.05;
   flex-direction: column;
   text-align: center;
   position: relative;
-  @include dFlex(flex-start, center);
+  @include mixins.dFlex(flex-start, center);
 
   > img {
     width: $skill-icon-size;
@@ -217,7 +219,7 @@ $scale-hover-small: 1.05;
     padding-bottom: 4px;
     object-fit: contain;
     filter: brightness($brightness-hover) contrast($contrast-hover);
-    transition: transform $transition-base;
+    transition: transform variables.$transition-base;
 
     &:hover {
       transform: scale($scale-hover);
@@ -225,9 +227,9 @@ $scale-hover-small: 1.05;
   }
 
   > p {
-    @include code-font;
+    @include mixins.code-font;
     font-size: 16px;
-    color: $white;
+    color: variables.$white;
     font-weight: 400;
     margin: 0;
     line-height: 1.2;
@@ -235,7 +237,7 @@ $scale-hover-small: 1.05;
   }
 
   &:last-child > img:hover + p {
-    color: $main-color;
+    color: variables.$main-color;
   }
 
   &:last-child > img:hover ~ .tooltip {
@@ -246,7 +248,7 @@ $scale-hover-small: 1.05;
 }
 
 .tooltip {
-  @include tooltip();
+  @include mixins.tooltip();
   right: -30px;
   top: -165px;
   width: $tooltip-width;
@@ -254,10 +256,10 @@ $scale-hover-small: 1.05;
   flex-direction: column;
   gap: 12px;
   pointer-events: none;
-  @include dFlex(center, center);
+  @include mixins.dFlex(center, center);
 
   > span {
-    color: $main-color;
+    color: variables.$main-color;
     line-height: 1.4;
   }
 
@@ -267,21 +269,21 @@ $scale-hover-small: 1.05;
     top: 100%;
     left: 50%;
     border: $tooltip-arrow-size solid;
-    border-color: $white transparent transparent transparent;
+    border-color: variables.$white transparent transparent transparent;
     transform: translateX(-50%);
   }
 }
 
 .future-skills {
   gap: 20px;
-  @include dFlex(center, center);
+  @include mixins.dFlex(center, center);
 }
 
 .skillItem {
   flex-direction: column;
   gap: 8px;
-  transition: transform $transition-base;
-  @include dFlex(center, center);
+  transition: transform variables.$transition-base;
+  @include mixins.dFlex(center, center);
 
   &:hover {
     transform: scale($scale-hover-small);
@@ -291,7 +293,7 @@ $scale-hover-small: 1.05;
     width: $skill-icon-size-sm;
     height: $skill-icon-size-sm;
     object-fit: contain;
-    transition: transform $transition-base;
+    transition: transform variables.$transition-base;
 
     &:hover {
       transform: rotate(5deg);
@@ -299,9 +301,9 @@ $scale-hover-small: 1.05;
   }
 
   p {
-    @include code-font;
+    @include mixins.code-font;
     font-size: 16px;
-    color: $main-color;
+    color: variables.$main-color;
     font-weight: 400;
     margin: 0;
   }
@@ -310,7 +312,7 @@ $scale-hover-small: 1.05;
 @media (min-width: 2000px) {
   .contentWrapper {
     gap: 100px;
-    max-width: $content-max-width;
+    max-width: variables.$content-max-width;
   }
   .textWrapper .textDiv {
     min-width: 720px;
@@ -479,7 +481,7 @@ $scale-hover-small: 1.05;
   .textWrapper .textDiv {
     max-width: 100%;
     padding: 15px;
-    border-radius: $border-radius-base;
+    border-radius: variables.$border-radius-base;
 
     .skillIntroduction,
     > span:last-of-type {

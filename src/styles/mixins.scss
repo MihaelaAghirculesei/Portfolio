@@ -1,3 +1,7 @@
+@use 'sass:color';
+@use 'sass:map';
+@use './variables' as *;
+
 @mixin primary-font {
   font-family: "Karla", sans-serif;
 }
@@ -20,77 +24,77 @@
 
 @mixin responsive-typography($typography-map) {
   h1 {
-    font-size: map-get($typography-map, h1);
+    font-size: map.get($typography-map, h1);
   }
 
   h2 {
-    font-size: map-get($typography-map, h2);
+    font-size: map.get($typography-map, h2);
   }
 
   h3 {
-    font-size: map-get($typography-map, h3);
+    font-size: map.get($typography-map, h3);
   }
 
   .aboutMeDiv {
     h3 {
-      font-size: map-get($typography-map, h3);
+      font-size: map.get($typography-map, h3);
     }
 
     span,
     .aboutMePs,
     .aboutMePs p {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
   }
 
   .formDiv {
     label {
-      font-size: map-get($typography-map, h3);
+      font-size: map.get($typography-map, h3);
     }
 
     input,
     textarea {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
 
     .checkbox-container span {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
 
     .alert-text {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
   }
 
   .popup-header h3 {
-    font-size: map-get($typography-map, h3);
+    font-size: map.get($typography-map, h3);
   }
 
   .popup-content p {
-    font-size: map-get($typography-map, text);
+    font-size: map.get($typography-map, text);
   }
 
   .contactDiv {
     p {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
   }
 
   .contact-cta {
     span {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
   }
 
   .feedback-card {
     p {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
   }
 
   .feedbackBottom {
     > span {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
   }
 
@@ -98,11 +102,11 @@
     .contact-details p,
     .contact-name,
     .contact-address {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
 
     .source-footer p {
-      font-size: map-get($typography-map, text);
+      font-size: map.get($typography-map, text);
     }
   }
 }
@@ -388,8 +392,8 @@
 }
 
 @mixin featureItem($gap: 20px) {
-  @include dFlex(flex-start, center);
   @include primary-font;
+  @include dFlex(flex-start, center);
   font-size: 18px;
   color: $white-dimmed;
   font-weight: 400;
@@ -438,6 +442,11 @@
   $thumb-color: $main-color,
   $thumb-hover-color: null
 ) {
+  & {
+    scrollbar-width: thin;
+    scrollbar-color: $thumb-color $track-color;
+  }
+
   &::-webkit-scrollbar {
     width: $width;
   }
@@ -450,7 +459,6 @@
   &::-webkit-scrollbar-thumb {
     background: $thumb-color;
     border-radius: 1px;
-    visibility: visible;
 
     @if $thumb-hover-color {
       &:hover {
@@ -458,13 +466,14 @@
       }
     } @else {
       &:hover {
-        background: lighten($thumb-color, 10%);
+        background: color.adjust($thumb-color, $lightness: 10%);
       }
     }
-  }
 
-  scrollbar-width: thin;
-  scrollbar-color: $thumb-color $track-color;
+    & {
+      visibility: visible;
+    }
+  }
 }
 
 @mixin spectacularText($animation-duration: 40s, $glow-duration: 30s) {
@@ -531,5 +540,19 @@
         opacity: 0.7;
       }
     }
+  }
+}
+
+@mixin text($font-family, $font-size, $color, $font-weight) {
+  font-size: $font-size;
+  color: $color;
+  font-weight: $font-weight;
+
+  @if $font-family == "Karla" {
+    @include primary-font;
+  } @else if $font-family == "Fira Code" {
+    @include code-font;
+  } @else {
+    font-family: $font-family;
   }
 }

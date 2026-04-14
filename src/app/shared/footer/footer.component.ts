@@ -5,12 +5,11 @@ import { ScrollService } from '../services/scroll.service';
 import { LoggerService } from '../services/logger.service';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [RouterLink, TranslatePipe],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-footer',
+    imports: [RouterLink, TranslatePipe],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
   isHovered = false;

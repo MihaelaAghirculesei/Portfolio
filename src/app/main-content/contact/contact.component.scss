@@ -1,17 +1,18 @@
-@import "../../../styles/styles.scss";
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 section {
   padding: 15px;
   margin: 0;
-  @include responsive-section-layout;
-  background-color: $gradient-start;
+  @include mixins.responsive-section-layout;
+  background-color: variables.$gradient-start;
   min-height: auto;
 }
 
 h3 {
-  @include code-font;
+  @include mixins.code-font;
   font-size: 36px;
-  color: $main-color;
+  color: variables.$main-color;
   font-weight: 400;
   margin: 0;
   padding: 15px 0;
@@ -20,9 +21,9 @@ h3 {
 }
 
 h2 {
-  @include primary-font;
+  @include mixins.primary-font;
   font-size: 48px;
-  color: $main-color;
+  color: variables.$main-color;
   font-weight: 700;
   margin: 0;
   padding: 15px 0;
@@ -30,7 +31,7 @@ h2 {
 }
 
 .contactDiv {
-  @include dFlex(center, start);
+  @include mixins.dFlex(center, start);
   flex-direction: column;
   flex: 1;
   height: 100%;
@@ -41,8 +42,8 @@ h2 {
   padding: 0;
 
   p {
-    @include primary-font;
-    color: $white;
+    @include mixins.primary-font;
+    color: variables.$white;
     font-weight: 400;
     max-width: 100%;
     word-wrap: break-word;
@@ -57,8 +58,8 @@ h2 {
   padding: 15px 0;
 
   span {
-    @include primary-font;
-    color: $white;
+    @include mixins.primary-font;
+    color: variables.$white;
     font-weight: 700;
     max-width: 100%;
     word-wrap: break-word;
@@ -69,7 +70,7 @@ h2 {
   }
 
   p {
-    color: $main-color;
+    color: variables.$main-color;
     font-weight: 700;
     margin: 0;
     padding: 15px 0;
@@ -82,7 +83,7 @@ h2 {
   width: 100%;
   margin: 0;
   padding: 0;
-  @include dFlex(center, stretch);
+  @include mixins.dFlex(center, stretch);
   gap: 60px;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -94,16 +95,16 @@ app-contact-form {
   max-width: 730px;
 }
 
-@media (min-width: $desktop-4k-min) {
-  @include responsive-typography($typography-4k);
+@media (min-width: variables.$desktop-4k-min) {
+  @include mixins.responsive-typography(variables.$typography-4k);
 }
 
-@media (min-width: $desktop-min) and (max-width: $desktop-max) {
-  @include responsive-typography($typography-desktop);
+@media (min-width: variables.$desktop-min) and (max-width: variables.$desktop-max) {
+  @include mixins.responsive-typography(variables.$typography-desktop);
 }
 
-@media (min-width: $tablet-min) and (max-width: $tablet-max) {
-  @include responsive-typography($typography-tablet);
+@media (min-width: variables.$tablet-min) and (max-width: variables.$tablet-max) {
+  @include mixins.responsive-typography(variables.$typography-tablet);
 }
 
 @media (min-width: 769px) {
@@ -129,8 +130,8 @@ app-contact-form {
   }
 }
 
-@media (max-width: $mobile-max) {
-  @include responsive-typography($typography-mobile);
+@media (max-width: variables.$mobile-max) {
+  @include mixins.responsive-typography(variables.$typography-mobile);
 
   .contactDiv {
     flex: unset;

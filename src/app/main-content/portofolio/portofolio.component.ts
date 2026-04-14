@@ -19,12 +19,11 @@ import {BREAKPOINTS, PORTFOLIO_CONFIG, TIMING_CONFIG} from '../../shared/constan
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-portofolio',
-  standalone: true,
-  imports: [TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
-  templateUrl: './portofolio.component.html',
-  styleUrl: './portofolio.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-portofolio',
+    imports: [TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
+    templateUrl: './portofolio.component.html',
+    styleUrl: './portofolio.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PortofolioComponent implements OnInit, OnDestroy {
   @ViewChild('projectsTable') projectsTable!: ElementRef;
@@ -112,7 +111,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     map['Join'] = 'join';
     map['El Pollo Loco'] = 'elPolloLoco';
     map['Pokédex'] = 'pokedex';
-    map['Birthday Reminder'] = 'birthdayReminder';
+    map['Birthday Reminder Pro'] = 'birthdayReminder';
     return map;
   })();
 

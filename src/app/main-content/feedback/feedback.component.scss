@@ -1,17 +1,18 @@
-@import "../../../styles/styles.scss";
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 section {
-  background-color: $gradient-start;
+  background-color: variables.$gradient-start;
   text-align: center;
   padding: 15px;
   margin: 0;
 
   > h2 {
-    color: $main-color;
-    @include primary-font;
+    color: variables.$main-color;
+    @include mixins.primary-font;
     font-weight: 700;
     margin: 0;
-    padding: $spacing-xxl 0 $spacing-xl 0;
+    padding: variables.$spacing-xxl 0 variables.$spacing-xl 0;
   }
   .slider-container {
     position: relative;
@@ -20,7 +21,7 @@ section {
     padding: 0 21px;
 
     .feedback-wrapper {
-      @include dFlex(center, center);
+      @include mixins.dFlex(center, center);
       width: 100%;
       height: 320px;
       overflow-x: hidden;
@@ -28,7 +29,7 @@ section {
       padding: 15px 0 0 0;
 
 &:focus-visible {
-outline: 2px solid $main-color;
+outline: 2px solid variables.$main-color;
 outline-offset: 2px;
 }
 
@@ -38,12 +39,12 @@ max-width: 632px;
 width: 90%;
 min-width: 300px;
 height: 80%;
-padding: $spacing-xl;
-margin: 0 $spacing-lg;
-background: rgba($main-color, 0.3);
+padding: variables.$spacing-xl;
+margin: 0 variables.$spacing-lg;
+background: rgba(variables.$main-color, 0.3);
 border-radius: 15px;
-border: 1px solid $main-color;
-color: $white;
+border: 1px solid variables.$main-color;
+color: variables.$white;
 text-align: center;
 will-change: transform;
 transform-origin: center center;
@@ -62,17 +63,17 @@ word-wrap: break-word;
 hyphens: auto;
 line-height: 1.6;
 margin: 0;
-padding: $spacing-lg $spacing-md $spacing-xl 0;
+padding: variables.$spacing-lg variables.$spacing-md variables.$spacing-xl 0;
 flex: 1;
 display: flex;
 align-items: flex-start;
 justify-content: flex-start;
 text-align: left;
 overflow-y: auto;
-@include primary-font;
+@include mixins.primary-font;
 font-weight: 400;
-color: $white;
-@include customScrollbar();
+color: variables.$white;
+@include mixins.customScrollbar();
 }
 &.active {
 opacity: 1;
@@ -142,13 +143,13 @@ opacity: 0.4;
 
 &.active {
 opacity: 1;
-background: $main-color;
-border-color: $main-color;
+background: variables.$main-color;
+border-color: variables.$main-color;
 box-shadow: 0 2px 8px rgba(61, 207, 182, 0.6);
 }
 
 &:focus-visible {
-outline: 2px solid $main-color;
+outline: 2px solid variables.$main-color;
 outline-offset: 2px;
 }
 
@@ -158,16 +159,16 @@ margin: 0 2px;
 }
 }
 .feedbackBottom {
-@include dFlex(center, center);
-gap: $spacing-xxxl;
-margin-top: $spacing-md;
+@include mixins.dFlex(center, center);
+gap: variables.$spacing-xxxl;
+margin-top: variables.$spacing-md;
 flex-shrink: 0;
 background-color: rgba(0, 0, 0, 0.2);
-padding: $spacing-sm;
-border-radius: $spacing-sm;
+padding: variables.$spacing-sm;
+border-radius: variables.$spacing-sm;
 > span {
-@include primary-font;
-color: $white;
+@include mixins.primary-font;
+color: variables.$white;
 font-weight: 400;
 }
 .lineDiv {
@@ -180,20 +181,20 @@ opacity: 0.7;
 }
 }
 
-@media (max-width: $mobile-max) {
-@include responsive-typography($typography-mobile);
+@media (max-width: variables.$mobile-max) {
+@include mixins.responsive-typography(variables.$typography-mobile);
 }
 
-@media (min-width: $tablet-min) and (max-width: $tablet-max) {
-@include responsive-typography($typography-tablet);
+@media (min-width: variables.$tablet-min) and (max-width: variables.$tablet-max) {
+@include mixins.responsive-typography(variables.$typography-tablet);
 }
 
-@media (min-width: $desktop-min) and (max-width: $desktop-max) {
-@include responsive-typography($typography-desktop);
+@media (min-width: variables.$desktop-min) and (max-width: variables.$desktop-max) {
+@include mixins.responsive-typography(variables.$typography-desktop);
 }
 
-@media (min-width: $desktop-4k-min) {
-@include responsive-typography($typography-4k);
+@media (min-width: variables.$desktop-4k-min) {
+@include mixins.responsive-typography(variables.$typography-4k);
 }
 
 @media (max-width: 1200px) {
@@ -220,16 +221,16 @@ padding: 0;
 @media (max-width: 768px) {
 section {
 .slider-container {
-padding: 0 $spacing-xxl;
+padding: 0 variables.$spacing-xxl;
 .feedback-wrapper .feedback-card {
 width: 85%;
 max-width: 400px;
-padding: $spacing-md;
-margin: 0 $spacing-md;
+padding: variables.$spacing-md;
+margin: 0 variables.$spacing-md;
 min-width: 280px;
 p {
 line-height: 1.5;
-padding: $spacing-sm $spacing-sm $spacing-sm 0;
+padding: variables.$spacing-sm variables.$spacing-sm variables.$spacing-sm 0;
 }
 }
 .quotes-overlay {
@@ -261,7 +262,7 @@ margin: 0 5px;
 min-width: 280px;
 p {
 line-height: 1.4;
-padding: $spacing-xs $spacing-sm $spacing-xs 0;
+padding: variables.$spacing-xs variables.$spacing-sm variables.$spacing-xs 0;
 text-align: left;
 }
 }
@@ -317,7 +318,7 @@ min-width: 220px;
 p {
 line-height: 1.1;
 font-weight: 250;
-padding: $spacing-xs $spacing-sm $spacing-xs 0;
+padding: variables.$spacing-xs variables.$spacing-sm variables.$spacing-xs 0;
 }
 }
 }

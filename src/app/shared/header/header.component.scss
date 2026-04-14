@@ -1,4 +1,6 @@
-@import "../../../styles/styles.scss";
+@use 'sass:map';
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
 
 $header-height: 98px;
 $header-padding: 21px;
@@ -39,10 +41,10 @@ header {
   right: 0;
   background-color: transparent;
   z-index: 199;
-  transition: background-color $transition-base;
+  transition: background-color variables.$transition-base;
 
   &.scrolled {
-    background-color: $background-color;
+    background-color: variables.$background-color;
   }
 
   div.content-width {
@@ -52,7 +54,7 @@ header {
     margin: 0 auto;
     height: $header-height;
     position: relative;
-    max-width: $content-max-width;
+    max-width: variables.$content-max-width;
     padding: $header-padding;
   }
 }
@@ -68,26 +70,26 @@ header {
 
     li {
       background-color: transparent;
-      font-size: map-get($typography-tablet, text);
+      font-size: map.get(variables.$typography-tablet, text);
 
-      @media (max-width: $mobile-max) {
-        font-size: map-get($typography-mobile, text);
+      @media (max-width: variables.$mobile-max) {
+        font-size: map.get(variables.$typography-mobile, text);
       }
 
-      @media (min-width: $desktop-min) {
-        font-size: map-get($typography-desktop, text);
+      @media (min-width: variables.$desktop-min) {
+        font-size: map.get(variables.$typography-desktop, text);
       }
 
-      @media (min-width: $desktop-4k-min) {
-        font-size: map-get($typography-4k, text);
+      @media (min-width: variables.$desktop-4k-min) {
+        font-size: map.get(variables.$typography-4k, text);
       }
 
       a {
         text-decoration: none;
-        color: $white;
+        color: variables.$white;
         position: relative;
         cursor: pointer;
-        @include primary-font;
+        @include mixins.primary-font;
 
         &::after {
           content: "•";
@@ -96,12 +98,12 @@ header {
           bottom: $nav-dot-bottom;
           transform: translateX(-50%) scale(0);
           font-size: $nav-dot-size;
-          color: $main-color;
-          transition: transform $transition-base;
+          color: variables.$main-color;
+          transition: transform variables.$transition-base;
         }
 
         &:hover {
-          color: $main-color;
+          color: variables.$main-color;
 
           &::after {
             transform: translateX(-50%) scale(1);
@@ -116,7 +118,7 @@ header {
   width: auto;
   height: $logo-width;
   cursor: pointer;
-  @include smoothHoverEffect();
+  @include mixins.smoothHoverEffect();
 }
 
 @keyframes pulse {
@@ -132,24 +134,24 @@ header {
 .switch {
   position: relative;
   display: inline-block;
-  margin: 0 $spacing-xs + 1px;
+  margin: 0 variables.$spacing-xs + 1px;
 }
 
 .switch > span {
   position: absolute;
   top: $switch-span-top;
   pointer-events: none;
-  @include code-font;
+  @include mixins.code-font;
   font-weight: bold;
   font-size: $switch-font-size;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba($black-pure, 0.06);
+  text-shadow: 0 1px 0 rgba(variables.$black-pure, 0.06);
   width: 50%;
   text-align: center;
 }
 
 input.check-toggle-round-flat:checked ~ .off {
-  color: $white;
+  color: variables.$white;
 }
 
 input.check-toggle-round-flat:checked ~ .on {
@@ -159,7 +161,7 @@ input.check-toggle-round-flat:checked ~ .on {
 .switch > span.on {
   left: 0;
   padding-left: $switch-padding;
-  color: $white;
+  color: variables.$white;
 }
 
 .switch > span.off {
@@ -202,7 +204,7 @@ input.check-toggle-round-flat + label:before {
   left: $switch-padding;
   bottom: $switch-padding;
   right: $switch-padding;
-  background-color: $background-color;
+  background-color: variables.$background-color;
   border-radius: $switch-border-radius;
 }
 
@@ -211,9 +213,9 @@ input.check-toggle-round-flat + label:after {
   left: 0;
   bottom: 0;
   width: $switch-toggle-width;
-  background-color: $main-color;
+  background-color: variables.$main-color;
   border-radius: $switch-border-radius-small;
-  transition: margin $transition-base;
+  transition: margin variables.$transition-base;
 }
 
 input.check-toggle-round-flat:checked + label:after {
@@ -252,7 +254,7 @@ button.logo-button {
     position: absolute;
     height: $hamburger-bar-height;
     width: 100%;
-    background-color: $white;
+    background-color: variables.$white;
     border-radius: $hamburger-bar-radius;
     opacity: 1;
     left: 0;
@@ -298,12 +300,12 @@ button.logo-button {
   width: auto;
   right: $mobile-dropdown-right;
   height: 0;
-  background: linear-gradient(45deg, $background-color 40%, $gradient-end 100%);
+  background: linear-gradient(45deg, variables.$background-color 40%, variables.$gradient-end 100%);
   overflow: hidden;
-  transition: height $transition-base;
+  transition: height variables.$transition-base;
   border-radius: $mobile-dropdown-border-radius;
   z-index: 100;
-  box-shadow: 0 5px 15px $shadow-medium;
+  box-shadow: 0 5px 15px variables.$shadow-medium;
   display: none;
 
   &.open {
@@ -325,26 +327,26 @@ button.logo-button {
 
       li {
         background-color: transparent;
-        font-size: map-get($typography-tablet, text);
+        font-size: map.get(variables.$typography-tablet, text);
 
-        @media (max-width: $mobile-max) {
-          font-size: map-get($typography-mobile, text);
+        @media (max-width: variables.$mobile-max) {
+          font-size: map.get(variables.$typography-mobile, text);
         }
 
-        @media (min-width: $desktop-min) {
-          font-size: map-get($typography-desktop, text);
+        @media (min-width: variables.$desktop-min) {
+          font-size: map.get(variables.$typography-desktop, text);
         }
 
-        @media (min-width: $desktop-4k-min) {
-          font-size: map-get($typography-4k, text);
+        @media (min-width: variables.$desktop-4k-min) {
+          font-size: map.get(variables.$typography-4k, text);
         }
 
         a {
           text-decoration: none;
           display: block;
           padding: 5px 0;
-          color: $white;
-          @include primary-font;
+          color: variables.$white;
+          @include mixins.primary-font;
           position: relative;
 
           &::before {
@@ -355,13 +357,13 @@ button.logo-button {
             transform: translateY(-50%) scale(0);
             width: 6px;
             height: 6px;
-            background-color: $main-color;
+            background-color: variables.$main-color;
             border-radius: 50%;
-            transition: transform $transition-base;
+            transition: transform variables.$transition-base;
           }
 
           &:hover {
-            color: $main-color;
+            color: variables.$main-color;
 
             &::before {
               transform: translateY(-50%) scale(1);
@@ -373,7 +375,7 @@ button.logo-button {
   }
 }
 
-@media (min-width: $desktop-4k-min) {
+@media (min-width: variables.$desktop-4k-min) {
   div.content-width {
     padding: $header-padding 0;
   }
@@ -385,7 +387,7 @@ button.logo-button {
   }
 }
 
-@media (max-width: $tablet-max) {
+@media (max-width: variables.$tablet-max) {
   .desktop-nav {
     display: none;
   }
