@@ -54,7 +54,7 @@ describe('HeaderComponent', () => {
     it('should initialize with default values', () => {
       expect(component.isHovered).toBe(false);
       expect(component.isScrolled).toBe(false);
-      expect(component.isEnglish).toBe(false);
+      expect(component.isGerman).toBe(false);
       expect(component.isMenuOpen).toBe(false);
     });
   });
@@ -149,14 +149,14 @@ describe('HeaderComponent', () => {
   describe('Language Toggle', () => {
     it('should toggle between German and English', () => {
       spyOn(translateService, 'use');
-      component.isEnglish = false;
+      component.isGerman = false;
 
       component.toggleLanguage();
-      expect(component.isEnglish).toBe(true);
+      expect(component.isGerman).toBe(true);
       expect(translateService.use).toHaveBeenCalledWith('de');
 
       component.toggleLanguage();
-      expect(component.isEnglish).toBe(false);
+      expect(component.isGerman).toBe(false);
       expect(translateService.use).toHaveBeenCalledWith('en');
     });
   });
@@ -325,13 +325,13 @@ describe('HeaderComponent', () => {
 
     it('should handle language toggle and menu toggle together', () => {
       component.toggleLanguage();
-      expect(component.isEnglish).toBe(true);
+      expect(component.isGerman).toBe(true);
 
       component.toggleMenu();
       expect(component.isMenuOpen).toBe(true);
 
       component.toggleLanguage();
-      expect(component.isEnglish).toBe(false);
+      expect(component.isGerman).toBe(false);
 
       component.toggleMenu();
       expect(component.isMenuOpen).toBe(false);
