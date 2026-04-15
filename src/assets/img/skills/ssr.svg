@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect x="16" y="18" width="96" height="26" rx="5" ry="5" fill="#FFFFFF"/>
+  <rect x="16" y="52" width="96" height="26" rx="5" ry="5" fill="#FFFFFF"/>
+  <rect x="16" y="86" width="96" height="26" rx="5" ry="5" fill="#FFFFFF"/>
+  <circle cx="100" cy="31" r="4" fill="#FFFFFF" fill-opacity="0.4"/>
+  <circle cx="88" cy="31" r="4" fill="#FFFFFF" fill-opacity="0.4"/>
+  <circle cx="100" cy="65" r="4" fill="#FFFFFF" fill-opacity="0.4"/>
+  <circle cx="88" cy="65" r="4" fill="#FFFFFF" fill-opacity="0.4"/>
+  <rect x="26" y="26" width="42" height="10" rx="2" fill="#FFFFFF" fill-opacity="0.4"/>
+  <rect x="26" y="60" width="42" height="10" rx="2" fill="#FFFFFF" fill-opacity="0.4"/>
+  <text x="64" y="106" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#FFFFFF" fill-opacity="0.4" text-anchor="middle">SSR</text>
+</svg>
