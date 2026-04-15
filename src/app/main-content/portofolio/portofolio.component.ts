@@ -31,7 +31,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   projects: Projects[] = [
     {
   name: 'Birthday Reminder Pro',
-  technologies: ['Angular', 'TypeScript', 'NgRx', 'RxJS', 'Material Design', 'Capacitor', 'Firebase', 'OAuth 2.0', 'PWA', 'SSR'],
+  technologies: ['Angular', 'TypeScript', 'SCSS', 'NgRx', 'RxJS', 'Material Design', 'Capacitor', 'Firebase', 'OAuth 2.0', 'PWA', 'SSR'],
   previewImg: 'assets/img/projects/birthday-reminder.png',
   description:
     'Enterprise-grade Birthday Reminder App built with Angular 19. Implements NgRx for predictable state management ' +
@@ -129,7 +129,9 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     materialdesign: 'assets/img/projects/icons/material-design.svg',
     capacitor: 'assets/img/projects/icons/capacitor.svg',
     indexeddb: 'assets/img/projects/icons/indexeddb.svg',
-    oauth20: 'assets/img/projects/icons/oauth.svg'
+    oauth20: 'assets/img/projects/icons/oauth.svg',
+    pwa: 'assets/img/projects/icons/pwa.svg',
+    ssr: 'assets/img/projects/icons/ssr.svg'
   };
 
   constructor(
