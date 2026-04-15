@@ -21,6 +21,7 @@ export class SkillsComponent {
     { url: 'assets/img/skills/javascript.svg', name: 'JavaScript' },
     { url: 'assets/img/skills/html.svg', name: 'HTML' },
     { url: 'assets/img/skills/css.svg', name: 'CSS' },
+    { url: 'assets/img/skills/sass.svg', name: 'SASS' },
     { url: 'assets/img/skills/firebase.svg', name: 'Firebase' },
     { url: 'assets/img/skills/git.svg', name: 'Git' },
     { url: 'assets/img/skills/figma.svg', name: 'Figma' },
@@ -29,6 +30,9 @@ export class SkillsComponent {
     { url: 'assets/img/skills/scrum.svg', name: 'Scrum' },
     { url: 'assets/img/skills/ngrx.svg', name: 'NgRx' },
     { url: 'assets/img/skills/rxjs.svg', name: 'RxJS' },
+    { url: 'assets/img/skills/capacitor.svg', name: 'Capacitor' },
+    { url: 'assets/img/skills/pwa.svg', name: 'PWA' },
+    { url: 'assets/img/skills/ssr.svg', name: 'SSR' },
     { url: 'assets/img/skills/mindset.svg', name: 'Growth Mindset' },
   ];
 
