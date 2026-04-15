@@ -3,11 +3,11 @@
 [![CI](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Angular](https://img.shields.io/badge/Angular-17.3-DD0031?logo=angular)](https://angular.io/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Angular](https://img.shields.io/badge/Angular-19.2-DD0031?logo=angular)](https://angular.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Deployed on Cloudflare Pages](https://img.shields.io/badge/Deployed-Cloudflare%20Pages-F38020?logo=cloudflare)](https://aghirculesei.pages.dev)
 
-> A modern, performant, and fully accessible portfolio website built with Angular 17, showcasing best practices in web development.
+> A modern, performant, and fully accessible portfolio website built with Angular 19, showcasing best practices in web development.
 
 [🌐 Live Demo](https://aghirculesei.pages.dev) • [📧 Contact](mailto:aghirculesei@gmail.com)
 
@@ -87,8 +87,8 @@ Built with **clean architecture principles** and **modern Angular patterns**, th
 ## 🛠️ Tech Stack
 
 ### **Core**
-- **Framework:** Angular 17.3 (Standalone Components)
-- **Language:** TypeScript 5.4
+- **Framework:** Angular 19.2 (Standalone Components)
+- **Language:** TypeScript 5.8
 - **Styling:** SCSS with responsive design
 - **Internationalization:** @ngx-translate
 
@@ -193,26 +193,27 @@ npm test -- --watch=false --browsers=ChromeHeadless
 ```
 src/
 ├── app/
-│   ├── main-content/           # Feature modules
+│   ├── main-content/           # Feature components
 │   │   ├── about-me/
 │   │   ├── contact/
+│   │   │   └── contact-form/
 │   │   ├── feedback/
 │   │   ├── landing-page/
+│   │   │   └── banner-section/
 │   │   ├── legal-notice/
+│   │   ├── overlay/
 │   │   ├── portofolio/
 │   │   ├── privacy-policy/
 │   │   └── skills/
 │   ├── shared/                 # Shared resources
-│   │   ├── components/
 │   │   ├── constants/
 │   │   ├── directives/
-│   │   ├── interfaces/
+│   │   ├── footer/
+│   │   ├── header/
 │   │   └── services/
-│   └── layout/                 # Layout components
-│       ├── header/
-│       └── footer/
+│   └── interfaces/             # TypeScript interfaces
 ├── assets/                     # Static assets
-│   ├── i18n/                  # Translation files
+│   ├── i18n/                  # Translation files (en, de)
 │   └── img/                   # Images
 └── environments/              # Environment configs
 ```
@@ -229,7 +230,14 @@ The project uses environment-based configuration for different deployment stages
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: 'https://aghirculesei.pages.dev',
+  emailWorkerUrl: '...',
+  social: { github: '...', linkedin: '...' },
+  projects: {
+    join: { github: '...', live: '...' },
+    elPolloLoco: { github: '...', live: '...' },
+    pokedex: { github: '...', live: '...' },
+    birthdayReminder: { github: '...', live: '...' }
+  },
   enableLogging: true
 };
 ```
@@ -238,7 +246,9 @@ export const environment = {
 ```typescript
 export const environment = {
   production: true,
-  apiUrl: 'https://aghirculesei.pages.dev',
+  emailWorkerUrl: '...',
+  social: { github: '...', linkedin: '...' },
+  projects: { ... },
   enableLogging: false
 };
 ```
@@ -339,8 +349,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Statistics
 
-- **Components:** 20+ standalone components
-- **Services:** 10+ specialized services (Navigation, Logger, Translation, etc.)
+- **Components:** 14 standalone components
+- **Services:** 6 specialized services (Navigation, Logger, Scroll, Platform, AriaAnnouncer, GlobalErrorHandler)
 - **Test Coverage:** Comprehensive unit tests with Karma/Jasmine
 - **TypeScript:** 100% type-safe code (zero `any` types)
 - **Accessibility:** WCAG 2.1 Level AA compliant
