@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnInit, inject, ElementRef } from '@angular/core';
+import {
+  Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef,
+  OnDestroy, OnInit, inject, ElementRef, DestroyRef
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
 import { LoggerService } from '../services/logger.service';
@@ -17,13 +21,14 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 export class HeaderComponent implements OnInit, OnDestroy {
   isHovered = false;
   isScrolled = false;
-  isEnglish = false;
+  isGerman = false;
   isMenuOpen = false;
   private boundCheckScroll = this.checkScroll.bind(this);
   private focusableMenuElements: HTMLElement[] = [];
   private firstMenuFocusable: HTMLElement | null = null;
   private lastMenuFocusable: HTMLElement | null = null;
   private readonly logger = inject(LoggerService);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     private scrollService: ScrollService,
@@ -35,6 +40,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isGerman = this.translate.currentLang === 'de';
+
+    this.translate.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ lang }) => {
+        this.isGerman = lang === 'de';
+        this.cdr.markForCheck();
+      });
+
     this.checkScroll();
 
     if (this.platformService.isWindowDefined()) {
@@ -56,9 +70,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleLanguage(): void {
-    this.isEnglish = !this.isEnglish;
-    const lang = this.isEnglish ? 'de' : 'en';
+    this.isGerman = !this.isGerman;
+    const lang = this.isGerman ? 'de' : 'en';
     this.translate.use(lang);
+    if (this.platformService.isBrowser) {
+      localStorage.setItem('lang', lang);
+    }
   }
 
   toggleMenu(): void {

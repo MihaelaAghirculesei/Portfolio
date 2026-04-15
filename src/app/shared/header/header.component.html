@@ -7,11 +7,11 @@
             id="language-toggle"
             class="check-toggle check-toggle-round-flat"
             type="checkbox"
-            [checked]="isEnglish"
+            [checked]="isGerman"
             (click)="toggleLanguage()"
             [attr.aria-label]="'header.languageToggleAriaLabel' | translate"
             role="switch"
-            [attr.aria-checked]="isEnglish"
+            [attr.aria-checked]="isGerman"
           />
           <label for="language-toggle"></label>
           <span class="on" aria-hidden="true">EN</span>
@@ -155,11 +155,11 @@
             id="mobile-language-toggle"
             class="check-toggle check-toggle-round-flat"
             type="checkbox"
-            [checked]="isEnglish"
+            [checked]="isGerman"
             (click)="toggleLanguage()"
             [attr.aria-label]="'header.languageToggleAriaLabel' | translate"
             role="switch"
-            [attr.aria-checked]="isEnglish"
+            [attr.aria-checked]="isGerman"
             [attr.tabindex]="isMenuOpen ? 0 : -1"
           />
           <label for="mobile-language-toggle"></label>
