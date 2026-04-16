@@ -9,23 +9,25 @@ import {
   PLATFORM_ID,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  inject,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
+import { FocusTrapService } from '../../shared/services/focus-trap.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {PassiveTouchStartDirective, PassiveTouchEndDirective} from '../../shared/directives/passive-listeners.directive';
 import {BREAKPOINTS, PORTFOLIO_CONFIG, TIMING_CONFIG} from '../../shared/constants/app.constants';
 import { environment } from '../../../environments/environment';
 
 @Component({
-    selector: 'app-portofolio',
+    selector: 'app-portfolio',
     imports: [TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
-    templateUrl: './portofolio.component.html',
-    styleUrl: './portofolio.component.scss',
+    templateUrl: './portfolio.component.html',
+    styleUrl: './portfolio.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PortofolioComponent implements OnInit, OnDestroy {
+export class PortfolioComponent implements OnInit, OnDestroy {
   @ViewChild('projectsTable') projectsTable!: ElementRef;
 
   projects: Projects[] = [
@@ -101,10 +103,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
   private originalHeaderDisplay = '';
   private rafPending = false;
   private boundOnTouchMove = this.onTouchMove.bind(this);
-  private previousFocusedElement: HTMLElement | null = null;
-  private focusableElements: HTMLElement[] = [];
-  private firstFocusableElement: HTMLElement | null = null;
-  private lastFocusableElement: HTMLElement | null = null;
+  private readonly focusTrap = inject(FocusTrapService);
 
   private readonly PROJECT_MAP = (() => {
     const map: Record<string, string> = {};
@@ -278,7 +277,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     this.platformService.disableScroll();
 
     if (isPlatformBrowser(this.platformId)) {
-      this.previousFocusedElement = document.activeElement as HTMLElement;
+      this.focusTrap.saveFocus();
 
       this.headerElement = document.querySelector('header');
       if (this.headerElement) {
@@ -288,7 +287,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
       }
 
       setTimeout(() => {
-        this.setupFocusTrap();
+        this.focusTrap.activate('.project-modal', false);
         const modal = document.querySelector('.project-modal') as HTMLElement;
         if (modal) {
           modal.focus();
@@ -308,10 +307,7 @@ export class PortofolioComponent implements OnInit, OnDestroy {
         this.headerElement.style.display = this.originalHeaderDisplay;
       }
 
-      if (this.previousFocusedElement) {
-        this.previousFocusedElement.focus();
-        this.previousFocusedElement = null;
-      }
+      this.focusTrap.deactivate(true);
     }
     this.cdr.markForCheck();
   }
@@ -355,36 +351,4 @@ export class PortofolioComponent implements OnInit, OnDestroy {
     return this.TECH_ICONS[normalized] || null;
   }
 
-  private setupFocusTrap(): void {
-    const modal = document.querySelector('.project-modal');
-    if (!modal) {
-      return;
-    }
-
-    const selectors = [
-      'a[href]', 'button:not([disabled])', 'input:not([disabled])',
-      'select:not([disabled])', 'textarea:not([disabled])', '[tabindex]:not([tabindex="-1"])'
-    ].join(', ');
-    this.focusableElements = Array.from(modal.querySelectorAll(selectors));
-
-    if (this.focusableElements.length > 0) {
-      this.firstFocusableElement = this.focusableElements[0];
-      this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1];
-      modal.addEventListener('keydown', this.handleFocusTrap.bind(this));
-    }
-  }
-
-  private handleFocusTrap(event: Event): void {
-    if (!(event instanceof KeyboardEvent) || event.key !== 'Tab') {
-      return;
-    }
-
-    if (event.shiftKey && document.activeElement === this.firstFocusableElement) {
-      event.preventDefault();
-      this.lastFocusableElement?.focus();
-    } else if (!event.shiftKey && document.activeElement === this.lastFocusableElement) {
-      event.preventDefault();
-      this.firstFocusableElement?.focus();
-    }
-  }
 }

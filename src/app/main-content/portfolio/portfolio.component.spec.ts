@@ -1,25 +1,25 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { PortofolioComponent } from './portofolio.component';
+import { PortfolioComponent } from './portfolio.component';
 import { PlatformService } from '../../shared/services/platform.service';
 import { ElementRef, PLATFORM_ID } from '@angular/core';
 
-describe('PortofolioComponent', () => {
-  let component: PortofolioComponent;
-  let fixture: ComponentFixture<PortofolioComponent>;
+describe('PortfolioComponent', () => {
+  let component: PortfolioComponent;
+  let fixture: ComponentFixture<PortfolioComponent>;
   let platformService: PlatformService;
   let translateService: TranslateService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PortofolioComponent, TranslateModule.forRoot()],
+      imports: [PortfolioComponent, TranslateModule.forRoot()],
       providers: [
         PlatformService,
         { provide: PLATFORM_ID, useValue: 'browser' }
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PortofolioComponent);
+    fixture = TestBed.createComponent(PortfolioComponent);
     component = fixture.componentInstance;
     platformService = TestBed.inject(PlatformService);
     translateService = TestBed.inject(TranslateService);
