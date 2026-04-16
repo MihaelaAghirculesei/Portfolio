@@ -1,6 +1,7 @@
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { BREAKPOINTS, SCROLL_CONFIG } from '../constants/app.constants';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,8 @@ export class ScrollService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
+  private readonly logger = inject(LoggerService);
+  private readonly SCROLL_STORAGE_KEY = 'contact-scroll-position';
 
   private readonly mobileOffsets: Record<string, number> = {
     aboutMe: 0,
@@ -67,5 +70,27 @@ export class ScrollService {
 
   isScrolledBeyond(threshold: number): boolean {
     return this.getCurrentScrollPosition() > threshold;
+  }
+
+  saveScrollPosition(): void {
+    if (!this.isBrowser) { return; }
+    try {
+      sessionStorage.setItem(this.SCROLL_STORAGE_KEY, this.getCurrentScrollPosition().toString());
+    } catch (error) {
+      this.logger.error('Failed to save scroll position', error);
+    }
+  }
+
+  restoreScrollPosition(): void {
+    if (!this.isBrowser) { return; }
+    try {
+      const savedPosition = sessionStorage.getItem(this.SCROLL_STORAGE_KEY);
+      if (savedPosition) {
+        this.document.defaultView?.scrollTo(0, parseInt(savedPosition, 10));
+        sessionStorage.removeItem(this.SCROLL_STORAGE_KEY);
+      }
+    } catch (error) {
+      this.logger.error('Failed to restore scroll position', error);
+    }
   }
 }
