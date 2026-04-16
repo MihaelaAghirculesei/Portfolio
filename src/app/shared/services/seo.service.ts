@@ -139,6 +139,7 @@ export class SeoService {
 
   // ── Canonical ────────────────────────────────────────────────────────────
 
+
   private setCanonical(url: string): void {
     let link = this.doc.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!link) {
