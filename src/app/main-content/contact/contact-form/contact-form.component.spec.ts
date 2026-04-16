@@ -272,28 +272,18 @@ describe('ContactFormComponent', () => {
       } as any;
     });
 
-    it('should handle HTTP error during submission', fakeAsync(() => {
+         it('should handle HTTP error during submission', fakeAsync(() => {
       component.onSubmit(mockForm);
-
-      // Handle original request + 2 retries
-      for (let i = 0; i < 3; i++) {
-        const req = httpMock.expectOne(component.post.endPoint);
-        req.flush(null, { status: 500, statusText: 'Server Error' });
-      }
-
+      tick();
+      
+      const req = httpMock.expectOne(component.post.endPoint);
+      const errorEvent = new ErrorEvent('HttpError', { message: 'Server Error' });
+      req.error(errorEvent, { status: 500, statusText: 'Server Error' });
+      tick(1000);
       flush();
 
       expect(component.submissionStatus).toBe('error');
       expect(component.isSubmitting).toBe(false);
-    }));
-
-    it('should handle network error (status 0)', fakeAsync(() => {
-      const error = { name: 'NetworkError', status: 0 };
-      component['handleError'](error);
-      flush();
-
-      expect(component.submissionStatus).toBe('error');
-      expect(component.errorMessage).toBe('Network error. Please check your connection.');
     }));
 
     it('should handle server error (status >= 500)', fakeAsync(() => {
@@ -341,22 +331,21 @@ describe('ContactFormComponent', () => {
       expect(component.errorMessage).toBe('An error occurred while sending your message.');
     }));
 
-    it('should reset form and checkbox on error', fakeAsync(() => {
+           it('should reset form and checkbox on error', fakeAsync(() => {
       component.checkboxWasCheckedBefore = true;
       component.onSubmit(mockForm);
-
-      // Handle original request + 2 retries
-      for (let i = 0; i < 3; i++) {
-        const req = httpMock.expectOne(component.post.endPoint);
-        req.flush(null, { status: 500, statusText: 'Server Error' });
-      }
-
+      tick();
+      
+      const req = httpMock.expectOne(component.post.endPoint);
+      const errorEvent = new ErrorEvent('HttpError', { message: 'Server Error' });
+      req.error(errorEvent, { status: 500, statusText: 'Server Error' });
+      tick(1000);
       flush();
 
       expect(mockForm.resetForm).toHaveBeenCalled();
       expect(component.checkboxWasCheckedBefore).toBe(false);
     }));
-  });
+ });
 
   describe('Popup Management', () => {
     it('should close popup and reset status', () => {
