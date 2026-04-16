@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { AboutmeComponent } from './about-me.component';
+import { AboutMeComponent } from './about-me.component';
 import { AOS_CONFIG } from '../../shared/constants/app.constants';
 
-describe('AboutmeComponent', () => {
-  let component: AboutmeComponent;
-  let fixture: ComponentFixture<AboutmeComponent>;
+describe('AboutMeComponent', () => {
+  let component: AboutMeComponent;
+  let fixture: ComponentFixture<AboutMeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AboutmeComponent, TranslateModule.forRoot()],
+      imports: [AboutMeComponent, TranslateModule.forRoot()],
       providers: [
         { provide: PLATFORM_ID, useValue: 'browser' }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AboutmeComponent);
+    fixture = TestBed.createComponent(AboutMeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -137,12 +137,12 @@ describe('AboutmeComponent', () => {
 
   describe('Server-Side Rendering', () => {
     it('should handle SSR gracefully', () => {
-      const ssrComponent = new AboutmeComponent({} as object);
+      const ssrComponent = new AboutMeComponent({} as object);
       expect(ssrComponent['isBrowser']).toBe(false);
     });
 
     it('should not initialize animations on server', () => {
-      const ssrComponent = new AboutmeComponent({} as object);
+      const ssrComponent = new AboutMeComponent({} as object);
       spyOn<any>(ssrComponent, 'initScrollAnimations');
 
       ssrComponent.ngOnInit();
