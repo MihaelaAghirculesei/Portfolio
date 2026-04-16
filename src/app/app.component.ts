@@ -6,10 +6,10 @@ import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HeaderComponent } from './shared/header/header.component';
-import { LandingpageComponent } from './main-content/landing-page/landing-page.component';
-import { AboutmeComponent } from './main-content/about-me/about-me.component';
+import { LandingPageComponent } from './main-content/landing-page/landing-page.component';
+import { AboutMeComponent } from './main-content/about-me/about-me.component';
 import { SkillsComponent } from './main-content/skills/skills.component';
-import { PortofolioComponent } from './main-content/portofolio/portofolio.component';
+import { PortfolioComponent } from './main-content/portfolio/portfolio.component';
 import { FeedbacksComponent } from './main-content/feedback/feedback.component';
 import { ContactComponent } from './main-content/contact/contact.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -55,10 +55,10 @@ const SEO_CONFIGS = new Map<string, SeoConfig>([
         RouterOutlet,
         HeaderComponent,
         FooterComponent,
-        LandingpageComponent,
-        AboutmeComponent,
+        LandingPageComponent,
+        AboutMeComponent,
         SkillsComponent,
-        PortofolioComponent,
+        PortfolioComponent,
         FeedbacksComponent,
         ContactComponent,
     ],

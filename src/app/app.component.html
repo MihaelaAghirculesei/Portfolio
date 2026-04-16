@@ -2,10 +2,10 @@
 <app-header></app-header>
 <main id="main-content" role="main" [attr.aria-label]="'Portfolio content'">
   @if (showMainContent) {
-    <app-landingpage></app-landingpage>
+    <app-landing-page></app-landing-page>
 
     @defer (on idle; on viewport) {
-      <app-aboutme></app-aboutme>
+      <app-about-me></app-about-me>
     } @placeholder {
       <div style="min-height: 600px;"></div>
     }
@@ -17,7 +17,7 @@
     }
 
     @defer (on idle; on viewport) {
-      <app-portofolio></app-portofolio>
+      <app-portfolio></app-portfolio>
     } @placeholder {
       <div style="min-height: 700px;"></div>
     }
