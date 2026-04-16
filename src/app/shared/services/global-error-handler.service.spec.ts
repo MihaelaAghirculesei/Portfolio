@@ -1,8 +1,19 @@
 import { TestBed } from '@angular/core/testing';
-import { PLATFORM_ID } from '@angular/core';
+import { Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GlobalErrorHandler } from './global-error-handler.service';
 import { LoggerService } from './logger.service';
+
+@Injectable()
+class TestErrorHandler extends GlobalErrorHandler {
+  sentryCalled = false;
+  sentryCalledWith: unknown = null;
+
+  override callSentry(error: unknown): void {
+    this.sentryCalled = true;
+    this.sentryCalledWith = error;
+  }
+}
 
 describe('GlobalErrorHandler', () => {
   let handler: GlobalErrorHandler;
@@ -15,6 +26,7 @@ describe('GlobalErrorHandler', () => {
       TestBed.configureTestingModule({
         providers: [
           GlobalErrorHandler,
+          TestErrorHandler,
           { provide: LoggerService, useValue: loggerSpyObj },
           { provide: PLATFORM_ID, useValue: 'browser' }
         ]
@@ -435,6 +447,37 @@ describe('GlobalErrorHandler', () => {
       });
     });
 
+    describe('Sentry Integration', () => {
+      it('should call sentry for critical errors', () => {
+        const testHandler = TestBed.inject(TestErrorHandler);
+        const error = new Error('Critical error');
+
+        expect(() => testHandler.handleError(error)).toThrow(error);
+
+        expect(testHandler.sentryCalled).toBeTrue();
+        expect(testHandler.sentryCalledWith).toBe(error);
+      });
+
+      it('should not call sentry for non-critical errors', () => {
+        const testHandler = TestBed.inject(TestErrorHandler);
+        const error = new Error('Navigation cancelled');
+
+        testHandler.handleError(error);
+
+        expect(testHandler.sentryCalled).toBeFalse();
+      });
+
+      it('should call sentry for HttpErrorResponse', () => {
+        const testHandler = TestBed.inject(TestErrorHandler);
+        const httpError = new HttpErrorResponse({ status: 500 });
+
+        expect(() => testHandler.handleError(httpError)).toThrow(httpError);
+
+        expect(testHandler.sentryCalled).toBeTrue();
+        expect(testHandler.sentryCalledWith).toBe(httpError);
+      });
+    });
+
     describe('Edge Cases', () => {
       it('should handle very long error messages', () => {
         const longMessage = 'A'.repeat(10000);
@@ -482,6 +525,7 @@ describe('GlobalErrorHandler', () => {
       TestBed.configureTestingModule({
         providers: [
           GlobalErrorHandler,
+          TestErrorHandler,
           { provide: LoggerService, useValue: loggerSpyObj },
           { provide: PLATFORM_ID, useValue: 'server' }
         ]
@@ -523,6 +567,15 @@ describe('GlobalErrorHandler', () => {
       expect(() => handler.handleError(httpError)).toThrow(httpError);
 
       expect(loggerSpy.error).not.toHaveBeenCalled();
+    });
+
+    it('should not call sentry on server platform', () => {
+      const testHandler = TestBed.inject(TestErrorHandler);
+      const error = new Error('Server error');
+
+      expect(() => testHandler.handleError(error)).toThrow(error);
+
+      expect(testHandler.sentryCalled).toBeFalse();
     });
   });
 
