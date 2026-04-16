@@ -19,13 +19,13 @@ interface SocialLink {
 }
 
 @Component({
-    selector: 'app-landingpage',
+    selector: 'app-landing-page',
     imports: [BannerSectionComponent, TranslatePipe],
     templateUrl: './landing-page.component.html',
     styleUrl: './landing-page.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LandingpageComponent {
+export class LandingPageComponent {
   readonly profileInfo = {
     firstName: 'Mihaela Melania',
     lastName: 'Aghirculesei',

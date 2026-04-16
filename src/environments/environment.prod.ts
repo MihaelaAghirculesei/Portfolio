@@ -24,5 +24,6 @@ export const environment = {
       live: 'https://birthday-reminder-aghirculesei.pages.dev'
     }
   },
-  enableLogging: false
+  enableLogging: false,
+  sentryDsn: '' // TODO: replace with your Sentry DSN from sentry.io
 };

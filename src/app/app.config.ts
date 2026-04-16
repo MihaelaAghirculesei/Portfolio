@@ -4,8 +4,9 @@ import {
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
-import { provideHttpClient, withFetch, HttpClient } from '@angular/common/http';
+import { provideRouter, NoPreloading, withPreloading } from '@angular/router';
+import { provideHttpClient, withFetch, withInterceptors, HttpClient } from '@angular/common/http';
+import { httpInterceptor } from './shared/interceptors/http.interceptor';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
@@ -28,10 +29,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
       routes,
-      withPreloading(PreloadAllModules)
+      withPreloading(NoPreloading)
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     importProvidersFrom([
       TranslateModule.forRoot({

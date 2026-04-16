@@ -4,10 +4,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { timeout, retry, catchError, takeUntil } from 'rxjs/operators';
+import { timeout, catchError, takeUntil } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
 import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.service';
 import { LoggerService } from '../../../shared/services/logger.service';
+import { FocusTrapService } from '../../../shared/services/focus-trap.service';
+import { ScrollService } from '../../../shared/services/scroll.service';
 import { VALIDATION_CONFIG, HTTP_CONFIG, TIMING_CONFIG } from '../../../shared/constants/app.constants';
 import { environment } from '../../../../environments/environment';
 
@@ -40,13 +42,13 @@ interface ErrorLike {
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   private readonly FORM_STORAGE_KEY = 'contact-form-data';
-  private readonly SCROLL_STORAGE_KEY = 'contact-scroll-position';
   http = inject(HttpClient);
   translate = inject(TranslateService);
   cdr = inject(ChangeDetectorRef);
   private ariaAnnouncer = inject(AriaAnnouncerService);
   private readonly logger = inject(LoggerService);
-  private previousFocusedElement: HTMLElement | null = null;
+  private readonly scrollService = inject(ScrollService);
+  private readonly focusTrap = inject(FocusTrapService);
   private destroy$ = new Subject<void>();
 
   contactData: ContactData = {
@@ -77,7 +79,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadFormData();
-    setTimeout(() => this.restoreScrollPosition(), 100);
+    setTimeout(() => this.scrollService.restoreScrollPosition(), 100);
   }
 
   private saveFormData(): void {
@@ -114,24 +116,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   saveScrollPosition(): void {
-    try {
-      const scrollY = window.scrollY || window.pageYOffset;
-      sessionStorage.setItem(this.SCROLL_STORAGE_KEY, scrollY.toString());
-    } catch (error) {
-      this.logger.error('Failed to save scroll position', error);
-    }
-  }
-
-  private restoreScrollPosition(): void {
-    try {
-      const savedPosition = sessionStorage.getItem(this.SCROLL_STORAGE_KEY);
-      if (savedPosition) {
-        window.scrollTo(0, parseInt(savedPosition, 10));
-        sessionStorage.removeItem(this.SCROLL_STORAGE_KEY);
-      }
-    } catch (error) {
-      this.logger.error('Failed to restore scroll position', error);
-    }
+    this.scrollService.saveScrollPosition();
   }
 
   validateForm(field: string): void {
@@ -181,7 +166,6 @@ export class ContactFormComponent implements OnInit, OnDestroy {
         )
         .pipe(
           timeout(HTTP_CONFIG.TIMEOUT),
-          retry(HTTP_CONFIG.RETRY_ATTEMPTS),
           catchError((error: HttpErrorResponse) => {
             return of<ContactResponse>({ error: true, errorDetails: error });
           }),
@@ -272,10 +256,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   closePopup(): void {
     this.submissionStatus = null;
     this.errorMessage = '';
-    if (this.previousFocusedElement) {
-      this.previousFocusedElement.focus();
-      this.previousFocusedElement = null;
-    }
+    this.focusTrap.restoreFocus();
   }
 
   private showPopupWithAnnouncement(message: string, translate = true): void {
@@ -286,12 +267,9 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   private focusPopup(): void {
-    this.previousFocusedElement = document.activeElement as HTMLElement;
-
+    this.focusTrap.saveFocus();
     const closeButton = document.querySelector('.popup-footer button') as HTMLElement;
-    if (closeButton) {
-      closeButton.focus();
-    }
+    closeButton?.focus();
   }
 
   checkboxWasCheckedBefore = false;

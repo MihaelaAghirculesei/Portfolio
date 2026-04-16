@@ -39,13 +39,13 @@ declare global {
 }
 
 @Component({
-    selector: 'app-aboutme',
+    selector: 'app-about-me',
     imports: [CommonModule, TranslatePipe],
     templateUrl: './about-me.component.html',
     styleUrl: './about-me.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AboutmeComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('imgDiv', { static: false }) imgDivRef!: ElementRef;
   @ViewChild('imageContainer', { static: false }) imageContainerRef!: ElementRef;
   @ViewChildren('iconWrapper') iconWrappers!: QueryList<ElementRef>;

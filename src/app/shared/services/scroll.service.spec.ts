@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ScrollService } from './scroll.service';
+import { LoggerService } from './logger.service';
 
 interface MockWindow {
   scrollTo: jasmine.Spy;
@@ -21,6 +22,7 @@ describe('ScrollService', () => {
   let service: ScrollService;
   let mockDocument: MockDocument;
   let mockWindow: MockWindow;
+  let mockLogger: jasmine.SpyObj<LoggerService>;
 
   beforeEach(() => {
     mockWindow = {
@@ -37,15 +39,19 @@ describe('ScrollService', () => {
       querySelectorAll: jasmine.createSpy('querySelectorAll').and.returnValue([])
     };
 
+    mockLogger = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+
     TestBed.configureTestingModule({
       providers: [
         ScrollService,
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: DOCUMENT, useValue: mockDocument }
+        { provide: DOCUMENT, useValue: mockDocument },
+        { provide: LoggerService, useValue: mockLogger }
       ]
     });
 
     service = TestBed.inject(ScrollService);
+    sessionStorage.clear();
   });
 
   describe('Service Creation', () => {
@@ -265,6 +271,62 @@ describe('ScrollService', () => {
     it('should handle SSR gracefully', () => {
       // SSR tests would need proper SSR setup
       expect(service).toBeTruthy();
+    });
+  });
+
+  describe('saveScrollPosition', () => {
+    it('should save current scroll position to sessionStorage', () => {
+      mockWindow.scrollY = 350;
+
+      service.saveScrollPosition();
+
+      expect(sessionStorage.getItem('contact-scroll-position')).toBe('350');
+    });
+
+    it('should log error when sessionStorage is unavailable', () => {
+      spyOn(sessionStorage, 'setItem').and.throwError('QuotaExceededError');
+
+      service.saveScrollPosition();
+
+      expect(mockLogger.error).toHaveBeenCalledWith(
+        'Failed to save scroll position',
+        jasmine.any(Error)
+      );
+    });
+  });
+
+  describe('restoreScrollPosition', () => {
+    it('should restore saved position and scroll to it', () => {
+      sessionStorage.setItem('contact-scroll-position', '500');
+
+      service.restoreScrollPosition();
+
+      expect(mockWindow.scrollTo).toHaveBeenCalledWith(0, 500);
+    });
+
+    it('should remove the key from sessionStorage after restoring', () => {
+      sessionStorage.setItem('contact-scroll-position', '200');
+
+      service.restoreScrollPosition();
+
+      expect(sessionStorage.getItem('contact-scroll-position')).toBeNull();
+    });
+
+    it('should not scroll if no saved position exists', () => {
+      service.restoreScrollPosition();
+
+      expect(mockWindow.scrollTo).not.toHaveBeenCalled();
+    });
+
+    it('should log error when sessionStorage is unavailable', () => {
+      spyOn(sessionStorage, 'getItem').and.throwError('SecurityError');
+
+      service.restoreScrollPosition();
+
+      expect(mockLogger.error).toHaveBeenCalledWith(
+        'Failed to restore scroll position',
+        jasmine.any(Error)
+      );
     });
   });
 });

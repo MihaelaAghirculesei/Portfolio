@@ -2,6 +2,11 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    children: [],
+  },
+  {
     path: 'legal-notice',
     loadComponent: () =>
       import('./main-content/legal-notice/legal-notice.component').then(
@@ -27,7 +32,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
-    pathMatch: 'full',
+    redirectTo: '/',
   },
 ];
