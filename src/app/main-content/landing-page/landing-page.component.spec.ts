@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { LandingpageComponent } from './landing-page.component';
+import { LandingPageComponent } from './landing-page.component';
 import { ScrollService } from '../../shared/services/scroll.service';
 
-describe('LandingpageComponent', () => {
-  let component: LandingpageComponent;
-  let fixture: ComponentFixture<LandingpageComponent>;
+describe('LandingPageComponent', () => {
+  let component: LandingPageComponent;
+  let fixture: ComponentFixture<LandingPageComponent>;
   let mockScrollService: jasmine.SpyObj<ScrollService>;
 
   beforeEach(async () => {
     mockScrollService = jasmine.createSpyObj('ScrollService', ['scrollToElement']);
 
     await TestBed.configureTestingModule({
-      imports: [LandingpageComponent, TranslateModule.forRoot()],
+      imports: [LandingPageComponent, TranslateModule.forRoot()],
       providers: [
         { provide: ScrollService, useValue: mockScrollService }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LandingpageComponent);
+    fixture = TestBed.createComponent(LandingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
