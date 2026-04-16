@@ -8,6 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
 import { LoggerService } from '../services/logger.service';
+import { FocusTrapService } from '../services/focus-trap.service';
 import { BREAKPOINTS, SCROLL_CONFIG, TIMING_CONFIG } from '../constants/app.constants';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
@@ -24,11 +25,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isGerman = false;
   isMenuOpen = false;
   private boundCheckScroll = this.checkScroll.bind(this);
-  private focusableMenuElements: HTMLElement[] = [];
-  private firstMenuFocusable: HTMLElement | null = null;
-  private lastMenuFocusable: HTMLElement | null = null;
   private readonly logger = inject(LoggerService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly focusTrap = inject(FocusTrapService);
 
   constructor(
     private scrollService: ScrollService,
@@ -83,8 +82,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     if (this.isMenuOpen) {
       setTimeout(() => {
-        this.setupMenuFocusTrap();
+        this.focusTrap.activate('.mobile-dropdown');
       }, TIMING_CONFIG.MENU_SETUP_DELAY);
+    } else {
+      this.focusTrap.deactivate();
     }
   }
 
@@ -92,6 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const window = this.platformService.getWindow();
     if (window && window.innerWidth <= BREAKPOINTS.TABLET_MAX) {
       this.isMenuOpen = false;
+      this.focusTrap.deactivate();
     }
   }
 
@@ -120,6 +122,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       target.innerWidth > BREAKPOINTS.TABLET_MAX
     ) {
       this.isMenuOpen = false;
+      this.focusTrap.deactivate();
     }
   }
 
@@ -133,48 +136,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     if (!clickedInside) {
       this.isMenuOpen = false;
+      this.focusTrap.deactivate();
       this.cdr.markForCheck();
-    }
-  }
-
-  private setupMenuFocusTrap(): void {
-    const mobileMenu = document.querySelector('.mobile-dropdown');
-    if (!mobileMenu) {return;}
-
-    const focusableSelectors = [
-      'a[href]:not([tabindex="-1"])',
-      'button:not([disabled]):not([tabindex="-1"])',
-      'input:not([disabled]):not([tabindex="-1"])',
-      '[tabindex]:not([tabindex="-1"])'
-    ].join(', ');
-
-    this.focusableMenuElements = Array.from(
-      mobileMenu.querySelectorAll(focusableSelectors)
-    );
-
-    if (this.focusableMenuElements.length > 0) {
-      this.firstMenuFocusable = this.focusableMenuElements[0];
-      this.lastMenuFocusable = this.focusableMenuElements[this.focusableMenuElements.length - 1];
-
-      this.firstMenuFocusable?.focus();
-
-      mobileMenu.addEventListener('keydown', this.handleMenuFocusTrap.bind(this));
-    }
-  }
-
-  private handleMenuFocusTrap(event: Event): void {
-    if (!(event instanceof KeyboardEvent) || event.key !== 'Tab' || !this.isMenuOpen) {return;}
-
-    if (event.shiftKey) {
-      if (document.activeElement === this.firstMenuFocusable) {
-        event.preventDefault();
-        this.lastMenuFocusable?.focus();
-      }
-    } else {
-      if (document.activeElement === this.lastMenuFocusable) {
-        event.preventDefault();
-        this.firstMenuFocusable?.focus();
-      }
     }
   }
 }
