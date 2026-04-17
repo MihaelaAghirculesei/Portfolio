@@ -150,4 +150,81 @@ describe('AboutMeComponent', () => {
       expect(ssrComponent['initScrollAnimations']).not.toHaveBeenCalled();
     });
   });
+
+  describe('AOS Initialization', () => {
+    it('should call AOS.init when window.AOS is defined', () => {
+      const mockAOS = { init: jasmine.createSpy('init') };
+      (window as any).AOS = mockAOS;
+
+      component['initScrollAnimations']();
+
+      expect(mockAOS.init).toHaveBeenCalledWith(jasmine.objectContaining({
+        duration: AOS_CONFIG.DURATION,
+        easing: 'ease-in-out',
+        once: true,
+        offset: AOS_CONFIG.OFFSET
+      }));
+
+      delete (window as any).AOS;
+    });
+
+    it('should not throw when AOS is not defined', () => {
+      delete (window as any).AOS;
+      expect(() => component['initScrollAnimations']()).not.toThrow();
+    });
+  });
+
+  describe('IntersectionObserver callback', () => {
+    let originalIntersectionObserver: typeof IntersectionObserver;
+
+    beforeEach(() => {
+      originalIntersectionObserver = window.IntersectionObserver;
+    });
+
+    afterEach(() => {
+      (window as any).IntersectionObserver = originalIntersectionObserver;
+    });
+
+    it('should add animate-in class when entry is intersecting', () => {
+      let capturedCallback: ((entries: IntersectionObserverEntry[]) => void) | null = null;
+
+      class MockIntersectionObserver {
+        observe = jasmine.createSpy('observe');
+        disconnect = jasmine.createSpy('disconnect');
+        unobserve = jasmine.createSpy('unobserve');
+        takeRecords = jasmine.createSpy('takeRecords');
+        constructor(cb: any) { capturedCallback = cb; }
+      }
+      (window as any).IntersectionObserver = MockIntersectionObserver;
+
+      component['initIntersectionObserver']();
+
+      const mockElement = document.createElement('div');
+      const mockEntry = { isIntersecting: true, target: mockElement } as unknown as IntersectionObserverEntry;
+      capturedCallback!([mockEntry]);
+
+      expect(mockElement.classList.contains('animate-in')).toBe(true);
+    });
+
+    it('should not add animate-in class when entry is not intersecting', () => {
+      let capturedCallback: ((entries: IntersectionObserverEntry[]) => void) | null = null;
+
+      class MockIntersectionObserver {
+        observe = jasmine.createSpy('observe');
+        disconnect = jasmine.createSpy('disconnect');
+        unobserve = jasmine.createSpy('unobserve');
+        takeRecords = jasmine.createSpy('takeRecords');
+        constructor(cb: any) { capturedCallback = cb; }
+      }
+      (window as any).IntersectionObserver = MockIntersectionObserver;
+
+      component['initIntersectionObserver']();
+
+      const mockElement = document.createElement('div');
+      const mockEntry = { isIntersecting: false, target: mockElement } as unknown as IntersectionObserverEntry;
+      capturedCallback!([mockEntry]);
+
+      expect(mockElement.classList.contains('animate-in')).toBe(false);
+    });
+  });
 });
