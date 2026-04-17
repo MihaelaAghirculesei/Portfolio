@@ -347,4 +347,53 @@ describe('HeaderComponent', () => {
       expect(component['cdr'].markForCheck).toHaveBeenCalled();
     });
   });
+
+  describe('Document Click Handler (onDocumentClick)', () => {
+    it('should return early when menu is closed', () => {
+      component.isMenuOpen = false;
+      spyOn(component['cdr'], 'markForCheck');
+
+      const event = new MouseEvent('click');
+      component.onDocumentClick(event);
+
+      expect(component.isMenuOpen).toBe(false);
+      expect(component['cdr'].markForCheck).not.toHaveBeenCalled();
+    });
+
+    it('should close menu when clicking outside the component', () => {
+      component.isMenuOpen = true;
+      spyOn(component['cdr'], 'markForCheck');
+      spyOn(component['focusTrap'], 'deactivate');
+
+      // Simulate click outside: elementRef does not contain the click target
+      spyOn(component['elementRef'].nativeElement, 'contains').and.returnValue(false);
+
+      const outsideElement = document.createElement('div');
+      const event = new MouseEvent('click');
+      Object.defineProperty(event, 'target', { value: outsideElement, configurable: true });
+
+      component.onDocumentClick(event);
+
+      expect(component.isMenuOpen).toBe(false);
+      expect(component['focusTrap'].deactivate).toHaveBeenCalled();
+      expect(component['cdr'].markForCheck).toHaveBeenCalled();
+    });
+
+    it('should keep menu open when clicking inside the component', () => {
+      component.isMenuOpen = true;
+      spyOn(component['cdr'], 'markForCheck');
+
+      // Simulate click inside: elementRef contains the click target
+      spyOn(component['elementRef'].nativeElement, 'contains').and.returnValue(true);
+
+      const insideElement = document.createElement('div');
+      const event = new MouseEvent('click');
+      Object.defineProperty(event, 'target', { value: insideElement, configurable: true });
+
+      component.onDocumentClick(event);
+
+      expect(component.isMenuOpen).toBe(true);
+      expect(component['cdr'].markForCheck).not.toHaveBeenCalled();
+    });
+  });
 });
