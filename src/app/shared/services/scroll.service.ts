@@ -1,5 +1,5 @@
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID, DOCUMENT } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BREAKPOINTS, SCROLL_CONFIG } from '../constants/app.constants';
 import { LoggerService } from './logger.service';
 
