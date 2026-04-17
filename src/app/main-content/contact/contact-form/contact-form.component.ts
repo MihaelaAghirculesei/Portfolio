@@ -1,11 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, DestroyRef, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { timeout, catchError, takeUntil } from 'rxjs/operators';
-import { of, Subject } from 'rxjs';
+import { timeout, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.service';
 import { LoggerService } from '../../../shared/services/logger.service';
 import { FocusTrapService } from '../../../shared/services/focus-trap.service';
@@ -40,16 +41,15 @@ interface ErrorLike {
     styleUrl: './contact-form.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContactFormComponent implements OnInit, OnDestroy {
+export class ContactFormComponent implements OnInit {
   private readonly FORM_STORAGE_KEY = 'contact-form-data';
-  http = inject(HttpClient);
-  translate = inject(TranslateService);
-  cdr = inject(ChangeDetectorRef);
-  private ariaAnnouncer = inject(AriaAnnouncerService);
+  private readonly http = inject(HttpClient);
+  private readonly translate = inject(TranslateService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly ariaAnnouncer = inject(AriaAnnouncerService);
   private readonly logger = inject(LoggerService);
   private readonly scrollService = inject(ScrollService);
   private readonly focusTrap = inject(FocusTrapService);
-  private destroy$ = new Subject<void>();
 
   contactData: ContactData = {
     name: '',
@@ -59,12 +59,12 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   };
 
   mailTest = false;
-  isSubmitting = false;
 
-  submissionStatus: 'success' | 'error' | null = null;
-  errorMessage = '';
-
-  invalidFields: string[] = [];
+  readonly isSubmitting = signal(false);
+  readonly submissionStatus = signal<'success' | 'error' | null>(null);
+  readonly errorMessage = signal('');
+  readonly invalidFields = signal<string[]>([]);
+  readonly checkboxWasCheckedBefore = signal(false);
 
   post = {
     endPoint: environment.emailWorkerUrl,
@@ -94,9 +94,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     try {
       const savedData = sessionStorage.getItem(this.FORM_STORAGE_KEY);
       if (savedData) {
-        const parsedData = JSON.parse(savedData) as ContactData;
-        this.contactData = parsedData;
-        this.cdr.markForCheck();
+        this.contactData = JSON.parse(savedData) as ContactData;
       }
     } catch (error) {
       this.logger.error('Failed to load form data from sessionStorage', error);
@@ -120,43 +118,29 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   validateForm(field: string): void {
-    this.invalidFields = this.invalidFields.filter((f) => f !== field);
+    this.invalidFields.update(fields => fields.filter(f => f !== field));
 
-    if (field === 'name') {
-      if (!this.contactData.name || this.contactData.name.trim().length < VALIDATION_CONFIG.MIN_NAME_LENGTH) {
-        this.invalidFields.push('name');
-      }
+    if (field === 'name' && (!this.contactData.name || this.contactData.name.trim().length < VALIDATION_CONFIG.MIN_NAME_LENGTH)) {
+      this.invalidFields.update(fields => [...fields, 'name']);
     }
 
-    if (field === 'email') {
-      if (
-        !this.contactData.email ||
-        !VALIDATION_CONFIG.EMAIL_PATTERN.test(this.contactData.email.trim())
-      ) {
-        this.invalidFields.push('email');
-      }
+    if (field === 'email' && (!this.contactData.email || !VALIDATION_CONFIG.EMAIL_PATTERN.test(this.contactData.email.trim()))) {
+      this.invalidFields.update(fields => [...fields, 'email']);
     }
 
-    if (field === 'message') {
-      if (
-        !this.contactData.message ||
-        this.contactData.message.trim().length < VALIDATION_CONFIG.MIN_MESSAGE_LENGTH
-      ) {
-        this.invalidFields.push('message');
-      }
+    const msgTooShort = !this.contactData.message || this.contactData.message.trim().length < VALIDATION_CONFIG.MIN_MESSAGE_LENGTH;
+    if (field === 'message' && msgTooShort) {
+      this.invalidFields.update(fields => [...fields, 'message']);
     }
 
-    if (field === 'checkbox') {
-      if (!this.contactData.privacypolicy) {
-        this.invalidFields.push('checkbox');
-      }
+    if (field === 'checkbox' && !this.contactData.privacypolicy) {
+      this.invalidFields.update(fields => [...fields, 'checkbox']);
     }
   }
 
   onSubmit(ngForm: NgForm): void {
     if (ngForm.submitted && ngForm.form.valid && !this.mailTest) {
-      this.isSubmitting = true;
-      this.cdr.markForCheck();
+      this.isSubmitting.set(true);
 
       this.http
         .post<ContactResponse>(
@@ -166,42 +150,38 @@ export class ContactFormComponent implements OnInit, OnDestroy {
         )
         .pipe(
           timeout(HTTP_CONFIG.TIMEOUT),
-          catchError((error: HttpErrorResponse) => {
-            return of<ContactResponse>({ error: true, errorDetails: error });
-          }),
-          takeUntil(this.destroy$)
+          catchError((error: HttpErrorResponse) => of<ContactResponse>({ error: true, errorDetails: error })),
+          takeUntilDestroyed(this.destroyRef)
         )
         .subscribe({
           next: (response: ContactResponse) => {
-            this.isSubmitting = false;
+            this.isSubmitting.set(false);
 
             if (response?.error && response.errorDetails) {
               this.handleError(response.errorDetails);
             } else {
-              this.submissionStatus = 'success';
-              this.invalidFields = [];
+              this.submissionStatus.set('success');
+              this.invalidFields.set([]);
               this.clearFormData();
               this.showPopupWithAnnouncement('contact.form.successMessage');
             }
 
-            this.checkboxWasCheckedBefore = false;
+            this.checkboxWasCheckedBefore.set(false);
             ngForm.resetForm();
-            this.cdr.markForCheck();
           },
           error: (error: HttpErrorResponse) => {
-            this.isSubmitting = false;
+            this.isSubmitting.set(false);
             this.handleError(error);
-            this.checkboxWasCheckedBefore = false;
+            this.checkboxWasCheckedBefore.set(false);
             ngForm.resetForm();
-            this.cdr.markForCheck();
           },
         });
     } else if (ngForm.submitted && ngForm.form.valid && this.mailTest) {
-      this.submissionStatus = 'success';
+      this.submissionStatus.set('success');
       this.clearFormData();
       ngForm.resetForm();
-      this.checkboxWasCheckedBefore = false;
-      this.invalidFields = [];
+      this.checkboxWasCheckedBefore.set(false);
+      this.invalidFields.set([]);
     }
   }
 
@@ -215,7 +195,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   private handleError(error: unknown): void {
-    this.submissionStatus = 'error';
+    this.submissionStatus.set('error');
 
     const errorLike = error as ErrorLike;
     const isHttpError = error instanceof HttpErrorResponse;
@@ -231,31 +211,29 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       timestamp: new Date().toISOString()
     });
 
+    let msg: string;
     if (errorLike.name === 'TimeoutError') {
-      this.errorMessage = 'Request timeout. Please try again.';
-    } else if (error instanceof HttpErrorResponse && error.status === 0) {
-      this.errorMessage = 'Network error. Please check your connection.';
-    } else if (errorLike.status === 0) {
-      this.errorMessage = 'Network error. Please check your connection.';
-    } else if (error instanceof HttpErrorResponse && error.status >= HTTP_CONFIG.STATUS_SERVER_ERROR) {
-      this.errorMessage = 'Server error. Please try again later.';
-    } else if (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_SERVER_ERROR) {
-      this.errorMessage = 'Server error. Please try again later.';
-    } else if (error instanceof HttpErrorResponse && error.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) {
-      this.errorMessage = 'Bad request. Please check your input.';
-    } else if (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) {
-      this.errorMessage = 'Bad request. Please check your input.';
+      msg = 'Request timeout. Please try again.';
+    } else if ((error instanceof HttpErrorResponse && error.status === 0) || errorLike.status === 0) {
+      msg = 'Network error. Please check your connection.';
+    } else if ((error instanceof HttpErrorResponse && error.status >= HTTP_CONFIG.STATUS_SERVER_ERROR)
+      || (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_SERVER_ERROR)) {
+      msg = 'Server error. Please try again later.';
+    } else if ((error instanceof HttpErrorResponse && error.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR)
+      || (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR)) {
+      msg = 'Bad request. Please check your input.';
     } else {
-      this.errorMessage = errorLike.message || 'An error occurred while sending your message.';
+      msg = errorLike.message || 'An error occurred while sending your message.';
     }
+    this.errorMessage.set(msg);
 
-    const errorMsg = `${this.translate.instant('contact.form.errorMessage')} ${this.errorMessage}`;
+    const errorMsg = `${this.translate.instant('contact.form.errorMessage')} ${this.errorMessage()}`;
     this.showPopupWithAnnouncement(errorMsg, false);
   }
 
   closePopup(): void {
-    this.submissionStatus = null;
-    this.errorMessage = '';
+    this.submissionStatus.set(null);
+    this.errorMessage.set('');
     this.focusTrap.restoreFocus();
   }
 
@@ -272,16 +250,9 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     closeButton?.focus();
   }
 
-  checkboxWasCheckedBefore = false;
-
   checkboxChanged(): void {
     if (this.contactData.privacypolicy) {
-      this.checkboxWasCheckedBefore = true;
+      this.checkboxWasCheckedBefore.set(true);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
