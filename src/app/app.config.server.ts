@@ -1,13 +1,13 @@
 import { provideServerRendering } from '@angular/ssr';
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
-import { TranslateLoader } from '@ngx-translate/core';
+import { TranslateLoader, TranslationObject } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { appConfig } from './app.config';
 
 class TranslateServerLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<object> {
+  getTranslation(lang: string): Observable<TranslationObject> {
     const candidates = [
       join(process.cwd(), 'src', 'assets', 'i18n', `${lang}.json`),
       join(process.cwd(), 'dist', 'angular-portfolio', 'browser', 'assets', 'i18n', `${lang}.json`),
