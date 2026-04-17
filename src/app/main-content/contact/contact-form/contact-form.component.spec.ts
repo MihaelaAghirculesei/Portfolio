@@ -52,9 +52,9 @@ describe('ContactFormComponent', () => {
         message: '',
         privacypolicy: false
       });
-      expect(component.isSubmitting).toBe(false);
-      expect(component.submissionStatus).toBeNull();
-      expect(component.invalidFields).toEqual([]);
+      expect(component.isSubmitting()).toBe(false);
+      expect(component.submissionStatus()).toBeNull();
+      expect(component.invalidFields()).toEqual([]);
     });
 
     it('should have correct endpoint configuration', () => {
@@ -67,25 +67,25 @@ describe('ContactFormComponent', () => {
       it('should validate empty name as invalid', () => {
         component.contactData.name = '';
         component.validateForm('name');
-        expect(component.invalidFields).toContain('name');
+        expect(component.invalidFields()).toContain('name');
       });
 
       it('should validate name with less than 3 characters as invalid', () => {
         component.contactData.name = 'Jo';
         component.validateForm('name');
-        expect(component.invalidFields).toContain('name');
+        expect(component.invalidFields()).toContain('name');
       });
 
       it('should validate name with 3 or more characters as valid', () => {
         component.contactData.name = 'John';
         component.validateForm('name');
-        expect(component.invalidFields).not.toContain('name');
+        expect(component.invalidFields()).not.toContain('name');
       });
 
       it('should trim whitespace before validation', () => {
         component.contactData.name = '   ';
         component.validateForm('name');
-        expect(component.invalidFields).toContain('name');
+        expect(component.invalidFields()).toContain('name');
       });
     });
 
@@ -93,16 +93,16 @@ describe('ContactFormComponent', () => {
       it('should validate empty email as invalid', () => {
         component.contactData.email = '';
         component.validateForm('email');
-        expect(component.invalidFields).toContain('email');
+        expect(component.invalidFields()).toContain('email');
       });
 
       it('should validate invalid email format as invalid', () => {
         const invalidEmails = ['test', 'test@', '@test.com', 'test@test', 'test.com'];
         invalidEmails.forEach(email => {
-          component.invalidFields = [];
+          component.invalidFields.set([]);
           component.contactData.email = email;
           component.validateForm('email');
-          expect(component.invalidFields).toContain('email');
+          expect(component.invalidFields()).toContain('email');
         });
       });
 
@@ -113,10 +113,10 @@ describe('ContactFormComponent', () => {
           'test+tag@domain.com'
         ];
         validEmails.forEach(email => {
-          component.invalidFields = [];
+          component.invalidFields.set([]);
           component.contactData.email = email;
           component.validateForm('email');
-          expect(component.invalidFields).not.toContain('email');
+          expect(component.invalidFields()).not.toContain('email');
         });
       });
     });
@@ -125,19 +125,19 @@ describe('ContactFormComponent', () => {
       it('should validate empty message as invalid', () => {
         component.contactData.message = '';
         component.validateForm('message');
-        expect(component.invalidFields).toContain('message');
+        expect(component.invalidFields()).toContain('message');
       });
 
       it('should validate message with less than 10 characters as invalid', () => {
         component.contactData.message = 'Short';
         component.validateForm('message');
-        expect(component.invalidFields).toContain('message');
+        expect(component.invalidFields()).toContain('message');
       });
 
       it('should validate message with 10 or more characters as valid', () => {
         component.contactData.message = 'This is a valid message';
         component.validateForm('message');
-        expect(component.invalidFields).not.toContain('message');
+        expect(component.invalidFields()).not.toContain('message');
       });
     });
 
@@ -145,21 +145,21 @@ describe('ContactFormComponent', () => {
       it('should validate unchecked privacy policy as invalid', () => {
         component.contactData.privacypolicy = false;
         component.validateForm('checkbox');
-        expect(component.invalidFields).toContain('checkbox');
+        expect(component.invalidFields()).toContain('checkbox');
       });
 
       it('should validate checked privacy policy as valid', () => {
         component.contactData.privacypolicy = true;
         component.validateForm('checkbox');
-        expect(component.invalidFields).not.toContain('checkbox');
+        expect(component.invalidFields()).not.toContain('checkbox');
       });
     });
 
     it('should remove field from invalidFields when revalidating as valid', () => {
-      component.invalidFields = ['name'];
+      component.invalidFields.set(['name']);
       component.contactData.name = 'Valid Name';
       component.validateForm('name');
-      expect(component.invalidFields).not.toContain('name');
+      expect(component.invalidFields()).not.toContain('name');
     });
   });
 
@@ -180,11 +180,11 @@ describe('ContactFormComponent', () => {
         form: { valid: false },
         resetForm: jasmine.createSpy('resetForm')
       } as any;
-      spyOn(component.http, 'post');
 
       component.onSubmit(invalidForm);
 
-      expect(component.http.post).not.toHaveBeenCalled();
+      expect(component.isSubmitting()).toBe(false);
+      httpMock.expectNone(component.post.endPoint);
     });
 
     it('should not submit if form is not submitted', () => {
@@ -193,11 +193,11 @@ describe('ContactFormComponent', () => {
         form: { valid: true },
         resetForm: jasmine.createSpy('resetForm')
       } as any;
-      spyOn(component.http, 'post');
 
       component.onSubmit(notSubmittedForm);
 
-      expect(component.http.post).not.toHaveBeenCalled();
+      expect(component.isSubmitting()).toBe(false);
+      httpMock.expectNone(component.post.endPoint);
     });
 
     it('should submit form with sanitized data', fakeAsync(() => {
@@ -227,13 +227,13 @@ describe('ContactFormComponent', () => {
     it('should set isSubmitting to true during submission', fakeAsync(() => {
       component.onSubmit(mockForm);
 
-      expect(component.isSubmitting).toBe(true);
+      expect(component.isSubmitting()).toBe(true);
 
       const req = httpMock.expectOne(component.post.endPoint);
       req.flush({ success: true });
       flush();
 
-      expect(component.isSubmitting).toBe(false);
+      expect(component.isSubmitting()).toBe(false);
     }));
 
     it('should handle successful submission', fakeAsync(() => {
@@ -244,10 +244,10 @@ describe('ContactFormComponent', () => {
       req.flush({ success: true });
       flush();
 
-      expect(component.submissionStatus).toBe('success');
+      expect(component.submissionStatus()).toBe('success');
       expect(mockForm.resetForm).toHaveBeenCalled();
-      expect(component.checkboxWasCheckedBefore).toBe(false);
-      expect(component.invalidFields).toEqual([]);
+      expect(component.checkboxWasCheckedBefore()).toBe(false);
+      expect(component.invalidFields()).toEqual([]);
     }));
 
     it('should handle mailTest mode correctly', () => {
@@ -255,7 +255,7 @@ describe('ContactFormComponent', () => {
 
       component.onSubmit(mockForm);
 
-      expect(component.submissionStatus).toBe('success');
+      expect(component.submissionStatus()).toBe('success');
       expect(mockForm.resetForm).toHaveBeenCalled();
       httpMock.expectNone(component.post.endPoint);
     });
@@ -272,18 +272,18 @@ describe('ContactFormComponent', () => {
       } as any;
     });
 
-         it('should handle HTTP error during submission', fakeAsync(() => {
+    it('should handle HTTP error during submission', fakeAsync(() => {
       component.onSubmit(mockForm);
       tick();
-      
+
       const req = httpMock.expectOne(component.post.endPoint);
       const errorEvent = new ErrorEvent('HttpError', { message: 'Server Error' });
       req.error(errorEvent, { status: 500, statusText: 'Server Error' });
       tick(1000);
       flush();
 
-      expect(component.submissionStatus).toBe('error');
-      expect(component.isSubmitting).toBe(false);
+      expect(component.submissionStatus()).toBe('error');
+      expect(component.isSubmitting()).toBe(false);
     }));
 
     it('should handle server error (status >= 500)', fakeAsync(() => {
@@ -291,8 +291,8 @@ describe('ContactFormComponent', () => {
       component['handleError'](error);
       flush();
 
-      expect(component.submissionStatus).toBe('error');
-      expect(component.errorMessage).toBe('Server error. Please try again later.');
+      expect(component.submissionStatus()).toBe('error');
+      expect(component.errorMessage()).toBe('Server error. Please try again later.');
     }));
 
     it('should handle client error (status >= 400)', fakeAsync(() => {
@@ -300,8 +300,8 @@ describe('ContactFormComponent', () => {
       component['handleError'](error);
       flush();
 
-      expect(component.submissionStatus).toBe('error');
-      expect(component.errorMessage).toBe('Bad request. Please check your input.');
+      expect(component.submissionStatus()).toBe('error');
+      expect(component.errorMessage()).toBe('Bad request. Please check your input.');
     }));
 
     it('should handle timeout error specifically', fakeAsync(() => {
@@ -309,8 +309,8 @@ describe('ContactFormComponent', () => {
       component['handleError'](error);
       flush();
 
-      expect(component.submissionStatus).toBe('error');
-      expect(component.errorMessage).toBe('Request timeout. Please try again.');
+      expect(component.submissionStatus()).toBe('error');
+      expect(component.errorMessage()).toBe('Request timeout. Please try again.');
     }));
 
     it('should handle generic error with message', fakeAsync(() => {
@@ -318,8 +318,8 @@ describe('ContactFormComponent', () => {
       component['handleError'](error);
       flush();
 
-      expect(component.submissionStatus).toBe('error');
-      expect(component.errorMessage).toBe('Custom error message');
+      expect(component.submissionStatus()).toBe('error');
+      expect(component.errorMessage()).toBe('Custom error message');
     }));
 
     it('should handle generic error without message', fakeAsync(() => {
@@ -327,15 +327,15 @@ describe('ContactFormComponent', () => {
       component['handleError'](error);
       flush();
 
-      expect(component.submissionStatus).toBe('error');
-      expect(component.errorMessage).toBe('An error occurred while sending your message.');
+      expect(component.submissionStatus()).toBe('error');
+      expect(component.errorMessage()).toBe('An error occurred while sending your message.');
     }));
 
-           it('should reset form and checkbox on error', fakeAsync(() => {
-      component.checkboxWasCheckedBefore = true;
+    it('should reset form and checkbox on error', fakeAsync(() => {
+      component.checkboxWasCheckedBefore.set(true);
       component.onSubmit(mockForm);
       tick();
-      
+
       const req = httpMock.expectOne(component.post.endPoint);
       const errorEvent = new ErrorEvent('HttpError', { message: 'Server Error' });
       req.error(errorEvent, { status: 500, statusText: 'Server Error' });
@@ -343,19 +343,19 @@ describe('ContactFormComponent', () => {
       flush();
 
       expect(mockForm.resetForm).toHaveBeenCalled();
-      expect(component.checkboxWasCheckedBefore).toBe(false);
+      expect(component.checkboxWasCheckedBefore()).toBe(false);
     }));
- });
+  });
 
   describe('Popup Management', () => {
     it('should close popup and reset status', () => {
-      component.submissionStatus = 'success';
-      component.errorMessage = 'Some error';
+      component.submissionStatus.set('success');
+      component.errorMessage.set('Some error');
 
       component.closePopup();
 
-      expect(component.submissionStatus).toBeNull();
-      expect(component.errorMessage).toBe('');
+      expect(component.submissionStatus()).toBeNull();
+      expect(component.errorMessage()).toBe('');
     });
   });
 
@@ -364,18 +364,17 @@ describe('ContactFormComponent', () => {
       component.contactData.privacypolicy = true;
       component.checkboxChanged();
 
-      expect(component.checkboxWasCheckedBefore).toBe(true);
+      expect(component.checkboxWasCheckedBefore()).toBe(true);
     });
 
     it('should not change checkboxWasCheckedBefore when checkbox is unchecked', () => {
-      component.checkboxWasCheckedBefore = false;
+      component.checkboxWasCheckedBefore.set(false);
       component.contactData.privacypolicy = false;
       component.checkboxChanged();
 
-      expect(component.checkboxWasCheckedBefore).toBe(false);
+      expect(component.checkboxWasCheckedBefore()).toBe(false);
     });
   });
-
 
   describe('Data Sanitization', () => {
     it('should sanitize contact data correctly', () => {
@@ -407,15 +406,5 @@ describe('ContactFormComponent', () => {
     it('should have correct content-type header', () => {
       expect(component.post.options.headers['Content-Type']).toBe('application/json');
     });
-  });
-
-  describe('Change Detection', () => {
-    it('should mark for check after error', fakeAsync(() => {
-      spyOn(component.cdr, 'markForCheck');
-      component['handleError']({ status: 500 });
-      flush();
-
-      expect(component.submissionStatus).toBe('error');
-    }));
   });
 });
