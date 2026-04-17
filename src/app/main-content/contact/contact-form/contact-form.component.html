@@ -17,15 +17,15 @@
         (focus)="validateForm('name')"
         (blur)="validateForm('name')"
         (input)="validateForm('name')"
-        [class.invalid]="invalidFields.includes('name')"
+        [class.invalid]="invalidFields().includes('name')"
         [attr.placeholder]="'contact.form.namePlaceholder' | translate"
-        [attr.aria-invalid]="invalidFields.includes('name')"
-        [attr.aria-describedby]="invalidFields.includes('name') ? 'name-error' : null"
+        [attr.aria-invalid]="invalidFields().includes('name')"
+        [attr.aria-describedby]="invalidFields().includes('name') ? 'name-error' : null"
         required
         minlength="3"
         autocomplete="name"
       />
-      @if (invalidFields.includes('name')) {
+      @if (invalidFields().includes('name')) {
       <p class="alert-text" id="name-error" role="alert" aria-live="polite">
         {{ "contact.form.nameError" | translate }}
       </p>
@@ -46,15 +46,15 @@
         (focus)="validateForm('email')"
         (blur)="validateForm('email')"
         (input)="validateForm('email')"
-        [class.invalid]="invalidFields.includes('email')"
+        [class.invalid]="invalidFields().includes('email')"
         [attr.placeholder]="'contact.form.emailPlaceholder' | translate"
-        [attr.aria-invalid]="invalidFields.includes('email')"
-        [attr.aria-describedby]="invalidFields.includes('email') ? 'email-error' : null"
+        [attr.aria-invalid]="invalidFields().includes('email')"
+        [attr.aria-describedby]="invalidFields().includes('email') ? 'email-error' : null"
         required
         pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
         autocomplete="email"
       />
-      @if (invalidFields.includes('email')) {
+      @if (invalidFields().includes('email')) {
       <p class="alert-text" id="email-error" role="alert" aria-live="polite">
         {{ "contact.form.emailError" | translate }}
       </p>
@@ -74,16 +74,16 @@
         (focus)="validateForm('message')"
         (blur)="validateForm('message')"
         (input)="validateForm('message')"
-        [class.invalid]="invalidFields.includes('message')"
+        [class.invalid]="invalidFields().includes('message')"
         [attr.placeholder]="'contact.form.messagePlaceholder' | translate"
-        [attr.aria-invalid]="invalidFields.includes('message')"
-        [attr.aria-describedby]="invalidFields.includes('message') ? 'message-error' : null"
+        [attr.aria-invalid]="invalidFields().includes('message')"
+        [attr.aria-describedby]="invalidFields().includes('message') ? 'message-error' : null"
         [attr.aria-label]="'contact.form.messageLabel' | translate"
         required
         minlength="10"
         rows="4"
       ></textarea>
-      @if (invalidFields.includes('message')) {
+      @if (invalidFields().includes('message')) {
       <p class="alert-text" id="message-error" role="alert" aria-live="polite">
         {{ "contact.form.messageError" | translate }}
       </p>
@@ -104,9 +104,9 @@
           name="privacypolicy"
           (focus)="validateForm('checkbox')"
           (blur)="validateForm('checkbox')"
-          [class.invalid]="invalidFields.includes('checkbox')"
+          [class.invalid]="invalidFields().includes('checkbox')"
           [attr.aria-describedby]="
-            invalidFields.includes('checkbox') ? 'privacy-error' : null
+            invalidFields().includes('checkbox') ? 'privacy-error' : null
           "
           required
         />
@@ -125,7 +125,7 @@
         </span>
       </div>
       @if ((privacypolicy.invalid && (privacypolicy.dirty ||
-      privacypolicy.touched)) || checkboxWasCheckedBefore &&
+      privacypolicy.touched)) || checkboxWasCheckedBefore() &&
       !contactData.privacypolicy) {
       <p class="alert-text" id="privacy-error" role="alert">
         {{ "contact.form.privacyError" | translate }}
@@ -135,15 +135,15 @@
 
     <input
       type="submit"
-      [value]="isSubmitting ? ('contact.form.submitting' | translate) : ('contact.form.submitButton' | translate)"
-      [disabled]="!contactForm.form.valid || isSubmitting"
+      [value]="isSubmitting() ? ('contact.form.submitting' | translate) : ('contact.form.submitButton' | translate)"
+      [disabled]="!contactForm.form.valid || isSubmitting()"
       [attr.aria-label]="'contact.form.submitButton' | translate"
-      [attr.aria-busy]="isSubmitting"
+      [attr.aria-busy]="isSubmitting()"
     />
   </form>
 </div>
 
-@if (submissionStatus) {
+@if (submissionStatus()) {
 <div
   class="popup-overlay"
   (click)="closePopup()"
@@ -157,26 +157,26 @@
     class="popup"
     role="document"
     tabindex="0"
-    [class.success]="submissionStatus === 'success'"
-    [class.error]="submissionStatus === 'error'"
+    [class.success]="submissionStatus() === 'success'"
+    [class.error]="submissionStatus() === 'error'"
     (click)="$event.stopPropagation()"
     (keydown)="$event.stopPropagation()"
   >
     <div class="popup-header">
       <h3 id="popup-title">
         {{
-          submissionStatus === "success"
+          submissionStatus() === "success"
             ? ("contact.form.successTitle" | translate)
             : ("contact.form.errorTitle" | translate)
         }}
       </h3>
     </div>
     <div class="popup-content">
-      @if (submissionStatus === 'success') {
+      @if (submissionStatus() === 'success') {
       <p>{{ "contact.form.successMessage" | translate }}</p>
       } @else {
       <p>{{ "contact.form.errorMessage" | translate }}</p>
-      <p class="error-details" role="alert">{{ errorMessage }}</p>
+      <p class="error-details" role="alert">{{ errorMessage() }}</p>
       }
     </div>
     <div class="popup-footer">

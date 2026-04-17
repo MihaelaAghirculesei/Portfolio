@@ -117,3 +117,51 @@ describe('PlatformService', () => {
     });
   });
 });
+
+describe('PlatformService - Server Platform (SSR)', () => {
+  let ssrService: PlatformService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        PlatformService,
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: DOCUMENT, useValue: { defaultView: null, body: { style: {} } } }
+      ]
+    });
+
+    ssrService = TestBed.inject(PlatformService);
+  });
+
+  it('should detect server platform', () => {
+    expect(ssrService.isBrowser).toBe(false);
+  });
+
+  it('window getter should return null on server', () => {
+    expect(ssrService.window).toBeNull();
+  });
+
+  it('getWindow should return null on server', () => {
+    expect(ssrService.getWindow()).toBeNull();
+  });
+
+  it('getDocument should return null on server', () => {
+    expect(ssrService.getDocument()).toBeNull();
+  });
+
+  it('isWindowDefined should return false on server', () => {
+    expect(ssrService.isWindowDefined()).toBe(false);
+  });
+
+  it('setBodyOverflow should do nothing on server', () => {
+    expect(() => ssrService.setBodyOverflow('hidden')).not.toThrow();
+  });
+
+  it('disableScroll should do nothing on server', () => {
+    expect(() => ssrService.disableScroll()).not.toThrow();
+  });
+
+  it('enableScroll should do nothing on server', () => {
+    expect(() => ssrService.enableScroll()).not.toThrow();
+  });
+});

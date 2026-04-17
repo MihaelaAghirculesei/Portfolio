@@ -17,9 +17,16 @@
     "languageToggleAriaLabel": "Toggle language between English and German"
   },
   "common": {
-    "references": "References"
+    "references": "References",
+    "previous": "Previous",
+    "next": "Next"
   },
   "references": {
+    "carousel": "Feedback carousel",
+    "feedback": "Feedback",
+    "navigation": "Slide navigation",
+    "slide": "Slide",
+    "goToSlide": "Go to slide {{index}}",
     "projectNames": {
       "kochwelt": "Kochwelt",
       "join": "Join"

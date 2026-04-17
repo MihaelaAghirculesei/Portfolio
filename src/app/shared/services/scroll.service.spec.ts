@@ -267,9 +267,8 @@ describe('ScrollService', () => {
     });
   });
 
-  describe('Server-side rendering', () => {
-    it('should handle SSR gracefully', () => {
-      // SSR tests would need proper SSR setup
+  describe('Server-side rendering (browser service)', () => {
+    it('should be truthy', () => {
       expect(service).toBeTruthy();
     });
   });
@@ -328,5 +327,80 @@ describe('ScrollService', () => {
         jasmine.any(Error)
       );
     });
+  });
+});
+
+describe('ScrollService - SSR (server platform)', () => {
+  let ssrService: ScrollService;
+  let ssrMockWindow: { scrollTo: jasmine.Spy; scrollY: number; pageYOffset: number; innerWidth: number };
+  let ssrMockDocument: {
+    getElementById: jasmine.Spy;
+    defaultView: typeof ssrMockWindow | null;
+    body: HTMLElement;
+    querySelectorAll: jasmine.Spy;
+  };
+  let ssrMockLogger: jasmine.SpyObj<LoggerService>;
+
+  beforeEach(() => {
+    ssrMockWindow = {
+      scrollTo: jasmine.createSpy('scrollTo'),
+      scrollY: 0,
+      pageYOffset: 0,
+      innerWidth: 1920
+    };
+    ssrMockDocument = {
+      getElementById: jasmine.createSpy('getElementById'),
+      defaultView: ssrMockWindow,
+      body: document.body,
+      querySelectorAll: jasmine.createSpy('querySelectorAll').and.returnValue([])
+    };
+    ssrMockLogger = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+
+    TestBed.configureTestingModule({
+      providers: [
+        ScrollService,
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: DOCUMENT, useValue: ssrMockDocument },
+        { provide: LoggerService, useValue: ssrMockLogger }
+      ]
+    });
+
+    ssrService = TestBed.inject(ScrollService);
+  });
+
+  it('should report isBrowser as false', () => {
+    expect(ssrService['isBrowser']).toBe(false);
+  });
+
+  it('scrollToElement should not scroll on server', () => {
+    const mockEl = { offsetTop: 500 } as HTMLElement;
+    ssrMockDocument.getElementById.and.returnValue(mockEl);
+
+    ssrService.scrollToElement('test');
+
+    expect(ssrMockWindow.scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('scrollToPosition should not scroll on server', () => {
+    ssrService.scrollToPosition(300);
+
+    expect(ssrMockWindow.scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('getCurrentScrollPosition should return 0 on server', () => {
+    expect(ssrService.getCurrentScrollPosition()).toBe(0);
+  });
+
+  it('saveScrollPosition should do nothing on server', () => {
+    sessionStorage.clear();
+    ssrService.saveScrollPosition();
+    expect(sessionStorage.getItem('contact-scroll-position')).toBeNull();
+  });
+
+  it('restoreScrollPosition should do nothing on server', () => {
+    sessionStorage.setItem('contact-scroll-position', '200');
+    ssrService.restoreScrollPosition();
+    expect(ssrMockWindow.scrollTo).not.toHaveBeenCalled();
+    sessionStorage.clear();
   });
 });

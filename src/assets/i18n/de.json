@@ -17,9 +17,16 @@
     "languageToggleAriaLabel": "Sprache zwischen Englisch und Deutsch wechseln"
   },
   "common": {
-    "references": "Referenzen"
+    "references": "Referenzen",
+    "previous": "Zurück",
+    "next": "Weiter"
   },
   "references": {
+    "carousel": "Feedback-Karussell",
+    "feedback": "Feedback",
+    "navigation": "Foliennavigation",
+    "slide": "Folie",
+    "goToSlide": "Zur Folie {{index}} gehen",
     "projectNames": {
       "kochwelt": "Kochwelt",
       "join": "Join"

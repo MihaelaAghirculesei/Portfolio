@@ -81,4 +81,22 @@ describe('AppComponent', () => {
     routerEventsSubject.next(new NavigationEnd(2, '/', '/'));
     expect(component.showMainContent).toBe(true);
   });
+
+  it('should use German when localStorage lang is de', () => {
+    localStorage.setItem('lang', 'de');
+    const translateService = TestBed.inject(TranslateService);
+
+    component.ngOnInit();
+
+    expect(translateService.use).toHaveBeenCalledWith('de');
+    localStorage.removeItem('lang');
+  });
+
+  it('should fall back to home SEO config for unknown routes', () => {
+    component.ngOnInit();
+    // Navigate to an unknown path not in SEO_CONFIGS
+    routerEventsSubject.next(new NavigationEnd(1, '/unknown-route', '/unknown-route'));
+    // The app should still work (SEO fallback to '/')
+    expect(component.showMainContent).toBe(false);
+  });
 });
