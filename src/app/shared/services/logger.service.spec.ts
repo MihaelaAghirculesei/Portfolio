@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { LoggerService } from './logger.service';
+import { environment } from '../../../environments/environment';
 
 describe('LoggerService', () => {
   let service: LoggerService;
@@ -358,5 +359,92 @@ describe('LoggerService', () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledWith('Error occurred', error);
     });
+  });
+});
+
+describe('LoggerService - Logging Disabled', () => {
+  let service: LoggerService;
+  let consoleErrorSpy: jasmine.Spy;
+  let consoleWarnSpy: jasmine.Spy;
+  let consoleInfoSpy: jasmine.Spy;
+  let consoleDebugSpy: jasmine.Spy;
+
+  beforeEach(() => {
+    (environment as any).enableLogging = false;
+
+    TestBed.configureTestingModule({
+      providers: [
+        LoggerService,
+        { provide: PLATFORM_ID, useValue: 'browser' }
+      ]
+    });
+
+    service = TestBed.inject(LoggerService);
+    consoleErrorSpy = spyOn(console, 'error');
+    consoleWarnSpy = spyOn(console, 'warn');
+    consoleInfoSpy = spyOn(console, 'info');
+    consoleDebugSpy = spyOn(console, 'debug');
+  });
+
+  afterEach(() => {
+    (environment as any).enableLogging = true;
+  });
+
+  it('should not log error when enableLogging is false', () => {
+    service.error('test error');
+    expect(consoleErrorSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not log warn when enableLogging is false', () => {
+    service.warn('test warn');
+    expect(consoleWarnSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not log info when enableLogging is false', () => {
+    service.info('test info');
+    expect(consoleInfoSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not log debug when enableLogging is false', () => {
+    service.debug('test debug');
+    expect(consoleDebugSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe('LoggerService - Switch Branch Coverage', () => {
+  let service: LoggerService;
+  let consoleWarnSpy: jasmine.Spy;
+  let consoleInfoSpy: jasmine.Spy;
+  let consoleDebugSpy: jasmine.Spy;
+
+  beforeEach(() => {
+    (environment as any).enableLogging = true;
+
+    TestBed.configureTestingModule({
+      providers: [
+        LoggerService,
+        { provide: PLATFORM_ID, useValue: 'browser' }
+      ]
+    });
+
+    service = TestBed.inject(LoggerService);
+    consoleWarnSpy = spyOn(console, 'warn');
+    consoleInfoSpy = spyOn(console, 'info');
+    consoleDebugSpy = spyOn(console, 'debug');
+  });
+
+  it('should reach warn branch in switch', () => {
+    service.warn('branch warn');
+    expect(consoleWarnSpy).toHaveBeenCalledWith('branch warn', undefined);
+  });
+
+  it('should reach info branch in switch', () => {
+    service.info('branch info');
+    expect(consoleInfoSpy).toHaveBeenCalledWith('branch info', undefined);
+  });
+
+  it('should reach debug branch in switch', () => {
+    service.debug('branch debug');
+    expect(consoleDebugSpy).toHaveBeenCalledWith('branch debug', undefined);
   });
 });
