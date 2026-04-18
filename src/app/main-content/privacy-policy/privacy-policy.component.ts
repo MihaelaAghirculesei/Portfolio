@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser, Location } from '@angular/common';
+import { NgIf, isPlatformBrowser, Location } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
     selector: 'app-privacy-policy',
-    imports: [CommonModule, TranslateModule],
+    imports: [NgIf, TranslateModule],
     templateUrl: './privacy-policy.component.html',
     styleUrl: './privacy-policy.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

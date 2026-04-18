@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -17,7 +17,7 @@ import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shar
 @Component({
     selector: 'app-feedbacks',
     imports: [
-        CommonModule,
+        NgClass,
         TranslatePipe,
         PassiveTouchStartDirective,
         PassiveTouchEndDirective
