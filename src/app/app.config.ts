@@ -1,9 +1,10 @@
 import {
   ApplicationConfig,
   ErrorHandler,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, NoPreloading, withPreloading } from '@angular/router';
+import { provideRouter, NoPreloading, withPreloading, TitleStrategy } from '@angular/router';
+import { TranslatedTitleStrategy } from './shared/services/translated-title.strategy';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from './shared/interceptors/http.interceptor';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -17,9 +18,10 @@ export const appConfig: ApplicationConfig = {
       routes,
       withPreloading(NoPreloading)
     ),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: TitleStrategy, useClass: TranslatedTitleStrategy },
     provideTranslateService(),
     ...provideTranslateHttpLoader({ prefix: '/assets/i18n/', suffix: '.json' }),
   ],
