@@ -135,6 +135,82 @@ describe('AboutMeComponent', () => {
     });
   });
 
+  describe('Icon Hover Effects', () => {
+    it('should apply icon-hover class on hover when img exists', () => {
+      const wrapper = document.createElement('div');
+      const img = document.createElement('img');
+      img.classList.add('icon-normal');
+      wrapper.appendChild(img);
+
+      component['onIconHover']({ target: wrapper } as unknown as Event);
+
+      expect(img.classList.contains('icon-hover')).toBe(true);
+      expect(img.classList.contains('icon-normal')).toBe(false);
+    });
+
+    it('should not throw on hover when target has no img', () => {
+      const wrapper = document.createElement('div');
+      expect(() => component['onIconHover']({ target: wrapper } as unknown as Event)).not.toThrow();
+    });
+
+    it('should apply icon-normal class on leave when img exists', () => {
+      const wrapper = document.createElement('div');
+      const img = document.createElement('img');
+      img.classList.add('icon-hover');
+      wrapper.appendChild(img);
+
+      component['onIconLeave']({ target: wrapper } as unknown as Event);
+
+      expect(img.classList.contains('icon-normal')).toBe(true);
+      expect(img.classList.contains('icon-hover')).toBe(false);
+    });
+
+    it('should not throw on leave when target has no img', () => {
+      const wrapper = document.createElement('div');
+      expect(() => component['onIconLeave']({ target: wrapper } as unknown as Event)).not.toThrow();
+    });
+  });
+
+  describe('Image Hover Effects', () => {
+    it('should apply image-hover class when img exists in imageContainerRef', () => {
+      const container = document.createElement('div');
+      const img = document.createElement('img');
+      img.classList.add('image-normal');
+      container.appendChild(img);
+      component['imageContainerRef'] = { nativeElement: container } as any;
+
+      component['onImageHover']({} as Event);
+
+      expect(img.classList.contains('image-hover')).toBe(true);
+      expect(img.classList.contains('image-normal')).toBe(false);
+    });
+
+    it('should not throw on hover when imageContainerRef has no img', () => {
+      const container = document.createElement('div');
+      component['imageContainerRef'] = { nativeElement: container } as any;
+      expect(() => component['onImageHover']({} as Event)).not.toThrow();
+    });
+
+    it('should apply image-normal class on leave when img exists in imageContainerRef', () => {
+      const container = document.createElement('div');
+      const img = document.createElement('img');
+      img.classList.add('image-hover');
+      container.appendChild(img);
+      component['imageContainerRef'] = { nativeElement: container } as any;
+
+      component['onImageLeave']({} as Event);
+
+      expect(img.classList.contains('image-normal')).toBe(true);
+      expect(img.classList.contains('image-hover')).toBe(false);
+    });
+
+    it('should not throw on leave when imageContainerRef has no img', () => {
+      const container = document.createElement('div');
+      component['imageContainerRef'] = { nativeElement: container } as any;
+      expect(() => component['onImageLeave']({} as Event)).not.toThrow();
+    });
+  });
+
   describe('Server-Side Rendering', () => {
     it('should handle SSR gracefully', () => {
       const ssrComponent = new AboutMeComponent({} as object);
