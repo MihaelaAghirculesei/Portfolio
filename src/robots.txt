@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aghirculesei.pages.dev/sitemap.xml
