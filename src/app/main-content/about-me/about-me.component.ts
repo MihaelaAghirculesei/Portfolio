@@ -11,7 +11,7 @@ import {
   ViewChildren,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AOS_CONFIG } from '../../shared/constants/app.constants';
 
@@ -40,7 +40,7 @@ declare global {
 
 @Component({
     selector: 'app-about-me',
-    imports: [CommonModule, TranslatePipe],
+    imports: [TranslatePipe],
     templateUrl: './about-me.component.html',
     styleUrl: './about-me.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
