@@ -4,6 +4,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
+import { LoggerService } from './shared/services/logger.service';
 
 @Component({
   selector: 'router-outlet',
@@ -98,5 +99,48 @@ describe('AppComponent', () => {
     routerEventsSubject.next(new NavigationEnd(1, '/unknown-route', '/unknown-route'));
     // The app should still work (SEO fallback to '/')
     expect(component.showMainContent).toBe(false);
+  });
+});
+
+describe('AppComponent router error handling', () => {
+  let mockLogger: jasmine.SpyObj<LoggerService>;
+  let errorEventsSubject: Subject<unknown>;
+
+  beforeEach(async () => {
+    errorEventsSubject = new Subject();
+    mockLogger = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+    const errorRouter = jasmine.createSpyObj('Router', ['createUrlTree', 'serializeUrl'], {
+      url: '/',
+      events: errorEventsSubject.asObservable(),
+    });
+    errorRouter.createUrlTree.and.returnValue({} as any);
+    errorRouter.serializeUrl.and.returnValue('/');
+
+    await TestBed.configureTestingModule({
+      imports: [AppComponent, TranslateModule.forRoot(), MockRouterOutlet],
+      providers: [
+        { provide: Router, useValue: errorRouter },
+        { provide: ActivatedRoute, useValue: { snapshot: { params: {}, queryParams: {}, data: {} } } },
+        { provide: LoggerService, useValue: mockLogger }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).overrideComponent(AppComponent, {
+      remove: { imports: [RouterOutlet] },
+      add: { imports: [MockRouterOutlet] }
+    }).compileComponents();
+
+    const translateService = TestBed.inject(TranslateService);
+    spyOn(translateService, 'setDefaultLang');
+    spyOn(translateService, 'use');
+  });
+
+  it('should log error when router events emit an error', () => {
+    const errorFixture = TestBed.createComponent(AppComponent);
+    errorFixture.componentInstance.ngOnInit();
+
+    const routerError = new Error('Router error');
+    errorEventsSubject.error(routerError);
+
+    expect(mockLogger.error).toHaveBeenCalledWith('Router events error:', routerError);
   });
 });
