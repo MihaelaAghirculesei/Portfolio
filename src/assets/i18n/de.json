@@ -111,6 +111,9 @@
       "closeButton": "Schließen"
     }
   },
+  "privacyPolicy": {
+    "title": "Datenschutzerklärung"
+  },
   "legalNotice": {
     "title": "Impressum",
     "contact": "Kontakt",

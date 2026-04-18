@@ -38,4 +38,6 @@
     <router-outlet></router-outlet>
   }
 </main>
-<app-footer></app-footer>
+@defer (on idle) {
+  <app-footer></app-footer>
+}
