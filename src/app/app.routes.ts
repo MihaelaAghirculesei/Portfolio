@@ -12,7 +12,7 @@ export const routes: Routes = [
       import('./main-content/legal-notice/legal-notice.component').then(
         (m) => m.LegalNoticeComponent
       ),
-    title: 'Legal Notice',
+    title: 'legalNotice.title',
   },
   {
     path: 'datenschutz',
@@ -20,7 +20,7 @@ export const routes: Routes = [
       import('./main-content/privacy-policy/privacy-policy.component').then(
         (m) => m.PrivacyPolicyComponent
       ),
-    title: 'Datenschutz',
+    title: 'privacyPolicy.title',
   },
   {
     path: 'privacy-policy',
@@ -28,7 +28,7 @@ export const routes: Routes = [
       import('./main-content/privacy-policy/privacy-policy.component').then(
         (m) => m.PrivacyPolicyComponent
       ),
-    title: 'Privacy Policy',
+    title: 'privacyPolicy.title',
   },
   {
     path: '**',
