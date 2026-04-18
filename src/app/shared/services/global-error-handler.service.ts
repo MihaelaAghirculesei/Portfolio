@@ -1,7 +1,6 @@
 import { ErrorHandler, Injectable, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import * as sentry from '@sentry/angular';
 import { LoggerService } from './logger.service';
 
 interface ErrorWithMessage {
@@ -44,7 +43,9 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 
   protected callSentry(error: ApplicationError): void {
-    sentry.captureException(error);
+    import('@sentry/angular').then((sentry) => {
+      sentry.captureException(error);
+    });
   }
 
   private getErrorMessage(error: ApplicationError): string {

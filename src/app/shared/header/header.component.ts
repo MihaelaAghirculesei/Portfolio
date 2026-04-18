@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef,
   OnDestroy, OnInit, inject, ElementRef, DestroyRef
@@ -14,7 +14,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-header',
-    imports: [CommonModule, TranslatePipe],
+    imports: [NgClass, TranslatePipe],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

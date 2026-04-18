@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { HeaderComponent } from './shared/header/header.component';
 import { LandingPageComponent } from './main-content/landing-page/landing-page.component';
 import { AboutMeComponent } from './main-content/about-me/about-me.component';
@@ -51,7 +51,6 @@ const SEO_CONFIGS = new Map<string, SeoConfig>([
 @Component({
     selector: 'app-root',
     imports: [
-        CommonModule,
         RouterOutlet,
         HeaderComponent,
         FooterComponent,
