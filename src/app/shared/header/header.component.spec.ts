@@ -396,4 +396,32 @@ describe('HeaderComponent', () => {
       expect(component['cdr'].markForCheck).not.toHaveBeenCalled();
     });
   });
+
+  describe('Language Toggle with browser platform', () => {
+    it('should save lang to localStorage when isBrowser is true', () => {
+      (mockPlatformService as any).isBrowser = true;
+      spyOn(localStorage, 'setItem');
+      spyOn(translateService, 'use');
+      component.isGerman = false;
+
+      component.toggleLanguage();
+
+      expect(localStorage.setItem).toHaveBeenCalledWith('lang', 'de');
+      delete (mockPlatformService as any).isBrowser;
+    });
+  });
+
+  describe('Scroll to Section error handling', () => {
+    it('should log error when navigation to home fails', fakeAsync(() => {
+      Object.defineProperty(mockRouter, 'url', { value: '/privacy-policy', configurable: true });
+      mockRouter.navigate.and.returnValue(Promise.reject('nav-error'));
+      const logger = component['logger'];
+      spyOn(logger, 'error');
+
+      component.scrollToSection('contact');
+      tick(200);
+
+      expect(logger.error).toHaveBeenCalledWith('Navigation to home failed:', 'nav-error');
+    }));
+  });
 });
