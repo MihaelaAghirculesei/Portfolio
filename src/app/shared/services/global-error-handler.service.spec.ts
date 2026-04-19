@@ -165,6 +165,19 @@ describe('GlobalErrorHandler', () => {
 
         expect(loggerSpy.error).toHaveBeenCalled();
       });
+
+      it('should fall back to HTTP Error message when HttpErrorResponse has no message', () => {
+        const httpError = Object.create(HttpErrorResponse.prototype) as HttpErrorResponse;
+        Object.defineProperty(httpError, 'message', { value: '', configurable: true });
+        Object.defineProperty(httpError, 'status', { value: 503, configurable: true });
+
+        try { handler.handleError(httpError); } catch (_) { /* expected */ }
+
+        expect(loggerSpy.error).toHaveBeenCalledWith(
+          'Global Error Handler:',
+          jasmine.objectContaining({ message: 'HTTP Error 503' })
+        );
+      });
     });
 
     describe('handleError() with Non-Critical Errors', () => {

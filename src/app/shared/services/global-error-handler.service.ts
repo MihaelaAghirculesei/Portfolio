@@ -43,8 +43,8 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 
   protected callSentry(error: ApplicationError): void {
-    import('@sentry/angular').then((sentry) => {
-      sentry.captureException(error);
+    import('@sentry/browser').then(({ captureException }) => {
+      captureException(error);
     });
   }
 

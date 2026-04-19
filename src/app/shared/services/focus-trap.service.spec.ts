@@ -78,6 +78,17 @@ describe('FocusTrapService', () => {
       expect(btn.focus).not.toHaveBeenCalled();
     });
 
+    it('removes the previous keydown listener when activated a second time', () => {
+      container.appendChild(makeButton());
+      container.appendChild(makeButton());
+      service.activate(container, false);
+
+      spyOn(container, 'removeEventListener').and.callThrough();
+      service.activate(container, false);
+
+      expect(container.removeEventListener).toHaveBeenCalledWith('keydown', jasmine.any(Function));
+    });
+
     it('saves the previously focused element', () => {
       const trigger = makeButton();
       document.body.appendChild(trigger);
