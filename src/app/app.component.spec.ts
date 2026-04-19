@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Router, NavigationEnd, RouterOutlet, ActivatedRoute } from '@angular/router';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, PLATFORM_ID } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { LoggerService } from './shared/services/logger.service';
@@ -99,6 +99,47 @@ describe('AppComponent', () => {
     routerEventsSubject.next(new NavigationEnd(1, '/unknown-route', '/unknown-route'));
     // The app should still work (SEO fallback to '/')
     expect(component.showMainContent).toBe(false);
+  });
+});
+
+describe('AppComponent on server platform', () => {
+  let component: AppComponent;
+  let serverEventsSubject: Subject<unknown>;
+
+  beforeEach(async () => {
+    serverEventsSubject = new Subject();
+    const serverRouter = jasmine.createSpyObj('Router', ['createUrlTree', 'serializeUrl'], {
+      url: '/',
+      events: serverEventsSubject.asObservable(),
+    });
+    serverRouter.createUrlTree.and.returnValue({} as any);
+    serverRouter.serializeUrl.and.returnValue('/');
+
+    await TestBed.configureTestingModule({
+      imports: [AppComponent, TranslateModule.forRoot(), MockRouterOutlet],
+      providers: [
+        { provide: Router, useValue: serverRouter },
+        { provide: ActivatedRoute, useValue: { snapshot: { params: {}, queryParams: {}, data: {} } } },
+        { provide: PLATFORM_ID, useValue: 'server' },
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).overrideComponent(AppComponent, {
+      remove: { imports: [RouterOutlet] },
+      add: { imports: [MockRouterOutlet] }
+    }).compileComponents();
+
+    const translateService = TestBed.inject(TranslateService);
+    spyOn(translateService, 'setDefaultLang');
+    spyOn(translateService, 'use');
+
+    const fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should default to English on server (localStorage not available)', () => {
+    const translateService = TestBed.inject(TranslateService);
+    component.ngOnInit();
+    expect(translateService.use).toHaveBeenCalledWith('en');
   });
 });
 
