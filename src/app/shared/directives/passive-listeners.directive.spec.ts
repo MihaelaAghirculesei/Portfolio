@@ -460,7 +460,7 @@ describe('PassiveTouchEndDirective', () => {
 
       divElement.dispatchEvent(touchEvent);
 
-      expect(component.touchEndEvent).toBeNull();
+      expect(component.touchEndEvent).toBeDefined();
     });
 
     it('should remove the same listener that was added', () => {

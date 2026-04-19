@@ -1,9 +1,11 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpEvent, HttpRequest,
+  provideHttpClient, withInterceptors, HttpHandlerFn, HttpInterceptorFn } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { LoggerService } from '../services/logger.service';
 import { httpInterceptor } from './http.interceptor';
+import { Observable, throwError } from 'rxjs';
 
 describe('httpInterceptor', () => {
   let http: HttpClient;
@@ -298,4 +300,40 @@ describe('httpInterceptor', () => {
       expect(retryCount).toBe(2);
     }));
   });
+});
+
+describe('httpInterceptor with non-HttpErrorResponse error', () => {
+  let http: HttpClient;
+  let loggerSpy: jasmine.SpyObj<LoggerService>;
+
+  class ThrowingBackend implements HttpBackend {
+    handle(_req: HttpRequest<unknown>): Observable<HttpEvent<unknown>> {
+      return throwError(() => new Error('Non-HTTP failure'));
+    }
+  }
+
+  beforeEach(() => {
+    loggerSpy = jasmine.createSpyObj('LoggerService', ['info', 'warn', 'error', 'debug']);
+
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(withInterceptors([httpInterceptor])),
+        { provide: HttpBackend, useClass: ThrowingBackend },
+        { provide: LoggerService, useValue: loggerSpy },
+        { provide: TranslateService, useValue: { currentLang: 'en', defaultLang: 'en' } },
+      ],
+    });
+
+    http = TestBed.inject(HttpClient);
+  });
+
+  it('should log "unknown" status when error is not HttpErrorResponse', fakeAsync(() => {
+    http.get('/api/test').subscribe({ error: () => { /* expected */ } });
+    tick(0);
+
+    expect(loggerSpy.error).toHaveBeenCalledWith(
+      jasmine.stringContaining('GET /api/test'),
+      jasmine.objectContaining({ status: 'unknown' })
+    );
+  }));
 });

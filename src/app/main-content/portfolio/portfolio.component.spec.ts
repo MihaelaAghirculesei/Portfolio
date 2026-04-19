@@ -412,6 +412,169 @@ describe('PortfolioComponent', () => {
     });
   });
 
+  describe('HostListener resize and orientationchange', () => {
+    it('should call checkOrientation on window resize', () => {
+      spyOn(component as any, 'checkOrientation');
+      component.onResize();
+      expect(component['checkOrientation']).toHaveBeenCalled();
+    });
+
+    it('should call checkOrientation on orientationchange', () => {
+      spyOn(component as any, 'checkOrientation');
+      component.onOrientationChange();
+      expect(component['checkOrientation']).toHaveBeenCalled();
+    });
+  });
+
+  describe('setActiveProject - small preview and missing offsetConfig', () => {
+    let mockDiv: HTMLElement;
+    let mockEvent: MouseEvent;
+
+    beforeEach(() => {
+      mockDiv = document.createElement('div');
+      mockDiv.getBoundingClientRect = () => ({
+        top: 150, left: 0, height: 50, width: 800,
+        bottom: 200, right: 800, x: 0, y: 150, toJSON: () => ({})
+      });
+      mockEvent = new MouseEvent('mouseenter');
+      Object.defineProperty(mockEvent, 'currentTarget', { value: mockDiv, writable: false });
+    });
+
+    it('should use SMALL_PREVIEW offset when innerWidth is small', fakeAsync(() => {
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 700 });
+
+      component.setActiveProject(0, mockEvent);
+      tick(16);
+
+      expect(component.hoverPosition).not.toBeNull();
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1920 });
+    }));
+
+    it('should use base position when offsetConfig is missing', fakeAsync(() => {
+      const projects = component.projects;
+      component.projects = [
+        ...projects,
+        { name: 'NoOffset', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '' }
+      ] as any;
+
+      component.setActiveProject(4, mockEvent);
+      tick(16);
+
+      expect(component.hoverPosition).not.toBeNull();
+      component.projects = projects;
+    }));
+  });
+
+  describe('handleTouchStart early return', () => {
+    it('should return early when event has no touches', () => {
+      const emptyTouchEvent = { touches: { length: 0 } } as unknown as TouchEvent;
+      const initialX = component['touchStartX'];
+
+      component.handleTouchStart(emptyTouchEvent, 0);
+
+      expect(component['touchStartX']).toBe(initialX);
+    });
+  });
+
+  describe('onTouchMove private method', () => {
+    it('should return early when event has no touches', () => {
+      const emptyTouchEvent = { touches: { length: 0 } } as unknown as TouchEvent;
+      const initialMoved = component['touchMoved'];
+
+      component['onTouchMove'](emptyTouchEvent);
+
+      expect(component['touchMoved']).toBe(initialMoved);
+    });
+
+    it('should set touchMoved when deltaX exceeds threshold', () => {
+      component['touchStartX'] = 0;
+      component['touchStartY'] = 0;
+      const moveEvent = {
+        touches: [{ clientX: 100, clientY: 0 }],
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        preventDefault: () => {}
+      } as any;
+
+      component['onTouchMove'](moveEvent);
+
+      expect(component['touchMoved']).toBe(true);
+    });
+
+    it('should set touchMoved when only deltaY exceeds threshold', () => {
+      component['touchStartX'] = 0;
+      component['touchStartY'] = 0;
+      const moveEvent = {
+        touches: [{ clientX: 0, clientY: 100 }],
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        preventDefault: () => {}
+      } as any;
+
+      component['onTouchMove'](moveEvent);
+
+      expect(component['touchMoved']).toBe(true);
+    });
+  });
+
+  describe('openProjectOverlay edge cases', () => {
+    it('should use "block" fallback when headerElement has no display style', fakeAsync(() => {
+      const header = document.createElement('header');
+      header.style.display = '';
+      document.body.appendChild(header);
+      spyOn(document, 'querySelector').and.callFake((selector: string) => {
+        if (selector === 'header') { return header; }
+        return null;
+      });
+
+      component.openProjectOverlay(component.projects[0], 0);
+      tick(200);
+
+      expect(component['originalHeaderDisplay']).toBe('block');
+      document.body.removeChild(header);
+    }));
+
+    it('should focus modal when .project-modal is found', fakeAsync(() => {
+      const modal = document.createElement('div');
+      modal.classList.add('project-modal');
+      document.body.appendChild(modal);
+      spyOn(modal, 'focus');
+      spyOn(document, 'querySelector').and.callFake((selector: string) => {
+        if (selector === 'header') { return null; }
+        if (selector === '.project-modal') { return modal; }
+        return null;
+      });
+
+      component.openProjectOverlay(component.projects[0], 0);
+      tick(200);
+
+      expect(modal.focus).toHaveBeenCalled();
+      document.body.removeChild(modal);
+    }));
+  });
+
+  describe('getProjectScreenshotAlt fallback', () => {
+    it('should return "Project screenshot" when project name is empty', () => {
+      const origProjects = component.projects;
+      component.projects = [{ name: '', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '' }] as any;
+
+      const alt = component.getProjectScreenshotAlt(0);
+
+      expect(alt).toBe('Project screenshot');
+      component.projects = origProjects;
+    });
+  });
+
+  describe('getProjectTranslation shortDescription fallback', () => {
+    it('should call translate.instant for unknown project shortDescription', () => {
+      spyOn(translateService, 'instant').and.returnValue('default short');
+      const unknownProject = { name: 'Unknown', technologies: [], previewImg: '', description: 'desc', githubUrl: '', liveUrl: '' };
+
+      const result = component.getProjectShortDescription(unknownProject as any);
+
+      expect(translateService.instant).toHaveBeenCalledWith('projects.default.shortDescription');
+      expect(result).toBe('default short');
+    });
+  });
+
   describe('RequestAnimationFrame Throttling', () => {
     it('should prevent multiple simultaneous setActiveProject calls', fakeAsync(() => {
       const mockDiv = document.createElement('div');
