@@ -157,23 +157,16 @@ export class ContactFormComponent implements OnInit {
           ),
           takeUntilDestroyed(this.destroyRef)
         )
-        .subscribe({
-          next: (response: ContactResponse) => {
-            this.isSubmitting.set(false);
-            if (response?.error && response.errorDetails) {
-              this.handleError(response.errorDetails);
-            } else {
-              this.submissionStatus.set('success');
-              this.clearFormData();
-              this.showPopupWithAnnouncement('contact.form.successMessage');
-            }
-            this.form.reset();
-          },
-          error: (error: HttpErrorResponse) => {
-            this.isSubmitting.set(false);
-            this.handleError(error);
-            this.form.reset();
-          },
+        .subscribe((response: ContactResponse) => {
+          this.isSubmitting.set(false);
+          if (response?.error && response.errorDetails) {
+            this.handleError(response.errorDetails);
+          } else {
+            this.submissionStatus.set('success');
+            this.clearFormData();
+            this.showPopupWithAnnouncement('contact.form.successMessage');
+          }
+          this.form.reset();
         });
     } else {
       this.submissionStatus.set('success');
