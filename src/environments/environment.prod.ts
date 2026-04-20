@@ -25,5 +25,5 @@ export const environment = {
     }
   },
   enableLogging: false,
-  sentryDsn: '' // TODO: replace with your Sentry DSN from sentry.io
+  sentryDsn: 'https://66b422adbefda3379f56c9e14f01b5be@o4511251210829824.ingest.de.sentry.io/4511251338821712',
 };
