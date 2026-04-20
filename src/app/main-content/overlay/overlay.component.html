@@ -19,7 +19,7 @@
       <div class="techDiv">
         @for (skill of singleProject.technologies; track skill) {
           <p>
-            <img src="../../../assets/img/portfolio/{{ skill }}.svg" [alt]="skill + ' technology icon'" loading="lazy">
+            <img [ngSrc]="'/assets/img/portfolio/' + skill + '.svg'" [alt]="skill + ' technology icon'" width="24" height="24" disableOptimizedSrcset>
             {{ skill }}
           </p>
         }
@@ -54,7 +54,7 @@
         <span aria-hidden="true">X</span>
       </button>
       <div class="imageContainer">
-        <img src="../{{ singleProject.previewImg }}" [alt]="singleProject.name + ' project screenshot'" loading="lazy">
+        <img [ngSrc]="'/' + singleProject.previewImg" [alt]="singleProject.name + ' project screenshot'" width="350" height="230">
       </div>
       <button
         (click)="nextProject.emit()"
@@ -62,7 +62,7 @@
         [attr.aria-label]="'portfolio.nextProject' | translate"
       >
         {{ 'portfolio.nextProject' | translate }}
-        <img src="../../../assets/img/portfolio/arrow_right.svg" alt="" aria-hidden="true" loading="lazy">
+        <img ngSrc="/assets/img/portfolio/arrow_right.svg" alt="" aria-hidden="true" width="24" height="24" disableOptimizedSrcset>
       </button>
     </div>
   </div>

@@ -519,8 +519,7 @@
   background-color: rgba($white, 0.07);
   position: absolute;
   transform: rotate($rotation);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  contain: layout style paint;
 
   .banner-track {
     @include dFlex(flex-start, center);
