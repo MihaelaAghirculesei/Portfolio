@@ -52,7 +52,9 @@
               "src/styles/styles.scss"
             ],
             "scripts": [],
-            "prerender": true,
+            "prerender": {
+              "routesFile": "src/prerender-routes.txt"
+            },
             "ssr": {
               "entry": "server.ts"
             }
@@ -121,7 +123,8 @@
             "styles": [
               "src/styles/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverage": true
           }
         }
       }
