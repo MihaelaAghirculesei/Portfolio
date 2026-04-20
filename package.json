@@ -16,7 +16,8 @@
     "ci:security": "npm audit --audit-level=moderate",
     "ci:quality": "npm run lint && ng test --watch=false --browsers=ChromeHeadless --code-coverage",
     "ci:build": "ng build --configuration=production",
-    "ci:local": "npm outdated || node -e \"\" && npm run ci:security && npm run ci:quality && npm run ci:build"
+    "ci:lighthouse": "lhci autorun",
+    "ci:local": "npm outdated || node -e \"\" && npm run ci:security && npm run ci:quality && npm run ci:build && npm run ci:lighthouse"
   },
   "private": true,
   "dependencies": {
@@ -70,6 +71,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "sharp": "^0.34.4",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.45.0"
+    "typescript-eslint": "^8.45.0",
+    "@lhci/cli": "^0.14.0"
   }
 }
