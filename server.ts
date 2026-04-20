@@ -30,7 +30,10 @@ export function app(): express.Express {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  const commonEngine = new CommonEngine();
+  const allowedHosts = (process.env['ALLOWED_HOSTS'] ?? 'localhost,127.0.0.1,aghirculesei.pages.dev')
+    .split(',')
+    .map(h => h.trim());
+  const commonEngine = new CommonEngine({ allowedHosts });
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
