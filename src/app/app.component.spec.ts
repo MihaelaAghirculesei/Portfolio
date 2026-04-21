@@ -5,6 +5,7 @@ import { Component, NO_ERRORS_SCHEMA, PLATFORM_ID } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { LoggerService } from './shared/services/logger.service';
+import { SeoService } from './shared/services/seo.service';
 
 @Component({
   selector: 'router-outlet',
@@ -18,6 +19,7 @@ describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let mockRouter: jasmine.SpyObj<Router>;
   let mockActivatedRoute: Partial<ActivatedRoute>;
+  let mockSeoService: jasmine.SpyObj<SeoService>;
   let routerEventsSubject: Subject<unknown>;
 
   beforeEach(async () => {
@@ -31,12 +33,14 @@ describe('AppComponent', () => {
     mockActivatedRoute = {
       snapshot: { params: {}, queryParams: {}, data: {} } as any
     };
+    mockSeoService = jasmine.createSpyObj('SeoService', ['update']);
 
     await TestBed.configureTestingModule({
       imports: [AppComponent, TranslateModule.forRoot(), MockRouterOutlet],
       providers: [
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: SeoService, useValue: mockSeoService },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).overrideComponent(AppComponent, {
@@ -56,7 +60,6 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('should initialize translation service with English', () => {
     const translateService = TestBed.inject(TranslateService);
     component.ngOnInit();
@@ -64,23 +67,30 @@ describe('AppComponent', () => {
     expect(translateService.use).toHaveBeenCalledWith('en');
   });
 
-
-  it('should show main content when on home route', () => {
+  it('should call seoService.update with home config on init', () => {
     component.ngOnInit();
-    expect(component.showMainContent).toBe(true);
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Frontend Developer' })
+    );
   });
 
-  it('should hide main content when navigating away from home', () => {
+  it('should update SEO when navigating to legal-notice', () => {
     component.ngOnInit();
+    mockSeoService.update.calls.reset();
     routerEventsSubject.next(new NavigationEnd(1, '/legal-notice', '/legal-notice'));
-    expect(component.showMainContent).toBe(false);
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({ title: 'Legal Notice — Mihaela Aghirculesei' })
+    );
   });
 
-  it('should show main content when navigating back to home', () => {
+  it('should update SEO when navigating back to home', () => {
     component.ngOnInit();
     routerEventsSubject.next(new NavigationEnd(1, '/legal-notice', '/legal-notice'));
+    mockSeoService.update.calls.reset();
     routerEventsSubject.next(new NavigationEnd(2, '/', '/'));
-    expect(component.showMainContent).toBe(true);
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Frontend Developer' })
+    );
   });
 
   it('should use German when localStorage lang is de', () => {
@@ -95,10 +105,11 @@ describe('AppComponent', () => {
 
   it('should fall back to home SEO config for unknown routes', () => {
     component.ngOnInit();
-    // Navigate to an unknown path not in SEO_CONFIGS
+    mockSeoService.update.calls.reset();
     routerEventsSubject.next(new NavigationEnd(1, '/unknown-route', '/unknown-route'));
-    // The app should still work (SEO fallback to '/')
-    expect(component.showMainContent).toBe(false);
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Frontend Developer' })
+    );
   });
 });
 
