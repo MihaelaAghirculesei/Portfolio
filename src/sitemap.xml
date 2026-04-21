@@ -11,6 +11,11 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://aghirculesei.pages.dev/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://aghirculesei.pages.dev/privacy-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
