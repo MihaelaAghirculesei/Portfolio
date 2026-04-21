@@ -25,5 +25,4 @@ export const environment = {
     }
   },
   enableLogging: false,
-  sentryDsn: 'https://66b422adbefda3379f56c9e14f01b5be@o4511251210829824.ingest.de.sentry.io/4511251338821712',
 };

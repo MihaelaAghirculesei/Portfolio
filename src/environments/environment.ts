@@ -25,5 +25,4 @@ export const environment = {
     }
   },
   enableLogging: true,
-  sentryDsn: ''
 };
