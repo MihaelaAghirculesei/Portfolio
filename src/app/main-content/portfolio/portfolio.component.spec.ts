@@ -454,7 +454,7 @@ describe('PortfolioComponent', () => {
       const projects = component.projects;
       component.projects = [
         ...projects,
-        { name: 'NoOffset', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '' }
+        { name: 'NoOffset', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '', offsetConfig: { x: 0, y: 0 }  }
       ] as any;
 
       component.setActiveProject(4, mockEvent);
