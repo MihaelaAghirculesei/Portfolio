@@ -2,6 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { CSP_NONCE } from '@angular/core';
 import { CommonEngine } from '@angular/ssr/node';
 import express from 'express';
+import compression from 'compression';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { randomBytes } from 'node:crypto';
@@ -30,7 +31,12 @@ export function app(): express.Express {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  const commonEngine = new CommonEngine();
+  const allowedHosts = (process.env['ALLOWED_HOSTS'] ?? 'localhost,127.0.0.1,aghirculesei.pages.dev')
+    .split(',')
+    .map(h => h.trim());
+  const commonEngine = new CommonEngine({ allowedHosts });
+
+  server.use(compression({ level: 9, threshold: 0 }));
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);

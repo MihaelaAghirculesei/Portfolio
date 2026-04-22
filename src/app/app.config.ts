@@ -3,8 +3,7 @@ import {
   ErrorHandler,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, NoPreloading, withPreloading, TitleStrategy } from '@angular/router';
-import { TranslatedTitleStrategy } from './shared/services/translated-title.strategy';
+import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from './shared/interceptors/http.interceptor';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -14,14 +13,10 @@ import { GlobalErrorHandler } from './shared/services/global-error-handler.servi
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(
-      routes,
-      withPreloading(NoPreloading)
-    ),
+    provideRouter(routes, withEnabledBlockingInitialNavigation()),
     provideZonelessChangeDetection(),
     provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: TitleStrategy, useClass: TranslatedTitleStrategy },
     provideTranslateService(),
     ...provideTranslateHttpLoader({ prefix: '/assets/i18n/', suffix: '.json' }),
   ],

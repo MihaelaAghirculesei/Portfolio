@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { Projects } from '../../interfaces/projects';
 
 @Component({
     selector: 'app-overlay',
-    imports: [TranslateModule],
+    imports: [TranslateModule, NgOptimizedImage],
     templateUrl: './overlay.component.html',
     styleUrl: './overlay.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

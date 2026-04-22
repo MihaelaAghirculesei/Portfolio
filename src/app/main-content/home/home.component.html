@@ -1,0 +1,27 @@
+<app-landing-page></app-landing-page>
+
+<app-about-me></app-about-me>
+
+@defer (on viewport) {
+  <app-skills></app-skills>
+} @placeholder {
+  <div style="min-height: 700px;"></div>
+}
+
+@defer (on viewport) {
+  <app-portfolio></app-portfolio>
+} @placeholder {
+  <div style="min-height: 700px;"></div>
+}
+
+@defer (on viewport) {
+  <app-feedbacks></app-feedbacks>
+} @placeholder {
+  <div style="min-height: 450px;"></div>
+}
+
+@defer (on viewport) {
+  <app-contact></app-contact>
+} @placeholder {
+  <div style="min-height: 100vh;"></div>
+}

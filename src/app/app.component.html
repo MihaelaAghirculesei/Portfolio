@@ -1,43 +1,10 @@
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <app-header></app-header>
 <main id="main-content" role="main" [attr.aria-label]="'Portfolio content'">
-  @if (showMainContent) {
-    <app-landing-page></app-landing-page>
-
-    @defer (on idle; on viewport) {
-      <app-about-me></app-about-me>
-    } @placeholder {
-      <div style="min-height: 600px;"></div>
-    }
-
-    @defer (on idle; on viewport) {
-      <app-skills></app-skills>
-    } @placeholder {
-      <div style="min-height: 500px;"></div>
-    }
-
-    @defer (on idle; on viewport) {
-      <app-portfolio></app-portfolio>
-    } @placeholder {
-      <div style="min-height: 700px;"></div>
-    }
-
-    @defer (on idle; on viewport) {
-      <app-feedbacks></app-feedbacks>
-    } @placeholder {
-      <div style="min-height: 400px;"></div>
-    }
-
-    @defer (on idle; on viewport) {
-      <app-contact></app-contact>
-    } @placeholder {
-      <div style="min-height: 600px;"></div>
-    }
-
-  } @else {
-    <router-outlet></router-outlet>
-  }
+  <router-outlet></router-outlet>
 </main>
-@defer (on idle) {
+@defer (on viewport) {
   <app-footer></app-footer>
+} @placeholder {
+  <div style="min-height: 120px;"></div>
 }

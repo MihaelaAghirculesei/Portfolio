@@ -1,0 +1,58 @@
+[
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.8,
+    "values": [
+      0.8
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://localhost:54911/index.csr.html"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.84,
+    "values": [
+      0.84
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://localhost:54911/index.html"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.89,
+    "values": [
+      0.89
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://localhost:54911/datenschutz/index.html"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.88,
+    "values": [
+      0.88
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://localhost:54911/legal-notice/index.html"
+  }
+]
