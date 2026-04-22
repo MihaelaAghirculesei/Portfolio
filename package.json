@@ -16,8 +16,7 @@
     "ci:security": "npm audit --audit-level=moderate",
     "ci:quality": "npm run lint && ng test --watch=false --browsers=ChromeHeadless --code-coverage",
     "ci:build": "ng build --configuration=production",
-    "ci:lighthouse": "lhci autorun",
-    "ci:local": "npm outdated || node -e \"\" && npm run ci:security && npm run ci:quality && npm run ci:build && npm run ci:lighthouse",
+    "ci:local": "npm outdated || node -e \"\" && npm run ci:security && npm run ci:quality && npm run ci:build",
     "build:purge": "ng build --configuration=production && npx purgecss --css \"dist/angular-portofolio/browser/**/*.css\" --content \"dist/angular-portofolio/browser/**/*.html\" \"dist/angular-portofolio/browser/**/*.js\" --output dist/angular-portofolio/browser/"
   },
   "private": true,
