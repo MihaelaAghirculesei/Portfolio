@@ -52,6 +52,9 @@
               "src/styles/styles.scss"
             ],
             "scripts": [],
+            "allowedCommonJsDependencies": [
+              "compression"
+            ],
             "prerender": {
               "routesFile": "src/prerender-routes.txt"
             },
