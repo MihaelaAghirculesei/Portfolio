@@ -35,17 +35,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       return;
     }
 
-    if (isPlatformBrowser(this.platformId)) {
-      this.callSentry(error);
-    }
-
     throw error;
-  }
-
-  protected callSentry(error: ApplicationError): void {
-    import('@sentry/browser').then(({ captureException }) => {
-      captureException(error);
-    });
   }
 
   private getErrorMessage(error: ApplicationError): string {

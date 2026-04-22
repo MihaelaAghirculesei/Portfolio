@@ -25,5 +25,4 @@ export const environment = {
     }
   },
   enableLogging: false,
-  sentryDsn: '' // TODO: replace with your Sentry DSN from sentry.io
 };
