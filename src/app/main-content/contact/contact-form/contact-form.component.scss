@@ -64,7 +64,7 @@ input:-webkit-autofill:active {
         width: 100%;
         height: 47px;
         padding: 0 variables.$content-margin-base;
-        border: 0 solid variables.$white;
+        border: 1px solid variables.$main-color;
         border-radius: 4px;
         box-sizing: border-box;
         margin-top: 16px;
@@ -78,6 +78,11 @@ input:-webkit-autofill:active {
         &.invalid {
           border-color: variables.$alert-text;
         }
+      }
+
+      textarea {
+        height: 94px;
+        padding-top: 12px;
       }
 
       .alert-text {
@@ -202,8 +207,8 @@ hr {
   margin: 24px 0;
   width: 100%;
   border: none;
-  border-top: 1px solid variables.$main-color;
-  height: 1px;
+  border-top: 4px solid variables.$main-color;
+  height: 4px;
 }
 
 input[type="submit"] {

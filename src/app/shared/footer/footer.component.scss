@@ -8,7 +8,7 @@ $footer-margin-top: -5px;
 $footer-content-padding: 20px;
 $footer-section-gap: 12px;
 
-$logo-width: 120px;
+$logo-width: 80px;
 
 section {
   background-color: variables.$gradient-start;
@@ -257,7 +257,7 @@ section {
         margin-left: 0;
 
         > img {
-          width: 90px;
+          width: 55px;
           height: auto;
           top: -5px;
         }
@@ -278,7 +278,7 @@ section {
       }
 
       div {
-        max-width: 80px;
+        max-width: 83px;
 
         p {
           line-height: 1.2;
@@ -322,7 +322,7 @@ section {
       height: 40px;
 
       > img {
-        width: 85px;
+        width: 52px;
         height: auto;
         top: -5px;
       }
@@ -337,7 +337,7 @@ section {
       }
 
       div {
-        max-width: 70px;
+        max-width: 76px;
 
         p {
           font-size: 13px;
@@ -391,7 +391,7 @@ section {
       margin-left: 0;
 
       > img {
-        width: 75px;
+        width: 48px;
         top: -4px;
       }
     }
@@ -405,7 +405,7 @@ section {
       }
 
       div {
-        max-width: 64px;
+        max-width: 76px;
 
         p {
           word-wrap: break-word;
