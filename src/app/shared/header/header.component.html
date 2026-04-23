@@ -85,9 +85,10 @@
       [attr.aria-label]="'header.logoAriaLabel' | translate"
     >
       <img
-        [src]="
-          isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png'
-        "
+        [src]="isHovered ? 'assets/img/logo-hover.png' : 'assets/img/logo-normal.png'"
+        [srcset]="isHovered
+          ? 'assets/img/logo-hover-120.webp 1x, assets/img/logo-hover-240.webp 2x, assets/img/logo-hover-360.webp 3x'
+          : 'assets/img/logo-normal-120.webp 1x, assets/img/logo-normal-240.webp 2x, assets/img/logo-normal-360.webp 3x'"
         (mouseenter)="isHovered = true"
         (mouseleave)="isHovered = false"
         [alt]="'header.logoAlt' | translate"
