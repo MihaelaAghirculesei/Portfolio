@@ -17,11 +17,12 @@
     "ci:quality": "npm run lint && ng test --watch=false --browsers=ChromeHeadless --code-coverage",
     "ci:build": "ng build --configuration=production",
     "ci:local": "npm outdated || node -e \"\" && npm run ci:security && npm run ci:quality && npm run ci:build",
-    "build:purge": "ng build --configuration=production && npx purgecss --css \"dist/angular-portofolio/browser/**/*.css\" --content \"dist/angular-portofolio/browser/**/*.html\" \"dist/angular-portofolio/browser/**/*.js\" --output dist/angular-portofolio/browser/"
+    "build:purge": "ng build --configuration=production && npx purgecss --css \"dist/angular-portofolio/browser/**/*.css\" --content \"dist/angular-portofolio/browser/**/*.html\" \"dist/angular-portofolio/browser/**/*.js\" --output dist/angular-portofolio/browser/",
+    "lighthouse": "lighthouse http://localhost:4200 --output html --output-path ./lighthouse-report.html --chrome-flags=\"--headless\"",
+    "lighthouse:prod": "lighthouse https://aghirculesei.pages.dev --output html --output-path ./lighthouse-report.html --chrome-flags=\"--headless\""
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^20.3.19",
     "@angular/common": "^20.3.19",
     "@angular/compiler": "^20.3.19",
     "@angular/core": "^20.3.19",
@@ -42,7 +43,8 @@
   },
   "overrides": {
     "serialize-javascript": ">=7.0.5",
-    "tar": ">=7.5.11"
+    "tar": ">=7.5.11",
+    "uuid": ">=14.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^20.3.24",
