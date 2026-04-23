@@ -2,15 +2,26 @@
   <div class="contentWrapper">
     <article class="imgDiv" #imgDiv #animatedElement data-aos="fade-right" data-aos-duration="800">
       <div class="imageContainer" #imageContainer>
-        <img
-          [src]="ASSETS_PATH + 'mihaela-aghirculesei(2).jpg'"
-          alt="Mihaela Aghirculesei - Frontend Developer"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          width="580"
-          height="580"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcset="
+              assets/img/about-me/mihaela-aghirculesei-480w.webp   480w,
+              assets/img/about-me/mihaela-aghirculesei-800w.webp   800w,
+              assets/img/about-me/mihaela-aghirculesei-1200w.webp 1200w,
+              assets/img/about-me/mihaela-aghirculesei-1600w.webp 1600w"
+            sizes="(max-width: 768px) 100vw, 580px"
+          />
+          <img
+            [src]="ASSETS_PATH + 'mihaela-aghirculesei(2).jpg'"
+            alt="Mihaela Aghirculesei - Frontend Developer"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="580"
+            height="580"
+          />
+        </picture>
       </div>
       <div class="lineDiv"></div>
     </article>

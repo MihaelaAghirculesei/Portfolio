@@ -56,4 +56,5 @@ tmp_*.png
 /test-results
 /blob-report
 /playwright/.cache
-.lighthouseci/ 
+.lighthouseci/
+lighthouse-report.*
