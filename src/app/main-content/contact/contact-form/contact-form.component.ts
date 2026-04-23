@@ -68,8 +68,6 @@ export class ContactFormComponent implements OnInit {
     afterNextRender(() => this.scrollService.restoreScrollPosition());
   }
 
-  mailTest = false;
-
   readonly isSubmitting = signal(false);
   readonly submissionStatus = signal<'success' | 'error' | null>(null);
   readonly errorMessage = signal('');
@@ -106,7 +104,8 @@ export class ContactFormComponent implements OnInit {
 
   private saveFormData(): void {
     try {
-      sessionStorage.setItem(this.FORM_STORAGE_KEY, JSON.stringify(this.form.getRawValue()));
+      const { name, email, privacyPolicy } = this.form.getRawValue();
+      sessionStorage.setItem(this.FORM_STORAGE_KEY, JSON.stringify({ name, email, privacyPolicy }));
     } catch (error) {
       this.logger.error('Failed to save form data to sessionStorage', error);
     }
@@ -116,7 +115,8 @@ export class ContactFormComponent implements OnInit {
     try {
       const savedData = sessionStorage.getItem(this.FORM_STORAGE_KEY);
       if (savedData) {
-        this.form.patchValue(JSON.parse(savedData) as Partial<ContactData>);
+        const { name, email, privacyPolicy } = JSON.parse(savedData) as Partial<ContactData>;
+        this.form.patchValue({ name, email, privacyPolicy });
       }
     } catch (error) {
       this.logger.error('Failed to load form data from sessionStorage', error);
@@ -141,38 +141,32 @@ export class ContactFormComponent implements OnInit {
       return;
     }
 
-    if (!this.mailTest) {
-      this.isSubmitting.set(true);
+    this.isSubmitting.set(true);
 
-      this.http
-        .post<ContactResponse>(
-          this.post.endPoint,
-          this.post.body(this.sanitizeContactData()),
-          this.post.options
-        )
-        .pipe(
-          timeout(HTTP_CONFIG.TIMEOUT),
-          catchError((error: HttpErrorResponse) =>
-            of<ContactResponse>({ error: true, errorDetails: error })
-          ),
-          takeUntilDestroyed(this.destroyRef)
-        )
-        .subscribe((response: ContactResponse) => {
-          this.isSubmitting.set(false);
-          if (response?.error && response.errorDetails) {
-            this.handleError(response.errorDetails);
-          } else {
-            this.submissionStatus.set('success');
-            this.clearFormData();
-            this.showPopupWithAnnouncement('contact.form.successMessage');
-          }
-          this.form.reset();
-        });
-    } else {
-      this.submissionStatus.set('success');
-      this.clearFormData();
-      this.form.reset();
-    }
+    this.http
+      .post<ContactResponse>(
+        this.post.endPoint,
+        this.post.body(this.sanitizeContactData()),
+        this.post.options
+      )
+      .pipe(
+        timeout(HTTP_CONFIG.TIMEOUT),
+        catchError((error: HttpErrorResponse) =>
+          of<ContactResponse>({ error: true, errorDetails: error })
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((response: ContactResponse) => {
+        this.isSubmitting.set(false);
+        if (response?.error && response.errorDetails) {
+          this.handleError(response.errorDetails);
+        } else {
+          this.submissionStatus.set('success');
+          this.clearFormData();
+          this.showPopupWithAnnouncement('contact.form.successMessage');
+        }
+        this.form.reset();
+      });
   }
 
   private sanitizeContactData(): ContactData {
