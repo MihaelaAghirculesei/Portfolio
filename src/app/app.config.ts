@@ -3,7 +3,13 @@ import {
   ErrorHandler,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
+import {
+  provideRouter,
+  withEnabledBlockingInitialNavigation,
+  withPreloading,
+  PreloadAllModules,
+  withViewTransitions,
+} from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from './shared/interceptors/http.interceptor';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -13,7 +19,12 @@ import { GlobalErrorHandler } from './shared/services/global-error-handler.servi
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withEnabledBlockingInitialNavigation()),
+    provideRouter(
+      routes,
+      withEnabledBlockingInitialNavigation(),
+      withPreloading(PreloadAllModules),
+      withViewTransitions(),
+    ),
     provideZonelessChangeDetection(),
     provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
