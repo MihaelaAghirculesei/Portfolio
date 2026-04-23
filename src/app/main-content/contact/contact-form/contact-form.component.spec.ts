@@ -217,15 +217,6 @@ describe('ContactFormComponent', () => {
       expect(component.form.pristine).toBeTrue();
     }));
 
-    it('should handle mailTest mode', () => {
-      fillValidForm();
-      component.mailTest = true;
-
-      component.onSubmit();
-
-      expect(component.submissionStatus()).toBe('success');
-      httpMock.expectNone(component.post.endPoint);
-    });
   });
 
   describe('Error Handling', () => {
@@ -360,15 +351,17 @@ describe('ContactFormComponent', () => {
       expect(saved.name).toBe('SaveTest');
     });
 
-    it('should call sessionStorage.removeItem when clearing form data', () => {
+    it('should call sessionStorage.removeItem when clearing form data', fakeAsync(() => {
       spyOn(sessionStorage, 'removeItem');
       component.form.setValue({ name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true });
-      component.mailTest = true;
 
       component.onSubmit();
+      const req = httpMock.expectOne(component.post.endPoint);
+      req.flush({ success: true });
+      flush();
 
       expect(sessionStorage.removeItem).toHaveBeenCalledWith(STORAGE_KEY);
-    });
+    }));
   });
 
   describe('HTTP Configuration', () => {
@@ -429,9 +422,10 @@ describe('ContactFormComponent', () => {
       spyOn(sessionStorage, 'removeItem').and.throwError('access denied');
       const loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
       component.form.setValue({ name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true });
-      component.mailTest = true;
 
       component.onSubmit();
+      const req = httpMock.expectOne(component.post.endPoint);
+      req.flush({ success: true });
       flush();
 
       expect(loggerSpy.error).toHaveBeenCalledWith(
