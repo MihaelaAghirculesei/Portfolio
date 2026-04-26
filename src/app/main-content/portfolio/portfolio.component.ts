@@ -32,25 +32,36 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   projects: Projects[] = [
     {
-  name: 'Birthday Reminder Pro',
-  technologies: ['Angular', 'TypeScript', 'SCSS', 'NgRx', 'RxJS', 'Material Design', 'Capacitor', 'Firebase', 'OAuth 2.0', 'PWA', 'SSR'],
-  previewImg: 'assets/img/projects/birthday-reminder.png',
-  description:
-    'Enterprise-grade Birthday Reminder App built with Angular 19. Implements NgRx for predictable state management ' +
-    'with effects for side effects and entity adapters for normalized state. Features Firebase backend with Google OAuth 2.0 ' +
-    'authentication and Firestore for cloud synchronization with offline-first capabilities. Cross-platform support includes ' +
-    'Web PWA with Service Worker for offline access and Android native via Capacitor with local push notifications. ' +
-    'Server-Side Rendering (SSR) ensures optimal performance and SEO. Material Design UI with custom theming provides ' +
-    'a responsive, accessible interface. Comprehensive testing strategy includes Cypress e2e tests and Karma unit tests, ' +
-    'with CI/CD pipeline ready. Features bundle optimization, Git hooks with Husky, and lint-staged for code quality.',
-  githubUrl: environment.projects.birthdayReminder.github,
-  liveUrl: environment.projects.birthdayReminder.live,
-  isPersonal: true,
-},
+      name: 'Birthday Reminder Pro',
+      technologies: [
+        'Angular', 'TypeScript', 'SCSS', 'NgRx', 'RxJS',
+        'Material Design', 'Capacitor', 'Firebase', 'OAuth 2.0', 'PWA', 'SSR',
+      ],
+      previewImg: 'assets/img/projects/birthday-reminder.webp',
+      previewImgSrcset:
+        'assets/img/projects/birthday-reminder-400w.webp 400w, ' +
+        'assets/img/projects/birthday-reminder-800w.webp 800w, ' +
+        'assets/img/projects/birthday-reminder-1200w.webp 1200w',
+      description:
+        'Enterprise-grade Birthday Reminder App built with Angular 19. Implements NgRx for predictable state management ' +
+        'with effects for side effects and entity adapters for normalized state. Features Firebase backend with Google OAuth 2.0 ' +
+        'authentication and Firestore for cloud synchronization with offline-first capabilities. Cross-platform support includes ' +
+        'Web PWA with Service Worker for offline access and Android native via Capacitor with local push notifications. ' +
+        'Server-Side Rendering (SSR) ensures optimal performance and SEO. Material Design UI with custom theming provides ' +
+        'a responsive, accessible interface. Comprehensive testing strategy includes Cypress e2e tests and Karma unit tests, ' +
+        'with CI/CD pipeline ready. Features bundle optimization, Git hooks with Husky, and lint-staged for code quality.',
+      githubUrl: environment.projects.birthdayReminder.github,
+      liveUrl: environment.projects.birthdayReminder.live,
+      isPersonal: true,
+    },
     {
       name: 'Join',
       technologies: ['Firebase', 'Angular', 'TypeScript', 'HTML', 'SCSS'],
-      previewImg: 'assets/img/projects/join.png',
+      previewImg: 'assets/img/projects/join.webp',
+      previewImgSrcset:
+        'assets/img/projects/join-400w.webp 400w, ' +
+        'assets/img/projects/join-800w.webp 800w, ' +
+        'assets/img/projects/join-1200w.webp 1200w',
       description:
         'Join Kanban Board is the project management revolution! ' +
         'An extraordinary application that transforms every project into a success through ' +
@@ -62,22 +73,32 @@ export class PortfolioComponent implements OnInit, OnDestroy {
         'Board and take your projects to the next level. Your next big victory starts here.',
       githubUrl: environment.projects.join.github,
       liveUrl: environment.projects.join.live,
+      isTeam: true,
     },
     {
-      name: 'El Pollo Loco',
-      technologies: ['JavaScript', 'HTML', 'CSS'],
-      previewImg: 'assets/img/projects/el-pollo-locco.png',
+      name: 'Todo Platform API',
+      technologies: ['Python 3.13', 'FastAPI', 'SQLAlchemy 2.0', 'Pydantic 2', 'SQLite', 'Pytest'],
+      previewImg: 'assets/img/projects/todo-api.webp',
       description:
-        'An exciting game where courage meets chicken chaos! Built with JavaScript, ' +
-        'HTML and CSS, it offers smooth gameplay with keyboard and touch controls, ' +
-        'epic Endboss challenges, immersive sound effects and responsive design for all devices.',
-      githubUrl: environment.projects.elPolloLoco.github,
-      liveUrl: environment.projects.elPolloLoco.live,
+        'Production-ready RESTful API built with FastAPI and SQLAlchemy 2.0, following a ' +
+        'strict layered architecture (Router → Service → Repository → Database). Developed ' +
+        'as part of a team project to deliver a robust backend for a Todo platform. ' +
+        'Features full CRUD, Pydantic input validation, custom exception handling, and ISO ' +
+        '8601 UTC timestamps. Covered by 23 tests (unit + integration) using an in-memory ' +
+        'SQLite database for fast, isolated test runs.',
+      githubUrl: environment.projects.todoApi.github,
+      liveUrl: environment.projects.todoApi.live,
+      isTeam: true,
+      inProgress: true,
     },
     {
       name: 'Pokédex',
       technologies: ['Rest-Api', 'JavaScript', 'HTML', 'CSS'],
-      previewImg: 'assets/img/projects/pokedex.png',
+      previewImg: 'assets/img/projects/pokedex.webp',
+      previewImgSrcset:
+        'assets/img/projects/pokedex-400w.webp 400w, ' +
+        'assets/img/projects/pokedex-800w.webp 800w, ' +
+        'assets/img/projects/pokedex-1200w.webp 1200w',
       description:
         'An interactive portal into the magical world of Pokemon! Designed with passion, ' +
         'it offers a smooth and engaging experience built with modern technologies: ' +
@@ -85,6 +106,21 @@ export class PortfolioComponent implements OnInit, OnDestroy {
         'performant JavaScript and captivating CSS animations.',
       githubUrl: environment.projects.pokedex.github,
       liveUrl: environment.projects.pokedex.live,
+    },
+    {
+      name: 'El Pollo Loco',
+      technologies: ['JavaScript', 'HTML', 'CSS'],
+      previewImg: 'assets/img/projects/el-pollo-locco.webp',
+      previewImgSrcset:
+        'assets/img/projects/el-pollo-locco-400w.webp 400w, ' +
+        'assets/img/projects/el-pollo-locco-800w.webp 800w, ' +
+        'assets/img/projects/el-pollo-locco-1200w.webp 1200w',
+      description:
+        'An exciting game where courage meets chicken chaos! Built with JavaScript, ' +
+        'HTML and CSS, it offers smooth gameplay with keyboard and touch controls, ' +
+        'epic Endboss challenges, immersive sound effects and responsive design for all devices.',
+      githubUrl: environment.projects.elPolloLoco.github,
+      liveUrl: environment.projects.elPolloLoco.live,
     },
   ];
 
@@ -111,6 +147,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     map['El Pollo Loco'] = 'elPolloLoco';
     map['Pokédex'] = 'pokedex';
     map['Birthday Reminder Pro'] = 'birthdayReminder';
+    map['Todo Platform API'] = 'todoApi';
     return map;
   })();
 
