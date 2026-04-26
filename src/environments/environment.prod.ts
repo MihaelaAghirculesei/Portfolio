@@ -22,6 +22,10 @@ export const environment = {
     birthdayReminder: {
       github: 'https://github.com/MihaelaAghirculesei/birthday-reminder-app',
       live: 'https://birthday-reminder-aghirculesei.pages.dev'
+    },
+    todoApi: {
+      github: 'https://github.com/MihaelaAghirculesei/todo-api',
+      live: ''
     }
   },
   enableLogging: false,
