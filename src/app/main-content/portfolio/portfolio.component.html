@@ -31,6 +31,12 @@
               @if (project.isPersonal) {
               <span class="personal-badge">{{ "portfolio.personalProject" | translate }}</span>
               }
+              @if (project.isTeam) {
+              <span class="personal-badge">{{ "portfolio.teamProject" | translate }}</span>
+              }
+              @if (project.inProgress) {
+              <span class="wip-badge">{{ "portfolio.workInProgress" | translate }}</span>
+              }
             </td>
             <td class="project-tech">
               @for (tech of project.technologies; track tech; let last = $last)
@@ -94,6 +100,12 @@
           >
             {{ getProjectShortDescription(selectedProject) }}
           </p>
+          @if (selectedProject.isTeam) {
+          <span class="personal-badge personal-badge--modal">{{ "portfolio.teamProject" | translate }}</span>
+          }
+          @if (selectedProject.inProgress) {
+          <span class="wip-badge wip-badge--modal">{{ "portfolio.workInProgress" | translate }}</span>
+          }
 
           <div class="project-long-description">
             <p>{{ getProjectDescription(selectedProject) }}</p>
@@ -130,7 +142,10 @@
               {{ "portfolio.github" | translate }}
             </a>
             <a
-              [href]="selectedProject.liveUrl"
+              [href]="selectedProject.liveUrl || null"
+              [class.link-button2--disabled]="!selectedProject.liveUrl"
+              [attr.aria-disabled]="!selectedProject.liveUrl ? 'true' : null"
+              [attr.tabindex]="!selectedProject.liveUrl ? '-1' : null"
               target="_blank"
               rel="noopener noreferrer"
               class="link-button2"
@@ -139,6 +154,9 @@
               {{ "portfolio.liveTest" | translate }}
             </a>
           </div>
+          @if (!selectedProject.liveUrl) {
+          <p class="not-live-notice">{{ "portfolio.notLiveYet" | translate }}</p>
+          }
         </div>
 
         <div class="project-image-container">
@@ -155,6 +173,8 @@
             <div class="imageContainer">
               <img
                 [src]="selectedProject.previewImg"
+                [srcset]="selectedProject.previewImgSrcset || ''"
+                sizes="(max-width: 600px) 100vw, 580px"
                 [alt]="getProjectScreenshotAlt(selectedIndex)"
                 loading="lazy"
               />
