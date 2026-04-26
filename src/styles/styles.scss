@@ -177,6 +177,15 @@ textarea {
   }
 }
 
+.defer-ph {
+  width: 100%;
+
+  &--700 { min-height: 700px; }
+  &--450 { min-height: 450px; }
+  &--100vh { min-height: 100vh; }
+  &--120 { min-height: 120px; }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

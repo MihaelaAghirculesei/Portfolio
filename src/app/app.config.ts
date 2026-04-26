@@ -6,29 +6,27 @@ import {
 import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
-  withPreloading,
-  PreloadAllModules,
   withViewTransitions,
 } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from './shared/interceptors/http.interceptor';
-import { provideTranslateService } from '@ngx-translate/core';
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { routes } from './app.routes';
 import { GlobalErrorHandler } from './shared/services/global-error-handler.service';
+import { InlineTranslateLoader } from './shared/i18n/inline-translate-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
       routes,
       withEnabledBlockingInitialNavigation(),
-      withPreloading(PreloadAllModules),
       withViewTransitions(),
     ),
     provideZonelessChangeDetection(),
     provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    provideTranslateService(),
-    ...provideTranslateHttpLoader({ prefix: '/assets/i18n/', suffix: '.json' }),
+    provideTranslateService({
+      loader: { provide: TranslateLoader, useClass: InlineTranslateLoader },
+    }),
   ],
 };
