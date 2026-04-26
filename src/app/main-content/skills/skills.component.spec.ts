@@ -31,8 +31,8 @@ describe('SkillsComponent', () => {
   });
 
   describe('Skill Items', () => {
-    it('should have exactly 18 skill items', () => {
-      expect(component.skillItems.length).toBe(18);
+    it('should have exactly 22 skill items', () => {
+      expect(component.skillItems.length).toBe(22);
     });
 
     it('should have all required skills', () => {
@@ -54,6 +54,10 @@ describe('SkillsComponent', () => {
       expect(skillNames).toContain('Capacitor');
       expect(skillNames).toContain('PWA');
       expect(skillNames).toContain('SSR');
+      expect(skillNames).toContain('Python');
+      expect(skillNames).toContain('FastAPI');
+      expect(skillNames).toContain('SQLite');
+      expect(skillNames).toContain('Pytest');
       expect(skillNames).toContain('Growth Mindset');
     });
 
@@ -71,14 +75,13 @@ describe('SkillsComponent', () => {
   });
 
   describe('Future Skills', () => {
-    it('should have exactly 2 future skills', () => {
-      expect(component.futureSkills.length).toBe(2);
+    it('should have exactly 1 future skill', () => {
+      expect(component.futureSkills.length).toBe(1);
     });
 
-    it('should include React and Python', () => {
+    it('should include React', () => {
       const skillNames = component.futureSkills.map(item => item.name);
       expect(skillNames).toContain('React');
-      expect(skillNames).toContain('Python');
     });
 
     it('should have correct React icon path', () => {
@@ -86,8 +89,8 @@ describe('SkillsComponent', () => {
       expect(react?.url).toBe('assets/img/skills/react.svg');
     });
 
-    it('should have correct Python icon path', () => {
-      const python = component.futureSkills.find(s => s.name === 'Python');
+    it('should have Python in main skill items', () => {
+      const python = component.skillItems.find(s => s.name === 'Python');
       expect(python?.url).toBe('assets/img/skills/python.svg');
     });
   });
@@ -160,12 +163,12 @@ describe('SkillsComponent', () => {
   describe('Data Integrity', () => {
     it('should have immutable skill items', () => {
       const originalLength = component.skillItems.length;
-      expect(originalLength).toBe(18);
+      expect(originalLength).toBe(22);
     });
 
     it('should have immutable future skills', () => {
       const originalLength = component.futureSkills.length;
-      expect(originalLength).toBe(2);
+      expect(originalLength).toBe(1);
     });
 
     it('should have all skills with both url and name properties', () => {
