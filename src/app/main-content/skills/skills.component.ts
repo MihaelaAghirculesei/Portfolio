@@ -16,29 +16,39 @@ interface SkillItem {
 })
 export class SkillsComponent {
   readonly skillItems: readonly SkillItem[] = [
-    { url: 'assets/img/skills/angular.svg', name: 'Angular' },
-    { url: 'assets/img/skills/typescript.svg', name: 'TypeScript' },
-    { url: 'assets/img/skills/javascript.svg', name: 'JavaScript' },
+    // Core web
     { url: 'assets/img/skills/html.svg', name: 'HTML' },
     { url: 'assets/img/skills/css.svg', name: 'CSS' },
+    { url: 'assets/img/skills/javascript.svg', name: 'JavaScript' },
+    { url: 'assets/img/skills/typescript.svg', name: 'TypeScript' },
     { url: 'assets/img/skills/sass.svg', name: 'SASS' },
-    { url: 'assets/img/skills/firebase.svg', name: 'Firebase' },
-    { url: 'assets/img/skills/git.svg', name: 'Git' },
-    { url: 'assets/img/skills/figma.svg', name: 'Figma' },
-    { url: 'assets/img/skills/materialDesign.svg', name: 'Material Design' },
-    { url: 'assets/img/skills/rest-api.svg', name: 'Rest-API' },
-    { url: 'assets/img/skills/scrum.svg', name: 'Scrum' },
+    // Angular ecosystem
+    { url: 'assets/img/skills/angular.svg', name: 'Angular' },
     { url: 'assets/img/skills/ngrx.svg', name: 'NgRx' },
     { url: 'assets/img/skills/rxjs.svg', name: 'RxJS' },
-    { url: 'assets/img/skills/capacitor.svg', name: 'Capacitor' },
+    { url: 'assets/img/skills/materialDesign.svg', name: 'Material Design' },
+    // Servizi & API
+    { url: 'assets/img/skills/firebase.svg', name: 'Firebase' },
+    { url: 'assets/img/skills/rest-api.svg', name: 'Rest-API' },
+    // Modern web
     { url: 'assets/img/skills/pwa.svg', name: 'PWA' },
     { url: 'assets/img/skills/ssr.svg', name: 'SSR' },
+    { url: 'assets/img/skills/capacitor.svg', name: 'Capacitor' },
+    // Backend
+    { url: 'assets/img/skills/python.svg', name: 'Python' },
+    { url: 'assets/img/skills/fastapi.svg', name: 'FastAPI' },
+    { url: 'assets/img/skills/sqlite.svg', name: 'SQLite' },
+    { url: 'assets/img/skills/pytest.svg', name: 'Pytest' },
+    // Strumenti & processo
+    { url: 'assets/img/skills/git.svg', name: 'Git' },
+    { url: 'assets/img/skills/figma.svg', name: 'Figma' },
+    { url: 'assets/img/skills/scrum.svg', name: 'Scrum' },
+    // Soft skill
     { url: 'assets/img/skills/mindset.svg', name: 'Growth Mindset' },
   ];
 
   readonly futureSkills: readonly SkillItem[] = [
     { url: 'assets/img/skills/react.svg', name: 'React' },
-    { url: 'assets/img/skills/python.svg', name: 'Python' },
   ];
 
   constructor(private scrollService: ScrollService) {}
