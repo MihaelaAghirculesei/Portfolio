@@ -31,6 +31,27 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'skills',
+    loadComponent: () =>
+      import('./main-content/skills/skills.component').then(
+        (m) => m.SkillsComponent
+      ),
+  },
+  {
+    path: 'feedback',
+    loadComponent: () =>
+      import('./main-content/feedback/feedback.component').then(
+        (m) => m.FeedbacksComponent
+      ),
+  },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./main-content/contact/contact-form/contact-form.component').then(
+        (m) => m.ContactFormComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: '/',
   },
