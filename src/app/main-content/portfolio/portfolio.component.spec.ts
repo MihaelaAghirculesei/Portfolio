@@ -46,9 +46,9 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have projects array with 4 projects', () => {
+    it('should have projects array with 5 projects', () => {
       expect(component.projects).toBeDefined();
-      expect(component.projects.length).toBe(4);
+      expect(component.projects.length).toBe(5);
     });
 
     it('should have correct project data structure', () => {
@@ -366,6 +366,53 @@ describe('PortfolioComponent', () => {
     });
   });
 
+  describe('Todo Platform API Project', () => {
+    it('should have Todo Platform API as the third project', () => {
+      const todoProject = component.projects[2];
+      expect(todoProject.name).toBe('Todo Platform API');
+    });
+
+    it('should have inProgress flag set to true', () => {
+      const todoProject = component.projects[2];
+      expect(todoProject.inProgress).toBe(true);
+    });
+
+    it('should have isTeam flag set to true', () => {
+      const todoProject = component.projects[2];
+      expect(todoProject.isTeam).toBe(true);
+    });
+
+    it('should get translation for Todo Platform API description', () => {
+      spyOn(translateService, 'instant').and.returnValue('Todo API description');
+      const todoProject = component.projects.find(p => p.name === 'Todo Platform API')!;
+
+      const desc = component.getProjectDescription(todoProject);
+
+      expect(translateService.instant).toHaveBeenCalledWith('projects.todoApi.description');
+      expect(desc).toBe('Todo API description');
+    });
+
+    it('should get translation for Todo Platform API short description', () => {
+      spyOn(translateService, 'instant').and.returnValue('Todo API short desc');
+      const todoProject = component.projects.find(p => p.name === 'Todo Platform API')!;
+
+      const desc = component.getProjectShortDescription(todoProject);
+
+      expect(translateService.instant).toHaveBeenCalledWith('projects.todoApi.shortDescription');
+      expect(desc).toBe('Todo API short desc');
+    });
+
+    it('should return correct screenshot alt for Todo Platform API', () => {
+      const alt = component.getProjectScreenshotAlt(2);
+      expect(alt).toBe('Todo Platform API screenshot');
+    });
+
+    it('should not have icons for Python 3.13 and FastAPI', () => {
+      expect(component.hasTechIcon('Python 3.13')).toBe(false);
+      expect(component.hasTechIcon('FastAPI')).toBe(false);
+    });
+  });
+
   describe('Hover and Leave Handlers', () => {
     it('should set active project on hover', () => {
       spyOn(component, 'setActiveProject');
@@ -451,13 +498,15 @@ describe('PortfolioComponent', () => {
     }));
 
     it('should use base position when offsetConfig is missing', fakeAsync(() => {
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1920 });
+
       const projects = component.projects;
       component.projects = [
         ...projects,
-        { name: 'NoOffset', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '', offsetConfig: { x: 0, y: 0 }  }
+        { name: 'NoOffset', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '' }
       ] as any;
 
-      component.setActiveProject(4, mockEvent);
+      component.setActiveProject(5, mockEvent);
       tick(16);
 
       expect(component.hoverPosition).not.toBeNull();

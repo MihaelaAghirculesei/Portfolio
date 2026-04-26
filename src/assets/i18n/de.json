@@ -79,7 +79,10 @@
     "liveTest": "Live Test",
     "aboutProject": "Worum geht es in diesem Projekt?",
     "closeModal": "Projektdetails schließen",
-    "personalProject": "Persönliches Projekt"
+    "personalProject": "Persönliches Projekt",
+    "teamProject": "Teamprojekt",
+    "workInProgress": "In Entwicklung",
+    "notLiveYet": "Live-Version noch nicht verfügbar — dieses Projekt befindet sich derzeit in Entwicklung."
   },
   "contact": {
     "title": "Kontaktieren Sie mich",
@@ -141,7 +144,7 @@
   },
   "projects": {
     "join": {
-      "description": "Join Kanban Board ist die Projektmanagement-Revolution! Eine außergewöhnliche Anwendung, die jedes Projekt durch spektakuläre visuelle Boards und Echtzeit-Kollaboration zum Erfolg führt. Mit Join können Sie Aufgaben einfach organisieren, Fortschritte verfolgen und mit Ihrem Team in einer dynamischen und intuitiven Umgebung zusammenarbeiten. Verabschieden Sie sich vom Chaos und begrüßen Sie die Produktivität! Join Kanban Board ist das perfekte Tool für Teams jeder Größe, von Startups bis zu großen Unternehmen. Erleben Sie die Zukunft des Projektmanagements mit Join Kanban Board und bringen Sie Ihre Projekte auf die nächste Stufe. Ihr nächster großer Sieg beginnt hier.",
+      "description": "Im Rahmen eines 5-köpfigen Teams entwickelt. Join Kanban Board ist die Projektmanagement-Revolution! Eine außergewöhnliche Anwendung, die jedes Projekt durch spektakuläre visuelle Boards und Echtzeit-Kollaboration zum Erfolg führt. Mit Join können Sie Aufgaben einfach organisieren, Fortschritte verfolgen und mit Ihrem Team in einer dynamischen und intuitiven Umgebung zusammenarbeiten. Verabschieden Sie sich vom Chaos und begrüßen Sie die Produktivität! Join Kanban Board ist das perfekte Tool für Teams jeder Größe, von Startups bis zu großen Unternehmen. Erleben Sie die Zukunft des Projektmanagements mit Join Kanban Board und bringen Sie Ihre Projekte auf die nächste Stufe. Ihr nächster großer Sieg beginnt hier.",
       "shortDescription": "Kanban Board Anwendung"
     },
     "elPolloLoco": {
@@ -155,6 +158,10 @@
     "birthdayReminder": {
       "description": "Eine moderne Birthday Reminder App mit NgRx State Management für vorhersagbaren Datenfluss, Offline-First Architektur mit IndexedDB, Google Calendar-Synchronisation über OAuth 2.0, Cross-Platform-Unterstützung (Web PWA + Android mit Capacitor), Push-Benachrichtigungen (Web + Nativ) und Material Design UI. Gebaut mit Angular 17, demonstriert die App Enterprise-Grade-Architektur mit Effects für Seiteneffekte, Entity Adapters für normalisierten State und ein umfassendes Benachrichtigungssystem mit anpassbaren Erinnerungen.",
       "shortDescription": "Geburtstags-Management App"
+    },
+    "todoApi": {
+      "description": "Im Rahmen eines 2-köpfigen Teams entwickelt. Produktionsreife RESTful API mit FastAPI und SQLAlchemy 2.0, entwickelt nach einer strikten Schichtarchitektur (Router → Service → Repository → Datenbank). Entstanden, um ein robustes Backend für eine Todo-Plattform bereitzustellen. Unterstützt vollständiges CRUD, Pydantic-Validierung, benutzerdefiniertes Exception-Handling und ISO 8601 UTC-Zeitstempel. Abgedeckt durch 23 Tests (Unit + Integration) mit In-Memory-SQLite für schnelle, isolierte Testläufe.",
+      "shortDescription": "RESTful Todo-API mit sauberer Schichtarchitektur"
     },
     "default": {
       "shortDescription": "Web Anwendung"

@@ -79,7 +79,10 @@
     "liveTest": "Live Test",
     "aboutProject": "What is this project about?",
     "closeModal": "Close project details",
-    "personalProject": "Personal Project"
+    "personalProject": "Personal Project",
+    "teamProject": "Team Project",
+    "workInProgress": "Work in Progress",
+    "notLiveYet": "Live version not available yet — this project is currently in development."
   },
   "contact": {
     "title": "Contact me",
@@ -141,7 +144,7 @@
   },
   "projects": {
     "join": {
-      "description": "Join Kanban Board is the project management revolution! An extraordinary application that transforms every project into a success through spectacular visual boards and real-time collaboration. With Join, you can easily organize tasks, track progress, and collaborate with your team in a dynamic and intuitive environment. Leave behind the chaos and embrace productivity! Join Kanban Board is the perfect tool for teams of all sizes, from startups to large enterprises. Experience the future of project management with Join Kanban Board and take your projects to the next level. Your next big victory starts here.",
+      "description": "Developed in a 5-person team. Join Kanban Board is the project management revolution! An extraordinary application that transforms every project into a success through spectacular visual boards and real-time collaboration. With Join, you can easily organize tasks, track progress, and collaborate with your team in a dynamic and intuitive environment. Leave behind the chaos and embrace productivity! Join Kanban Board is the perfect tool for teams of all sizes, from startups to large enterprises. Experience the future of project management with Join Kanban Board and take your projects to the next level. Your next big victory starts here.",
       "shortDescription": "Kanban Board Application"
     },
     "elPolloLoco": {
@@ -155,6 +158,10 @@
     "birthdayReminder": {
       "description": "A modern Birthday Reminder App featuring NgRx State Management for predictable state flow, Offline-First architecture with IndexedDB, Google Calendar synchronization via OAuth 2.0, Cross-Platform support (Web PWA + Android with Capacitor), Push Notifications (Web + Native), and Material Design UI. Built with Angular 17, the app demonstrates enterprise-grade architecture with effects for side effects, entity adapters for normalized state, and a comprehensive notification system with customizable reminders.",
       "shortDescription": "Birthday Management App"
+    },
+    "todoApi": {
+      "description": "Developed in a 2-person team. Production-ready RESTful API built with FastAPI and SQLAlchemy 2.0, following a strict layered architecture (Router → Service → Repository → Database). Built to deliver a robust backend for a Todo platform. Features full CRUD, Pydantic input validation, custom exception handling, and ISO 8601 UTC timestamps. Covered by 23 tests (unit + integration) using an in-memory SQLite database for fast, isolated test runs.",
+      "shortDescription": "RESTful Todo API with clean layered architecture"
     },
     "default": {
       "shortDescription": "Web Application"

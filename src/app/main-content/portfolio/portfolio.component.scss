@@ -226,6 +226,22 @@
             white-space: nowrap;
             transition: all 0.2s ease;
           }
+
+          .wip-badge {
+            display: inline-block;
+            margin-left: 16px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #f4a40e;
+            background-color: rgba(244, 164, 14, 0.1);
+            border: 1px solid #f4a40e;
+            border-radius: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+          }
         }
 
         .project-tech {
@@ -256,7 +272,8 @@
   &[data-project-id="0"],
   &[data-project-id="1"],
   &[data-project-id="2"],
-  &[data-project-id="3"] {
+  &[data-project-id="3"],
+  &[data-project-id="4"] {
     top: 50% !important;
     transform: translateY(-50%);
   }
@@ -469,6 +486,14 @@
     @include mixins.dFlex(flex-start, center);
     gap: 16px;
   }
+
+  .not-live-notice {
+    margin-top: 12px;
+    font-size: 13px;
+    color: variables.$placeholder-color;
+    @include mixins.primary-font;
+    font-style: italic;
+  }
 }
 
 .project-image-container {
@@ -646,6 +671,21 @@
       color: variables.$main-color;
     }
   }
+
+  &.link-button2--disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    &:hover,
+    &:active {
+      border: 1px solid variables.$white;
+
+      &::after {
+        transform: none;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 1440px) and (max-width: 1919px) {
@@ -653,7 +693,8 @@
     &[data-project-id="0"],
     &[data-project-id="1"],
     &[data-project-id="2"],
-    &[data-project-id="3"] {
+    &[data-project-id="3"],
+    &[data-project-id="4"] {
       top: 50% !important;
       transform: translateY(-50%);
     }
@@ -685,7 +726,8 @@
     &[data-project-id="0"],
     &[data-project-id="1"],
     &[data-project-id="2"],
-    &[data-project-id="3"] {
+    &[data-project-id="3"],
+    &[data-project-id="4"] {
       top: 50% !important;
       transform: translateY(-50%);
     }
@@ -735,7 +777,8 @@
     &[data-project-id="0"],
     &[data-project-id="1"],
     &[data-project-id="2"],
-    &[data-project-id="3"] {
+    &[data-project-id="3"],
+    &[data-project-id="4"] {
       top: 50% !important;
       transform: translateY(-50%);
     }
@@ -784,6 +827,35 @@
   .project-title,
   .project-description {
     margin-bottom: 8px;
+  }
+
+  .personal-badge--modal {
+    display: inline-block;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: variables.$main-color;
+    background-color: rgba(variables.$main-color, 0.1);
+    border: 1px solid variables.$main-color;
+    border-radius: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .wip-badge--modal {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #f4a40e;
+    background-color: rgba(244, 164, 14, 0.1);
+    border: 1px solid #f4a40e;
+    border-radius: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 }
 
@@ -870,7 +942,8 @@
     &[data-project-id="0"],
     &[data-project-id="1"],
     &[data-project-id="2"],
-    &[data-project-id="3"] {
+    &[data-project-id="3"],
+    &[data-project-id="4"] {
       top: calc(50% + 40px) !important;
     }
   }
@@ -881,7 +954,8 @@
     &[data-project-id="0"],
     &[data-project-id="1"],
     &[data-project-id="2"],
-    &[data-project-id="3"] {
+    &[data-project-id="3"],
+    &[data-project-id="4"] {
       top: calc(50% + 60px) !important;
     }
   }
@@ -1071,6 +1145,12 @@
       padding: 3px 10px;
       margin-left: 12px;
     }
+
+    .wip-badge {
+      font-size: 10px;
+      padding: 3px 10px;
+      margin-left: 12px;
+    }
   }
 }
 
@@ -1152,6 +1232,13 @@
   }
 
   .projectWrapper .projects-table tbody tr .project-name .personal-badge {
+    font-size: 9px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  .projectWrapper .projects-table tbody tr .project-name .wip-badge {
     font-size: 9px;
     padding: 2px 8px;
     margin-left: 8px;

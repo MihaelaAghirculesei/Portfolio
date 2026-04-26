@@ -314,7 +314,6 @@
   position: relative;
   transform: translateY(-15px);
   transition: transform $transition-base;
-  will-change: transform;
 
   .imageContainer {
     position: relative;
@@ -337,7 +336,6 @@
       object-fit: cover;
       transition: transform $transition-base;
       filter: brightness(1.05) contrast(1.02);
-      will-change: transform;
 
       &:hover {
         transform: scale(1.02);
@@ -388,7 +386,6 @@
   padding-left: 20px;
   margin-bottom: 25px;
   transition: transform $transition-base;
-  will-change: transform;
 
   &:hover {
     transform: translateX(5px);
@@ -484,9 +481,11 @@
   font-weight: 600;
   letter-spacing: 2px;
   text-shadow: none;
-  will-change: transform;
   cursor: default;
   @include smoothHoverEffect();
+  &:hover {
+    will-change: transform;
+  }
 }
 
 @mixin smoothHoverEffect($scale: 1.05) {
