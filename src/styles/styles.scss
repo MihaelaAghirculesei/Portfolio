@@ -120,7 +120,7 @@ textarea {
   font-family: "Fira Code";
   font-style: normal;
   font-weight: 400;
-  src: url("../assets/fonts/fira-code-v22-latin-regular.woff2") format("woff2");
+  src: url("/assets/fonts/fira-code-v22-latin-regular.woff2") format("woff2");
 }
 
 @font-face {
@@ -128,7 +128,7 @@ textarea {
   font-family: "Karla";
   font-style: normal;
   font-weight: 400;
-  src: url("../assets/fonts/karla-v31-latin-regular.woff2") format("woff2");
+  src: url("/assets/fonts/karla-v31-latin-regular.woff2") format("woff2");
 }
 
 ::-webkit-scrollbar {
