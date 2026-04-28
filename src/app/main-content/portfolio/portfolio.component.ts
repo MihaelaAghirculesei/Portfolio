@@ -93,7 +93,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     },
     {
       name: 'Pokédex',
-      technologies: ['Rest-Api', 'JavaScript', 'HTML', 'CSS'],
+      technologies: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'REST API', 'PWA', 'Vite', 'Workbox', 'Vitest'],
       previewImg: 'assets/img/projects/pokedex.webp',
       previewImgSrcset:
         'assets/img/projects/pokedex-400w.webp 400w, ' +
@@ -167,7 +167,10 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     indexeddb: 'assets/img/projects/icons/indexeddb.svg',
     oauth20: 'assets/img/projects/icons/oauth.svg',
     pwa: 'assets/img/projects/icons/pwa.svg',
-    ssr: 'assets/img/projects/icons/ssr.svg'
+    ssr: 'assets/img/projects/icons/ssr.svg',
+    vite: 'assets/img/projects/icons/vite.svg',
+    vitest: 'assets/img/projects/icons/vitest.svg',
+    workbox: 'assets/img/projects/icons/workbox.svg'
   };
 
   constructor(

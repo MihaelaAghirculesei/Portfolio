@@ -40,6 +40,9 @@ export class SkillsComponent {
     { url: 'assets/img/skills/sqlite.svg', name: 'SQLite' },
     { url: 'assets/img/skills/pytest.svg', name: 'Pytest' },
     // Strumenti & processo
+    { url: 'assets/img/skills/vite.svg', name: 'Vite' },
+    { url: 'assets/img/skills/vitest.svg', name: 'Vitest' },
+    { url: 'assets/img/skills/workbox.svg', name: 'Workbox' },
     { url: 'assets/img/skills/git.svg', name: 'Git' },
     { url: 'assets/img/skills/figma.svg', name: 'Figma' },
     { url: 'assets/img/skills/scrum.svg', name: 'Scrum' },
