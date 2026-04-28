@@ -152,8 +152,8 @@
       "shortDescription": "Abenteuer Spiel"
     },
     "pokedex": {
-      "description": "Ein interaktives Portal in die magische Welt der Pokemon! Mit Leidenschaft entwickelt bietet es eine reibungslose und fesselnde Erfahrung mit modernen Technologien: PokeAPI für immer aktuelle Daten, responsives Design für alle Geräte, performantes JavaScript und fesselnde CSS-Animationen.",
-      "shortDescription": "Pokemon Datenbank"
+      "description": "Eine Offline-First Pokédex PWA, die in zwei Phasen entstanden ist: zuerst vollständig in Vanilla JavaScript — ohne Frameworks, nur native Browser-APIs — um die Plattform von Grund auf zu verstehen. Danach zu TypeScript Strict Mode und Vite migriert, ohne eine einzige Funktion zu ändern. Der Service Worker nutzt Workbox mit getrennten Caches für API-Antworten (7 Tage, 300 Einträge) und Sprites (30 Tage, 600 Einträge). Tastaturzugänglichkeit folgt den WAI-ARIA-Richtlinien: Focus Trap im Modal, ESC zum Schließen, Pfeiltastennavigation und Fokusrückgabe zum zuvor aktiven Element. Der holografische Schimmereffekt repliziert physische Sammelkarten: Mausposition via mousemove in CSS Custom Properties --x/--y injiziert, gerendert über mix-blend-mode: color-dodge. 32 Vitest-Unit-Tests und ESLint mit typescript-eslint strict sichern die Korrektheit der migrierten Codebasis.",
+      "shortDescription": "Offline-First Pokédex PWA"
     },
     "birthdayReminder": {
       "description": "Eine moderne Birthday Reminder App mit NgRx State Management für vorhersagbaren Datenfluss, Offline-First Architektur mit IndexedDB, Google Calendar-Synchronisation über OAuth 2.0, Cross-Platform-Unterstützung (Web PWA + Android mit Capacitor), Push-Benachrichtigungen (Web + Nativ) und Material Design UI. Gebaut mit Angular 17, demonstriert die App Enterprise-Grade-Architektur mit Effects für Seiteneffekte, Entity Adapters für normalisierten State und ein umfassendes Benachrichtigungssystem mit anpassbaren Erinnerungen.",
