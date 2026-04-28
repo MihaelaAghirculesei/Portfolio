@@ -1,4 +1,7 @@
 /
+/skills
+/contact
+/feedback
 /legal-notice
 /datenschutz
 /privacy-policy
