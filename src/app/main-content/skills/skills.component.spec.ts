@@ -31,8 +31,8 @@ describe('SkillsComponent', () => {
   });
 
   describe('Skill Items', () => {
-    it('should have exactly 22 skill items', () => {
-      expect(component.skillItems.length).toBe(25);
+    it('should have exactly 27 skill items', () => {
+      expect(component.skillItems.length).toBe(27);
     });
 
     it('should have all required skills', () => {
@@ -56,8 +56,13 @@ describe('SkillsComponent', () => {
       expect(skillNames).toContain('SSR');
       expect(skillNames).toContain('Python');
       expect(skillNames).toContain('FastAPI');
+      expect(skillNames).toContain('SQLAlchemy');
+      expect(skillNames).toContain('Pydantic 2');
       expect(skillNames).toContain('SQLite');
       expect(skillNames).toContain('Pytest');
+      expect(skillNames).toContain('Vite');
+      expect(skillNames).toContain('Vitest');
+      expect(skillNames).toContain('Workbox');
       expect(skillNames).toContain('Growth Mindset');
     });
 
@@ -163,7 +168,7 @@ describe('SkillsComponent', () => {
   describe('Data Integrity', () => {
     it('should have immutable skill items', () => {
       const originalLength = component.skillItems.length;
-      expect(component.skillItems.length).toBe(25);
+      expect(component.skillItems.length).toBe(27);
     });
 
     it('should have immutable future skills', () => {
