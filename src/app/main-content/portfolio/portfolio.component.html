@@ -39,9 +39,21 @@
               }
             </td>
             <td class="project-tech">
-              @for (tech of project.technologies; track tech; let last = $last)
-              {
-              {{ tech }}@if (!last) {<span class="tech-separator"> | </span>} }
+              @for (tech of project.technologies; track tech; let last = $last) {
+                <span class="project-tech-item">
+                  @if (hasTechIcon(tech)) {
+                    <img
+                      [src]="getTechIconPath(tech)"
+                      class="project-tech-icon"
+                      [alt]="tech + ' icon'"
+                      loading="lazy"
+                      aria-hidden="true"
+                    />
+                  }
+                  {{ tech }}
+                </span>
+                @if (!last) {<span class="tech-separator"> | </span>}
+              }
             </td>
           </tr>
           }

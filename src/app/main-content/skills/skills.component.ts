@@ -37,6 +37,8 @@ export class SkillsComponent {
     // Backend
     { url: 'assets/img/skills/python.svg', name: 'Python' },
     { url: 'assets/img/skills/fastapi.svg', name: 'FastAPI' },
+    { url: 'assets/img/skills/sqlalchemy.svg', name: 'SQLAlchemy' },
+    { url: 'assets/img/skills/pydantic.svg', name: 'Pydantic 2' },
     { url: 'assets/img/skills/sqlite.svg', name: 'SQLite' },
     { url: 'assets/img/skills/pytest.svg', name: 'Pytest' },
     // Strumenti & processo
