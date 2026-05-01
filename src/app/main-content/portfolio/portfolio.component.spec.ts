@@ -407,9 +407,9 @@ describe('PortfolioComponent', () => {
       expect(alt).toBe('Todo Platform API screenshot');
     });
 
-    it('should not have icons for Python 3.13 and FastAPI', () => {
-      expect(component.hasTechIcon('Python 3.13')).toBe(false);
-      expect(component.hasTechIcon('FastAPI')).toBe(false);
+    it('should have icons for Python 3.13 and FastAPI', () => {
+      expect(component.hasTechIcon('Python 3.13')).toBe(true);
+      expect(component.hasTechIcon('FastAPI')).toBe(true);
     });
   });
 
