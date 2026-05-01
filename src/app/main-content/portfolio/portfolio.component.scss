@@ -256,6 +256,19 @@
             color: variables.$main-color;
             margin: 0 4px;
           }
+
+          .project-tech-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+          }
+
+          .project-tech-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+          }
         }
       }
     }
