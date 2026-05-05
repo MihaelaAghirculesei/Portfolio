@@ -3,7 +3,7 @@ export interface Projects {
     technologies: string [];
     previewImg: string;
     previewImgSrcset?: string;
-    description: string;
+    description?: string;
     githubUrl: string;
     liveUrl: string;
     isPersonal?: boolean;
