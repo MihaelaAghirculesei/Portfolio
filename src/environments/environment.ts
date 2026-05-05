@@ -24,8 +24,8 @@ export const environment = {
       live: 'https://birthday-reminder-aghirculesei.pages.dev'
     },
     todoApi: {
-      github: 'https://github.com/MihaelaAghirculesei/todo-api',
-      live: ''
+      github: 'https://github.com/MihaelaAghirculesei/todo-platform',
+      live: 'https://todo-aghirculesei.onrender.com'
     }
   },
   enableLogging: true,
