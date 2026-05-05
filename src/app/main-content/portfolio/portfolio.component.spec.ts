@@ -56,7 +56,6 @@ describe('PortfolioComponent', () => {
       expect(project.name).toBeDefined();
       expect(project.technologies).toBeDefined();
       expect(project.previewImg).toBeDefined();
-      expect(project.description).toBeDefined();
       expect(project.githubUrl).toBeDefined();
       expect(project.liveUrl).toBeDefined();
     });
@@ -364,6 +363,14 @@ describe('PortfolioComponent', () => {
 
       expect(desc).toBe('Default desc');
     });
+
+    it('should return empty string when unknown project has no description', () => {
+      const unknownProject = { name: 'Unknown', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' };
+
+      const desc = component.getProjectDescription(unknownProject as any);
+
+      expect(desc).toBe('');
+    });
   });
 
   describe('Todo Platform API Project', () => {
@@ -372,9 +379,9 @@ describe('PortfolioComponent', () => {
       expect(todoProject.name).toBe('Todo Platform API');
     });
 
-    it('should have inProgress flag set to true', () => {
+    it('should not have inProgress flag set', () => {
       const todoProject = component.projects[2];
-      expect(todoProject.inProgress).toBe(true);
+      expect(todoProject.inProgress).toBeFalsy();
     });
 
     it('should have isTeam flag set to true', () => {
@@ -407,8 +414,8 @@ describe('PortfolioComponent', () => {
       expect(alt).toBe('Todo Platform API screenshot');
     });
 
-    it('should have icons for Python 3.13 and FastAPI', () => {
-      expect(component.hasTechIcon('Python 3.13')).toBe(true);
+    it('should have icons for Python 3.11 and FastAPI', () => {
+      expect(component.hasTechIcon('Python 3.11')).toBe(true);
       expect(component.hasTechIcon('FastAPI')).toBe(true);
     });
   });
