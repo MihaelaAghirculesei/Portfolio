@@ -42,17 +42,10 @@ export class PortfolioComponent implements OnInit, OnDestroy {
         'assets/img/projects/birthday-reminder-400w.webp 400w, ' +
         'assets/img/projects/birthday-reminder-800w.webp 800w, ' +
         'assets/img/projects/birthday-reminder-1200w.webp 1200w',
-      description:
-        'Enterprise-grade Birthday Reminder App built with Angular 19. Implements NgRx for predictable state management ' +
-        'with effects for side effects and entity adapters for normalized state. Features Firebase backend with Google OAuth 2.0 ' +
-        'authentication and Firestore for cloud synchronization with offline-first capabilities. Cross-platform support includes ' +
-        'Web PWA with Service Worker for offline access and Android native via Capacitor with local push notifications. ' +
-        'Server-Side Rendering (SSR) ensures optimal performance and SEO. Material Design UI with custom theming provides ' +
-        'a responsive, accessible interface. Comprehensive testing strategy includes Cypress e2e tests and Karma unit tests, ' +
-        'with CI/CD pipeline ready. Features bundle optimization, Git hooks with Husky, and lint-staged for code quality.',
       githubUrl: environment.projects.birthdayReminder.github,
       liveUrl: environment.projects.birthdayReminder.live,
       isPersonal: true,
+      inProgress: true,
     },
     {
       name: 'Join',
@@ -62,34 +55,17 @@ export class PortfolioComponent implements OnInit, OnDestroy {
         'assets/img/projects/join-400w.webp 400w, ' +
         'assets/img/projects/join-800w.webp 800w, ' +
         'assets/img/projects/join-1200w.webp 1200w',
-      description:
-        'Join Kanban Board is the project management revolution! ' +
-        'An extraordinary application that transforms every project into a success through ' +
-        'spectacular visual boards and real-time collaboration. With Join, you can easily ' +
-        'organize tasks, track progress, and collaborate with your team in a dynamic and ' +
-        'intuitive environment. Say goodbye to chaos and hello to productivity! ' +
-        'Join Kanban Board is the perfect tool for teams of all sizes, from startups to ' +
-        'large enterprises. Experience the future of project management with Join Kanban ' +
-        'Board and take your projects to the next level. Your next big victory starts here.',
       githubUrl: environment.projects.join.github,
       liveUrl: environment.projects.join.live,
       isTeam: true,
     },
     {
       name: 'Todo Platform API',
-      technologies: ['Python 3.13', 'TypeScript', 'FastAPI', 'SQLAlchemy 2.0', 'Pydantic 2', 'SQLite', 'Pytest', 'React', 'Vite'],
+      technologies: ['Python 3.11', 'TypeScript', 'FastAPI', 'SQLAlchemy 2.0', 'Pydantic 2', 'SQLite', 'Pytest', 'React', 'Vite'],
       previewImg: 'assets/img/projects/todo-api.webp',
-      description:
-        'Production-ready RESTful API built with FastAPI and SQLAlchemy 2.0, following a ' +
-        'strict layered architecture (Router → Service → Repository → Database). Developed ' +
-        'as part of a team project to deliver a robust backend for a Todo platform. ' +
-        'Features full CRUD, Pydantic input validation, custom exception handling, and ISO ' +
-        '8601 UTC timestamps. Covered by 23 tests (unit + integration) using an in-memory ' +
-        'SQLite database for fast, isolated test runs.',
       githubUrl: environment.projects.todoApi.github,
       liveUrl: environment.projects.todoApi.live,
       isTeam: true,
-      inProgress: true,
     },
     {
       name: 'Pokédex',
@@ -99,11 +75,6 @@ export class PortfolioComponent implements OnInit, OnDestroy {
         'assets/img/projects/pokedex-400w.webp 400w, ' +
         'assets/img/projects/pokedex-800w.webp 800w, ' +
         'assets/img/projects/pokedex-1200w.webp 1200w',
-      description:
-        'An interactive portal into the magical world of Pokemon! Designed with passion, ' +
-        'it offers a smooth and engaging experience built with modern technologies: ' +
-        'PokeAPI for always up-to-date data, responsive design for all devices, ' +
-        'performant JavaScript and captivating CSS animations.',
       githubUrl: environment.projects.pokedex.github,
       liveUrl: environment.projects.pokedex.live,
     },
@@ -115,10 +86,6 @@ export class PortfolioComponent implements OnInit, OnDestroy {
         'assets/img/projects/el-pollo-locco-400w.webp 400w, ' +
         'assets/img/projects/el-pollo-locco-800w.webp 800w, ' +
         'assets/img/projects/el-pollo-locco-1200w.webp 1200w',
-      description:
-        'An exciting game where courage meets chicken chaos! Built with JavaScript, ' +
-        'HTML and CSS, it offers smooth gameplay with keyboard and touch controls, ' +
-        'epic Endboss challenges, immersive sound effects and responsive design for all devices.',
       githubUrl: environment.projects.elPolloLoco.github,
       liveUrl: environment.projects.elPolloLoco.live,
     },
@@ -151,33 +118,34 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     return map;
   })();
 
+  private readonly ICONS_BASE = 'assets/img/projects/icons/';
   private readonly TECH_ICONS: Record<string, string> = {
-    angular: 'assets/img/projects/icons/angular.svg',
-    firebase: 'assets/img/projects/icons/firebase.svg',
-    typescript: 'assets/img/projects/icons/typescript.svg',
-    html: 'assets/img/projects/icons/html.svg',
-    css: 'assets/img/projects/icons/css.svg',
-    scss: 'assets/img/projects/icons/sass.svg',
-    javascript: 'assets/img/projects/icons/javascript.svg',
-    restapi: 'assets/img/projects/icons/rest-api.svg',
-    ngrx: 'assets/img/projects/icons/ngrx.svg',
-    rxjs: 'assets/img/projects/icons/rxjs.svg',
-    materialdesign: 'assets/img/projects/icons/material-design.svg',
-    capacitor: 'assets/img/projects/icons/capacitor.svg',
-    indexeddb: 'assets/img/projects/icons/indexeddb.svg',
-    oauth20: 'assets/img/projects/icons/oauth.svg',
-    pwa: 'assets/img/projects/icons/pwa.svg',
-    ssr: 'assets/img/projects/icons/ssr.svg',
-    vite: 'assets/img/projects/icons/vite.svg',
-    vitest: 'assets/img/projects/icons/vitest.svg',
-    workbox: 'assets/img/projects/icons/workbox.svg',
-    python313: 'assets/img/projects/icons/python.svg',
-    fastapi: 'assets/img/projects/icons/fastapi.svg',
-    sqlalchemy20: 'assets/img/projects/icons/sqlalchemy.svg',
-    pydantic2: 'assets/img/projects/icons/pydantic.svg',
-    sqlite: 'assets/img/projects/icons/sqlite.svg',
-    pytest: 'assets/img/projects/icons/pytest.svg',
-    react: 'assets/img/projects/icons/react.svg',
+    angular: 'angular.svg',
+    firebase: 'firebase.svg',
+    typescript: 'typescript.svg',
+    html: 'html.svg',
+    css: 'css.svg',
+    scss: 'sass.svg',
+    javascript: 'javascript.svg',
+    restapi: 'rest-api.svg',
+    ngrx: 'ngrx.svg',
+    rxjs: 'rxjs.svg',
+    materialdesign: 'material-design.svg',
+    capacitor: 'capacitor.svg',
+    indexeddb: 'indexeddb.svg',
+    oauth20: 'oauth.svg',
+    pwa: 'pwa.svg',
+    ssr: 'ssr.svg',
+    vite: 'vite.svg',
+    vitest: 'vitest.svg',
+    workbox: 'workbox.svg',
+    python311: 'python.svg',
+    fastapi: 'fastapi.svg',
+    sqlalchemy20: 'sqlalchemy.svg',
+    pydantic2: 'pydantic.svg',
+    sqlite: 'sqlite.svg',
+    pytest: 'pytest.svg',
+    react: 'react.svg',
   };
 
   constructor(
@@ -384,7 +352,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   private getProjectTranslation(project: Projects, type: 'shortDescription' | 'description'): string {
     const projectKey = this.PROJECT_MAP[project.name];
     if (!projectKey) {
-      return type === 'description' ? project.description : this.translate.instant(`projects.default.${type}`);
+      return type === 'description' ? (project.description ?? '') : this.translate.instant(`projects.default.${type}`);
     }
     return this.translate.instant(`projects.${projectKey}.${type}`);
   }
@@ -395,7 +363,8 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   getTechIconPath(technology: string): string | null {
     const normalized = technology.replace(/[-\s.]/g, '').toLowerCase();
-    return this.TECH_ICONS[normalized] || null;
+    const icon = this.TECH_ICONS[normalized];
+    return icon ? this.ICONS_BASE + icon : null;
   }
 
 }
