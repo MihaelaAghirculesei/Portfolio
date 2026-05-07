@@ -20,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withEnabledBlockingInitialNavigation(),
-      withViewTransitions(),
+      withViewTransitions({ skipInitialTransition: true }),
     ),
     provideZonelessChangeDetection(),
     provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
