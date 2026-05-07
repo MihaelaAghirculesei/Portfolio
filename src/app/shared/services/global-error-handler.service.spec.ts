@@ -193,6 +193,14 @@ describe('GlobalErrorHandler', () => {
         expect(loggerSpy.error).toHaveBeenCalled();
       });
 
+      it('should not throw view transition aborted error', () => {
+        const error = new Error('Transition was aborted because of invalid state');
+
+        expect(() => handler.handleError(error)).not.toThrow();
+
+        expect(loggerSpy.error).toHaveBeenCalled();
+      });
+
       it('should still log non-critical errors', () => {
         const error = new Error('ExpressionChangedAfterItHasBeenCheckedError');
 

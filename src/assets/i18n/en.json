@@ -160,7 +160,7 @@
       "shortDescription": "Birthday Management App"
     },
     "todoApi": {
-      "description": "Developed in a 2-person team. Production-ready RESTful API built with FastAPI and SQLAlchemy 2.0, following a strict layered architecture (Router → Service → Repository → Database). Built to deliver a robust backend for a Todo platform. Features full CRUD, Pydantic input validation, custom exception handling, and ISO 8601 UTC timestamps. Covered by 23 tests (unit + integration) using an in-memory SQLite database for fast, isolated test runs.",
+      "description": "Developed in a 2-person team. Production-ready RESTful API built with FastAPI and SQLAlchemy 2.0, following a strict layered architecture (Router → Service → Repository → Database). Backed by PostgreSQL in production and SQLite locally. Features full CRUD, Pydantic input validation, custom exception handling, and ISO 8601 UTC timestamps. Covered by 23 tests (unit + integration) using an in-memory SQLite database for fast, isolated test runs.",
       "shortDescription": "RESTful Todo API with clean layered architecture"
     },
     "default": {
