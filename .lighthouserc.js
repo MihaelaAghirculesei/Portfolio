@@ -3,6 +3,9 @@ module.exports = {
     collect: {
       staticDistDir: './dist/angular-portofolio/browser',
       numberOfRuns: 1,
+      settings: {
+        chromeFlags: '--no-sandbox --disable-dev-shm-usage',
+      },
     },
     assert: {
       assertMatrix: [
