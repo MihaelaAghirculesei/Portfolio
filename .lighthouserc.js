@@ -4,7 +4,7 @@ module.exports = {
       staticDistDir: './dist/angular-portofolio/browser',
       numberOfRuns: 1,
       settings: {
-        chromeFlags: '--no-sandbox --disable-dev-shm-usage',
+        chromeFlags: '--no-sandbox --disable-dev-shm-usage --disable-gpu --no-first-run --disable-extensions --user-data-dir=./tmp/chrome-profile',
       },
     },
     assert: {
