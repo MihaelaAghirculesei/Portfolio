@@ -202,7 +202,7 @@ src/
 │   │   │   └── banner-section/
 │   │   ├── legal-notice/
 │   │   ├── overlay/
-│   │   ├── portofolio/
+│   │   ├── portfolio/
 │   │   ├── privacy-policy/
 │   │   └── skills/
 │   ├── shared/                 # Shared resources
@@ -230,13 +230,33 @@ The project uses environment-based configuration for different deployment stages
 ```typescript
 export const environment = {
   production: false,
-  emailWorkerUrl: '...',
-  social: { github: '...', linkedin: '...' },
+  siteUrl: 'http://localhost:4200',
+  emailWorkerUrl: 'https://api.aghirculesei.workers.dev',
+  social: {
+    github: 'https://github.com/MihaelaAghirculesei',
+    linkedin: 'https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/'
+  },
   projects: {
-    join: { github: '...', live: '...' },
-    elPolloLoco: { github: '...', live: '...' },
-    pokedex: { github: '...', live: '...' },
-    birthdayReminder: { github: '...', live: '...' }
+    join: {
+      github: 'https://github.com/MihaelaAghirculesei/join-kanban-board',
+      live: 'https://join-aghirculesei.pages.dev'
+    },
+    elPolloLoco: {
+      github: 'https://github.com/MihaelaAghirculesei/El-Pollo-Loco',
+      live: 'https://el-pollo-loco-aghirculesei.pages.dev'
+    },
+    pokedex: {
+      github: 'https://github.com/MihaelaAghirculesei/Pokedex',
+      live: 'https://pokedex-aghirculesei.pages.dev'
+    },
+    birthdayReminder: {
+      github: 'https://github.com/MihaelaAghirculesei/birthday-reminder-app',
+      live: 'https://birthday-reminder-aghirculesei.pages.dev'
+    },
+    todoApi: {
+      github: 'https://github.com/MihaelaAghirculesei/todo-platform',
+      live: 'https://todo-frontend-aghirculesei.onrender.com'
+    }
   },
   enableLogging: true
 };
@@ -246,9 +266,34 @@ export const environment = {
 ```typescript
 export const environment = {
   production: true,
-  emailWorkerUrl: '...',
-  social: { github: '...', linkedin: '...' },
-  projects: { ... },
+  siteUrl: 'https://aghirculesei.pages.dev',
+  emailWorkerUrl: 'https://api.aghirculesei.workers.dev',
+  social: {
+    github: 'https://github.com/MihaelaAghirculesei',
+    linkedin: 'https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/'
+  },
+  projects: {
+    join: {
+      github: 'https://github.com/MihaelaAghirculesei/join-kanban-board',
+      live: 'https://join-aghirculesei.pages.dev'
+    },
+    elPolloLoco: {
+      github: 'https://github.com/MihaelaAghirculesei/El-Pollo-Loco',
+      live: 'https://el-pollo-loco-aghirculesei.pages.dev'
+    },
+    pokedex: {
+      github: 'https://github.com/MihaelaAghirculesei/Pokedex',
+      live: 'https://pokedex-aghirculesei.pages.dev'
+    },
+    birthdayReminder: {
+      github: 'https://github.com/MihaelaAghirculesei/birthday-reminder-app',
+      live: 'https://birthday-reminder-aghirculesei.pages.dev'
+    },
+    todoApi: {
+      github: 'https://github.com/MihaelaAghirculesei/todo-platform',
+      live: 'https://todo-frontend-aghirculesei.onrender.com'
+    }
+  },
   enableLogging: false
 };
 ```

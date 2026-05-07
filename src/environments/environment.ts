@@ -25,7 +25,7 @@ export const environment = {
     },
     todoApi: {
       github: 'https://github.com/MihaelaAghirculesei/todo-platform',
-      live: 'https://todo-aghirculesei.onrender.com'
+      live: 'https://todo-frontend-aghirculesei.onrender.com'
     }
   },
   enableLogging: true,

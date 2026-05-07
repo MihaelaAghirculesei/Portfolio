@@ -73,7 +73,8 @@ export class GlobalErrorHandler implements ErrorHandler {
     const nonCriticalErrors = [
       'ExpressionChangedAfterItHasBeenCheckedError',
       'Navigation cancelled',
-      'ResizeObserver loop limit exceeded'
+      'ResizeObserver loop limit exceeded',
+      'Transition was aborted'
     ];
 
     const errorMessage = this.getErrorMessage(error);
