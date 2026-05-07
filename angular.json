@@ -64,6 +64,7 @@
           },
           "configurations": {
             "production": {
+              "sourceMap": false,
               "optimization": {
                 "scripts": true,
                 "styles": {
