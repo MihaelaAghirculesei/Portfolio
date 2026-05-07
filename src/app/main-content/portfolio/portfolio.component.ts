@@ -61,8 +61,12 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     },
     {
       name: 'Todo Platform API',
-      technologies: ['Python 3.11', 'TypeScript', 'FastAPI', 'SQLAlchemy 2.0', 'Pydantic 2', 'SQLite', 'Pytest', 'React', 'Vite'],
+      technologies: ['Python 3.11', 'TypeScript', 'FastAPI', 'SQLAlchemy 2.0', 'Pydantic 2', 'PostgreSQL', 'Pytest', 'React', 'Vite'],
       previewImg: 'assets/img/projects/todo-api.webp',
+      previewImgSrcset:
+        'assets/img/projects/todo-api-400w.webp 400w, ' +
+        'assets/img/projects/todo-api-800w.webp 800w, ' +
+        'assets/img/projects/todo-api-1200w.webp 1200w',
       githubUrl: environment.projects.todoApi.github,
       liveUrl: environment.projects.todoApi.live,
       isTeam: true,
@@ -144,6 +148,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     sqlalchemy20: 'sqlalchemy.svg',
     pydantic2: 'pydantic.svg',
     sqlite: 'sqlite.svg',
+    postgresql: 'postgresql.svg',
     pytest: 'pytest.svg',
     react: 'react.svg',
   };
