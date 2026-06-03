@@ -42,7 +42,7 @@
   "skills": {
     "title": "Fähigkeiten",
     "overContent": "Technologien",
-    "introduction": "Ich verwandle Ideen in ansprechende digitale Erlebnisse! Mit Angular, TypeScript, SASS und Material Design erstelle ich moderne Anwendungen, die die Benutzererfahrung verbessern. Ich integriere REST-APIs und Firebase für dynamische Funktionalität und suche immer nach innovativen Lösungen.",
+    "introduction": "Ich entwickle vollständige Anwendungen von der Datenbank bis zur Oberfläche! Mit Angular, TypeScript, SASS und Material Design im Frontend sowie Python, FastAPI und SQLAlchemy im Backend erstelle ich moderne Fullstack-Anwendungen. Ich integriere REST-APIs und Firebase für dynamische Funktionalität und suche immer nach innovativen Lösungen.",
     "additionalSkillsTitle": "Sie benötigen",
     "additionalSkillsHighlight": "eine andere Fähigkeit?",
     "additionalSkillsText": "Sehen Sie die Technologie, die Ihr Projekt benötigt, nicht? Kein Problem! Meine Neugier und Entschlossenheit ermöglichen es mir, neue technologische Herausforderungen anzunehmen. Jedes Projekt ist eine Gelegenheit zu wachsen und maßgeschneiderte Lösungen für Ihre Bedürfnisse zu liefern.",
@@ -52,17 +52,17 @@
   },
   "landingPage": {
     "greeting": "Hallo! Ich bin",
-    "role": "Frontend Entwicklerin",
-    "title": "Frontend Entwicklerin",
+    "role": "Fullstack Entwicklerin",
+    "title": "Fullstack Entwicklerin",
     "checkWork": "Meine Projekte",
     "contactMe": "Kontaktieren Sie mich",
-    "description": "Ich bin eine Frontend-Entwicklerin mit Sitz in Wolfsburg."
+    "description": "Ich bin eine Fullstack-Entwicklerin mit Sitz in Wolfsburg."
   },
   "aboutMe": {
     "title": "Über mich",
     "subtitle": "Wer bin ich?",
     "mainTitle": "Über mich",
-    "introText": "Hallo! Ich bin Mihaela, eine Frontend-Entwicklerin, die davon überzeugt ist, dass Technologie schön, zugänglich und sinnvoll sein sollte. Ich liebe es, Ideen in intuitive Benutzeroberflächen zu verwandeln, die Menschen gerne nutzen.",
+    "introText": "Hallo! Ich bin Mihaela, eine Fullstack-Entwicklerin, die davon überzeugt ist, dass Technologie schön, zugänglich und sinnvoll sein sollte. Ich liebe es, vollständige Anwendungen zu bauen — von robusten APIs bis hin zu intuitiven Benutzeroberflächen, die Menschen gerne nutzen.",
     "visionTitle": "Meine Vision:",
     "visionText": "Für mich ist Code eine Form der Kreativität – jede Zeile erzählt eine Geschichte und jede Interaktion schafft eine Erfahrung.",
     "locationTitle": "Grenzenlos:",
@@ -88,8 +88,8 @@
     "title": "Kontaktieren Sie mich",
     "subtitle": "Lassen Sie uns zusammenarbeiten",
     "question": "Haben Sie ein Problem zu lösen?",
-    "description": "Ich suche aktiv nach Möglichkeiten, bei denen ich meine Angular-, TypeScript- und JavaScript-Expertise einsetzen kann, um außergewöhnliche Benutzererfahrungen zu schaffen, die den Geschäftserfolg vorantreiben.",
-    "needDeveloper": "Brauchen Sie eine Frontend-Entwicklerin?",
+    "description": "Ich suche aktiv nach Möglichkeiten, bei denen ich meine Angular-, TypeScript- und Python-Expertise einbringen kann — von intuitiven Benutzeroberflächen bis hin zu robusten REST-APIs — um außergewöhnliche digitale Erlebnisse zu schaffen, die den Geschäftserfolg vorantreiben.",
+    "needDeveloper": "Brauchen Sie eine Fullstack-Entwicklerin?",
     "letsTalk": "Lassen Sie uns sprechen!",
     "form": {
       "nameLabel": "Wie ist Ihr Name?",
@@ -126,7 +126,7 @@
   },
   "footer": {
     "logoAriaLabel": "Zum Seitenanfang scrollen",
-    "role": "Frontend-Entwicklerin",
+    "role": "Fullstack-Entwicklerin",
     "location": "Wolfsburg, Deutschland",
     "legalNotice": "Impressum",
     "legalNoticeAriaLabel": "Impressum und rechtliche Hinweise anzeigen",
@@ -152,11 +152,11 @@
       "shortDescription": "Abenteuer Spiel"
     },
     "pokedex": {
-      "description": "Eine Offline-First Pokédex PWA, die in zwei Phasen entstanden ist: zuerst vollständig in Vanilla JavaScript — ohne Frameworks, nur native Browser-APIs — um die Plattform von Grund auf zu verstehen. Danach zu TypeScript Strict Mode und Vite migriert, ohne eine einzige Funktion zu ändern. Der Service Worker nutzt Workbox mit getrennten Caches für API-Antworten (7 Tage, 300 Einträge) und Sprites (30 Tage, 600 Einträge). Tastaturzugänglichkeit folgt den WAI-ARIA-Richtlinien: Focus Trap im Modal, ESC zum Schließen, Pfeiltastennavigation und Fokusrückgabe zum zuvor aktiven Element. Der holografische Schimmereffekt repliziert physische Sammelkarten: Mausposition via mousemove in CSS Custom Properties --x/--y injiziert, gerendert über mix-blend-mode: color-dodge. 32 Vitest-Unit-Tests und ESLint mit typescript-eslint strict sichern die Korrektheit der migrierten Codebasis.",
+      "description": "Eine Offline-First Pokédex PWA, die in zwei Phasen entstanden ist: zuerst vollständig in Vanilla JavaScript — ohne Frameworks, nur native Browser-APIs — um die Plattform von Grund auf zu verstehen. Danach zu TypeScript Strict Mode und Vite migriert, ohne eine einzige Funktion zu ändern. Der Service Worker nutzt Workbox mit getrennten Caches für API-Antworten (7 Tage, 300 Einträge) und Sprites (30 Tage, 600 Einträge). Tastaturzugänglichkeit folgt den WAI-ARIA-Richtlinien: Focus Trap im Modal, ESC zum Schließen, Pfeiltastennavigation und Fokusrückgabe zum zuvor aktiven Element. Der holografische Schimmereffekt repliziert physische Sammelkarten: Mausposition via mousemove in CSS Custom Properties --x/--y injiziert, gerendert über mix-blend-mode: color-dodge. 215 Vitest-Unit-Tests, eine Playwright-E2E-Suite (funktional, Barrierefreiheit via axe WCAG 2.1 AA, visuelle Regression und Mobile) sowie ESLint mit typescript-eslint strict sichern die Korrektheit der migrierten Codebasis.",
       "shortDescription": "Offline-First Pokédex PWA"
     },
     "birthdayReminder": {
-      "description": "Eine moderne Birthday Reminder App mit NgRx State Management für vorhersagbaren Datenfluss, Offline-First Architektur mit IndexedDB, Google Calendar-Synchronisation über OAuth 2.0, Cross-Platform-Unterstützung (Web PWA + Android mit Capacitor), Push-Benachrichtigungen (Web + Nativ) und Material Design UI. Gebaut mit Angular 17, demonstriert die App Enterprise-Grade-Architektur mit Effects für Seiteneffekte, Entity Adapters für normalisierten State und ein umfassendes Benachrichtigungssystem mit anpassbaren Erinnerungen.",
+      "description": "Eine moderne Birthday Reminder App mit NgRx State Management für vorhersagbaren Datenfluss, Offline-First Architektur mit IndexedDB, Google Calendar-Synchronisation über OAuth 2.0, Cross-Platform-Unterstützung (Web PWA + Android mit Capacitor), Push-Benachrichtigungen (Web + Nativ) und Material Design UI. Gebaut mit Angular 19, demonstriert die App Enterprise-Grade-Architektur mit Effects für Seiteneffekte, Entity Adapters für normalisierten State und ein umfassendes Benachrichtigungssystem mit anpassbaren Erinnerungen.",
       "shortDescription": "Geburtstags-Management App"
     },
     "todoApi": {
@@ -169,10 +169,10 @@
   },
   "banner": {
     "remoteWork": "Verfügbar für Remote-Arbeit",
-    "role": "Frontend Entwicklerin",
+    "role": "Fullstack Entwicklerin",
     "openToWork": "Offen für Arbeit & Lernen",
     "location": "Wohnhaft in Wolfsburg",
-    "skills": "Angular & TypeScript",
+    "skills": "Angular · Python · TypeScript",
     "passion": "Leidenschaftlich für sauberen Code"
   }
 }
