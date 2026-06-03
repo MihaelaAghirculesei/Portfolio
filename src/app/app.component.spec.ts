@@ -70,7 +70,7 @@ describe('AppComponent', () => {
   it('should call seoService.update with home config on init', () => {
     component.ngOnInit();
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Frontend Developer' })
+      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' })
     );
   });
 
@@ -89,7 +89,7 @@ describe('AppComponent', () => {
     mockSeoService.update.calls.reset();
     routerEventsSubject.next(new NavigationEnd(2, '/', '/'));
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Frontend Developer' })
+      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' })
     );
   });
 
@@ -108,7 +108,7 @@ describe('AppComponent', () => {
     mockSeoService.update.calls.reset();
     routerEventsSubject.next(new NavigationEnd(1, '/unknown-route', '/unknown-route'));
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Frontend Developer' })
+      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' })
     );
   });
 });

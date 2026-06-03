@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --watch=false",
+    "test:watch": "ng test",
     "serve:ssr:angular-portofolio": "node dist/angular-portofolio/server/server.mjs",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.html\"",
     "lint:fix": "eslint \"src/**/*.ts\" \"src/**/*.html\" --fix",
@@ -14,7 +15,7 @@
     "e2e:ui": "playwright test --ui",
     "e2e:report": "playwright show-report",
     "ci:security": "npm audit --audit-level=moderate",
-    "ci:quality": "npm run lint && ng test --watch=false --browsers=ChromeHeadless --code-coverage",
+    "ci:quality": "npm run lint && ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage",
     "ci:build": "ng build --configuration=production",
     "ci:local": "npm outdated || node -e \"\" && npm run ci:security && npm run ci:quality && npm run ci:build",
     "build:purge": "ng build --configuration=production && npx purgecss --css \"dist/angular-portofolio/browser/**/*.css\" --content \"dist/angular-portofolio/browser/**/*.html\" \"dist/angular-portofolio/browser/**/*.js\" --output dist/angular-portofolio/browser/",
@@ -46,7 +47,13 @@
     "serialize-javascript": ">=7.0.5",
     "tar": ">=7.5.11",
     "uuid": ">=14.0.0",
-    "postcss": ">=8.5.10"
+    "postcss": ">=8.5.10",
+    "brace-expansion": ">=5.0.6",
+    "tmp": ">=0.2.6",
+    "ws": ">=8.21.0",
+    "minimatch@3": {
+      "brace-expansion": "^1.1.11"
+    }
   },
   "devDependencies": {
     "@angular-eslint/builder": "^20.3.0",

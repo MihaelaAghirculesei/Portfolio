@@ -377,3 +377,80 @@ app-banner-section {
     transform: rotate(270deg) translateY($arrow-bounce-offset-end);
   }
 }
+
+// Mobile landscape: 2-column grid, lines go from icon down to bottom of screen
+@media (orientation: landscape) and (max-height: 450px) {
+  .headLine {
+    height: auto;
+    min-height: 100svh;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .headLine .contentWrapper {
+    position: static;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-content: center;
+    column-gap: 20px;
+    row-gap: 2px;
+    padding: 6px 50px 8px;
+    text-align: left;
+
+    p {
+      grid-column: 1;
+      grid-row: 1;
+      font-size: 12px;
+    }
+
+    h1 {
+      grid-column: 1;
+      grid-row: 2;
+      padding: 2px 0;
+      align-items: flex-start;
+
+      .name-spectacular {
+        font-size: 40px;
+        line-height: 1;
+
+        &.surname {
+          padding: 1px 0;
+        }
+      }
+    }
+
+    .buttonDiv {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0;
+      gap: 8px;
+
+      .link-button {
+        padding: 8px 14px;
+        font-size: 13px;
+        min-width: unset;
+      }
+    }
+
+    .edgeLine-left {
+      gap: 4px;
+
+      .greenLineDown {
+        height: calc(100svh - 210px);
+      }
+    }
+
+    .edgeLine-right {
+      gap: 4px;
+
+      .hero-right-line {
+        height: calc(100svh - 250px);
+      }
+    }
+  }
+}

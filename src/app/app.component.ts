@@ -14,9 +14,9 @@ const SITE_URL = environment.siteUrl;
 
 const SEO_CONFIGS = new Map<string, SeoConfig>([
   ['/', {
-    title: 'Mihaela Melania Aghirculesei — Frontend Developer',
+    title: 'Mihaela Melania Aghirculesei — Fullstack Developer',
     description:
-      'Mihaela Aghirculesei — Frontend Developer based in Germany, ' +
+      'Mihaela Aghirculesei — Fullstack Developer based in Germany, ' +
       'specializing in Angular, TypeScript, and modern web design. ' +
       'Available for new projects.',
     ogUrl: SITE_URL,
@@ -26,7 +26,7 @@ const SEO_CONFIGS = new Map<string, SeoConfig>([
     title: 'Legal Notice — Mihaela Aghirculesei',
     description:
       'Legal notice and imprint for the portfolio of Mihaela Melania Aghirculesei, ' +
-      'Frontend Developer based in Wolfsburg, Germany. Contact and legal information.',
+      'Fullstack Developer based in Wolfsburg, Germany. Contact and legal information.',
     ogUrl: `${SITE_URL}/legal-notice`,
   }],
   ['/datenschutz', {
@@ -40,7 +40,7 @@ const SEO_CONFIGS = new Map<string, SeoConfig>([
     title: 'Privacy Policy — Mihaela Aghirculesei',
     description:
       'Privacy policy for the portfolio of Mihaela Melania Aghirculesei, ' +
-      'Frontend Developer. Information on data processing in accordance with GDPR.',
+      'Fullstack Developer. Information on data processing in accordance with GDPR.',
     ogUrl: `${SITE_URL}/privacy-policy`,
   }],
 ]);
