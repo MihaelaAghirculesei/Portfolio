@@ -29,13 +29,15 @@ import { environment } from '../../../environments/environment';
 })
 export class PortfolioComponent implements OnInit, OnDestroy {
   @ViewChild('projectsTable') projectsTable!: ElementRef;
+  @ViewChild('descriptionEl') descriptionEl?: ElementRef<HTMLParagraphElement>;
 
   projects: Projects[] = [
     {
       name: 'Birthday Reminder Pro',
       technologies: [
         'Angular', 'TypeScript', 'SCSS', 'NgRx', 'RxJS',
-        'Material Design', 'Capacitor', 'Firebase', 'OAuth 2.0', 'PWA', 'SSR',
+        'Material Design', 'Capacitor', 'Firebase', 'IndexedDB', 'OAuth 2.0', 'PWA', 'SSR',
+        'Sentry', 'Cypress', 'Zod',
       ],
       previewImg: 'assets/img/projects/birthday-reminder.webp',
       previewImgSrcset:
@@ -61,7 +63,10 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     },
     {
       name: 'Todo Platform API',
-      technologies: ['Python 3.11', 'TypeScript', 'FastAPI', 'SQLAlchemy 2.0', 'Pydantic 2', 'PostgreSQL', 'Pytest', 'React', 'Vite'],
+      technologies: [
+        'Python 3.11', 'TypeScript', 'FastAPI', 'SQLAlchemy 2.0',
+        'Pydantic 2', 'PostgreSQL', 'SQLite', 'Pytest', 'React', 'Vite',
+      ],
       previewImg: 'assets/img/projects/todo-api.webp',
       previewImgSrcset:
         'assets/img/projects/todo-api-400w.webp 400w, ' +
@@ -73,7 +78,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     },
     {
       name: 'Pokédex',
-      technologies: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'REST API', 'PWA', 'Vite', 'Workbox', 'Vitest'],
+      technologies: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'REST API', 'PWA', 'Vite', 'Workbox', 'Vitest', 'Playwright'],
       previewImg: 'assets/img/projects/pokedex.webp',
       previewImgSrcset:
         'assets/img/projects/pokedex-400w.webp 400w, ' +
@@ -142,6 +147,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     ssr: 'ssr.svg',
     vite: 'vite.svg',
     vitest: 'vitest.svg',
+    playwright: 'playwright.svg',
     workbox: 'workbox.svg',
     python311: 'python.svg',
     fastapi: 'fastapi.svg',
@@ -151,6 +157,9 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     postgresql: 'postgresql.svg',
     pytest: 'pytest.svg',
     react: 'react.svg',
+    sentry: 'sentry.svg',
+    cypress: 'cypress.svg',
+    zod: 'zod.svg',
   };
 
   constructor(
@@ -335,6 +344,9 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   nextProject(): void {
     this.selectedIndex = (this.selectedIndex + 1) % this.projects.length;
     this.selectedProject = this.projects[this.selectedIndex];
+    if (this.descriptionEl) {
+      this.descriptionEl.nativeElement.scrollTop = 0;
+    }
     this.cdr.markForCheck();
   }
 
