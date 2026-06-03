@@ -40,6 +40,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     width: 100%;
     padding-top: 10px;
     border-top: 1px solid rgba(variables.$main-color, 0.2);
@@ -216,6 +217,14 @@ section {
     left: 50%;
     transform: translateX(-50%);
 
+    @media (min-width: variables.$tablet-min), (orientation: landscape) {
+      transform: translateX(calc(-50% - 30px));
+    }
+
+    @media (min-width: variables.$desktop-min) {
+      transform: translateX(calc(-50% - 80px));
+    }
+
     .link-item {
       display: flex;
       align-items: center;
@@ -291,8 +300,6 @@ section {
 
     .footer-bottom {
       padding-top: 8px;
-      flex-direction: row;
-      justify-content: space-between;
       align-items: center;
     }
 
