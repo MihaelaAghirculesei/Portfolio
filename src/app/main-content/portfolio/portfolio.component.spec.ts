@@ -138,6 +138,16 @@ describe('PortfolioComponent', () => {
       expect(component.selectedIndex).toBe(0);
       expect(component.selectedProject).toBe(component.projects[0]);
     });
+
+    it('should reset descriptionEl scrollTop when element is present', () => {
+      const fakeEl = { nativeElement: { scrollTop: 99 } } as any;
+      component.descriptionEl = fakeEl;
+      component.selectedIndex = 0;
+
+      component.nextProject();
+
+      expect(fakeEl.nativeElement.scrollTop).toBe(0);
+    });
   });
 
   describe('Active Project Management', () => {
