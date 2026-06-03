@@ -79,7 +79,7 @@ export class SeoService {
       url: SITE_URL,
       description:
         'Portfolio of Mihaela Melania Aghirculesei, ' +
-        'Frontend Developer specializing in Angular and TypeScript.',
+        'Fullstack Developer specializing in Angular, TypeScript, and Python.',
       author: { '@type': 'Person', name: 'Mihaela Melania Aghirculesei' },
     };
     /* eslint-enable @typescript-eslint/naming-convention */
@@ -94,8 +94,8 @@ export class SeoService {
       url: SITE_URL,
       image: DEFAULT_OG_IMAGE,
       description,
-      jobTitle: 'Frontend Developer',
-      knowsAbout: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'SASS'],
+      jobTitle: 'Fullstack Developer',
+      knowsAbout: ['Angular', 'TypeScript', 'JavaScript', 'Python', 'FastAPI', 'HTML', 'CSS', 'SASS'],
       sameAs: [
         environment.social.github,
         environment.social.linkedin,

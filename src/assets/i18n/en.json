@@ -42,7 +42,7 @@
   "skills": {
     "title": "Skill Set",
     "overContent": "Technologies",
-    "introduction": "I transform ideas into engaging digital experiences! With Angular, TypeScript, SASS, and Material Design, I create modern applications that enhance user experience. I integrate REST APIs and Firebase for dynamic functionality, always seeking innovative solutions.",
+    "introduction": "I build complete applications from database to interface! With Angular, TypeScript, SASS, and Material Design on the frontend, and Python, FastAPI, and SQLAlchemy on the backend, I create modern fullstack applications. I integrate REST APIs and Firebase for dynamic functionality, always seeking innovative solutions.",
     "additionalSkillsTitle": "You Need",
     "additionalSkillsHighlight": "another skill?",
     "additionalSkillsText": "Do not see the technology your project needs? No problem! My curiosity and determination allow me to embrace new technological challenges. Every project is an opportunity to grow and deliver tailored solutions for your needs.",
@@ -52,17 +52,17 @@
   },
   "landingPage": {
     "greeting": "Hello! I am",
-    "role": "Frontend Developer",
-    "title": "Frontend Developer",
+    "role": "Fullstack Developer",
+    "title": "Fullstack Developer",
     "checkWork": "View my work",
     "contactMe": "Contact me",
-    "description": "I am a frontend developer based in Wolfsburg."
+    "description": "I am a fullstack developer based in Wolfsburg."
   },
   "aboutMe": {
     "title": "About me",
     "subtitle": "Who I am",
     "mainTitle": "About me",
-    "introText": "Hello! I am Mihaela, a front-end developer who believes that technology should be beautiful, accessible and meaningful. I love turning ideas into intuitive interfaces that people enjoy using.",
+    "introText": "Hello! I am Mihaela, a fullstack developer who believes that technology should be beautiful, accessible and meaningful. I love building complete applications — from robust APIs to intuitive interfaces that people enjoy using.",
     "visionTitle": "My vision:",
     "visionText": "For me, code is a form of creativity — every line tells a story and every interaction creates an experience.",
     "locationTitle": "Beyond borders:",
@@ -88,8 +88,8 @@
     "title": "Contact me",
     "subtitle": "Let us work together",
     "question": "Do you have a problem to solve?",
-    "description": "I am actively seeking opportunities where I can contribute my Angular, TypeScript, and JavaScript expertise to create exceptional user experiences that drive business success.",
-    "needDeveloper": "Need a Front-End Developer?",
+    "description": "I am actively seeking opportunities where I can contribute my Angular, TypeScript, and Python expertise — from intuitive user interfaces to robust REST APIs — to create exceptional digital experiences that drive business success.",
+    "needDeveloper": "Need a Fullstack Developer?",
     "letsTalk": "Let us talk!",
     "form": {
       "nameLabel": "What is your name?",
@@ -126,7 +126,7 @@
   },
   "footer": {
     "logoAriaLabel": "Scroll to top of the page",
-    "role": "Frontend Developer",
+    "role": "Fullstack Developer",
     "location": "Wolfsburg, Germany",
     "legalNotice": "Legal Notice",
     "legalNoticeAriaLabel": "View legal notice and imprint",
@@ -152,11 +152,11 @@
       "shortDescription": "Adventure Game"
     },
     "pokedex": {
-      "description": "An offline-first Pokédex PWA built in two phases: first entirely in vanilla JavaScript — no frameworks, just native browser APIs — to understand the platform from the ground up. Then migrated to TypeScript strict mode and Vite, without changing a single function. The Service Worker uses Workbox with separate caches for API responses (7 days, 300 entries) and sprites (30 days, 600 entries). Keyboard accessibility follows WAI-ARIA guidelines: focus trap inside the modal, ESC to close, arrow key navigation, and focus restoration to the previously active element. The holographic shimmer effect replicates physical trading cards: mouse position tracked via mousemove, injected into CSS custom properties --x/--y, and rendered through mix-blend-mode: color-dodge. 32 Vitest unit tests and ESLint with typescript-eslint strict ensure the correctness of the migrated codebase.",
+      "description": "An offline-first Pokédex PWA built in two phases: first entirely in vanilla JavaScript — no frameworks, just native browser APIs — to understand the platform from the ground up. Then migrated to TypeScript strict mode and Vite, without changing a single function. The Service Worker uses Workbox with separate caches for API responses (7 days, 300 entries) and sprites (30 days, 600 entries). Keyboard accessibility follows WAI-ARIA guidelines: focus trap inside the modal, ESC to close, arrow key navigation, and focus restoration to the previously active element. The holographic shimmer effect replicates physical trading cards: mouse position tracked via mousemove, injected into CSS custom properties --x/--y, and rendered through mix-blend-mode: color-dodge. 215 Vitest unit tests, a Playwright E2E suite (functional, accessibility via axe WCAG 2.1 AA, visual regression, and mobile), and ESLint with typescript-eslint strict ensure the correctness of the migrated codebase.",
       "shortDescription": "Offline-First Pokédex PWA"
     },
     "birthdayReminder": {
-      "description": "A modern Birthday Reminder App featuring NgRx State Management for predictable state flow, Offline-First architecture with IndexedDB, Google Calendar synchronization via OAuth 2.0, Cross-Platform support (Web PWA + Android with Capacitor), Push Notifications (Web + Native), and Material Design UI. Built with Angular 17, the app demonstrates enterprise-grade architecture with effects for side effects, entity adapters for normalized state, and a comprehensive notification system with customizable reminders.",
+      "description": "A modern Birthday Reminder App featuring NgRx State Management for predictable state flow, Offline-First architecture with IndexedDB, Google Calendar synchronization via OAuth 2.0, Cross-Platform support (Web PWA + Android with Capacitor), Push Notifications (Web + Native), and Material Design UI. Built with Angular 19, the app demonstrates enterprise-grade architecture with effects for side effects, entity adapters for normalized state, and a comprehensive notification system with customizable reminders.",
       "shortDescription": "Birthday Management App"
     },
     "todoApi": {
@@ -169,10 +169,10 @@
   },
   "banner": {
     "remoteWork": "Available for remote work",
-    "role": "Frontend Developer",
+    "role": "Fullstack Developer",
     "openToWork": "Open to work & learn",
     "location": "Based in Wolfsburg",
-    "skills": "Angular & TypeScript",
+    "skills": "Angular · Python · TypeScript",
     "passion": "Passionate about clean code"
   }
 }

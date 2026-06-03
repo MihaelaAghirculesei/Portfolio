@@ -7,7 +7,7 @@ import { Projects } from '../../interfaces/projects';
 const MOCK_PROJECT: Projects = {
   name: 'Join',
   technologies: ['Angular', 'Firebase'],
-  previewImg: 'assets/img/join-preview.png',
+  previewImg: 'assets/img/projects/join.webp',
   description: 'A task management tool built with Angular.',
   githubUrl: 'https://github.com/example/join',
   liveUrl: 'https://join.example.com',
