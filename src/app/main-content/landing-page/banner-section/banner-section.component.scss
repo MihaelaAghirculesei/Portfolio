@@ -76,3 +76,22 @@ $banner-bottom-offset: 100px;
     }
   }
 }
+
+// Mobile landscape: thin banner strip instead of hiding
+@media (orientation: landscape) and (max-height: 450px) {
+  .banner-container {
+    padding: 3px 0;
+    inset: auto 0 15px 0;
+
+
+    .banner-track {
+      span {
+        font-size: 12px;
+      }
+
+      .separator {
+        font-size: 10px;
+      }
+    }
+  }
+}
