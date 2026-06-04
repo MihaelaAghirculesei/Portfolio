@@ -1,4 +1,4 @@
-<section id="aboutMe" class="aboutMeSection">
+<section id="aboutMe" class="aboutMeSection" aria-labelledby="about-me-heading">
   <div class="contentWrapper">
     <article class="imgDiv" #imgDiv #animatedElement data-aos="fade-right" data-aos-duration="800">
       <div class="imageContainer" #imageContainer>
@@ -34,7 +34,7 @@
       data-aos-delay="200"
     >
       <header>
-        <h2 class="subtitle">{{ "aboutMe.subtitle" | translate }}</h2>
+        <h2 id="about-me-heading" class="subtitle">{{ "aboutMe.subtitle" | translate }}</h2>
       </header>
 
       <div class="aboutMeDiv">
