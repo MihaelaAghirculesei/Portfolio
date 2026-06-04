@@ -279,6 +279,7 @@
 .projects-hover-content {
   display: block;
   position: absolute;
+  left: calc(70% + 36px);
   right: 15px;
   transition: opacity variables.$transition-base;
   opacity: 1;
@@ -294,11 +295,13 @@
 
   .imageContainer {
     position: relative;
-    display: inline-block;
+    display: block;
+    width: 100%;
 
     img {
-      width: 370px;
-      height: 250px;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 370 / 250;
       object-fit: cover;
       object-position: left center;
       transform: translate(-20px, -20px);
@@ -309,10 +312,10 @@
 
     .lineDiv {
       position: absolute;
-      top: -15px;
-      left: -10px;
-      width: 370px;
-      height: 250px;
+      top: -6px;
+      left: -4px;
+      width: 100%;
+      aspect-ratio: 370 / 250;
       background: repeating-linear-gradient(135deg, variables.$main-color 0px, variables.$main-color 2px, transparent 2px, transparent 12px);
       opacity: 0.8;
       z-index: 1;
@@ -473,7 +476,23 @@
       @include mixins.primary-font;
       color: variables.$white;
       @include responsive-font(18px, 16px);
-      @include mixins.customScrollbar(12px, variables.$main-color-lighter, variables.$main-color);
+      @include mixins.customScrollbar(12px, variables.$main-color, variables.$black-pure);
+
+      &::-webkit-scrollbar-button:single-button {
+        background-color: variables.$main-color;
+        height: 12px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 8px 5px;
+      }
+
+      &::-webkit-scrollbar-button:single-button:vertical:decrement {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M4 0L0 5h8z' fill='%23000000'/%3E%3C/svg%3E");
+      }
+
+      &::-webkit-scrollbar-button:single-button:vertical:increment {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0L4 5 8 0z' fill='%23000000'/%3E%3C/svg%3E");
+      }
     }
   }
 
@@ -714,25 +733,6 @@
     }
   }
 
-  #projects .projectWrapper .projects-hover-content .imageContainer.imageContainer {
-    margin-top: -20px;
-
-    img {
-      width: 420px;
-      height: 300px;
-      padding-right: 21px;
-      margin-top: -20px;
-      transform: translate(-30px, -20px);
-    }
-
-    .lineDiv {
-      width: 420px;
-      height: 300px;
-      padding-right: 42px;
-      padding-bottom: 72px;
-      left: -20px;
-    }
-  }
 }
 
 @media only screen and (min-width: 1920px) {
@@ -747,30 +747,15 @@
     }
   }
 
-  #projects .projectWrapper .projects-hover-content .imageContainer.imageContainer {
-    margin-top: -20px;
-
-    img {
-      width: 480px;
-      height: 360px;
-      padding-right: 21px;
-      margin-top: -20px;
-      transform: translate(-30px, -20px);
-    }
-
-    .lineDiv {
-      width: 480px;
-      height: 360px;
-      padding-right: 42px;
-      padding-bottom: 72px;
-      left: -20px;
-    }
-  }
 }
 
 @media (min-width: variables.$tablet-large-min) {
   #projects .projectWrapper .projects-table.projects-table {
     width: 55%;
+  }
+
+  .projectWrapper .projects-hover-content {
+    left: calc(55% + 36px);
   }
 
   .project-modal {
@@ -798,14 +783,6 @@
     }
   }
 
-  #projects .projectWrapper .projects-hover-content .imageContainer.imageContainer {
-    margin-top: -20px;
-
-    img {
-      margin-top: -20px;
-      padding-right: 15px;
-    }
-  }
 }
 
 
@@ -891,6 +868,10 @@
     width: 60%;
   }
 
+  .projectWrapper .projects-hover-content {
+    left: calc(60% + 36px);
+  }
+
   .projectWrapper .projects-table tbody tr .project-name,
   .projectWrapper .projects-table tbody tr .project-tech {
     display: table-cell;
@@ -902,22 +883,15 @@
   .projectWrapper .projects-hover-content {
     right: 0;
   }
-  .projectWrapper .projects-hover-content .imageContainer {
-    img {
-      width: 220px;
-      height: 145px;
-      transform: translate(-15px, -15px);
-    }
-
-    .lineDiv {
-      width: 220px;
-      height: 145px;
-    }
-  }
 }
 
-@media (min-width: variables.$tablet-medium-min) and (max-width: variables.$tablet-small-min) {  .projectWrapper .projects-table.projects-table {
+@media (min-width: variables.$tablet-medium-min) and (max-width: variables.$tablet-small-min) {
+  .projectWrapper .projects-table.projects-table {
     width: 50%;
+  }
+
+  .projectWrapper .projects-hover-content {
+    left: calc(50% + 36px);
   }
 
   .projectWrapper .projects-table tbody tr.project-row.project-row {
