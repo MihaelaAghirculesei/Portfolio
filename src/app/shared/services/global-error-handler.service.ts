@@ -1,7 +1,7 @@
-import { ErrorHandler, Injectable, Inject, PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { ErrorHandler, Injectable, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoggerService } from './logger.service';
+import { PlatformService } from './platform.service';
 
 interface ErrorWithMessage {
   message?: string;
@@ -16,14 +16,13 @@ type ApplicationError = Error | HttpErrorResponse | ErrorWithMessage | unknown;
 })
 export class GlobalErrorHandler implements ErrorHandler {
   private readonly logger = inject(LoggerService);
-
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  private readonly platformService = inject(PlatformService);
 
   handleError(error: ApplicationError): void {
     const errorMessage = this.getErrorMessage(error);
     const errorStack = this.getErrorStack(error);
 
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.platformService.isBrowser) {
       this.logger.error('Global Error Handler:', {
         message: errorMessage,
         stack: errorStack,
