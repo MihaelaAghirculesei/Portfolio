@@ -5,14 +5,13 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  Inject,
-  PLATFORM_ID,
+  inject,
   QueryList,
   ViewChildren,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { PlatformService } from '../../shared/services/platform.service';
 import { AOS_CONFIG } from '../../shared/constants/app.constants';
 
 interface AboutSection {
@@ -51,9 +50,9 @@ export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren('iconWrapper') iconWrappers!: QueryList<ElementRef>;
   @ViewChildren('animatedElement') animatedElements!: QueryList<ElementRef>;
 
+  private readonly platformService = inject(PlatformService);
   private observer?: IntersectionObserver;
   private animationFrameId?: number;
-  private isBrowser: boolean;
   private eventListeners: (() => void)[] = [];
 
   readonly ASSETS_PATH = '../../assets/img/about-me/';
@@ -82,29 +81,25 @@ export class AboutMeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-  }
-
   trackByIcon(index: number, item: AboutSection): string {
     return item.icon;
   }
 
   ngOnInit(): void {
-    if (this.isBrowser) {
+    if (this.platformService.isBrowser) {
       this.initScrollAnimations();
     }
   }
 
   ngAfterViewInit(): void {
-    if (this.isBrowser) {
+    if (this.platformService.isBrowser) {
       this.initIntersectionObserver();
       this.addHoverEffects();
     }
   }
 
   ngOnDestroy(): void {
-    if (this.isBrowser) {
+    if (this.platformService.isBrowser) {
       if (this.observer) {
         this.observer.disconnect();
       }

@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { AboutMeComponent } from './about-me.component';
 import { AOS_CONFIG } from '../../shared/constants/app.constants';
 
@@ -10,7 +9,7 @@ describe('AboutMeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AboutMeComponent, TranslateModule.forRoot()],
+      imports: [AboutMeComponent],
       providers: [
         { provide: PLATFORM_ID, useValue: 'browser' }
       ]
@@ -27,7 +26,7 @@ describe('AboutMeComponent', () => {
     });
 
     it('should initialize with browser platform', () => {
-      expect(component['isBrowser']).toBe(true);
+      expect(component['platformService'].isBrowser).toBe(true);
     });
   });
 
@@ -213,17 +212,19 @@ describe('AboutMeComponent', () => {
 
   describe('Server-Side Rendering', () => {
     it('should handle SSR gracefully', () => {
-      const ssrComponent = new AboutMeComponent({} as object);
-      expect(ssrComponent['isBrowser']).toBe(false);
+      (component['platformService'] as any).isBrowser = false;
+      expect(component['platformService'].isBrowser).toBe(false);
+      (component['platformService'] as any).isBrowser = true;
     });
 
     it('should not initialize animations on server', () => {
-      const ssrComponent = new AboutMeComponent({} as object);
-      spyOn<any>(ssrComponent, 'initScrollAnimations');
+      (component['platformService'] as any).isBrowser = false;
+      spyOn<any>(component, 'initScrollAnimations');
 
-      ssrComponent.ngOnInit();
+      component.ngOnInit();
 
-      expect(ssrComponent['initScrollAnimations']).not.toHaveBeenCalled();
+      expect(component['initScrollAnimations']).not.toHaveBeenCalled();
+      (component['platformService'] as any).isBrowser = true;
     });
   });
 

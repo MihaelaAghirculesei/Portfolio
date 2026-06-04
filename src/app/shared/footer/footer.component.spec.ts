@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
 import { Directive, HostListener, Input } from '@angular/core';
 import { FooterComponent } from './footer.component';
 import { ScrollService } from '../services/scroll.service';
@@ -33,7 +32,7 @@ describe('FooterComponent', () => {
     mockLogger = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
 
     await TestBed.configureTestingModule({
-      imports: [FooterComponent, TranslateModule.forRoot(), MockRouterLinkDirective],
+      imports: [FooterComponent, MockRouterLinkDirective],
       providers: [
         { provide: Router, useValue: mockRouter },
         { provide: ScrollService, useValue: mockScrollService },

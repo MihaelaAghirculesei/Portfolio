@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '../pipes/translate.pipe';
 import { ScrollService } from '../services/scroll.service';
 import { LoggerService } from '../services/logger.service';
 

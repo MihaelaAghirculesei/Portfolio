@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslationService } from '../services/translation.service';
 import { HeaderComponent } from './header.component';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
@@ -11,7 +11,7 @@ describe('HeaderComponent', () => {
   let mockScrollService: jasmine.SpyObj<ScrollService>;
   let mockPlatformService: jasmine.SpyObj<PlatformService>;
   let mockRouter: jasmine.SpyObj<Router>;
-  let translateService: TranslateService;
+  let translateService: TranslationService;
 
   beforeEach(async () => {
     mockScrollService = jasmine.createSpyObj('ScrollService', [
@@ -32,7 +32,7 @@ describe('HeaderComponent', () => {
     mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent, TranslateModule.forRoot()],
+      imports: [HeaderComponent],
       providers: [
         { provide: ScrollService, useValue: mockScrollService },
         { provide: PlatformService, useValue: mockPlatformService },
@@ -42,7 +42,7 @@ describe('HeaderComponent', () => {
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
-    translateService = TestBed.inject(TranslateService);
+    translateService = TestBed.inject(TranslationService);
     fixture.detectChanges();
   });
 

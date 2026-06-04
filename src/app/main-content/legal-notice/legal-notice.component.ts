@@ -1,7 +1,8 @@
-import { Component, OnInit, PLATFORM_ID, Inject, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
-import { isPlatformBrowser, Location } from '@angular/common';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { Location } from '@angular/common';
+import { PlatformService } from '../../shared/services/platform.service';
 import { LoggerService } from '../../shared/services/logger.service';
 
 interface ContactInfo {
@@ -30,6 +31,7 @@ interface ExternalLink {
 })
 export class LegalNoticeComponent implements OnInit {
   private readonly logger = inject(LoggerService);
+  private readonly platformService = inject(PlatformService);
 
   readonly contactInfo: ContactInfo = {
     name: 'Mihaela Melania Aghirculesei',
@@ -50,12 +52,11 @@ export class LegalNoticeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: object,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.platformService.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }

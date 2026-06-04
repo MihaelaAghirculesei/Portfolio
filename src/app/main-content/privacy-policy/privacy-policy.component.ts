@@ -1,12 +1,13 @@
-import { isPlatformBrowser, Location } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Inject, PLATFORM_ID, inject } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
+import { TranslationService } from '../../shared/services/translation.service';
+import { PlatformService } from '../../shared/services/platform.service';
 import { Router } from '@angular/router';
 import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
     selector: 'app-privacy-policy',
-    imports: [TranslateModule],
+    imports: [],
     templateUrl: './privacy-policy.component.html',
     styleUrl: './privacy-policy.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -15,11 +16,11 @@ export class PrivacyPolicyComponent implements OnInit {
   private readonly logger = inject(LoggerService);
 
   constructor(
-    public translateService: TranslateService,
+    public translateService: TranslationService,
     private router: Router,
     private location: Location,
     private cdr: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId: object
+    private platformService: PlatformService
   ) {
     this.translateService.onLangChange.subscribe(() => {
       this.cdr.markForCheck();
@@ -27,7 +28,7 @@ export class PrivacyPolicyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.platformService.isBrowser) {
       window.scrollTo(0, 0);
     }
   }
