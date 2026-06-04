@@ -8,14 +8,15 @@ import {
 } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
+import { TranslationService } from '../../../shared/services/translation.service';
 import { timeout, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.service';
 import { LoggerService } from '../../../shared/services/logger.service';
 import { FocusTrapService } from '../../../shared/services/focus-trap.service';
 import { ScrollService } from '../../../shared/services/scroll.service';
-import { VALIDATION_CONFIG, HTTP_CONFIG, TIMING_CONFIG } from '../../../shared/constants/app.constants';
+import { VALIDATION_CONFIG, HTTP_CONFIG } from '../../../shared/constants/app.constants';
 import { environment } from '../../../../environments/environment';
 
 interface ContactData {
@@ -55,7 +56,7 @@ function trimmedMinLength(min: number): ValidatorFn {
 export class ContactFormComponent implements OnInit {
   private readonly FORM_STORAGE_KEY = 'contact-form-data';
   private readonly http = inject(HttpClient);
-  private readonly translate = inject(TranslateService);
+  private readonly translate = inject(TranslationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly ariaAnnouncer = inject(AriaAnnouncerService);
   private readonly logger = inject(LoggerService);
@@ -236,7 +237,7 @@ export class ContactFormComponent implements OnInit {
   private showPopupWithAnnouncement(message: string, translate = true): void {
     const announcement = translate ? this.translate.instant(message) : message;
     this.ariaAnnouncer.announce(announcement, 'assertive');
-    setTimeout(() => this.focusPopup(), TIMING_CONFIG.FOCUS_DELAY);
+    setTimeout(() => this.focusPopup(), 0);
   }
 
   private focusPopup(): void {
