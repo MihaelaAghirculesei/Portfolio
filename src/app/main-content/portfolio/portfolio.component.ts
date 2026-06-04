@@ -14,159 +14,53 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
-import { FocusTrapService } from '../../shared/services/focus-trap.service';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import {PassiveTouchStartDirective, PassiveTouchEndDirective} from '../../shared/directives/passive-listeners.directive';
-import {BREAKPOINTS, PORTFOLIO_CONFIG, TIMING_CONFIG} from '../../shared/constants/app.constants';
-import { environment } from '../../../environments/environment';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
+import { BREAKPOINTS, PORTFOLIO_CONFIG } from '../../shared/constants/app.constants';
+import { ProjectDataService } from './services/project-data.service';
+import { PortfolioOverlayService } from './services/portfolio-overlay.service';
 
 @Component({
-    selector: 'app-portfolio',
-    imports: [TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
-    templateUrl: './portfolio.component.html',
-    styleUrl: './portfolio.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-portfolio',
+  imports: [TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
+  templateUrl: './portfolio.component.html',
+  styleUrl: './portfolio.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [PortfolioOverlayService],
 })
 export class PortfolioComponent implements OnInit, OnDestroy {
   @ViewChild('projectsTable') projectsTable!: ElementRef;
   @ViewChild('descriptionEl') descriptionEl?: ElementRef<HTMLParagraphElement>;
 
-  projects: Projects[] = [
-    {
-      name: 'Birthday Reminder Pro',
-      technologies: [
-        'Angular', 'TypeScript', 'SCSS', 'NgRx', 'RxJS',
-        'Material Design', 'Capacitor', 'Firebase', 'IndexedDB', 'OAuth 2.0', 'PWA', 'SSR',
-        'Sentry', 'Cypress', 'Zod',
-      ],
-      previewImg: 'assets/img/projects/birthday-reminder.webp',
-      previewImgSrcset:
-        'assets/img/projects/birthday-reminder-400w.webp 400w, ' +
-        'assets/img/projects/birthday-reminder-800w.webp 800w, ' +
-        'assets/img/projects/birthday-reminder-1200w.webp 1200w',
-      githubUrl: environment.projects.birthdayReminder.github,
-      liveUrl: environment.projects.birthdayReminder.live,
-      isPersonal: true,
-      inProgress: true,
-    },
-    {
-      name: 'Join',
-      technologies: ['Firebase', 'Angular', 'TypeScript', 'HTML', 'SCSS'],
-      previewImg: 'assets/img/projects/join.webp',
-      previewImgSrcset:
-        'assets/img/projects/join-400w.webp 400w, ' +
-        'assets/img/projects/join-800w.webp 800w, ' +
-        'assets/img/projects/join-1200w.webp 1200w',
-      githubUrl: environment.projects.join.github,
-      liveUrl: environment.projects.join.live,
-      isTeam: true,
-    },
-    {
-      name: 'Todo Platform API',
-      technologies: [
-        'Python 3.11', 'TypeScript', 'FastAPI', 'SQLAlchemy 2.0',
-        'Pydantic 2', 'PostgreSQL', 'SQLite', 'Pytest', 'React', 'Vite',
-      ],
-      previewImg: 'assets/img/projects/todo-api.webp',
-      previewImgSrcset:
-        'assets/img/projects/todo-api-400w.webp 400w, ' +
-        'assets/img/projects/todo-api-800w.webp 800w, ' +
-        'assets/img/projects/todo-api-1200w.webp 1200w',
-      githubUrl: environment.projects.todoApi.github,
-      liveUrl: environment.projects.todoApi.live,
-      isTeam: true,
-    },
-    {
-      name: 'Pokédex',
-      technologies: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'REST API', 'PWA', 'Vite', 'Workbox', 'Vitest', 'Playwright'],
-      previewImg: 'assets/img/projects/pokedex.webp',
-      previewImgSrcset:
-        'assets/img/projects/pokedex-400w.webp 400w, ' +
-        'assets/img/projects/pokedex-800w.webp 800w, ' +
-        'assets/img/projects/pokedex-1200w.webp 1200w',
-      githubUrl: environment.projects.pokedex.github,
-      liveUrl: environment.projects.pokedex.live,
-    },
-    {
-      name: 'El Pollo Loco',
-      technologies: ['JavaScript', 'HTML', 'CSS'],
-      previewImg: 'assets/img/projects/el-pollo-locco.webp',
-      previewImgSrcset:
-        'assets/img/projects/el-pollo-locco-400w.webp 400w, ' +
-        'assets/img/projects/el-pollo-locco-800w.webp 800w, ' +
-        'assets/img/projects/el-pollo-locco-1200w.webp 1200w',
-      githubUrl: environment.projects.elPolloLoco.github,
-      liveUrl: environment.projects.elPolloLoco.live,
-    },
-  ];
+  protected readonly data = inject(ProjectDataService);
+  protected readonly overlay = inject(PortfolioOverlayService);
 
+  // ── Local UI state ──────────────────────────────────────────────────────────
   activeProjectId: number | null = null;
   hoverPosition: number | null = null;
   activePreview = '';
-
-  selectedProject: Projects | null = null;
-  selectedIndex = 0;
   isLandscape = false;
 
+  // ── Delegating accessors — keep the template and tests unchanged ────────────
+  get projects(): Projects[] { return this.data.projects; }
+
+  get selectedProject(): Projects | null { return this.overlay.selectedProject; }
+  set selectedProject(v: Projects | null) { this.overlay.selectedProject = v; }
+
+  get selectedIndex(): number { return this.overlay.selectedIndex; }
+  set selectedIndex(v: number) { this.overlay.selectedIndex = v; }
+
+  // ── Touch gesture state ─────────────────────────────────────────────────────
   private touchStartX = 0;
   private touchStartY = 0;
   private touchMoved = false;
-  private headerElement: HTMLElement | null = null;
-  private originalHeaderDisplay = '';
   private rafPending = false;
-  private boundOnTouchMove = this.onTouchMove.bind(this);
-  private readonly focusTrap = inject(FocusTrapService);
-
-  private readonly PROJECT_MAP = (() => {
-    const map: Record<string, string> = {};
-    map['Join'] = 'join';
-    map['El Pollo Loco'] = 'elPolloLoco';
-    map['Pokédex'] = 'pokedex';
-    map['Birthday Reminder Pro'] = 'birthdayReminder';
-    map['Todo Platform API'] = 'todoApi';
-    return map;
-  })();
-
-  private readonly ICONS_BASE = 'assets/img/projects/icons/';
-  private readonly TECH_ICONS: Record<string, string> = {
-    angular: 'angular.svg',
-    firebase: 'firebase.svg',
-    typescript: 'typescript.svg',
-    html: 'html.svg',
-    css: 'css.svg',
-    scss: 'sass.svg',
-    javascript: 'javascript.svg',
-    restapi: 'rest-api.svg',
-    ngrx: 'ngrx.svg',
-    rxjs: 'rxjs.svg',
-    materialdesign: 'material-design.svg',
-    capacitor: 'capacitor.svg',
-    indexeddb: 'indexeddb.svg',
-    oauth20: 'oauth.svg',
-    pwa: 'pwa.svg',
-    ssr: 'ssr.svg',
-    vite: 'vite.svg',
-    vitest: 'vitest.svg',
-    playwright: 'playwright.svg',
-    workbox: 'workbox.svg',
-    python311: 'python.svg',
-    fastapi: 'fastapi.svg',
-    sqlalchemy20: 'sqlalchemy.svg',
-    pydantic2: 'pydantic.svg',
-    sqlite: 'sqlite.svg',
-    postgresql: 'postgresql.svg',
-    pytest: 'pytest.svg',
-    react: 'react.svg',
-    sentry: 'sentry.svg',
-    cypress: 'cypress.svg',
-    zod: 'zod.svg',
-  };
+  private readonly boundOnTouchMove = this.onTouchMove.bind(this);
 
   constructor(
     private platformService: PlatformService,
-    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: object,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {
     this.checkOrientation();
   }
@@ -179,65 +73,34 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.platformService.enableScroll();
-
     if (isPlatformBrowser(this.platformId)) {
       document.removeEventListener('touchmove', this.boundOnTouchMove);
     }
   }
 
   @HostListener('window:resize')
-  onResize(): void {
-    this.checkOrientation();
-  }
+  onResize(): void { this.checkOrientation(); }
 
   @HostListener('window:orientationchange')
-  onOrientationChange(): void {
-    this.checkOrientation();
+  onOrientationChange(): void { this.checkOrientation(); }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (this.overlay.selectedProject) { this.closeOverlay(); }
   }
 
-  private checkOrientation(): void {
-    const window = this.platformService.getWindow();
-    if (window) {
-      this.isLandscape = window.innerWidth > window.innerHeight;
-      this.cdr.markForCheck();
-    }
-  }
+  setActiveProject(index: number, event: MouseEvent): void {
+    const win = this.platformService.getWindow();
+    if (!win || win.innerWidth <= BREAKPOINTS.MOBILE_MAX || this.rafPending) { return; }
 
-  setActiveProject(projectIndex: number, event: MouseEvent): void {
-    const windowObj = this.platformService.getWindow();
-    if (!windowObj || windowObj.innerWidth <= BREAKPOINTS.MOBILE_MAX) {
-      return;
-    }
-
-    if (this.rafPending) {
-      return;
-    }
-
-    this.activeProjectId = projectIndex;
-    this.activePreview = this.projects[projectIndex].previewImg;
-
-    const trElement = event.currentTarget as HTMLElement;
-
+    this.activeProjectId = index;
+    this.activePreview = this.data.projects[index].previewImg;
     this.rafPending = true;
+    const trElement = event.currentTarget as HTMLElement;
 
     requestAnimationFrame(() => {
       this.rafPending = false;
-
-      const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
-      const trRect = trElement.getBoundingClientRect();
-
-      const basePosition = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
-
-      const isSmallPreview = windowObj && windowObj.innerWidth <= BREAKPOINTS.SMALL_PREVIEW_MAX;
-
-      const offsetConfig = PORTFOLIO_CONFIG.POSITION_OFFSETS[`PROJECT_${projectIndex}` as keyof typeof PORTFOLIO_CONFIG.POSITION_OFFSETS];
-
-      if (offsetConfig) {
-        const extraOffset = isSmallPreview ? offsetConfig.SMALL_PREVIEW : 0;
-        this.hoverPosition = basePosition + offsetConfig.BASE + extraOffset;
-      } else {
-        this.hoverPosition = basePosition;
-      }
+      this.hoverPosition = this.calculatePreviewPosition(trElement, index, win);
       this.cdr.markForCheck();
     });
   }
@@ -249,139 +112,75 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  handleTouchStart(event: TouchEvent, projectIndex: number): void {
-    if (event.touches.length === 0) {
-      return;
-    }
-
+  handleTouchStart(event: TouchEvent, index: number): void {
+    if (!event.touches.length) { return; }
     this.touchStartX = event.touches[0].clientX;
     this.touchStartY = event.touches[0].clientY;
     this.touchMoved = false;
-    this.activeProjectId = projectIndex;
-    this.activePreview = this.projects[projectIndex].previewImg;
+    this.activeProjectId = index;
+    this.activePreview = this.data.projects[index].previewImg;
 
-    const trElement = event.currentTarget as HTMLElement;
     requestAnimationFrame(() => {
       const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
-      const trRect = trElement.getBoundingClientRect();
+      const trRect = (event.currentTarget as HTMLElement).getBoundingClientRect();
       this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
       this.cdr.markForCheck();
     });
   }
 
   handleTouchEnd(_event: TouchEvent, index: number): void {
-    if (!this.touchMoved) {
-      this.openProjectOverlay(this.projects[index], index);
-    }
-
+    if (!this.touchMoved) { this.openProjectOverlay(this.data.projects[index], index); }
     this.clearActiveProject();
   }
 
-  @HostListener('document:keydown.escape')
-  onEscapeKey(): void {
-    if (this.selectedProject) {
-      this.closeOverlay();
-    }
+  openProjectOverlay(project: Projects, index: number): void {
+    this.checkOrientation();
+    this.overlay.open(project, index);
+    this.cdr.markForCheck();
   }
 
-  private onTouchMove(event: TouchEvent): void {
-    if (event.touches.length === 0) {
-      return;
-    }
+  closeOverlay(): void {
+    this.overlay.close();
+    this.cdr.markForCheck();
+  }
 
+  nextProject(): void {
+    this.overlay.next(this.data.projects, this.descriptionEl);
+    this.cdr.markForCheck();
+  }
+
+  // ── Template helpers delegated to ProjectDataService ───────────────────────
+  hasTechIcon(technology: string): boolean { return this.data.hasTechIcon(technology); }
+  getTechIconPath(technology: string): string | null { return this.data.getTechIconPath(technology); }
+  getProjectScreenshotAlt(idx: number | null): string { return this.data.getProjectScreenshotAlt(idx); }
+  getProjectShortDescription(project: Projects): string { return this.data.getProjectShortDescription(project); }
+  getProjectDescription(project: Projects): string { return this.data.getProjectDescription(project); }
+
+  private onTouchMove(event: TouchEvent): void {
+    if (!event.touches.length) { return; }
     const deltaX = Math.abs(event.touches[0].clientX - this.touchStartX);
     const deltaY = Math.abs(event.touches[0].clientY - this.touchStartY);
-
     if (deltaX > PORTFOLIO_CONFIG.TOUCH_THRESHOLD || deltaY > PORTFOLIO_CONFIG.TOUCH_THRESHOLD) {
       this.touchMoved = true;
       this.clearActiveProject();
     }
   }
 
-  openProjectOverlay(project: Projects, index: number): void {
-    this.selectedProject = project;
-    this.selectedIndex = index;
-    this.checkOrientation();
-
-    this.platformService.disableScroll();
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.focusTrap.saveFocus();
-
-      this.headerElement = document.querySelector('header');
-      if (this.headerElement) {
-        this.originalHeaderDisplay =
-          this.headerElement.style.display || 'block';
-        this.headerElement.style.display = 'none';
-      }
-
-      setTimeout(() => {
-        this.focusTrap.activate('.project-modal', false);
-        const modal = document.querySelector('.project-modal') as HTMLElement;
-        if (modal) {
-          modal.focus();
-        }
-      }, TIMING_CONFIG.MODAL_FOCUS_DELAY);
+  private checkOrientation(): void {
+    const win = this.platformService.getWindow();
+    if (win) {
+      this.isLandscape = win.innerWidth > win.innerHeight;
+      this.cdr.markForCheck();
     }
-    this.cdr.markForCheck();
   }
 
-  closeOverlay(): void {
-    this.selectedProject = null;
-
-    this.platformService.enableScroll();
-
-    if (isPlatformBrowser(this.platformId)) {
-      if (this.headerElement) {
-        this.headerElement.style.display = this.originalHeaderDisplay;
-      }
-
-      this.focusTrap.deactivate(true);
-    }
-    this.cdr.markForCheck();
+  private calculatePreviewPosition(trElement: HTMLElement, index: number, win: Window): number {
+    const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
+    const trRect = trElement.getBoundingClientRect();
+    const base = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
+    const hoverOffset = this.data.projects[index]?.hoverOffset;
+    if (!hoverOffset) { return base; }
+    const isSmall = win.innerWidth <= BREAKPOINTS.SMALL_PREVIEW_MAX;
+    return base + hoverOffset.base + (isSmall ? hoverOffset.smallPreview : 0);
   }
-
-  nextProject(): void {
-    this.selectedIndex = (this.selectedIndex + 1) % this.projects.length;
-    this.selectedProject = this.projects[this.selectedIndex];
-    if (this.descriptionEl) {
-      this.descriptionEl.nativeElement.scrollTop = 0;
-    }
-    this.cdr.markForCheck();
-  }
-
-  getProjectScreenshotAlt(projectIndex: number | null): string {
-    if (projectIndex === null || projectIndex < 0 || projectIndex >= this.projects.length) {
-      return 'Project screenshot';
-    }
-    const projectName = this.projects[projectIndex]?.name || 'Project';
-    return `${projectName} screenshot`;
-  }
-
-  getProjectShortDescription(project: Projects): string {
-    return this.getProjectTranslation(project, 'shortDescription');
-  }
-
-  getProjectDescription(project: Projects): string {
-    return this.getProjectTranslation(project, 'description');
-  }
-
-  private getProjectTranslation(project: Projects, type: 'shortDescription' | 'description'): string {
-    const projectKey = this.PROJECT_MAP[project.name];
-    if (!projectKey) {
-      return type === 'description' ? (project.description ?? '') : this.translate.instant(`projects.default.${type}`);
-    }
-    return this.translate.instant(`projects.${projectKey}.${type}`);
-  }
-
-  hasTechIcon(technology: string): boolean {
-    return this.getTechIconPath(technology) !== null;
-  }
-
-  getTechIconPath(technology: string): string | null {
-    const normalized = technology.replace(/[-\s.]/g, '').toLowerCase();
-    const icon = this.TECH_ICONS[normalized];
-    return icon ? this.ICONS_BASE + icon : null;
-  }
-
 }
