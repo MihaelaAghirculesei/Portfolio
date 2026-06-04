@@ -198,32 +198,32 @@ export class ContactFormComponent implements OnInit {
       timestamp: new Date().toISOString(),
     });
 
-    let msg: string;
+    let errorKey: string;
     if (errorLike.name === 'TimeoutError') {
-      msg = 'Request timeout. Please try again.';
+      errorKey = 'contact.form.errors.timeout';
     } else if (
       (error instanceof HttpErrorResponse && error.status === 0) ||
       errorLike.status === 0
     ) {
-      msg = 'Network error. Please check your connection.';
+      errorKey = 'contact.form.errors.network';
     } else if (
       (error instanceof HttpErrorResponse &&
         error.status >= HTTP_CONFIG.STATUS_SERVER_ERROR) ||
       (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_SERVER_ERROR)
     ) {
-      msg = 'Server error. Please try again later.';
+      errorKey = 'contact.form.errors.server';
     } else if (
       (error instanceof HttpErrorResponse &&
         error.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) ||
       (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR)
     ) {
-      msg = 'Bad request. Please check your input.';
+      errorKey = 'contact.form.errors.client';
     } else {
-      msg = errorLike.message || 'An error occurred while sending your message.';
+      errorKey = 'contact.form.errors.generic';
     }
-    this.errorMessage.set(msg);
+    this.errorMessage.set(errorKey);
 
-    const errorMsg = `${this.translate.instant('contact.form.errorMessage')} ${this.errorMessage()}`;
+    const errorMsg = `${this.translate.instant('contact.form.errorMessage')} ${this.translate.instant(errorKey)}`;
     this.showPopupWithAnnouncement(errorMsg, false);
   }
 
