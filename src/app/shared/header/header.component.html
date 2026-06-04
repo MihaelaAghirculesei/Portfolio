@@ -107,7 +107,7 @@
     [attr.aria-hidden]="!isMenuOpen"
     [attr.inert]="!isMenuOpen ? true : null"
   >
-    <div class="dropdown-content">
+    <nav [attr.aria-label]="'header.mobileNavAriaLabel' | translate">
       <ul>
         <li>
           <a
@@ -170,6 +170,6 @@
           <span class="off" aria-hidden="true">DE</span>
         </li>
       </ul>
-    </div>
+    </nav>
   </div>
 </header>
