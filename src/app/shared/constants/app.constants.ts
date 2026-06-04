@@ -26,28 +26,6 @@ export const ANIMATION_CONFIG = {
 export const PORTFOLIO_CONFIG = {
   TOUCH_THRESHOLD: 10,
   PREVIEW_BASE_OFFSET: 100,
-  POSITION_OFFSETS: {
-    PROJECT_0: {
-      BASE: 70,
-      SMALL_PREVIEW: -10
-    },
-    PROJECT_1: {
-      BASE: 15,
-      SMALL_PREVIEW: 30
-    },
-    PROJECT_2: {
-      BASE: -40,
-      SMALL_PREVIEW: 70
-    },
-    PROJECT_3: {
-      BASE: -40,
-      SMALL_PREVIEW: 70
-    },
-    PROJECT_4: {
-      BASE: -40,
-      SMALL_PREVIEW: 70
-    }
-  }
 } as const;
 
 export const TIMING_CONFIG = {

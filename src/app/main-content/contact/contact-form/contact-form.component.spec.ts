@@ -250,35 +250,35 @@ describe('ContactFormComponent', () => {
       component['handleError']({ status: 500 });
       flush();
       expect(component.submissionStatus()).toBe('error');
-      expect(component.errorMessage()).toBe('Server error. Please try again later.');
+      expect(component.errorMessage()).toBe('contact.form.errors.server');
     }));
 
     it('should handle client error (status >= 400)', fakeAsync(() => {
       component['handleError']({ status: 400 });
       flush();
       expect(component.submissionStatus()).toBe('error');
-      expect(component.errorMessage()).toBe('Bad request. Please check your input.');
+      expect(component.errorMessage()).toBe('contact.form.errors.client');
     }));
 
     it('should handle timeout error', fakeAsync(() => {
       component['handleError']({ name: 'TimeoutError' });
       flush();
       expect(component.submissionStatus()).toBe('error');
-      expect(component.errorMessage()).toBe('Request timeout. Please try again.');
+      expect(component.errorMessage()).toBe('contact.form.errors.timeout');
     }));
 
     it('should handle generic error with message', fakeAsync(() => {
       component['handleError']({ message: 'Custom error message' });
       flush();
       expect(component.submissionStatus()).toBe('error');
-      expect(component.errorMessage()).toBe('Custom error message');
+      expect(component.errorMessage()).toBe('contact.form.errors.generic');
     }));
 
     it('should handle generic error without message', fakeAsync(() => {
       component['handleError']({});
       flush();
       expect(component.submissionStatus()).toBe('error');
-      expect(component.errorMessage()).toBe('An error occurred while sending your message.');
+      expect(component.errorMessage()).toBe('contact.form.errors.generic');
     }));
 
     it('should reset form on error', fakeAsync(() => {
@@ -439,19 +439,19 @@ describe('ContactFormComponent', () => {
     it('should handle network error (status 0) via HttpErrorResponse', fakeAsync(() => {
       component['handleError'](new HttpErrorResponse({ status: 0, statusText: 'Unknown Error' }));
       flush();
-      expect(component.errorMessage()).toBe('Network error. Please check your connection.');
+      expect(component.errorMessage()).toBe('contact.form.errors.network');
     }));
 
     it('should handle server error via HttpErrorResponse instanceof check', fakeAsync(() => {
       component['handleError'](new HttpErrorResponse({ status: 500, statusText: 'Server Error' }));
       flush();
-      expect(component.errorMessage()).toBe('Server error. Please try again later.');
+      expect(component.errorMessage()).toBe('contact.form.errors.server');
     }));
 
     it('should handle client error via HttpErrorResponse instanceof check', fakeAsync(() => {
       component['handleError'](new HttpErrorResponse({ status: 400, statusText: 'Bad Request' }));
       flush();
-      expect(component.errorMessage()).toBe('Bad request. Please check your input.');
+      expect(component.errorMessage()).toBe('contact.form.errors.client');
     }));
 
     it('should fall back to UnknownError for error with no name and no constructor name', fakeAsync(() => {

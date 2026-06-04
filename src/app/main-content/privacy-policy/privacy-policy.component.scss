@@ -7,7 +7,7 @@
   padding: 0;
 }
 
-section {
+article {
   min-height: calc(100vh - 160px);
   background-color: variables.$gradient-start;
   @include mixins.dFlex(center, flex-start);

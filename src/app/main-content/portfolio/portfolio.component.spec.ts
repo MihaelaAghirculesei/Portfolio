@@ -3,12 +3,16 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PortfolioComponent } from './portfolio.component';
 import { PlatformService } from '../../shared/services/platform.service';
 import { ElementRef, PLATFORM_ID } from '@angular/core';
+import { PortfolioOverlayService } from './services/portfolio-overlay.service';
+import { ProjectDataService } from './services/project-data.service';
 
 describe('PortfolioComponent', () => {
   let component: PortfolioComponent;
   let fixture: ComponentFixture<PortfolioComponent>;
   let platformService: PlatformService;
   let translateService: TranslateService;
+  let overlayService: PortfolioOverlayService;
+  let projectDataService: ProjectDataService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,6 +27,8 @@ describe('PortfolioComponent', () => {
     component = fixture.componentInstance;
     platformService = TestBed.inject(PlatformService);
     translateService = TestBed.inject(TranslateService);
+    overlayService = fixture.debugElement.injector.get(PortfolioOverlayService);
+    projectDataService = TestBed.inject(ProjectDataService);
 
     // Mock projectsTable ViewChild
     component.projectsTable = {
@@ -367,7 +373,11 @@ describe('PortfolioComponent', () => {
     });
 
     it('should return default description for unknown project', () => {
-      const unknownProject = { name: 'Unknown', technologies: [], previewImg: '', description: 'Default desc', githubUrl: '', liveUrl: '' };
+      const unknownProject = {
+        id: '', name: 'Unknown', technologies: [],
+        previewImg: '', description: 'Default desc',
+        githubUrl: '', liveUrl: '',
+      };
 
       const desc = component.getProjectDescription(unknownProject);
 
@@ -427,25 +437,6 @@ describe('PortfolioComponent', () => {
     it('should have icons for Python 3.11 and FastAPI', () => {
       expect(component.hasTechIcon('Python 3.11')).toBe(true);
       expect(component.hasTechIcon('FastAPI')).toBe(true);
-    });
-  });
-
-  describe('Hover and Leave Handlers', () => {
-    it('should set active project on hover', () => {
-      spyOn(component, 'setActiveProject');
-      const mockEvent = new MouseEvent('mouseenter');
-
-      component.setActiveProject(0, mockEvent);
-
-      expect(component.setActiveProject).toHaveBeenCalledWith(0, mockEvent);
-    });
-
-    it('should clear active project on leave', () => {
-      spyOn(component, 'clearActiveProject');
-
-      component.clearActiveProject();
-
-      expect(component.clearActiveProject).toHaveBeenCalled();
     });
   });
 
@@ -517,17 +508,17 @@ describe('PortfolioComponent', () => {
     it('should use base position when offsetConfig is missing', fakeAsync(() => {
       Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1920 });
 
-      const projects = component.projects;
-      component.projects = [
-        ...projects,
-        { name: 'NoOffset', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '' }
-      ] as any;
+      const original = projectDataService.projects;
+      projectDataService.projects = [
+        ...original,
+        { id: 'noOffset', name: 'NoOffset', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' }
+      ];
 
       component.setActiveProject(5, mockEvent);
       tick(16);
 
       expect(component.hoverPosition).not.toBeNull();
-      component.projects = projects;
+      projectDataService.projects = original;
     }));
   });
 
@@ -594,7 +585,7 @@ describe('PortfolioComponent', () => {
       component.openProjectOverlay(component.projects[0], 0);
       tick(200);
 
-      expect(component['originalHeaderDisplay']).toBe('block');
+      expect(overlayService['originalHeaderDisplay']).toBe('block');
       document.body.removeChild(header);
     }));
 
@@ -619,13 +610,13 @@ describe('PortfolioComponent', () => {
 
   describe('getProjectScreenshotAlt fallback', () => {
     it('should return "Project screenshot" when project name is empty', () => {
-      const origProjects = component.projects;
-      component.projects = [{ name: '', technologies: [], previewImg: '', description: '', githubUrl: '', liveUrl: '' }] as any;
+      const origProjects = projectDataService.projects;
+      projectDataService.projects = [{ id: '', name: '', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' }];
 
       const alt = component.getProjectScreenshotAlt(0);
 
       expect(alt).toBe('Project screenshot');
-      component.projects = origProjects;
+      projectDataService.projects = origProjects;
     });
   });
 

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "birthdayReminder",
+    "name": "Birthday Reminder Pro",
+    "technologies": [
+      "Angular", "TypeScript", "SCSS", "NgRx", "RxJS",
+      "Material Design", "Capacitor", "Firebase", "IndexedDB", "OAuth 2.0",
+      "PWA", "SSR", "Sentry", "Cypress", "Zod"
+    ],
+    "previewImg": "assets/img/projects/birthday-reminder.webp",
+    "previewImgSrcset": "assets/img/projects/birthday-reminder-400w.webp 400w, assets/img/projects/birthday-reminder-800w.webp 800w, assets/img/projects/birthday-reminder-1200w.webp 1200w",
+    "githubUrl": "https://github.com/MihaelaAghirculesei/birthday-reminder-app",
+    "liveUrl": "https://birthday-reminder-aghirculesei.pages.dev",
+    "isPersonal": true,
+    "inProgress": true,
+    "hoverOffset": { "base": 70, "smallPreview": -10 }
+  },
+  {
+    "id": "join",
+    "name": "Join",
+    "technologies": ["Firebase", "Angular", "TypeScript", "HTML", "SCSS"],
+    "previewImg": "assets/img/projects/join.webp",
+    "previewImgSrcset": "assets/img/projects/join-400w.webp 400w, assets/img/projects/join-800w.webp 800w, assets/img/projects/join-1200w.webp 1200w",
+    "githubUrl": "https://github.com/MihaelaAghirculesei/join-kanban-board",
+    "liveUrl": "https://join-aghirculesei.pages.dev",
+    "isTeam": true,
+    "hoverOffset": { "base": 15, "smallPreview": 30 }
+  },
+  {
+    "id": "todoApi",
+    "name": "Todo Platform API",
+    "technologies": [
+      "Python 3.11", "TypeScript", "FastAPI", "SQLAlchemy 2.0",
+      "Pydantic 2", "PostgreSQL", "SQLite", "Pytest", "React", "Vite"
+    ],
+    "previewImg": "assets/img/projects/todo-api.webp",
+    "previewImgSrcset": "assets/img/projects/todo-api-400w.webp 400w, assets/img/projects/todo-api-800w.webp 800w, assets/img/projects/todo-api-1200w.webp 1200w",
+    "githubUrl": "https://github.com/MihaelaAghirculesei/todo-platform",
+    "liveUrl": "https://todo-frontend-aghirculesei.onrender.com",
+    "isTeam": true,
+    "hoverOffset": { "base": -40, "smallPreview": 70 }
+  },
+  {
+    "id": "pokedex",
+    "name": "Pokédex",
+    "technologies": [
+      "JavaScript", "TypeScript", "HTML", "CSS", "REST API",
+      "PWA", "Vite", "Workbox", "Vitest", "Playwright"
+    ],
+    "previewImg": "assets/img/projects/pokedex.webp",
+    "previewImgSrcset": "assets/img/projects/pokedex-400w.webp 400w, assets/img/projects/pokedex-800w.webp 800w, assets/img/projects/pokedex-1200w.webp 1200w",
+    "githubUrl": "https://github.com/MihaelaAghirculesei/Pokedex",
+    "liveUrl": "https://pokedex-aghirculesei.pages.dev",
+    "hoverOffset": { "base": -40, "smallPreview": 70 }
+  },
+  {
+    "id": "elPolloLoco",
+    "name": "El Pollo Loco",
+    "technologies": ["JavaScript", "HTML", "CSS"],
+    "previewImg": "assets/img/projects/el-pollo-locco.webp",
+    "previewImgSrcset": "assets/img/projects/el-pollo-locco-400w.webp 400w, assets/img/projects/el-pollo-locco-800w.webp 800w, assets/img/projects/el-pollo-locco-1200w.webp 1200w",
+    "githubUrl": "https://github.com/MihaelaAghirculesei/El-Pollo-Loco",
+    "liveUrl": "https://el-pollo-loco-aghirculesei.pages.dev",
+    "hoverOffset": { "base": -40, "smallPreview": 70 }
+  }
+]
