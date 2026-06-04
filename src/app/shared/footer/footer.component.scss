@@ -10,7 +10,7 @@ $footer-section-gap: 12px;
 
 $logo-width: 80px;
 
-section {
+footer {
   background-color: variables.$gradient-start;
   padding: $footer-padding 0;
   margin-top: $footer-margin-top;
@@ -246,7 +246,7 @@ section {
 }
 
 @media (max-width: variables.$tablet-max) {
-  section {
+  footer {
     padding: $footer-padding-compact 0;
 
     .content-width {
@@ -316,7 +316,7 @@ section {
 }
 
 @media (max-width: variables.$mobile-max) {
-  section {
+  footer {
     .footer-top {
       gap: 8px;
     }
@@ -380,7 +380,7 @@ section {
 }
 
 @media (max-width: variables.$mobile-small-max) {
-  section {
+  footer {
     padding: $footer-padding-compact 0;
 
     .content-width {
