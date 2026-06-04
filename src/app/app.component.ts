@@ -1,13 +1,13 @@
-import { Component, OnInit, DestroyRef, inject, ChangeDetectionStrategy, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from './shared/services/translation.service';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { isPlatformBrowser } from '@angular/common';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { LoggerService } from './shared/services/logger.service';
 import { SeoService, SeoConfig } from './shared/services/seo.service';
+import { PlatformService } from './shared/services/platform.service';
 import { environment } from '../environments/environment';
 
 const SITE_URL = environment.siteUrl;
@@ -54,11 +54,11 @@ const SEO_CONFIGS = new Map<string, SeoConfig>([
 })
 export class AppComponent implements OnInit {
   private readonly router = inject(Router);
-  private readonly translate = inject(TranslateService);
+  private readonly translate = inject(TranslationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly logger = inject(LoggerService);
   private readonly seoService = inject(SeoService);
-  private readonly platformId = inject(PLATFORM_ID);
+  private readonly platformService = inject(PlatformService);
 
   ngOnInit(): void {
     this.initializeTranslation();
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     this.translate.addLangs(['en', 'de']);
     this.translate.setDefaultLang('en');
 
-    const saved = isPlatformBrowser(this.platformId)
+    const saved = this.platformService.isBrowser
       ? localStorage.getItem('lang')
       : null;
     const lang = saved === 'de' ? 'de' : 'en';

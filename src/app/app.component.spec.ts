@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Router, NavigationEnd, RouterOutlet, ActivatedRoute } from '@angular/router';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslationService } from './shared/services/translation.service';
 import { Component, NO_ERRORS_SCHEMA, PLATFORM_ID } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
@@ -36,7 +36,7 @@ describe('AppComponent', () => {
     mockSeoService = jasmine.createSpyObj('SeoService', ['update']);
 
     await TestBed.configureTestingModule({
-      imports: [AppComponent, TranslateModule.forRoot(), MockRouterOutlet],
+      imports: [AppComponent, MockRouterOutlet],
       providers: [
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
@@ -48,7 +48,7 @@ describe('AppComponent', () => {
       add: { imports: [MockRouterOutlet] }
     }).compileComponents();
 
-    const translateService = TestBed.inject(TranslateService);
+    const translateService = TestBed.inject(TranslationService);
     spyOn(translateService, 'setDefaultLang');
     spyOn(translateService, 'use');
 
@@ -61,7 +61,7 @@ describe('AppComponent', () => {
   });
 
   it('should initialize translation service with English', () => {
-    const translateService = TestBed.inject(TranslateService);
+    const translateService = TestBed.inject(TranslationService);
     component.ngOnInit();
     expect(translateService.setDefaultLang).toHaveBeenCalledWith('en');
     expect(translateService.use).toHaveBeenCalledWith('en');
@@ -95,7 +95,7 @@ describe('AppComponent', () => {
 
   it('should use German when localStorage lang is de', () => {
     localStorage.setItem('lang', 'de');
-    const translateService = TestBed.inject(TranslateService);
+    const translateService = TestBed.inject(TranslationService);
 
     component.ngOnInit();
 
@@ -127,7 +127,7 @@ describe('AppComponent on server platform', () => {
     serverRouter.serializeUrl.and.returnValue('/');
 
     await TestBed.configureTestingModule({
-      imports: [AppComponent, TranslateModule.forRoot(), MockRouterOutlet],
+      imports: [AppComponent, MockRouterOutlet],
       providers: [
         { provide: Router, useValue: serverRouter },
         { provide: ActivatedRoute, useValue: { snapshot: { params: {}, queryParams: {}, data: {} } } },
@@ -139,7 +139,7 @@ describe('AppComponent on server platform', () => {
       add: { imports: [MockRouterOutlet] }
     }).compileComponents();
 
-    const translateService = TestBed.inject(TranslateService);
+    const translateService = TestBed.inject(TranslationService);
     spyOn(translateService, 'setDefaultLang');
     spyOn(translateService, 'use');
 
@@ -148,7 +148,7 @@ describe('AppComponent on server platform', () => {
   });
 
   it('should default to English on server (localStorage not available)', () => {
-    const translateService = TestBed.inject(TranslateService);
+    const translateService = TestBed.inject(TranslationService);
     component.ngOnInit();
     expect(translateService.use).toHaveBeenCalledWith('en');
   });
@@ -169,7 +169,7 @@ describe('AppComponent router error handling', () => {
     errorRouter.serializeUrl.and.returnValue('/');
 
     await TestBed.configureTestingModule({
-      imports: [AppComponent, TranslateModule.forRoot(), MockRouterOutlet],
+      imports: [AppComponent, MockRouterOutlet],
       providers: [
         { provide: Router, useValue: errorRouter },
         { provide: ActivatedRoute, useValue: { snapshot: { params: {}, queryParams: {}, data: {} } } },
@@ -181,7 +181,7 @@ describe('AppComponent router error handling', () => {
       add: { imports: [MockRouterOutlet] }
     }).compileComponents();
 
-    const translateService = TestBed.inject(TranslateService);
+    const translateService = TestBed.inject(TranslationService);
     spyOn(translateService, 'setDefaultLang');
     spyOn(translateService, 'use');
   });
