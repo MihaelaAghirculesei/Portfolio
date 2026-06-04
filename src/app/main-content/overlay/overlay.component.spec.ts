@@ -5,6 +5,7 @@ import { OverlayComponent } from './overlay.component';
 import { Projects } from '../../interfaces/projects';
 
 const MOCK_PROJECT: Projects = {
+  id: 'join',
   name: 'Join',
   technologies: ['Angular', 'Firebase'],
   previewImg: 'assets/img/projects/join.webp',

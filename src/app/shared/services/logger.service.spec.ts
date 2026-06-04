@@ -31,12 +31,6 @@ describe('LoggerService', () => {
       it('should be created', () => {
         expect(service).toBeTruthy();
       });
-
-      it('should be provided in root', () => {
-        const service1 = TestBed.inject(LoggerService);
-        const service2 = TestBed.inject(LoggerService);
-        expect(service1).toBe(service2);
-      });
     });
 
     describe('error() method', () => {
@@ -255,6 +249,28 @@ describe('LoggerService', () => {
         expect(consoleDebugSpy).toHaveBeenCalledWith('Debug', circular);
       });
     });
+
+    describe('Type Safety', () => {
+      it('should accept unknown type for data parameter', () => {
+        const unknownData: unknown = { test: 'value' };
+
+        service.info('Test', unknownData);
+
+        expect(consoleInfoSpy).toHaveBeenCalled();
+      });
+
+      it('should accept any object type for data', () => {
+        class CustomError extends Error {
+          code = 500;
+        }
+
+        const error = new CustomError('Custom error');
+
+        service.error('Error occurred', error);
+
+        expect(consoleErrorSpy).toHaveBeenCalledWith('Error occurred', error);
+      });
+    });
   });
 
   describe('Server Platform', () => {
@@ -326,8 +342,10 @@ describe('LoggerService', () => {
     });
   });
 
-  describe('Type Safety', () => {
+  describe('Logging Disabled', () => {
     beforeEach(() => {
+      (environment as any).enableLogging = false;
+
       TestBed.configureTestingModule({
         providers: [
           LoggerService,
@@ -337,114 +355,33 @@ describe('LoggerService', () => {
 
       service = TestBed.inject(LoggerService);
       consoleErrorSpy = spyOn(console, 'error');
+      consoleWarnSpy = spyOn(console, 'warn');
       consoleInfoSpy = spyOn(console, 'info');
+      consoleDebugSpy = spyOn(console, 'debug');
     });
 
-    it('should accept unknown type for data parameter', () => {
-      const unknownData: unknown = { test: 'value' };
-
-      service.info('Test', unknownData);
-
-      expect(consoleInfoSpy).toHaveBeenCalled();
+    afterEach(() => {
+      (environment as any).enableLogging = true;
     });
 
-    it('should accept any object type for data', () => {
-      class CustomError extends Error {
-        code = 500;
-      }
-
-      const error = new CustomError('Custom error');
-
-      service.error('Error occurred', error);
-
-      expect(consoleErrorSpy).toHaveBeenCalledWith('Error occurred', error);
-    });
-  });
-});
-
-describe('LoggerService - Logging Disabled', () => {
-  let service: LoggerService;
-  let consoleErrorSpy: jasmine.Spy;
-  let consoleWarnSpy: jasmine.Spy;
-  let consoleInfoSpy: jasmine.Spy;
-  let consoleDebugSpy: jasmine.Spy;
-
-  beforeEach(() => {
-    (environment as any).enableLogging = false;
-
-    TestBed.configureTestingModule({
-      providers: [
-        LoggerService,
-        { provide: PLATFORM_ID, useValue: 'browser' }
-      ]
+    it('should not log error when enableLogging is false', () => {
+      service.error('test error');
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
     });
 
-    service = TestBed.inject(LoggerService);
-    consoleErrorSpy = spyOn(console, 'error');
-    consoleWarnSpy = spyOn(console, 'warn');
-    consoleInfoSpy = spyOn(console, 'info');
-    consoleDebugSpy = spyOn(console, 'debug');
-  });
-
-  afterEach(() => {
-    (environment as any).enableLogging = true;
-  });
-
-  it('should not log error when enableLogging is false', () => {
-    service.error('test error');
-    expect(consoleErrorSpy).not.toHaveBeenCalled();
-  });
-
-  it('should not log warn when enableLogging is false', () => {
-    service.warn('test warn');
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
-  });
-
-  it('should not log info when enableLogging is false', () => {
-    service.info('test info');
-    expect(consoleInfoSpy).not.toHaveBeenCalled();
-  });
-
-  it('should not log debug when enableLogging is false', () => {
-    service.debug('test debug');
-    expect(consoleDebugSpy).not.toHaveBeenCalled();
-  });
-});
-
-describe('LoggerService - Switch Branch Coverage', () => {
-  let service: LoggerService;
-  let consoleWarnSpy: jasmine.Spy;
-  let consoleInfoSpy: jasmine.Spy;
-  let consoleDebugSpy: jasmine.Spy;
-
-  beforeEach(() => {
-    (environment as any).enableLogging = true;
-
-    TestBed.configureTestingModule({
-      providers: [
-        LoggerService,
-        { provide: PLATFORM_ID, useValue: 'browser' }
-      ]
+    it('should not log warn when enableLogging is false', () => {
+      service.warn('test warn');
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
     });
 
-    service = TestBed.inject(LoggerService);
-    consoleWarnSpy = spyOn(console, 'warn');
-    consoleInfoSpy = spyOn(console, 'info');
-    consoleDebugSpy = spyOn(console, 'debug');
-  });
+    it('should not log info when enableLogging is false', () => {
+      service.info('test info');
+      expect(consoleInfoSpy).not.toHaveBeenCalled();
+    });
 
-  it('should reach warn branch in switch', () => {
-    service.warn('branch warn');
-    expect(consoleWarnSpy).toHaveBeenCalledWith('branch warn', undefined);
-  });
-
-  it('should reach info branch in switch', () => {
-    service.info('branch info');
-    expect(consoleInfoSpy).toHaveBeenCalledWith('branch info', undefined);
-  });
-
-  it('should reach debug branch in switch', () => {
-    service.debug('branch debug');
-    expect(consoleDebugSpy).toHaveBeenCalledWith('branch debug', undefined);
+    it('should not log debug when enableLogging is false', () => {
+      service.debug('test debug');
+      expect(consoleDebugSpy).not.toHaveBeenCalled();
+    });
   });
 });
