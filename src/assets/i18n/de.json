@@ -14,7 +14,8 @@
     "logoAlt": "Mihaela Melania Aghirculesei Logo",
     "openMenuAriaLabel": "Navigationsmenü öffnen",
     "closeMenuAriaLabel": "Navigationsmenü schließen",
-    "languageToggleAriaLabel": "Sprache zwischen Englisch und Deutsch wechseln"
+    "languageToggleAriaLabel": "Sprache zwischen Englisch und Deutsch wechseln",
+    "mobileNavAriaLabel": "Mobiles Navigationsmenü"
   },
   "common": {
     "references": "Referenzen",
@@ -111,6 +112,13 @@
       "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!",
       "errorTitle": "Fehler",
       "errorMessage": "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten.",
+      "errors": {
+        "timeout": "Zeitüberschreitung. Bitte versuchen Sie es erneut.",
+        "network": "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung.",
+        "server": "Serverfehler. Bitte versuchen Sie es später erneut.",
+        "client": "Ungültige Anfrage. Bitte überprüfen Sie Ihre Eingabe.",
+        "generic": "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten."
+      },
       "closeButton": "Schließen"
     }
   },
@@ -144,23 +152,23 @@
   },
   "projects": {
     "join": {
-      "description": "Im Rahmen eines 5-köpfigen Teams entwickelt. Join Kanban Board ist die Projektmanagement-Revolution! Eine außergewöhnliche Anwendung, die jedes Projekt durch spektakuläre visuelle Boards und Echtzeit-Kollaboration zum Erfolg führt. Mit Join können Sie Aufgaben einfach organisieren, Fortschritte verfolgen und mit Ihrem Team in einer dynamischen und intuitiven Umgebung zusammenarbeiten. Verabschieden Sie sich vom Chaos und begrüßen Sie die Produktivität! Join Kanban Board ist das perfekte Tool für Teams jeder Größe, von Startups bis zu großen Unternehmen. Erleben Sie die Zukunft des Projektmanagements mit Join Kanban Board und bringen Sie Ihre Projekte auf die nächste Stufe. Ihr nächster großer Sieg beginnt hier.",
+      "description": "Im Rahmen eines 5-köpfigen Teams entwickelt, ist Join eine Echtzeit-Kanban-Aufgabenverwaltung mit Angular und Firebase. Das Board bietet Live-Synchronisierung über Firebase Firestore, Benutzerauthentifizierung, Drag-and-Drop-Workflow-Management über Status-Spalten sowie ein vollständiges Kontaktsystem mit Aufgabenzuweisung, Prioritätsstufen und Fälligkeitsterminen. Ein Summary-Dashboard liefert einen schnellen Überblick über Task-Statistiken und anstehende Deadlines. Die Entwicklung im 5-köpfigen Team erforderte koordiniertes Component-Ownership, abgestimmte Service-Interfaces und Git-Workflows, die professionelle Angular-Entwicklungsumgebungen widerspiegeln. Vollständig responsiv und live deployed.",
       "shortDescription": "Kanban Board Anwendung"
     },
     "elPolloLoco": {
-      "description": "Ein aufregendes Spiel, bei dem Mut auf Hühner-Chaos trifft! Gebaut mit JavaScript, HTML und CSS bietet es flüssiges Gameplay mit Tastatur- und Touch-Steuerung, epische Endboss-Herausforderungen, immersive Soundeffekte und responsives Design für alle Geräte.",
+      "description": "Ein lebendiges 2D-Plattform-Abenteuer, gebaut mit reinem Vanilla JavaScript und HTML5 Canvas – keine Frameworks, nur pure Performance. Spiele als Pepe, ein mutiger Held auf der Mission, den bösen Endboss-Hahn in herausfordernden Leveln zu besiegen. Bekämpfe verschiedene Gegnertypen mit Sprung-Attacken oder werfbaren Flaschen und sammle Münzen für ein Extra-Leben. Das Spiel bietet eine saubere objektorientierte Architektur mit vollständigem Kampfsystem, dynamischen Lebensbalken für Spieler und Boss, steigendem Schwierigkeitsgrad und einem Audio-Pooling-System für verzögerungsfreie Soundeffekte. Vollständig responsiv mit nativen Touch-Steuerungen für Mobilgeräte und flüssigem 60fps-Gameplay auf jedem Gerät.",
       "shortDescription": "Abenteuer Spiel"
     },
     "pokedex": {
-      "description": "Eine Offline-First Pokédex PWA, die in zwei Phasen entstanden ist: zuerst vollständig in Vanilla JavaScript — ohne Frameworks, nur native Browser-APIs — um die Plattform von Grund auf zu verstehen. Danach zu TypeScript Strict Mode und Vite migriert, ohne eine einzige Funktion zu ändern. Der Service Worker nutzt Workbox mit getrennten Caches für API-Antworten (7 Tage, 300 Einträge) und Sprites (30 Tage, 600 Einträge). Tastaturzugänglichkeit folgt den WAI-ARIA-Richtlinien: Focus Trap im Modal, ESC zum Schließen, Pfeiltastennavigation und Fokusrückgabe zum zuvor aktiven Element. Der holografische Schimmereffekt repliziert physische Sammelkarten: Mausposition via mousemove in CSS Custom Properties --x/--y injiziert, gerendert über mix-blend-mode: color-dodge. 215 Vitest-Unit-Tests, eine Playwright-E2E-Suite (funktional, Barrierefreiheit via axe WCAG 2.1 AA, visuelle Regression und Mobile) sowie ESLint mit typescript-eslint strict sichern die Korrektheit der migrierten Codebasis.",
+      "description": "Eine Offline-First Pokédex PWA, die in zwei Phasen entstanden ist: zuerst vollständig in Vanilla JavaScript — ohne Frameworks, nur native Browser-APIs — um die Plattform von Grund auf zu verstehen. Danach zu TypeScript Strict Mode und Vite migriert, ohne eine einzige Funktion zu ändern. Der Service Worker nutzt Workbox mit getrennten Caches für API-Antworten (7 Tage, 300 Einträge) und Sprites (30 Tage, 600 Einträge). Tastaturzugänglichkeit folgt den WAI-ARIA-Richtlinien: Focus Trap im Modal, ESC zum Schließen, Pfeiltastennavigation und Fokusrückgabe zum zuvor aktiven Element. Der holografische Schimmereffekt repliziert physische Sammelkarten: Mausposition via mousemove in CSS Custom Properties --x/--y injiziert, gerendert über mix-blend-mode: color-dodge. 251 Vitest-Unit-Tests, eine Playwright-E2E-Suite (funktional, Barrierefreiheit via axe WCAG 2.1 AA, visuelle Regression und Mobile) sowie ESLint mit typescript-eslint strict sichern die Korrektheit der migrierten Codebasis.",
       "shortDescription": "Offline-First Pokédex PWA"
     },
     "birthdayReminder": {
-      "description": "Eine moderne Birthday Reminder App mit NgRx State Management für vorhersagbaren Datenfluss, Offline-First Architektur mit IndexedDB, Google Calendar-Synchronisation über OAuth 2.0, Cross-Platform-Unterstützung (Web PWA + Android mit Capacitor), Push-Benachrichtigungen (Web + Nativ) und Material Design UI. Gebaut mit Angular 19, demonstriert die App Enterprise-Grade-Architektur mit Effects für Seiteneffekte, Entity Adapters für normalisierten State und ein umfassendes Benachrichtigungssystem mit anpassbaren Erinnerungen.",
+      "description": "Komplett solo konzipiert, entwickelt und bis zur Produktion deployed — von der ersten Idee bis zum fertigen Produkt. Diese Full-Stack-Cross-Platform-App demonstriert Senior-Level-Architektur auf jeder Ebene: Angular 19 mit NgRx über fünf unabhängige State-Slices, ein Offline-First-Ansatz mit IndexedDB als alleiniger Source of Truth und Echtzeit-Cloudsync mit Firebase Firestore und Storage über eine Pending-Changes-Queue. Die App wird als PWA mit SSR auf Cloudflare Pages und als native Android-App via Capacitor ausgeliefert, mit Push-Benachrichtigungen über Service Worker und die native Notification API. Google Calendar-Integration mit OAuth 2.0 unterstützt uni- und bidirektionale Synchronisierung mit wiederkehrenden Events, ergänzt durch eine vollständige Datenpipeline für JSON-, CSV- und vCard-Import/-Export. Qualität wird durch Karma-Unit-Tests, Cypress-E2E- und Visual-Regression-Tests sowie axe-core-Accessibility-Audits sichergestellt — mit null kritischen Verstößen und vollständiger NVDA-Unterstützung.",
       "shortDescription": "Geburtstags-Management App"
     },
     "todoApi": {
-      "description": "Im Rahmen eines 2-köpfigen Teams entwickelt. Produktionsreife RESTful API mit FastAPI und SQLAlchemy 2.0, entwickelt nach einer strikten Schichtarchitektur (Router → Service → Repository → Datenbank). In Produktion mit PostgreSQL, lokal mit SQLite. Unterstützt vollständiges CRUD, Pydantic-Validierung, benutzerdefiniertes Exception-Handling und ISO 8601 UTC-Zeitstempel. Abgedeckt durch 23 Tests (Unit + Integration) mit In-Memory-SQLite für schnelle, isolierte Testläufe.",
+      "description": "Ein 2-köpfiges Teamprojekt, bei dem Mihaela die gesamte Backend-Architektur von Grund auf verantwortete. Gebaut mit Python 3.11, FastAPI 0.115 und SQLAlchemy 2.0, folgt die API einer strikten Vier-Schicht-Architektur (Router → Service → Repository → Datenbank) mit Pydantic 2 zur Eingabevalidierung und benutzerdefiniertem Exception-Handling. Lokal mit SQLite, in Produktion mit PostgreSQL — ISO 8601 UTC-Zeitstempel und automatische Schema-Erstellung beim Start inklusive. Eine umfassende Test-Suite mit 23 Tests — 13 Unit-Tests für die Business-Logik und 10 Integrationstests — läuft gegen eine In-Memory-SQLite-Datenbank in unter 0,2 Sekunden durch. Live auf Render deployed mit interaktiver Swagger/OpenAPI-Dokumentation, kombiniert mit einem React + TypeScript + Vite Frontend.",
       "shortDescription": "RESTful Todo-API mit sauberer Schichtarchitektur"
     },
     "default": {
