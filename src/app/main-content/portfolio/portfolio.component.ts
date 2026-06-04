@@ -5,16 +5,13 @@ import {
   OnInit,
   OnDestroy,
   HostListener,
-  Inject,
-  PLATFORM_ID,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   inject,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shared/directives/passive-listeners.directive';
 import { BREAKPOINTS, PORTFOLIO_CONFIG } from '../../shared/constants/app.constants';
 import { ProjectDataService } from './services/project-data.service';
@@ -59,21 +56,20 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   constructor(
     private platformService: PlatformService,
-    @Inject(PLATFORM_ID) private platformId: object,
     private cdr: ChangeDetectorRef,
   ) {
     this.checkOrientation();
   }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.platformService.isBrowser) {
       document.addEventListener('touchmove', this.boundOnTouchMove, { passive: true });
     }
   }
 
   ngOnDestroy(): void {
     this.platformService.enableScroll();
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.platformService.isBrowser) {
       document.removeEventListener('touchmove', this.boundOnTouchMove);
     }
   }
