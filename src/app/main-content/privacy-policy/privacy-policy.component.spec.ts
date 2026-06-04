@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslationService } from '../../shared/services/translation.service';
 import { PrivacyPolicyComponent } from './privacy-policy.component';
 
 describe('PrivacyPolicyComponent', () => {
@@ -13,7 +13,7 @@ describe('PrivacyPolicyComponent', () => {
     mockLocation = jasmine.createSpyObj('Location', ['back']);
 
     await TestBed.configureTestingModule({
-      imports: [PrivacyPolicyComponent, TranslateModule.forRoot()],
+      imports: [PrivacyPolicyComponent],
       providers: [
         { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
         { provide: Location, useValue: mockLocation }
@@ -36,7 +36,7 @@ describe('PrivacyPolicyComponent', () => {
   });
 
   it('should mark for check when language changes', () => {
-    const translateService = TestBed.inject(TranslateService);
+    const translateService = TestBed.inject(TranslationService);
     expect(() => {
       translateService.use('de');
       fixture.detectChanges();

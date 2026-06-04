@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 interface BannerItem {
   key: string;

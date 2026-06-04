@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 import { LegalNoticeComponent } from './legal-notice.component';
 
 describe('LegalNoticeComponent', () => {
@@ -13,7 +12,7 @@ describe('LegalNoticeComponent', () => {
     mockLocation = jasmine.createSpyObj('Location', ['back']);
 
     await TestBed.configureTestingModule({
-      imports: [LegalNoticeComponent, TranslateModule.forRoot()],
+      imports: [LegalNoticeComponent],
       providers: [
         { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
         { provide: Location, useValue: mockLocation }

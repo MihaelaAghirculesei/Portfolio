@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { BannerSectionComponent } from './banner-section/banner-section.component';
 import { ScrollService } from '../../shared/services/scroll.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { environment } from '../../../environments/environment';
 
 interface ActionButton {

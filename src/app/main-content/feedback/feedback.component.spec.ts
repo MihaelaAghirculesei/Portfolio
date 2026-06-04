@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { FeedbacksComponent } from './feedback.component';
 import { PlatformService } from '../../shared/services/platform.service';
 import { QueryList, ElementRef } from '@angular/core';
@@ -14,7 +13,7 @@ describe('FeedbacksComponent', () => {
     mockPlatformService.getDocument.and.returnValue(document);
 
     await TestBed.configureTestingModule({
-      imports: [FeedbacksComponent, TranslateModule.forRoot()],
+      imports: [FeedbacksComponent],
       providers: [
         { provide: PlatformService, useValue: mockPlatformService }
       ]

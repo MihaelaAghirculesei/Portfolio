@@ -7,7 +7,7 @@ import {
   QueryList,
   ElementRef
 } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import {
   SLIDER_CONFIG,
   ANIMATION_CONFIG
@@ -67,7 +67,7 @@ export class FeedbacksComponent {
       role: 'Frontend Developer'
     },
   ];
-  
+
   middleIndex = 2;
 
   get currentSlide(): number {
@@ -77,7 +77,7 @@ export class FeedbacksComponent {
   get totalSlides(): number {
     return this.feedbacks.length;
   }
-  
+
   slideLeft(): void {
     this.slide(1);
   }
@@ -98,7 +98,7 @@ export class FeedbacksComponent {
     this.updateCards();
     this.cdr.markForCheck();
   }
-  
+
   updateCards(): void {
     if (this.feedbackCards) {
       this.isTransitioning = true;
@@ -117,8 +117,8 @@ export class FeedbacksComponent {
       }, SLIDER_CONFIG.TRANSITION_DURATION);
     }
   }
-  
-  
+
+
   getCardClass(index: number): string {
     if (index < this.middleIndex) {return 'left feedback-card';}
     if (index > this.middleIndex) {return 'right feedback-card';}

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { SkillsComponent } from './skills.component';
 import { ScrollService } from '../../shared/services/scroll.service';
 
@@ -12,7 +11,7 @@ describe('SkillsComponent', () => {
     mockScrollService = jasmine.createSpyObj('ScrollService', ['scrollToElement']);
 
     await TestBed.configureTestingModule({
-      imports: [SkillsComponent, TranslateModule.forRoot()],
+      imports: [SkillsComponent],
       providers: [
         { provide: ScrollService, useValue: mockScrollService }
       ]
