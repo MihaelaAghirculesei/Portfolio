@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslationService } from '../../../shared/services/translation.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './contact-form.component';
 import { HttpErrorResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -13,13 +13,13 @@ describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
   let fixture: ComponentFixture<ContactFormComponent>;
   let httpMock: HttpTestingController;
-  let translateService: TranslateService;
+  let translateService: TranslationService;
 
   beforeEach(async () => {
     sessionStorage.clear();
 
     await TestBed.configureTestingModule({
-      imports: [ContactFormComponent, TranslateModule.forRoot(), ReactiveFormsModule],
+      imports: [ContactFormComponent, ReactiveFormsModule],
       providers: [
         { provide: ActivatedRoute, useValue: { fragment: of(null) } },
         provideHttpClient(withInterceptorsFromDi()),
@@ -30,7 +30,7 @@ describe('ContactFormComponent', () => {
     fixture = TestBed.createComponent(ContactFormComponent);
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
-    translateService = TestBed.inject(TranslateService);
+    translateService = TestBed.inject(TranslationService);
     spyOn(TestBed.inject(LoggerService), 'error');
     fixture.detectChanges();
     await fixture.whenStable();

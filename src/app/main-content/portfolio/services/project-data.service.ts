@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from '../../../shared/services/translation.service';
 import { Projects } from '../../../interfaces/projects';
 import projectsData from '../../../../assets/data/projects.json';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectDataService {
-  private readonly translate = inject(TranslateService);
+  private readonly translate = inject(TranslationService);
 
   projects: Projects[] = projectsData as Projects[];
 

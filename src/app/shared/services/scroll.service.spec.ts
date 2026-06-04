@@ -356,7 +356,7 @@ describe('ScrollService - SSR (server platform)', () => {
   });
 
   it('should report isBrowser as false', () => {
-    expect(ssrService['isBrowser']).toBe(false);
+    expect(ssrService['platformService'].isBrowser).toBe(false);
   });
 
   it('scrollToElement should not scroll on server', () => {

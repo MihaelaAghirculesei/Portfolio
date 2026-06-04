@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { OverlayComponent } from './overlay.component';
 import { Projects } from '../../interfaces/projects';
 
@@ -20,7 +19,7 @@ describe('OverlayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OverlayComponent, TranslateModule.forRoot()],
+      imports: [OverlayComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(OverlayComponent);

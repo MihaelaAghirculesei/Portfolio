@@ -10,7 +10,8 @@ import { PlatformService } from '../services/platform.service';
 import { LoggerService } from '../services/logger.service';
 import { FocusTrapService } from '../services/focus-trap.service';
 import { BREAKPOINTS, SCROLL_CONFIG, TIMING_CONFIG } from '../constants/app.constants';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslationService } from '../services/translation.service';
+import { TranslatePipe } from '../pipes/translate.pipe';
 
 @Component({
     selector: 'app-header',
@@ -32,7 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private scrollService: ScrollService,
     private platformService: PlatformService,
-    private translate: TranslateService,
+    private translate: TranslationService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private elementRef: ElementRef
