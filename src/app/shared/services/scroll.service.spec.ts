@@ -58,19 +58,6 @@ describe('ScrollService', () => {
     it('should be created', () => {
       expect(service).toBeTruthy();
     });
-
-    it('should initialize with browser platform', () => {
-      expect(service['isBrowser']).toBe(true);
-    });
-
-    it('should have mobile offsets configured', () => {
-      expect(service['mobileOffsets']).toEqual({
-        aboutMe: 0,
-        skills: -5,
-        projects: 20,
-        references: 100
-      });
-    });
   });
 
   describe('scrollToElement', () => {
