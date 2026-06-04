@@ -1,15 +1,14 @@
-import { inject, Injectable, PLATFORM_ID, DOCUMENT } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, DOCUMENT } from '@angular/core';
 import { BREAKPOINTS, SCROLL_CONFIG } from '../constants/app.constants';
 import { LoggerService } from './logger.service';
+import { PlatformService } from './platform.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScrollService {
-  private readonly platformId = inject(PLATFORM_ID);
+  private readonly platformService = inject(PlatformService);
   private readonly document = inject(DOCUMENT);
-  private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly logger = inject(LoggerService);
   private readonly SCROLL_STORAGE_KEY = 'contact-scroll-position';
 
@@ -24,7 +23,7 @@ export class ScrollService {
     elementId: string,
     _block: 'start' | 'center' | 'end' = 'start'
   ): void {
-    if (!this.isBrowser) {return;}
+    if (!this.platformService.isBrowser) {return;}
 
     const element = this.document.getElementById(elementId);
     if (!element) {return;}
@@ -49,7 +48,7 @@ export class ScrollService {
   }
 
   scrollToPosition(position: number): void {
-    if (!this.isBrowser) {return;}
+    if (!this.platformService.isBrowser) {return;}
 
     this.document.defaultView?.scrollTo({
       top: position,
@@ -62,7 +61,7 @@ export class ScrollService {
   }
 
   getCurrentScrollPosition(): number {
-    if (!this.isBrowser) {return 0;}
+    if (!this.platformService.isBrowser) {return 0;}
 
     const window = this.document.defaultView;
     return window?.scrollY ?? window?.pageYOffset ?? 0;
@@ -73,7 +72,7 @@ export class ScrollService {
   }
 
   saveScrollPosition(): void {
-    if (!this.isBrowser) { return; }
+    if (!this.platformService.isBrowser) { return; }
     try {
       sessionStorage.setItem(this.SCROLL_STORAGE_KEY, this.getCurrentScrollPosition().toString());
     } catch (error) {
@@ -82,7 +81,7 @@ export class ScrollService {
   }
 
   restoreScrollPosition(): void {
-    if (!this.isBrowser) { return; }
+    if (!this.platformService.isBrowser) { return; }
     try {
       const savedPosition = sessionStorage.getItem(this.SCROLL_STORAGE_KEY);
       if (savedPosition) {
