@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslationService } from '../../shared/services/translation.service';
 import { PortfolioComponent } from './portfolio.component';
 import { PlatformService } from '../../shared/services/platform.service';
 import { ElementRef, PLATFORM_ID } from '@angular/core';
@@ -10,13 +10,13 @@ describe('PortfolioComponent', () => {
   let component: PortfolioComponent;
   let fixture: ComponentFixture<PortfolioComponent>;
   let platformService: PlatformService;
-  let translateService: TranslateService;
+  let translateService: TranslationService;
   let overlayService: PortfolioOverlayService;
   let projectDataService: ProjectDataService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PortfolioComponent, TranslateModule.forRoot()],
+      imports: [PortfolioComponent],
       providers: [
         PlatformService,
         { provide: PLATFORM_ID, useValue: 'browser' }
@@ -26,7 +26,7 @@ describe('PortfolioComponent', () => {
     fixture = TestBed.createComponent(PortfolioComponent);
     component = fixture.componentInstance;
     platformService = TestBed.inject(PlatformService);
-    translateService = TestBed.inject(TranslateService);
+    translateService = TestBed.inject(TranslationService);
     overlayService = fixture.debugElement.injector.get(PortfolioOverlayService);
     projectDataService = TestBed.inject(ProjectDataService);
 

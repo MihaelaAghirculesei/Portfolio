@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ScrollService } from '../../shared/services/scroll.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 interface SkillItem {
   url: string;

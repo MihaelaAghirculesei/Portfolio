@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { BannerSectionComponent } from './banner-section.component';
 
 describe('BannerSectionComponent', () => {
@@ -9,7 +8,7 @@ describe('BannerSectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BannerSectionComponent, TranslateModule.forRoot()],
+      imports: [BannerSectionComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BannerSectionComponent);

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from './translation.service';
 
 @Injectable()
 export class TranslatedTitleStrategy extends TitleStrategy {
   constructor(
-    private readonly translate: TranslateService,
+    private readonly translate: TranslationService,
     private readonly titleService: Title,
   ) {
     super();

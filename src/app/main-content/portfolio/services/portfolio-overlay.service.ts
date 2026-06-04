@@ -1,5 +1,4 @@
-import { ElementRef, Inject, Injectable, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { ElementRef, Injectable, inject } from '@angular/core';
 import { Projects } from '../../../interfaces/projects';
 import { PlatformService } from '../../../shared/services/platform.service';
 import { FocusTrapService } from '../../../shared/services/focus-trap.service';
@@ -16,14 +15,12 @@ export class PortfolioOverlayService {
   private headerElement: HTMLElement | null = null;
   private originalHeaderDisplay = '';
 
-  constructor(@Inject(PLATFORM_ID) private readonly platformId: object) {}
-
   open(project: Projects, index: number): void {
     this.selectedProject = project;
     this.selectedIndex = index;
     this.platformService.disableScroll();
 
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.platformService.isBrowser) {
       this.focusTrap.saveFocus();
       this.headerElement = document.querySelector('header');
       if (this.headerElement) {
@@ -42,7 +39,7 @@ export class PortfolioOverlayService {
     this.selectedProject = null;
     this.platformService.enableScroll();
 
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.platformService.isBrowser) {
       if (this.headerElement) {
         this.headerElement.style.display = this.originalHeaderDisplay;
       }

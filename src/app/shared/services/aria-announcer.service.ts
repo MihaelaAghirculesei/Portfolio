@@ -1,17 +1,18 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, inject } from '@angular/core';
+import { PlatformService } from './platform.service';
 import { TIMING_CONFIG } from '../constants/app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AriaAnnouncerService {
+  private readonly platformService = inject(PlatformService);
   private liveRegion: HTMLElement | null = null;
   private announcementTimer?: ReturnType<typeof setTimeout>;
   private clearTimer?: ReturnType<typeof setTimeout>;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {
-    if (isPlatformBrowser(this.platformId)) {
+  constructor() {
+    if (this.platformService.isBrowser) {
       this.createLiveRegion();
     }
   }

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ContactFormComponent } from './contact-form/contact-form.component';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 @Component({
     selector: 'app-contact',

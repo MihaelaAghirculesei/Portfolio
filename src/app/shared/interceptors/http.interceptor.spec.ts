@@ -2,7 +2,7 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpBackend, HttpClient, HttpEvent, HttpRequest,
   provideHttpClient, withInterceptors, HttpHandlerFn, HttpInterceptorFn } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from '../services/translation.service';
 import { LoggerService } from '../services/logger.service';
 import { httpInterceptor } from './http.interceptor';
 import { Observable, throwError } from 'rxjs';
@@ -22,7 +22,7 @@ describe('httpInterceptor', () => {
         provideHttpClient(withInterceptors([httpInterceptor])),
         provideHttpClientTesting(),
         { provide: LoggerService, useValue: loggerSpy },
-        { provide: TranslateService, useValue: translateStub },
+        { provide: TranslationService, useValue: translateStub },
       ],
     });
 
@@ -320,7 +320,7 @@ describe('httpInterceptor with non-HttpErrorResponse error', () => {
         provideHttpClient(withInterceptors([httpInterceptor])),
         { provide: HttpBackend, useClass: ThrowingBackend },
         { provide: LoggerService, useValue: loggerSpy },
-        { provide: TranslateService, useValue: { currentLang: 'en', defaultLang: 'en' } },
+        { provide: TranslationService, useValue: { currentLang: 'en', defaultLang: 'en' } },
       ],
     });
 

@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from '../services/translation.service';
 import { timer } from 'rxjs';
 import { retry, tap } from 'rxjs/operators';
 import { HTTP_CONFIG } from '../constants/app.constants';
@@ -12,7 +12,7 @@ function isRetryable(error: HttpErrorResponse): boolean {
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   const logger = inject(LoggerService);
-  const translate = inject(TranslateService);
+  const translate = inject(TranslationService);
 
   const correlationId = crypto.randomUUID();
   const lang = translate.currentLang || translate.defaultLang || 'en';
