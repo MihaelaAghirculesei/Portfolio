@@ -6,7 +6,7 @@
   background-color: variables.$background-color;
   @include mixins.dFlex(center, flex-start);
   width: 100%;
-  padding: 74px variables.$spacing-md variables.$spacing-sm;
+  padding: 79px variables.$spacing-md variables.$spacing-sm;
   box-sizing: border-box;
   position: relative;
 
