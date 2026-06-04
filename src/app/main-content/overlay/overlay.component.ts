@@ -12,10 +12,10 @@ import { Projects } from '../../interfaces/projects';
 })
 export class OverlayComponent {
   @Input() singleProject: Projects = {
+    id: '',
     name: '',
     technologies: [],
     previewImg: '',
-    description: '',
     githubUrl: '',
     liveUrl: '',
   };
