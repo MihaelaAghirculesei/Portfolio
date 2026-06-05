@@ -1,8 +1,9 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../pipes/translate.pipe';
 import { ScrollService } from '../services/scroll.service';
-import { LoggerService } from '../services/logger.service';
+import { NavigationService } from '../services/navigation.service';
+import { CONTACT_INFO } from '../constants/app.constants';
 
 @Component({
     selector: 'app-footer',
@@ -14,18 +15,16 @@ import { LoggerService } from '../services/logger.service';
 export class FooterComponent {
   isHovered = false;
   currentYear = new Date().getFullYear();
-  private readonly logger = inject(LoggerService);
+  readonly mailtoLink = `mailto:${CONTACT_INFO.email}`;
 
-  constructor(private scrollService: ScrollService, private router: Router) {}
+  private readonly navigationService = inject(NavigationService);
+  private readonly scrollService = inject(ScrollService);
+
+  onLogoHover(): void { this.isHovered = true; }
+  onLogoUnhover(): void { this.isHovered = false; }
 
   scrollToTop(): void {
-    if (this.router.url === '/') {
-      this.scrollService.scrollToElement('headLine', 'start');
-    } else {
-      this.router.navigate(['/']).catch((error) => {
-        this.logger.error('Navigation to home failed:', error);
-      });
-    }
+    this.navigationService.scrollToSection('headLine');
   }
 
   saveScrollPosition(): void {

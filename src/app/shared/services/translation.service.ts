@@ -18,22 +18,18 @@ export class TranslationService {
     de: deTranslations as TranslationDict,
   };
 
-  readonly onLangChange = new Subject<LangChangeEvent>();
+  private readonly _onLangChange = new Subject<LangChangeEvent>();
+  readonly onLangChange = this._onLangChange.asObservable();
   readonly defaultLang = 'en';
 
   get currentLang(): Lang {
     return this._lang();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  addLangs(_langs: string[]): void {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setDefaultLang(_lang: string): void {}
-
   use(lang: string): Observable<TranslationDict> {
     const newLang: Lang = lang === 'de' ? 'de' : 'en';
     this._lang.set(newLang);
-    this.onLangChange.next({ lang: newLang });
+    this._onLangChange.next({ lang: newLang });
     return of(this.translations[newLang]);
   }
 
@@ -41,7 +37,8 @@ export class TranslationService {
     let result = this.resolve(key, this._lang()) ?? key;
     if (params) {
       Object.entries(params).forEach(([k, v]) => {
-        result = result.replace(new RegExp(`\\{\\{\\s*${k}\\s*\\}\\}`, 'g'), String(v));
+        const escapedKey = k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        result = result.replace(new RegExp(`\\{\\{\\s*${escapedKey}\\s*\\}\\}`, 'g'), String(v));
       });
     }
     return result;

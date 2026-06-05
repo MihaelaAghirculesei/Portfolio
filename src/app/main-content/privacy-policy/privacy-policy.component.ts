@@ -1,9 +1,8 @@
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject, DestroyRef } from '@angular/core';
 import { Location } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslationService } from '../../shared/services/translation.service';
-import { PlatformService } from '../../shared/services/platform.service';
-import { Router } from '@angular/router';
-import { LoggerService } from '../../shared/services/logger.service';
+import { ScrollService } from '../../shared/services/scroll.service';
 
 @Component({
     selector: 'app-privacy-policy',
@@ -13,24 +12,22 @@ import { LoggerService } from '../../shared/services/logger.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrivacyPolicyComponent implements OnInit {
-  private readonly logger = inject(LoggerService);
+  private readonly translateService = inject(TranslationService);
+  private readonly location = inject(Location);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly scrollService = inject(ScrollService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  constructor(
-    public translateService: TranslationService,
-    private router: Router,
-    private location: Location,
-    private cdr: ChangeDetectorRef,
-    private platformService: PlatformService
-  ) {
-    this.translateService.onLangChange.subscribe(() => {
-      this.cdr.markForCheck();
-    });
+  constructor() {
+    this.translateService.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.cdr.markForCheck();
+      });
   }
 
   ngOnInit(): void {
-    if (this.platformService.isBrowser) {
-      window.scrollTo(0, 0);
-    }
+    this.scrollService.scrollToTop();
   }
 
   goBack(): void {

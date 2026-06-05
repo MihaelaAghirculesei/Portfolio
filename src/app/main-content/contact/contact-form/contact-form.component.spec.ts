@@ -6,6 +6,7 @@ import { ContactFormComponent } from './contact-form.component';
 import { HttpErrorResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { of } from 'rxjs';
 import { HTTP_CONFIG } from '../../../shared/constants/app.constants';
+import { environment } from '../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { LoggerService } from '../../../shared/services/logger.service';
 
@@ -57,7 +58,7 @@ describe('ContactFormComponent', () => {
     });
 
     it('should have correct endpoint configuration', () => {
-      expect(component.post.endPoint).toContain('workers.dev');
+      expect(environment.emailWorkerUrl).toContain('workers.dev');
     });
   });
 
@@ -147,6 +148,13 @@ describe('ContactFormComponent', () => {
       component.onSubmit();
       expect(component.form.markAllAsTouched).toHaveBeenCalled();
     });
+
+    it('should return early when already submitting', () => {
+      component.isSubmitting.set(true);
+      component.onSubmit();
+      httpMock.expectNone(environment.emailWorkerUrl);
+      expect(component.isSubmitting()).toBe(true);
+    });
   });
 
   describe('Form Submission', () => {
@@ -162,7 +170,7 @@ describe('ContactFormComponent', () => {
     it('should not submit if form is invalid', () => {
       component.onSubmit();
       expect(component.isSubmitting()).toBe(false);
-      httpMock.expectNone(component.post.endPoint);
+      httpMock.expectNone(environment.emailWorkerUrl);
     });
 
     it('should submit form with sanitized data', fakeAsync(() => {
@@ -178,7 +186,7 @@ describe('ContactFormComponent', () => {
       component.onSubmit();
       tick();
 
-      const req = httpMock.expectOne(component.post.endPoint);
+      const req = httpMock.expectOne(environment.emailWorkerUrl);
       expect(req.request.method).toBe('POST');
 
       const body = JSON.parse(req.request.body);
@@ -197,7 +205,7 @@ describe('ContactFormComponent', () => {
 
       expect(component.isSubmitting()).toBe(true);
 
-      const req = httpMock.expectOne(component.post.endPoint);
+      const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
       flush();
 
@@ -209,7 +217,7 @@ describe('ContactFormComponent', () => {
       component.onSubmit();
       tick();
 
-      const req = httpMock.expectOne(component.post.endPoint);
+      const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
       flush();
 
@@ -234,7 +242,7 @@ describe('ContactFormComponent', () => {
       component.onSubmit();
       tick();
 
-      const req = httpMock.expectOne(component.post.endPoint);
+      const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.error(new ErrorEvent('HttpError', { message: 'Server Error' }), {
         status: 500,
         statusText: 'Server Error',
@@ -286,7 +294,7 @@ describe('ContactFormComponent', () => {
       component.onSubmit();
       tick();
 
-      const req = httpMock.expectOne(component.post.endPoint);
+      const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.error(new ErrorEvent('HttpError', { message: 'Server Error' }), {
         status: 500,
         statusText: 'Server Error',
@@ -308,6 +316,24 @@ describe('ContactFormComponent', () => {
       expect(component.submissionStatus()).toBeNull();
       expect(component.errorMessage()).toBe('');
     });
+
+    it('should focus the close button when it exists in the DOM', fakeAsync(() => {
+      const footer = document.createElement('div');
+      footer.classList.add('popup-footer');
+      const button = document.createElement('button');
+      footer.appendChild(button);
+      document.body.appendChild(footer);
+      spyOn(button, 'focus');
+
+      component.form.setValue({ name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true });
+      component.onSubmit();
+      const req = httpMock.expectOne(environment.emailWorkerUrl);
+      req.flush({ success: true });
+      flush();
+
+      expect(button.focus).toHaveBeenCalled();
+      document.body.removeChild(footer);
+    }));
   });
 
   describe('Data Sanitization', () => {
@@ -356,7 +382,7 @@ describe('ContactFormComponent', () => {
       component.form.setValue({ name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true });
 
       component.onSubmit();
-      const req = httpMock.expectOne(component.post.endPoint);
+      const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
       flush();
 
@@ -374,7 +400,7 @@ describe('ContactFormComponent', () => {
     });
 
     it('should have correct content-type header', () => {
-      expect(component.post.options.headers['Content-Type']).toBe('application/json');
+      expect(component['postConfig'].options.headers['Content-Type']).toBe('application/json');
     });
   });
 
@@ -424,7 +450,7 @@ describe('ContactFormComponent', () => {
       component.form.setValue({ name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true });
 
       component.onSubmit();
-      const req = httpMock.expectOne(component.post.endPoint);
+      const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
       flush();
 
