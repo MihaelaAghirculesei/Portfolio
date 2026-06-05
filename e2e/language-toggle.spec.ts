@@ -21,22 +21,22 @@ test.describe('Language Toggle', () => {
   });
 
   test('clicking the language toggle switches nav labels to German', async ({ page }) => {
-    await page.locator('#language-toggle').click();
+    await page.locator('label[for="language-toggle"]').click();
 
     const aboutLink = page.locator('nav.desktop-nav a[aria-label*="Über mich"]');
     await expect(aboutLink).toHaveText('Über mich');
   });
 
   test('clicking the language toggle twice restores English labels', async ({ page }) => {
-    await page.locator('#language-toggle').click();
-    await page.locator('#language-toggle').click();
+    await page.locator('label[for="language-toggle"]').click();
+    await page.locator('label[for="language-toggle"]').click();
 
     const aboutLink = page.locator('nav.desktop-nav a[aria-label="Navigate to About me section"]');
     await expect(aboutLink).toHaveText('About me');
   });
 
   test('language preference is persisted in localStorage', async ({ page }) => {
-    await page.locator('#language-toggle').click();
+    await page.locator('label[for="language-toggle"]').click();
 
     const lang = await page.evaluate(() => localStorage.getItem('lang'));
     expect(lang).toBe('de');
