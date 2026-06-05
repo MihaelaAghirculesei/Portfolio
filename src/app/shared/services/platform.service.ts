@@ -14,22 +14,12 @@ export class PlatformService {
     return this.isBrowser ? this.document.defaultView : null;
   }
 
-  getWindow(): Window | null {
-    return this.window;
-  }
-
   getDocument(): Document | null {
     return this.isBrowser ? this.document : null;
   }
 
   isWindowDefined(): boolean {
     return this.isBrowser;
-  }
-
-  setBodyOverflow(overflow: string): void {
-    if (this.isBrowser) {
-      this.document.body.style.overflow = overflow;
-    }
   }
 
   disableScroll(): void {

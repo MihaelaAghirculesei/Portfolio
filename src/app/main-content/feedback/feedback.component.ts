@@ -5,7 +5,8 @@ import {
   ChangeDetectorRef,
   ViewChildren,
   QueryList,
-  ElementRef
+  ElementRef,
+  inject
 } from '@angular/core';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import {
@@ -29,7 +30,7 @@ import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shar
 export class FeedbacksComponent {
   @ViewChildren('feedbackCard') feedbackCards!: QueryList<ElementRef>;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  private readonly cdr = inject(ChangeDetectorRef);
 
   private touchStartX = 0;
   private touchEndX = 0;
@@ -87,7 +88,7 @@ export class FeedbacksComponent {
   }
 
   private slide(direction: 1 | -1): void {
-    if (this.isTransitioning) {return;}
+    if (this.isTransitioning) { return; }
 
     if (direction === 1) {
       this.middleIndex = this.middleIndex < this.feedbacks.length - 1 ? this.middleIndex + 1 : 0;
@@ -100,9 +101,9 @@ export class FeedbacksComponent {
   }
 
   updateCards(): void {
-    if (this.feedbackCards) {
-      this.isTransitioning = true;
+    this.isTransitioning = true;
 
+    if (this.feedbackCards) {
       const baseOffset = (2 - this.middleIndex) * SLIDER_CONFIG.FEEDBACK_OFFSET;
 
       this.feedbackCards.forEach((card, index: number) => {
@@ -110,23 +111,22 @@ export class FeedbacksComponent {
         const scale = isActive ? ANIMATION_CONFIG.SCALE_ACTIVE : ANIMATION_CONFIG.SCALE_INACTIVE;
         card.nativeElement.style.transform = `translateX(${baseOffset}%) scale(${scale})`;
       });
-
-      setTimeout(() => {
-        this.isTransitioning = false;
-        this.cdr.markForCheck();
-      }, SLIDER_CONFIG.TRANSITION_DURATION);
     }
+
+    setTimeout(() => {
+      this.isTransitioning = false;
+      this.cdr.markForCheck();
+    }, SLIDER_CONFIG.TRANSITION_DURATION);
   }
 
-
   getCardClass(index: number): string {
-    if (index < this.middleIndex) {return 'left feedback-card';}
-    if (index > this.middleIndex) {return 'right feedback-card';}
+    if (index < this.middleIndex) { return 'left feedback-card'; }
+    if (index > this.middleIndex) { return 'right feedback-card'; }
     return 'feedback-card';
   }
 
   goToSlide(index: number): void {
-    if (this.isTransitioning || index === this.middleIndex) {return;}
+    if (this.isTransitioning || index === this.middleIndex) { return; }
 
     this.middleIndex = index;
     this.updateCards();
@@ -155,10 +155,12 @@ export class FeedbacksComponent {
   }
 
   onTouchStart(event: TouchEvent): void {
+    if (!event.changedTouches.length) { return; }
     this.touchStartX = event.changedTouches[0].screenX;
   }
 
   onTouchEnd(event: TouchEvent): void {
+    if (!event.changedTouches.length) { return; }
     this.touchEndX = event.changedTouches[0].screenX;
     this.handleSwipe();
   }
@@ -166,7 +168,7 @@ export class FeedbacksComponent {
   private handleSwipe(): void {
     const swipeDistance = this.touchStartX - this.touchEndX;
 
-    if (Math.abs(swipeDistance) < SLIDER_CONFIG.SWIPE_THRESHOLD) {return;}
+    if (Math.abs(swipeDistance) < SLIDER_CONFIG.SWIPE_THRESHOLD) { return; }
 
     if (swipeDistance > 0) {
       this.slideLeft();
@@ -174,5 +176,4 @@ export class FeedbacksComponent {
       this.slideRight();
     }
   }
-
 }

@@ -49,7 +49,6 @@ describe('AppComponent', () => {
     }).compileComponents();
 
     const translateService = TestBed.inject(TranslationService);
-    spyOn(translateService, 'setDefaultLang');
     spyOn(translateService, 'use');
 
     fixture = TestBed.createComponent(AppComponent);
@@ -63,7 +62,6 @@ describe('AppComponent', () => {
   it('should initialize translation service with English', () => {
     const translateService = TestBed.inject(TranslationService);
     component.ngOnInit();
-    expect(translateService.setDefaultLang).toHaveBeenCalledWith('en');
     expect(translateService.use).toHaveBeenCalledWith('en');
   });
 
@@ -140,7 +138,6 @@ describe('AppComponent on server platform', () => {
     }).compileComponents();
 
     const translateService = TestBed.inject(TranslationService);
-    spyOn(translateService, 'setDefaultLang');
     spyOn(translateService, 'use');
 
     const fixture = TestBed.createComponent(AppComponent);
@@ -182,7 +179,6 @@ describe('AppComponent router error handling', () => {
     }).compileComponents();
 
     const translateService = TestBed.inject(TranslationService);
-    spyOn(translateService, 'setDefaultLang');
     spyOn(translateService, 'use');
   });
 

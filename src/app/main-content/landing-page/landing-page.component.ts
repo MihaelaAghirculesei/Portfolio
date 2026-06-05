@@ -3,6 +3,7 @@ import { BannerSectionComponent } from './banner-section/banner-section.componen
 import { ScrollService } from '../../shared/services/scroll.service';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { environment } from '../../../environments/environment';
+import { CONTACT_INFO } from '../../shared/constants/app.constants';
 
 interface ActionButton {
   labelKey: string;
@@ -27,9 +28,9 @@ interface SocialLink {
 })
 export class LandingPageComponent {
   readonly profileInfo = {
-    firstName: 'Mihaela Melania',
-    lastName: 'Aghirculesei',
-    email: 'aghirculesei@gmail.com',
+    firstName: CONTACT_INFO.firstName,
+    lastName: CONTACT_INFO.lastName,
+    email: CONTACT_INFO.email,
   };
 
   get fullName(): string {
@@ -72,7 +73,7 @@ export class LandingPageComponent {
     },
   ];
 
-  private scrollService = inject(ScrollService);
+  private readonly scrollService = inject(ScrollService);
 
   scrollTo(elementId: string): void {
     this.scrollService.scrollToElement(elementId, 'start');

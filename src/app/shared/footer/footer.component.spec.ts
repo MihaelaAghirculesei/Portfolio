@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { Directive, HostListener, Input } from '@angular/core';
 import { FooterComponent } from './footer.component';
 import { ScrollService } from '../services/scroll.service';
-import { LoggerService } from '../services/logger.service';
+import { NavigationService } from '../services/navigation.service';
 
 @Directive({
   selector: '[appRouterLink]',
@@ -21,22 +21,18 @@ class MockRouterLinkDirective {
 describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
-  let mockRouter: jasmine.SpyObj<Router>;
+  let mockNavService: jasmine.SpyObj<NavigationService>;
   let mockScrollService: jasmine.SpyObj<ScrollService>;
-  let mockLogger: jasmine.SpyObj<LoggerService>;
 
   beforeEach(async () => {
-    mockRouter = jasmine.createSpyObj('Router', ['navigate'], { url: '/' });
-    mockRouter.navigate.and.returnValue(Promise.resolve(true));
+    mockNavService = jasmine.createSpyObj('NavigationService', ['scrollToSection', 'navigateToHome']);
     mockScrollService = jasmine.createSpyObj('ScrollService', ['scrollToElement', 'saveScrollPosition']);
-    mockLogger = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
 
     await TestBed.configureTestingModule({
       imports: [FooterComponent, MockRouterLinkDirective],
       providers: [
-        { provide: Router, useValue: mockRouter },
-        { provide: ScrollService, useValue: mockScrollService },
-        { provide: LoggerService, useValue: mockLogger }
+        { provide: NavigationService, useValue: mockNavService },
+        { provide: ScrollService, useValue: mockScrollService }
       ]
     }).overrideComponent(FooterComponent, {
       remove: { imports: [RouterLink] },
@@ -56,41 +52,25 @@ describe('FooterComponent', () => {
     expect(component.currentYear).toBe(new Date().getFullYear());
   });
 
-  it('should scroll to top when on home route', () => {
-    Object.defineProperty(mockRouter, 'url', { value: '/', writable: true });
+  it('should delegate scrollToTop to NavigationService.scrollToSection with headLine', () => {
     component.scrollToTop();
-    expect(mockScrollService.scrollToElement).toHaveBeenCalledWith('headLine', 'start');
-  });
-
-  it('should navigate to home when not on home route', () => {
-    Object.defineProperty(mockRouter, 'url', { value: '/legal-notice', writable: true });
-    component.scrollToTop();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
-  });
-
-  it('should log error when navigation fails', async () => {
-    const error = new Error('Nav failed');
-    Object.defineProperty(mockRouter, 'url', { value: '/legal-notice', writable: true });
-    mockRouter.navigate.and.returnValue(Promise.reject(error));
-
-    component.scrollToTop();
-
-    await fixture.whenStable();
-    expect(mockLogger.error).toHaveBeenCalledWith('Navigation to home failed:', error);
-  });
-
-  it('should not scroll when navigation fails', async () => {
-    Object.defineProperty(mockRouter, 'url', { value: '/legal-notice', writable: true });
-    mockRouter.navigate.and.returnValue(Promise.reject(new Error('Nav failed')));
-
-    component.scrollToTop();
-
-    await fixture.whenStable();
-    expect(mockScrollService.scrollToElement).not.toHaveBeenCalled();
+    expect(mockNavService.scrollToSection).toHaveBeenCalledWith('headLine');
   });
 
   it('should save scroll position via scrollService', () => {
     component.saveScrollPosition();
     expect(mockScrollService.saveScrollPosition).toHaveBeenCalled();
+  });
+
+  it('should set isHovered to true on onLogoHover', () => {
+    component.isHovered = false;
+    component.onLogoHover();
+    expect(component.isHovered).toBe(true);
+  });
+
+  it('should set isHovered to false on onLogoUnhover', () => {
+    component.isHovered = true;
+    component.onLogoUnhover();
+    expect(component.isHovered).toBe(false);
   });
 });

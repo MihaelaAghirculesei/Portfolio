@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
@@ -62,7 +62,7 @@ export class SkillsComponent {
     { url: 'assets/img/skills/react.svg', name: 'React' },
   ];
 
-  constructor(private scrollService: ScrollService) {}
+  private readonly scrollService = inject(ScrollService);
 
   isLastItem(index: number): boolean {
     return index === this.skillItems.length - 1;

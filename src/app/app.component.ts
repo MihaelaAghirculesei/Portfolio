@@ -66,9 +66,6 @@ export class AppComponent implements OnInit {
   }
 
   private initializeTranslation(): void {
-    this.translate.addLangs(['en', 'de']);
-    this.translate.setDefaultLang('en');
-
     const saved = this.platformService.isBrowser
       ? localStorage.getItem('lang')
       : null;

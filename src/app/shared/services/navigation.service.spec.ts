@@ -22,13 +22,14 @@ describe('NavigationService', () => {
       providers: [
         NavigationService,
         { provide: Router, useValue: mockRouter },
+        { provide: ScrollService, useValue: scrollServiceSpyObj },
         { provide: LoggerService, useValue: loggerSpyObj }
       ]
     });
 
     service = TestBed.inject(NavigationService);
+    scrollServiceSpy = TestBed.inject(ScrollService) as jasmine.SpyObj<ScrollService>;
     loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
-    scrollServiceSpy = scrollServiceSpyObj;
   });
 
   describe('Service Creation', () => {
@@ -105,33 +106,33 @@ describe('NavigationService', () => {
     });
   });
 
-  describe('navigateToHomeWithScroll()', () => {
+  describe('scrollToSection()', () => {
     describe('When already on home route', () => {
       beforeEach(() => {
         mockRouter.url = '/';
       });
 
       it('should scroll directly without navigation', () => {
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact');
+        service.scrollToSection('contact');
 
         expect(mockRouter.navigate).not.toHaveBeenCalled();
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start');
       });
 
       it('should scroll to specified section', () => {
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'about-me');
+        service.scrollToSection('about-me');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('about-me', 'start');
       });
 
       it('should scroll to portfolio section', () => {
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'portfolio');
+        service.scrollToSection('portfolio');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start');
       });
 
       it('should not delay scroll when already on home', () => {
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'skills');
+        service.scrollToSection('skills');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(1);
       });
@@ -143,7 +144,7 @@ describe('NavigationService', () => {
       });
 
       it('should scroll directly without navigation when url is empty', () => {
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact');
+        service.scrollToSection('contact');
 
         expect(mockRouter.navigate).not.toHaveBeenCalled();
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start');
@@ -158,20 +159,20 @@ describe('NavigationService', () => {
       it('should navigate to home first', fakeAsync(() => {
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact');
+        service.scrollToSection('contact');
 
         tick();
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
-        flush(); // Clear remaining timers
+        flush();
       }));
 
       it('should scroll after navigation with default delay', fakeAsync(() => {
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact');
+        service.scrollToSection('contact');
 
-        tick(); // Wait for navigation promise
-        tick(100); // Wait for default delay
+        tick();
+        tick(100);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start');
       }));
@@ -180,9 +181,9 @@ describe('NavigationService', () => {
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
         const customDelay = 500;
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'portfolio', customDelay);
+        service.scrollToSection('portfolio', customDelay);
 
-        tick(); // Wait for navigation promise
+        tick();
         tick(customDelay);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start');
@@ -191,21 +192,21 @@ describe('NavigationService', () => {
       it('should not scroll before delay expires', fakeAsync(() => {
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'about-me', 200);
+        service.scrollToSection('about-me', 200);
 
-        tick(); 
-        tick(199); 
+        tick();
+        tick(199);
 
         expect(scrollServiceSpy.scrollToElement).not.toHaveBeenCalled();
 
-        tick(1); 
+        tick(1);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
       }));
 
       it('should scroll to correct section after navigation', fakeAsync(() => {
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'skills');
+        service.scrollToSection('skills');
 
         tick();
         tick(100);
@@ -217,7 +218,7 @@ describe('NavigationService', () => {
         const error = new Error('Navigation error');
         mockRouter.navigate.and.returnValue(Promise.reject(error));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact');
+        service.scrollToSection('contact');
 
         tick();
         tick(100);
@@ -229,7 +230,7 @@ describe('NavigationService', () => {
       it('should not scroll when navigation fails', fakeAsync(() => {
         mockRouter.navigate.and.returnValue(Promise.reject('Navigation cancelled'));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'portfolio');
+        service.scrollToSection('portfolio');
 
         tick();
         tick(100);
@@ -244,7 +245,7 @@ describe('NavigationService', () => {
 
         sections.forEach(section => {
           scrollServiceSpy.scrollToElement.calls.reset();
-          service.navigateToHomeWithScroll(scrollServiceSpy, section);
+          service.scrollToSection(section);
           tick();
           tick(100);
           expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith(section, 'start');
@@ -257,7 +258,7 @@ describe('NavigationService', () => {
         mockRouter.url = '/legal-notice';
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact');
+        service.scrollToSection('contact');
 
         tick();
         tick(100);
@@ -270,7 +271,7 @@ describe('NavigationService', () => {
         mockRouter.url = '/some/deep/route';
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'about-me');
+        service.scrollToSection('about-me');
 
         tick();
         tick(100);
@@ -282,7 +283,7 @@ describe('NavigationService', () => {
         mockRouter.url = '/page?param=value';
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'skills');
+        service.scrollToSection('skills');
 
         tick();
         tick(100);
@@ -294,7 +295,7 @@ describe('NavigationService', () => {
         mockRouter.url = '/page#section';
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'portfolio');
+        service.scrollToSection('portfolio');
 
         tick();
         tick(100);
@@ -307,7 +308,7 @@ describe('NavigationService', () => {
       it('should handle empty section ID', fakeAsync(() => {
         mockRouter.url = '/';
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, '');
+        service.scrollToSection('');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('', 'start');
       }));
@@ -316,7 +317,7 @@ describe('NavigationService', () => {
         mockRouter.url = '/other';
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact', 0);
+        service.scrollToSection('contact', 0);
 
         tick();
         tick(0);
@@ -328,7 +329,7 @@ describe('NavigationService', () => {
         mockRouter.url = '/other';
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'about-me', 5000);
+        service.scrollToSection('about-me', 5000);
 
         tick();
         tick(5000);
@@ -339,7 +340,7 @@ describe('NavigationService', () => {
       it('should handle special characters in section ID', fakeAsync(() => {
         mockRouter.url = '/';
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'section-with-special_chars123');
+        service.scrollToSection('section-with-special_chars123');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith(
           'section-with-special_chars123',
@@ -350,7 +351,7 @@ describe('NavigationService', () => {
       it('should always use "start" as scroll behavior', fakeAsync(() => {
         mockRouter.url = '/';
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'any-section');
+        service.scrollToSection('any-section');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('any-section', 'start');
       }));
@@ -372,7 +373,7 @@ describe('NavigationService', () => {
           })
         );
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact', 100);
+        service.scrollToSection('contact', 100);
 
         tick(49);
         expect(navigationResolved).toBe(false);
@@ -388,7 +389,7 @@ describe('NavigationService', () => {
       it('should handle immediate navigation resolution', fakeAsync(() => {
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'skills', 50);
+        service.scrollToSection('skills', 50);
 
         tick();
         tick(50);
@@ -401,9 +402,9 @@ describe('NavigationService', () => {
       it('should handle rapid consecutive calls on same route', () => {
         mockRouter.url = '/';
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'about-me');
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'skills');
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'contact');
+        service.scrollToSection('about-me');
+        service.scrollToSection('skills');
+        service.scrollToSection('contact');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(3);
       });
@@ -412,8 +413,8 @@ describe('NavigationService', () => {
         mockRouter.url = '/other';
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'about-me');
-        service.navigateToHomeWithScroll(scrollServiceSpy, 'skills');
+        service.scrollToSection('about-me');
+        service.scrollToSection('skills');
 
         tick();
         tick(100);

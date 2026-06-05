@@ -3,15 +3,14 @@ import {
   Component, HostListener, ChangeDetectionStrategy, ChangeDetectorRef,
   OnDestroy, OnInit, inject, ElementRef, DestroyRef
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
-import { LoggerService } from '../services/logger.service';
 import { FocusTrapService } from '../services/focus-trap.service';
 import { BREAKPOINTS, SCROLL_CONFIG, TIMING_CONFIG } from '../constants/app.constants';
 import { TranslationService } from '../services/translation.service';
 import { TranslatePipe } from '../pipes/translate.pipe';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
     selector: 'app-header',
@@ -25,19 +24,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isScrolled = false;
   isGerman = false;
   isMenuOpen = false;
-  private boundCheckScroll = this.checkScroll.bind(this);
-  private readonly logger = inject(LoggerService);
+
+  private readonly scrollService = inject(ScrollService);
+  private readonly platformService = inject(PlatformService);
+  private readonly translate = inject(TranslationService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
   private readonly focusTrap = inject(FocusTrapService);
+  private readonly navigationService = inject(NavigationService);
 
-  constructor(
-    private scrollService: ScrollService,
-    private platformService: PlatformService,
-    private translate: TranslationService,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private elementRef: ElementRef
-  ) {}
+  private readonly boundCheckScroll = this.checkScroll.bind(this);
 
   ngOnInit(): void {
     this.isGerman = this.translate.currentLang === 'de';
@@ -63,9 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   checkScroll(): void {
-    this.isScrolled = this.scrollService.isScrolledBeyond(
-      SCROLL_CONFIG.THRESHOLD
-    );
+    this.isScrolled = this.scrollService.isScrolledBeyond(SCROLL_CONFIG.THRESHOLD);
     this.cdr.markForCheck();
   }
 
@@ -83,43 +78,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     if (this.isMenuOpen) {
       setTimeout(() => {
-        this.focusTrap.activate('.mobile-dropdown');
+        if (this.isMenuOpen) {
+          this.focusTrap.activate('.mobile-dropdown');
+        }
       }, TIMING_CONFIG.MENU_SETUP_DELAY);
     } else {
       this.focusTrap.deactivate();
     }
   }
 
+  onLogoHover(): void { this.isHovered = true; }
+  onLogoUnhover(): void { this.isHovered = false; }
+
   closeMenuIfMobile(): void {
-    const window = this.platformService.getWindow();
-    if (window && window.innerWidth <= BREAKPOINTS.TABLET_MAX) {
+    const win = this.platformService.window;
+    if (win && win.innerWidth <= BREAKPOINTS.TABLET_MAX) {
       this.isMenuOpen = false;
       this.focusTrap.deactivate();
     }
   }
 
   scrollToSection(sectionId: string): void {
-    if (this.router.url === '/' || this.router.url === '') {
-      this.scrollService.scrollToElement(sectionId, 'start');
-    } else {
-      this.router.navigate(['/']).then(
-        () => {
-          setTimeout(() => {
-            this.scrollService.scrollToElement(sectionId, 'start');
-          }, SCROLL_CONFIG.NAVIGATION_DELAY);
-        },
-        (error) => {
-          this.logger.error('Navigation to home failed:', error);
-        }
-      );
-    }
+    this.navigationService.scrollToSection(sectionId);
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
-    const target = event.target as Window;
+    const target = event.target as Window | null;
     if (
       this.platformService.isWindowDefined() &&
+      target !== null &&
       target.innerWidth > BREAKPOINTS.TABLET_MAX
     ) {
       this.isMenuOpen = false;
