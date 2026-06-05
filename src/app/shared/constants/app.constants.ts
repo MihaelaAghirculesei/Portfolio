@@ -57,12 +57,16 @@ export const AOS_CONFIG = {
   DELAY_STEP_3: 600
 } as const;
 
-export type Breakpoints = typeof BREAKPOINTS;
-export type ScrollConfig = typeof SCROLL_CONFIG;
-export type SliderConfig = typeof SLIDER_CONFIG;
-export type AnimationConfig = typeof ANIMATION_CONFIG;
-export type PortfolioConfig = typeof PORTFOLIO_CONFIG;
-export type TimingConfig = typeof TIMING_CONFIG;
-export type ValidationConfig = typeof VALIDATION_CONFIG;
-export type HttpConfig = typeof HTTP_CONFIG;
-export type AosConfig = typeof AOS_CONFIG;
+export const CONTACT_INFO = {
+  name: 'Mihaela Melania Aghirculesei',
+  firstName: 'Mihaela Melania',
+  lastName: 'Aghirculesei',
+  email: 'aghirculesei@gmail.com',
+  phone: '+49 174 9627899',
+  address: {
+    street: 'Springwiesen, 29',
+    postalCode: '38446',
+    city: 'Wolfsburg'
+  }
+} as const;
+
