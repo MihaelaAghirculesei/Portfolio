@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { LegalNoticeComponent } from './legal-notice.component';
 
@@ -14,7 +13,6 @@ describe('LegalNoticeComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LegalNoticeComponent],
       providers: [
-        { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
         { provide: Location, useValue: mockLocation }
       ]
     })
@@ -36,5 +34,13 @@ describe('LegalNoticeComponent', () => {
 
   it('should return correctly formatted full address', () => {
     expect(component.fullAddress).toBe('Springwiesen, 29, 38446 Wolfsburg');
+  });
+
+  it('should return correctly formatted phone link', () => {
+    expect(component.phoneLink).toMatch(/^tel:/);
+  });
+
+  it('should return correctly formatted email link', () => {
+    expect(component.emailLink).toMatch(/^mailto:/);
   });
 });

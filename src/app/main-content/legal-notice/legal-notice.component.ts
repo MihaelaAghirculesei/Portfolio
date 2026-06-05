@@ -1,20 +1,8 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { Location } from '@angular/common';
-import { PlatformService } from '../../shared/services/platform.service';
-import { LoggerService } from '../../shared/services/logger.service';
-
-interface ContactInfo {
-  name: string;
-  address: {
-    street: string;
-    postalCode: string;
-    city: string;
-  };
-  phone: string;
-  email: string;
-}
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { ScrollService } from '../../shared/services/scroll.service';
+import { CONTACT_INFO } from '../../shared/constants/app.constants';
 
 interface ExternalLink {
   url: string;
@@ -30,19 +18,10 @@ interface ExternalLink {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LegalNoticeComponent implements OnInit {
-  private readonly logger = inject(LoggerService);
-  private readonly platformService = inject(PlatformService);
+  private readonly scrollService = inject(ScrollService);
+  private readonly location = inject(Location);
 
-  readonly contactInfo: ContactInfo = {
-    name: 'Mihaela Melania Aghirculesei',
-    address: {
-      street: 'Springwiesen, 29',
-      postalCode: '38446',
-      city: 'Wolfsburg'
-    },
-    phone: '+49 174 9627899',
-    email: 'aghirculesei@gmail.com'
-  };
+  readonly contactInfo = CONTACT_INFO;
 
   readonly sourceLink: ExternalLink = {
     url: 'https://www.e-recht24.de/impressum-generator.html',
@@ -50,15 +29,8 @@ export class LegalNoticeComponent implements OnInit {
     isExternal: true
   };
 
-  constructor(
-    private router: Router,
-    private location: Location
-  ) {}
-
   ngOnInit(): void {
-    if (this.platformService.isBrowser) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    this.scrollService.scrollToTop();
   }
 
   goBack(): void {
