@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TranslationService } from '../../shared/services/translation.service';
 import { PrivacyPolicyComponent } from './privacy-policy.component';
@@ -15,7 +14,6 @@ describe('PrivacyPolicyComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PrivacyPolicyComponent],
       providers: [
-        { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
         { provide: Location, useValue: mockLocation }
       ]
     })
