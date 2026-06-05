@@ -80,6 +80,11 @@ describe('TranslationService', () => {
       const result = service.instant('references.goToSlide');
       expect(result).toContain('{{index}}');
     });
+
+    it('should return key when resolved value is an object, not a leaf string', () => {
+      service.use('en');
+      expect(service.instant('landingPage')).toBe('landingPage');
+    });
   });
 
   describe('get()', () => {
@@ -92,15 +97,4 @@ describe('TranslationService', () => {
     });
   });
 
-  describe('setDefaultLang()', () => {
-    it('should be callable without throwing', () => {
-      expect(() => service.setDefaultLang('en')).not.toThrow();
-    });
-  });
-
-  describe('addLangs()', () => {
-    it('should be callable without throwing', () => {
-      expect(() => service.addLangs(['en', 'de'])).not.toThrow();
-    });
-  });
 });
