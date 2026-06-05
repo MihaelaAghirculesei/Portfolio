@@ -210,23 +210,6 @@ describe('AboutMeComponent', () => {
     });
   });
 
-  describe('Server-Side Rendering', () => {
-    it('should handle SSR gracefully', () => {
-      (component['platformService'] as any).isBrowser = false;
-      expect(component['platformService'].isBrowser).toBe(false);
-      (component['platformService'] as any).isBrowser = true;
-    });
-
-    it('should not initialize animations on server', () => {
-      (component['platformService'] as any).isBrowser = false;
-      spyOn<any>(component, 'initScrollAnimations');
-
-      component.ngOnInit();
-
-      expect(component['initScrollAnimations']).not.toHaveBeenCalled();
-      (component['platformService'] as any).isBrowser = true;
-    });
-  });
 
   describe('AOS Initialization', () => {
     it('should call AOS.init when window.AOS is defined', () => {
@@ -303,5 +286,33 @@ describe('AboutMeComponent', () => {
 
       expect(mockElement.classList.contains('animate-in')).toBe(false);
     });
+  });
+});
+
+describe('AboutMeComponent — Server-Side Rendering', () => {
+  let component: AboutMeComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AboutMeComponent],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'server' }
+      ]
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(AboutMeComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should report isBrowser as false on server', () => {
+    expect(component['platformService'].isBrowser).toBe(false);
+  });
+
+  it('should not initialize animations on server', () => {
+    spyOn<any>(component, 'initScrollAnimations');
+
+    component.ngOnInit();
+
+    expect(component['initScrollAnimations']).not.toHaveBeenCalled();
   });
 });
