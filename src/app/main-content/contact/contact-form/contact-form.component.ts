@@ -16,7 +16,7 @@ import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.se
 import { LoggerService } from '../../../shared/services/logger.service';
 import { FocusTrapService } from '../../../shared/services/focus-trap.service';
 import { ScrollService } from '../../../shared/services/scroll.service';
-import { VALIDATION_CONFIG, HTTP_CONFIG } from '../../../shared/constants/app.constants';
+import { VALIDATION_CONFIG, HTTP_CONFIG, TIMING_CONFIG } from '../../../shared/constants/app.constants';
 import { environment } from '../../../../environments/environment';
 
 interface ContactData {
@@ -80,7 +80,7 @@ export class ContactFormComponent implements OnInit {
     privacyPolicy: [false, Validators.requiredTrue],
   });
 
-  post = {
+  private readonly postConfig = {
     endPoint: environment.emailWorkerUrl,
     body: (payload: ContactData) => JSON.stringify(payload),
     options: {
@@ -137,6 +137,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.isSubmitting()) { return; }
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -146,9 +147,9 @@ export class ContactFormComponent implements OnInit {
 
     this.http
       .post<ContactResponse>(
-        this.post.endPoint,
-        this.post.body(this.sanitizeContactData()),
-        this.post.options
+        this.postConfig.endPoint,
+        this.postConfig.body(this.sanitizeContactData()),
+        this.postConfig.options
       )
       .pipe(
         timeout(HTTP_CONFIG.TIMEOUT),
@@ -237,7 +238,7 @@ export class ContactFormComponent implements OnInit {
   private showPopupWithAnnouncement(message: string, translate = true): void {
     const announcement = translate ? this.translate.instant(message) : message;
     this.ariaAnnouncer.announce(announcement, 'assertive');
-    setTimeout(() => this.focusPopup(), 0);
+    setTimeout(() => this.focusPopup(), TIMING_CONFIG.MODAL_FOCUS_DELAY);
   }
 
   private focusPopup(): void {
