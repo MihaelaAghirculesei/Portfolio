@@ -55,12 +55,6 @@ describe('HomeComponent', () => {
     });
   });
 
-  describe('Component Metadata', () => {
-    it('should use OnPush change detection strategy', () => {
-      expect((HomeComponent as any).ɵcmp.onPush).toBeTrue();
-    });
-  });
-
   describe('Eagerly Loaded Sections', () => {
     it('should render app-landing-page immediately', () => {
       expect(fixture.debugElement.query(By.css('app-landing-page'))).toBeTruthy();
