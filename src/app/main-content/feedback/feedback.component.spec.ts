@@ -1,22 +1,14 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FeedbacksComponent } from './feedback.component';
-import { PlatformService } from '../../shared/services/platform.service';
 import { QueryList, ElementRef } from '@angular/core';
 
 describe('FeedbacksComponent', () => {
   let component: FeedbacksComponent;
   let fixture: ComponentFixture<FeedbacksComponent>;
-  let mockPlatformService: jasmine.SpyObj<PlatformService>;
 
   beforeEach(async () => {
-    mockPlatformService = jasmine.createSpyObj('PlatformService', ['getDocument', 'getWindow']);
-    mockPlatformService.getDocument.and.returnValue(document);
-
     await TestBed.configureTestingModule({
-      imports: [FeedbacksComponent],
-      providers: [
-        { provide: PlatformService, useValue: mockPlatformService }
-      ]
+      imports: [FeedbacksComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FeedbacksComponent);
@@ -255,6 +247,22 @@ describe('FeedbacksComponent', () => {
 
       component['handleSwipe']();
 
+      expect(component.slideLeft).not.toHaveBeenCalled();
+      expect(component.slideRight).not.toHaveBeenCalled();
+    });
+
+    it('should return early from onTouchStart when changedTouches is empty', () => {
+      const initialStartX = component['touchStartX'];
+      const event = { changedTouches: [] } as any;
+      component.onTouchStart(event);
+      expect(component['touchStartX']).toBe(initialStartX);
+    });
+
+    it('should return early from onTouchEnd when changedTouches is empty', () => {
+      spyOn(component, 'slideLeft');
+      spyOn(component, 'slideRight');
+      const event = { changedTouches: [] } as any;
+      component.onTouchEnd(event);
       expect(component.slideLeft).not.toHaveBeenCalled();
       expect(component.slideRight).not.toHaveBeenCalled();
     });
