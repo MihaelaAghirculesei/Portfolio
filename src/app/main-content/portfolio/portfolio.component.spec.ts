@@ -465,6 +465,15 @@ describe('PortfolioComponent', () => {
       );
       expect(platformService.enableScroll).toHaveBeenCalled();
     });
+
+    it('should cancel pending animation frame on destroy when one is pending', () => {
+      spyOn(window, 'cancelAnimationFrame');
+      component['pendingRafId'] = 42;
+
+      component.ngOnDestroy();
+
+      expect(window.cancelAnimationFrame).toHaveBeenCalledWith(42);
+    });
   });
 
   describe('HostListener resize and orientationchange', () => {
@@ -661,8 +670,8 @@ describe('PortfolioComponent', () => {
 
       component.setActiveProject(0, mockEvent);
 
-      // Set rafPending to true to simulate ongoing animation frame
-      component['rafPending'] = true;
+      // Set pendingRafId to non-null to simulate ongoing animation frame
+      component['pendingRafId'] = 1;
       const initialProjectId = component.activeProjectId;
 
       component.setActiveProject(1, mockEvent);

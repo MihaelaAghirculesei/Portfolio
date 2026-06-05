@@ -31,6 +31,8 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   protected readonly data = inject(ProjectDataService);
   protected readonly overlay = inject(PortfolioOverlayService);
+  private readonly platformService = inject(PlatformService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   // ── Local UI state ──────────────────────────────────────────────────────────
   activeProjectId: number | null = null;
@@ -51,13 +53,10 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   private touchStartX = 0;
   private touchStartY = 0;
   private touchMoved = false;
-  private rafPending = false;
+  private pendingRafId: number | null = null;
   private readonly boundOnTouchMove = this.onTouchMove.bind(this);
 
-  constructor(
-    private platformService: PlatformService,
-    private cdr: ChangeDetectorRef,
-  ) {
+  constructor() {
     this.checkOrientation();
   }
 
@@ -68,6 +67,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.pendingRafId !== null) { cancelAnimationFrame(this.pendingRafId); }
     this.platformService.enableScroll();
     if (this.platformService.isBrowser) {
       document.removeEventListener('touchmove', this.boundOnTouchMove);
@@ -86,16 +86,15 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   }
 
   setActiveProject(index: number, event: MouseEvent): void {
-    const win = this.platformService.getWindow();
-    if (!win || win.innerWidth <= BREAKPOINTS.MOBILE_MAX || this.rafPending) { return; }
+    const win = this.platformService.window;
+    if (!win || win.innerWidth <= BREAKPOINTS.MOBILE_MAX || this.pendingRafId !== null) { return; }
 
     this.activeProjectId = index;
     this.activePreview = this.data.projects[index].previewImg;
-    this.rafPending = true;
     const trElement = event.currentTarget as HTMLElement;
 
-    requestAnimationFrame(() => {
-      this.rafPending = false;
+    this.pendingRafId = requestAnimationFrame(() => {
+      this.pendingRafId = null;
       this.hoverPosition = this.calculatePreviewPosition(trElement, index, win);
       this.cdr.markForCheck();
     });
@@ -163,7 +162,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   }
 
   private checkOrientation(): void {
-    const win = this.platformService.getWindow();
+    const win = this.platformService.window;
     if (win) {
       this.isLandscape = win.innerWidth > win.innerHeight;
       this.cdr.markForCheck();
