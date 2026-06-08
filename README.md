@@ -3,11 +3,11 @@
 [![CI](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Angular](https://img.shields.io/badge/Angular-19.2-DD0031?logo=angular)](https://angular.io/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?logo=angular)](https://angular.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Deployed on Cloudflare Pages](https://img.shields.io/badge/Deployed-Cloudflare%20Pages-F38020?logo=cloudflare)](https://aghirculesei.pages.dev)
 
-> A modern, performant, and fully accessible portfolio website built with Angular 19, showcasing best practices in web development.
+> A modern, performant, and fully accessible portfolio website built with Angular 21, showcasing best practices in web development.
 
 [🌐 Live Demo](https://aghirculesei.pages.dev) • [📧 Contact](mailto:aghirculesei@gmail.com)
 
@@ -87,13 +87,13 @@ Built with **clean architecture principles** and **modern Angular patterns**, th
 ## 🛠️ Tech Stack
 
 ### **Core**
-- **Framework:** Angular 19.2 (Standalone Components)
-- **Language:** TypeScript 5.8
+- **Framework:** Angular 21.2 (Standalone Components)
+- **Language:** TypeScript 5.9
 - **Styling:** SCSS with responsive design
 - **Internationalization:** @ngx-translate
 
 ### **Development**
-- **Testing:** Karma, Jasmine
+- **Testing:** Karma, Jasmine (unit) · Playwright (e2e)
 - **Linting:** ESLint, @angular-eslint
 - **Build:** Angular CLI
 - **CI/CD:** GitHub Actions
@@ -394,9 +394,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Statistics
 
-- **Components:** 14 standalone components
-- **Services:** 6 specialized services (Navigation, Logger, Scroll, Platform, AriaAnnouncer, GlobalErrorHandler)
-- **Test Coverage:** Comprehensive unit tests with Karma/Jasmine
+- **Components:** 15 standalone components
+- **Services:** 11 specialized services (Navigation, Logger, Scroll, Platform, Translation, SEO, FocusTrap, AriaAnnouncer, GlobalErrorHandler, PortfolioOverlay, ProjectData)
+- **Test Coverage:** 100% (statements, branches, functions, lines) · 23 Playwright e2e tests
 - **TypeScript:** 100% type-safe code (zero `any` types)
 - **Accessibility:** WCAG 2.1 Level AA compliant
 - **Languages:** 2 (English, German)
