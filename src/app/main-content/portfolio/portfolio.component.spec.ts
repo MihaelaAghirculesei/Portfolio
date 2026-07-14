@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { TranslationService } from '../../shared/services/translation.service';
 import { PortfolioComponent } from './portfolio.component';
 import { PlatformService } from '../../shared/services/platform.service';
@@ -19,7 +20,8 @@ describe('PortfolioComponent', () => {
       imports: [PortfolioComponent],
       providers: [
         PlatformService,
-        { provide: PLATFORM_ID, useValue: 'browser' }
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        provideRouter([]),
       ],
     }).compileComponents();
 
