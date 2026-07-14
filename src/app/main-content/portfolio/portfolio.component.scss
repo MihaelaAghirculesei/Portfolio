@@ -276,6 +276,15 @@
   }
 }
 
+.view-all-wrapper {
+  @include mixins.dFlex(center, center);
+  margin-top: variables.$spacing-xxxl;
+
+  .link-button.animated:hover {
+    box-shadow: 0 0 20px variables.$main-color-light;
+  }
+}
+
 .projects-hover-content {
   display: block;
   position: absolute;

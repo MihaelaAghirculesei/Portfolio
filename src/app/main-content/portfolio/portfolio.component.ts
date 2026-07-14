@@ -9,6 +9,7 @@ import {
   ChangeDetectorRef,
   inject,
 } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
@@ -19,7 +20,7 @@ import { PortfolioOverlayService } from './services/portfolio-overlay.service';
 
 @Component({
   selector: 'app-portfolio',
-  imports: [TranslatePipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
+  imports: [TranslatePipe, RouterLink, PassiveTouchStartDirective, PassiveTouchEndDirective],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,9 +31,13 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   @ViewChild('descriptionEl') descriptionEl?: ElementRef<HTMLParagraphElement>;
 
   protected readonly data = inject(ProjectDataService);
+  
   protected readonly overlay = inject(PortfolioOverlayService);
   private readonly platformService = inject(PlatformService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly router = inject(Router);
+
+  protected readonly isProjectsPage = this.router.url.startsWith('/projects');
 
   // ── Local UI state ──────────────────────────────────────────────────────────
   activeProjectId: number | null = null;
