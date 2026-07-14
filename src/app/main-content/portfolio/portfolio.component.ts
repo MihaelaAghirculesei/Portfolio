@@ -46,7 +46,9 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   isLandscape = false;
 
   // ── Delegating accessors — keep the template and tests unchanged ────────────
-  get projects(): Projects[] { return this.data.projects; }
+  get projects(): Projects[] {
+    return this.isProjectsPage ? this.data.projects : this.data.projects.filter((p) => p.featured !== false);
+  }
 
   get selectedProject(): Projects | null { return this.overlay.selectedProject; }
   set selectedProject(v: Projects | null) { this.overlay.selectedProject = v; }
@@ -95,7 +97,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     if (!win || win.innerWidth <= BREAKPOINTS.MOBILE_MAX || this.pendingRafId !== null) { return; }
 
     this.activeProjectId = index;
-    this.activePreview = this.data.projects[index].previewImg;
+    this.activePreview = this.projects[index].previewImg;
     const trElement = event.currentTarget as HTMLElement;
 
     this.pendingRafId = requestAnimationFrame(() => {
@@ -118,7 +120,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     this.touchStartY = event.touches[0].clientY;
     this.touchMoved = false;
     this.activeProjectId = index;
-    this.activePreview = this.data.projects[index].previewImg;
+    this.activePreview = this.projects[index].previewImg;
 
     requestAnimationFrame(() => {
       const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
@@ -129,7 +131,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   }
 
   handleTouchEnd(_event: TouchEvent, index: number): void {
-    if (!this.touchMoved) { this.openProjectOverlay(this.data.projects[index], index); }
+    if (!this.touchMoved) { this.openProjectOverlay(this.projects[index], index); }
     this.clearActiveProject();
   }
 
@@ -145,14 +147,14 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   }
 
   nextProject(): void {
-    this.overlay.next(this.data.projects, this.descriptionEl);
+    this.overlay.next(this.projects, this.descriptionEl);
     this.cdr.markForCheck();
   }
 
   // ── Template helpers delegated to ProjectDataService ───────────────────────
   hasTechIcon(technology: string): boolean { return this.data.hasTechIcon(technology); }
   getTechIconPath(technology: string): string | null { return this.data.getTechIconPath(technology); }
-  getProjectScreenshotAlt(idx: number | null): string { return this.data.getProjectScreenshotAlt(idx); }
+  getProjectScreenshotAlt(idx: number | null): string { return this.data.getProjectScreenshotAlt(idx, this.projects); }
   getProjectShortDescription(project: Projects): string { return this.data.getProjectShortDescription(project); }
   getProjectDescription(project: Projects): string { return this.data.getProjectDescription(project); }
 
@@ -178,7 +180,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
     const trRect = trElement.getBoundingClientRect();
     const base = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
-    const hoverOffset = this.data.projects[index]?.hoverOffset;
+    const hoverOffset = this.projects[index]?.hoverOffset;
     if (!hoverOffset) { return base; }
     const isSmall = win.innerWidth <= BREAKPOINTS.SMALL_PREVIEW_MAX;
     return base + hoverOffset.base + (isSmall ? hoverOffset.smallPreview : 0);

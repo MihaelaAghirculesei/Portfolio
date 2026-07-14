@@ -54,11 +54,11 @@ export class ProjectDataService {
     return icon ? this.ICONS_BASE + icon : null;
   }
 
-  getProjectScreenshotAlt(projectIndex: number | null): string {
-    if (projectIndex === null || projectIndex < 0 || projectIndex >= this.projects.length) {
+  getProjectScreenshotAlt(projectIndex: number | null, projects: Projects[] = this.projects): string {
+    if (projectIndex === null || projectIndex < 0 || projectIndex >= projects.length) {
       return 'Project screenshot';
     }
-    const name = this.projects[projectIndex]?.name;
+    const name = projects[projectIndex]?.name;
     return name ? `${name} screenshot` : 'Project screenshot';
   }
 

@@ -16,4 +16,5 @@ export interface Projects {
   isTeam?: boolean;
   inProgress?: boolean;
   hoverOffset?: HoverOffset;
+  featured?: boolean;
 }
