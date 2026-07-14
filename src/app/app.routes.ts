@@ -38,6 +38,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'projects',
+    loadComponent: () =>
+      import('./main-content/portfolio/portfolio.component').then(
+        (m) => m.PortfolioComponent
+      ),
+  },
+  {
     path: 'feedback',
     loadComponent: () =>
       import('./main-content/feedback/feedback.component').then(
