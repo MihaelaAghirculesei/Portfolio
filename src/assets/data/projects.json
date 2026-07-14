@@ -61,6 +61,7 @@
     "previewImgSrcset": "assets/img/projects/el-pollo-locco-400w.webp 400w, assets/img/projects/el-pollo-locco-800w.webp 800w, assets/img/projects/el-pollo-locco-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/El-Pollo-Loco",
     "liveUrl": "https://el-pollo-loco-aghirculesei.pages.dev",
+    "featured": false,
     "hoverOffset": { "base": -40, "smallPreview": 70 }
   }
 ]
