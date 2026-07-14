@@ -36,6 +36,13 @@ const SEO_CONFIGS = new Map<string, SeoConfig>([
       'Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO.',
     ogUrl: `${SITE_URL}/datenschutz`,
   }],
+  ['/projects', {
+    title: 'All Projects — Mihaela Aghirculesei',
+    description:
+      'Full list of projects by Mihaela Aghirculesei, Fullstack Developer — ' +
+      'Angular, TypeScript, Python and FastAPI applications.',
+    ogUrl: `${SITE_URL}/projects`,
+  }],
   ['/privacy-policy', {
     title: 'Privacy Policy — Mihaela Aghirculesei',
     description:
