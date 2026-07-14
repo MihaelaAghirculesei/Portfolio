@@ -83,7 +83,9 @@
     "personalProject": "Personal Project",
     "teamProject": "Team Project",
     "workInProgress": "Work in Progress",
-    "notLiveYet": "Live version not available yet — this project is currently in development."
+    "notLiveYet": "Live version not available yet — this project is currently in development.",
+    "viewAllProjects": "View all projects",
+    "viewAllProjectsAriaLabel": "View all projects in a dedicated page"
   },
   "contact": {
     "title": "Contact me",
