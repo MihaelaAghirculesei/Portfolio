@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { TranslationService } from '../../shared/services/translation.service';
 import { PortfolioComponent } from './portfolio.component';
 import { PlatformService } from '../../shared/services/platform.service';
-import { ElementRef, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, PLATFORM_ID } from '@angular/core';
 import { PortfolioOverlayService } from './services/portfolio-overlay.service';
 import { ProjectDataService } from './services/project-data.service';
+
+@Component({ selector: 'app-stub-projects-target', template: '', standalone: true })
+class StubProjectsRouteComponent {}
 
 describe('PortfolioComponent', () => {
   let component: PortfolioComponent;
@@ -54,9 +57,10 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have projects array with 5 projects', () => {
+    it('should have 4 featured projects on the home page (El Pollo Loco excluded)', () => {
       expect(component.projects).toBeDefined();
-      expect(component.projects.length).toBe(5);
+      expect(component.projects.length).toBe(4);
+      expect(component.projects.some((p) => p.name === 'El Pollo Loco')).toBe(false);
     });
 
     it('should have correct project data structure', () => {
@@ -525,7 +529,9 @@ describe('PortfolioComponent', () => {
         { id: 'noOffset', name: 'NoOffset', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' }
       ];
 
-      component.setActiveProject(5, mockEvent);
+      // index 4 in the featured (home) list: El Pollo Loco (index 4 in the raw
+      // array) is filtered out, so the appended item lands at featured index 4
+      component.setActiveProject(4, mockEvent);
       tick(16);
 
       expect(component.hoverPosition).not.toBeNull();
@@ -681,5 +687,42 @@ describe('PortfolioComponent', () => {
       // Should return early due to rafPending flag
       expect(component.activeProjectId).toBe(initialProjectId);
     }));
+  });
+
+  describe('on the /projects page', () => {
+    let projFixture: ComponentFixture<PortfolioComponent>;
+    let projComponent: PortfolioComponent;
+
+    beforeEach(fakeAsync(() => {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        imports: [PortfolioComponent],
+        providers: [
+          PlatformService,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          provideRouter([{ path: 'projects', component: StubProjectsRouteComponent }]),
+        ],
+      }).compileComponents();
+
+      const router = TestBed.inject(Router);
+      router.navigateByUrl('/projects');
+      tick();
+
+      projFixture = TestBed.createComponent(PortfolioComponent);
+      projComponent = projFixture.componentInstance;
+      projComponent.projectsTable = {
+        nativeElement: {
+          getBoundingClientRect: () => ({ top: 100, left: 0, width: 800, height: 600 })
+        }
+      } as ElementRef;
+
+      projFixture.detectChanges();
+    }));
+
+    it('should show all 5 projects including El Pollo Loco', () => {
+      expect(projComponent['isProjectsPage']).toBe(true);
+      expect(projComponent.projects.length).toBe(5);
+      expect(projComponent.projects.some((p) => p.name === 'El Pollo Loco')).toBe(true);
+    });
   });
 });
