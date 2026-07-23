@@ -58,3 +58,6 @@ tmp_*.png
 /playwright/.cache
 .lighthouseci/
 lighthouse-report.*
+
+# Scratch notes
+plan.md
