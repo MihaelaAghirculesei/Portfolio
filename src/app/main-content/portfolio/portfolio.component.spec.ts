@@ -724,5 +724,12 @@ describe('PortfolioComponent', () => {
       expect(projComponent.projects.length).toBe(5);
       expect(projComponent.projects.some((p) => p.name === 'El Pollo Loco')).toBe(true);
     });
+
+    it('should render a link back to the featured projects instead of "view all"', () => {
+      const link: HTMLAnchorElement = projFixture.nativeElement.querySelector('.view-all-wrapper a');
+
+      expect(link.textContent?.trim()).toBe('Back to featured projects');
+      expect(link.getAttribute('data-text')).toBe('Back to featured projects');
+    });
   });
 });
