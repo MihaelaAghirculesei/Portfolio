@@ -128,11 +128,17 @@
   }
 }
 
+$header-padding-top: 98px;
+
 #projects {
   padding: 15px;
   background-color: variables.$gradient-start;
   @include mixins.dFlex(center, center);
   scroll-margin-top: 150px;
+
+  &.projects-page {
+    padding-top: $header-padding-top;
+  }
 
   .contentWrapper {
     text-align: left;
