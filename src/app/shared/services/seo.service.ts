@@ -15,6 +15,14 @@ export interface SeoConfig {
 const SITE_URL = environment.siteUrl;
 const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/img/about-me/mihaela-aghirculesei(2).jpg`;
 
+const HERO_IMAGE_HREF = 'assets/img/about-me/mihaela-aghirculesei-800w.webp';
+const HERO_IMAGE_SRCSET =
+  'assets/img/about-me/mihaela-aghirculesei-480w.webp 480w, ' +
+  'assets/img/about-me/mihaela-aghirculesei-800w.webp 800w, ' +
+  'assets/img/about-me/mihaela-aghirculesei-1200w.webp 1200w, ' +
+  'assets/img/about-me/mihaela-aghirculesei-1600w.webp 1600w';
+const HERO_IMAGE_SIZES = '(max-width: 768px) 100vw, 580px';
+
 @Injectable({ providedIn: 'root' })
 export class SeoService {
   private readonly meta = inject(Meta);
@@ -53,12 +61,19 @@ export class SeoService {
 
     // JSON-LD structured data
     this.updateJsonLd(ogUrl, config.description);
+
+    // Hero image preload — only relevant on the home page, where it's rendered eagerly
+    this.updateHeroPreload(this.isHome(ogUrl));
+  }
+
+  private isHome(ogUrl: string): boolean {
+    return ogUrl === SITE_URL || ogUrl === `${SITE_URL}/`;
   }
 
   // ── JSON-LD ──────────────────────────────────────────────────────────────
 
   private updateJsonLd(ogUrl: string, description: string): void {
-    const isHome = ogUrl === SITE_URL || ogUrl === `${SITE_URL}/`;
+    const isHome = this.isHome(ogUrl);
     const schemas: object[] = [this.buildWebSiteSchema()];
 
     if (isHome) {
@@ -148,5 +163,28 @@ export class SeoService {
       this.doc.head.appendChild(link);
     }
     link.setAttribute('href', url);
+  }
+
+  // ── Hero image preload ──────────────────────────────────────────────────
+
+  private updateHeroPreload(isHome: boolean): void {
+    const existing = this.doc.querySelector<HTMLLinkElement>('link[data-hero-preload]');
+
+    if (!isHome) {
+      existing?.parentNode?.removeChild(existing);
+      return;
+    }
+
+    if (existing) { return; }
+
+    const link = this.doc.createElement('link');
+    link.setAttribute('rel', 'preload');
+    link.setAttribute('as', 'image');
+    link.setAttribute('href', HERO_IMAGE_HREF);
+    link.setAttribute('imagesrcset', HERO_IMAGE_SRCSET);
+    link.setAttribute('imagesizes', HERO_IMAGE_SIZES);
+    link.setAttribute('fetchpriority', 'high');
+    link.setAttribute('data-hero-preload', 'true');
+    this.doc.head.appendChild(link);
   }
 }
