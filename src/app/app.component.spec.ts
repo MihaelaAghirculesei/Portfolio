@@ -81,6 +81,33 @@ describe('AppComponent', () => {
     );
   });
 
+  it('should update SEO when navigating to skills', () => {
+    component.ngOnInit();
+    mockSeoService.update.calls.reset();
+    routerEventsSubject.next(new NavigationEnd(1, '/skills', '/skills'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({ title: 'Skills — Mihaela Aghirculesei' })
+    );
+  });
+
+  it('should update SEO when navigating to feedback', () => {
+    component.ngOnInit();
+    mockSeoService.update.calls.reset();
+    routerEventsSubject.next(new NavigationEnd(1, '/feedback', '/feedback'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({ title: 'Feedback — Mihaela Aghirculesei' })
+    );
+  });
+
+  it('should update SEO when navigating to contact', () => {
+    component.ngOnInit();
+    mockSeoService.update.calls.reset();
+    routerEventsSubject.next(new NavigationEnd(1, '/contact', '/contact'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({ title: 'Contact — Mihaela Aghirculesei' })
+    );
+  });
+
   it('should update SEO when navigating back to home', () => {
     component.ngOnInit();
     routerEventsSubject.next(new NavigationEnd(1, '/legal-notice', '/legal-notice'));
