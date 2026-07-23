@@ -70,7 +70,7 @@
 
 ## 💡 What Makes This Project Special
 
-This portfolio demonstrates **production-ready Angular development** with enterprise-level best practices:
+This portfolio is built around a set of practices, each backed by a concrete check in CI:
 
 - **🎯 Type Safety:** Zero `any` types throughout the entire codebase
 - **♿ Accessibility First:** WCAG 2.1 AA compliant with full keyboard navigation and screen reader support
@@ -80,7 +80,7 @@ This portfolio demonstrates **production-ready Angular development** with enterp
 - **🌍 Internationalization:** Full English and German language support
 - **📱 Responsive:** Mobile-first design approach ensuring perfect rendering on all devices
 
-Built with **clean architecture principles** and **modern Angular patterns**, this project showcases skills in creating maintainable, scalable, and user-friendly web applications.
+Built with standalone components and a clean separation of concerns, aiming for a codebase that stays maintainable as it grows.
 
 ---
 
