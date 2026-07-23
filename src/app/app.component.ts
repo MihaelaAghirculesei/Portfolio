@@ -36,12 +36,33 @@ const SEO_CONFIGS = new Map<string, SeoConfig>([
       'Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO.',
     ogUrl: `${SITE_URL}/datenschutz`,
   }],
+  ['/skills', {
+    title: 'Skills — Mihaela Aghirculesei',
+    description:
+      'Technical skills of Mihaela Aghirculesei, Fullstack Developer — Angular, TypeScript, ' +
+      'SASS and Material Design on the frontend, Python, FastAPI and SQLAlchemy on the backend.',
+    ogUrl: `${SITE_URL}/skills`,
+  }],
   ['/projects', {
     title: 'All Projects — Mihaela Aghirculesei',
     description:
       'Full list of projects by Mihaela Aghirculesei, Fullstack Developer — ' +
       'Angular, TypeScript, Python and FastAPI applications.',
     ogUrl: `${SITE_URL}/projects`,
+  }],
+  ['/feedback', {
+    title: 'Feedback — Mihaela Aghirculesei',
+    description:
+      'Feedback and recommendations from colleagues who worked with Mihaela Aghirculesei, ' +
+      'Fullstack Developer specializing in Angular, TypeScript, and Python.',
+    ogUrl: `${SITE_URL}/feedback`,
+  }],
+  ['/contact', {
+    title: 'Contact — Mihaela Aghirculesei',
+    description:
+      'Get in touch with Mihaela Aghirculesei, Fullstack Developer based in Germany, ' +
+      'available for new projects involving Angular, TypeScript, and Python.',
+    ogUrl: `${SITE_URL}/contact`,
   }],
   ['/privacy-policy', {
     title: 'Privacy Policy — Mihaela Aghirculesei',
