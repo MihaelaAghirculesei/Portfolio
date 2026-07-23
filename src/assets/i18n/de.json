@@ -85,7 +85,9 @@
     "workInProgress": "In Entwicklung",
     "notLiveYet": "Live-Version noch nicht verfügbar — dieses Projekt befindet sich derzeit in Entwicklung.",
     "viewAllProjects": "Alle Projekte ansehen",
-    "viewAllProjectsAriaLabel": "Alle Projekte auf einer eigenen Seite ansehen"
+    "viewAllProjectsAriaLabel": "Alle Projekte auf einer eigenen Seite ansehen",
+    "viewFeaturedProjects": "Zurück zu den ausgewählten Projekten",
+    "viewFeaturedProjectsAriaLabel": "Zurück zu den ausgewählten Projekten auf der Startseite"
   },
   "contact": {
     "title": "Kontaktieren Sie mich",

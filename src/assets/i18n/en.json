@@ -85,7 +85,9 @@
     "workInProgress": "Work in Progress",
     "notLiveYet": "Live version not available yet — this project is currently in development.",
     "viewAllProjects": "View all projects",
-    "viewAllProjectsAriaLabel": "View all projects in a dedicated page"
+    "viewAllProjectsAriaLabel": "View all projects in a dedicated page",
+    "viewFeaturedProjects": "Back to featured projects",
+    "viewFeaturedProjectsAriaLabel": "Back to the featured projects on the home page"
   },
   "contact": {
     "title": "Contact me",

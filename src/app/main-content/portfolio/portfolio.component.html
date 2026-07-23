@@ -90,6 +90,17 @@
         <span>{{ "portfolio.viewAllProjects" | translate }}</span>
       </a>
     </div>
+    } @else {
+    <div class="view-all-wrapper">
+      <a
+        routerLink="/"
+        class="link-button animated"
+        [attr.data-text]="'portfolio.viewFeaturedProjects' | translate"
+        [attr.aria-label]="'portfolio.viewFeaturedProjectsAriaLabel' | translate"
+      >
+        <span>{{ "portfolio.viewFeaturedProjects" | translate }}</span>
+      </a>
+    </div>
     }
   </div>
 
