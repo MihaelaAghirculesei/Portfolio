@@ -52,6 +52,7 @@ describe('ContactFormComponent', () => {
         email: '',
         message: '',
         privacyPolicy: false,
+        website: '',
       });
       expect(component.isSubmitting()).toBe(false);
       expect(component.submissionStatus()).toBeNull();
@@ -164,6 +165,7 @@ describe('ContactFormComponent', () => {
         email: 'test@example.com',
         message: 'Hello World Message',
         privacyPolicy: true,
+        website: '',
       });
     }
 
@@ -181,6 +183,7 @@ describe('ContactFormComponent', () => {
         email: 'TEST@EXAMPLE.COM',
         message: '  Hello World Message  ',
         privacyPolicy: true,
+        website: '',
       });
 
       component.onSubmit();
@@ -234,6 +237,7 @@ describe('ContactFormComponent', () => {
         email: 'test@example.com',
         message: 'Hello World Message',
         privacyPolicy: true,
+        website: '',
       });
     }
 
@@ -325,7 +329,9 @@ describe('ContactFormComponent', () => {
       document.body.appendChild(footer);
       spyOn(button, 'focus');
 
-      component.form.setValue({ name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true });
+      component.form.setValue({
+        name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true, website: '',
+      });
       component.onSubmit();
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
@@ -343,6 +349,7 @@ describe('ContactFormComponent', () => {
         email: '  TEST@EXAMPLE.COM  ',
         message: '  Hello World Message  ',
         privacyPolicy: true,
+        website: '',
       });
 
       const sanitized = component['sanitizeContactData']();
@@ -379,7 +386,9 @@ describe('ContactFormComponent', () => {
 
     it('should call sessionStorage.removeItem when clearing form data', fakeAsync(() => {
       spyOn(sessionStorage, 'removeItem');
-      component.form.setValue({ name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true });
+      component.form.setValue({
+        name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true, website: '',
+      });
 
       component.onSubmit();
       const req = httpMock.expectOne(environment.emailWorkerUrl);
@@ -447,7 +456,9 @@ describe('ContactFormComponent', () => {
     it('should log error when sessionStorage.removeItem throws', fakeAsync(() => {
       spyOn(sessionStorage, 'removeItem').and.throwError('access denied');
       const loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
-      component.form.setValue({ name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true });
+      component.form.setValue({
+        name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true, website: '',
+      });
 
       component.onSubmit();
       const req = httpMock.expectOne(environment.emailWorkerUrl);

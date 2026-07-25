@@ -5,6 +5,18 @@
     [attr.spellcheck]="false"
     autocomplete="off"
   >
+    <div class="honeypot-field" aria-hidden="true">
+      <label for="website">Website</label>
+      <input
+        formControlName="website"
+        type="text"
+        id="website"
+        name="website"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
+
     <div class="inputText">
       <label for="name">{{ "contact.form.nameLabel" | translate }}</label>
       <input
