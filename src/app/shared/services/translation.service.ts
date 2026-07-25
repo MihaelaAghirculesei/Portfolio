@@ -3,7 +3,7 @@ import { Observable, of, Subject } from 'rxjs';
 import enTranslations from '../../../assets/i18n/en.json';
 import deTranslations from '../../../assets/i18n/de.json';
 
-type Lang = 'en' | 'de';
+export type Lang = 'en' | 'de';
 type TranslationDict = Record<string, unknown>;
 
 export interface LangChangeEvent {
@@ -33,8 +33,8 @@ export class TranslationService {
     return of(this.translations[newLang]);
   }
 
-  instant(key: string, params?: Record<string, unknown>): string {
-    let result = this.resolve(key, this._lang()) ?? key;
+  instant(key: string, params?: Record<string, unknown>, lang?: Lang): string {
+    let result = this.resolve(key, lang ?? this._lang()) ?? key;
     if (params) {
       Object.entries(params).forEach(([k, v]) => {
         const escapedKey = k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

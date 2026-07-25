@@ -186,5 +186,35 @@
     "location": "Based in Wolfsburg",
     "skills": "Angular · Python · TypeScript",
     "passion": "Passionate about clean code"
+  },
+  "seo": {
+    "home": {
+      "title": "Mihaela Melania Aghirculesei — Fullstack Developer",
+      "description": "Mihaela Aghirculesei — Fullstack Developer based in Germany, specializing in Angular, TypeScript, and modern web design. Available for new projects."
+    },
+    "legalNotice": {
+      "title": "Legal Notice — Mihaela Aghirculesei",
+      "description": "Legal notice and imprint for the portfolio of Mihaela Melania Aghirculesei, Fullstack Developer based in Wolfsburg, Germany. Contact and legal information."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy — Mihaela Aghirculesei",
+      "description": "Privacy policy for the portfolio of Mihaela Melania Aghirculesei, Fullstack Developer. Information on data processing in accordance with GDPR."
+    },
+    "skills": {
+      "title": "Skills — Mihaela Aghirculesei",
+      "description": "Technical skills of Mihaela Aghirculesei, Fullstack Developer — Angular, TypeScript, SASS and Material Design on the frontend, Python, FastAPI and SQLAlchemy on the backend."
+    },
+    "projects": {
+      "title": "All Projects — Mihaela Aghirculesei",
+      "description": "Full list of projects by Mihaela Aghirculesei, Fullstack Developer — Angular, TypeScript, Python and FastAPI applications."
+    },
+    "feedback": {
+      "title": "Feedback — Mihaela Aghirculesei",
+      "description": "Feedback and recommendations from colleagues who worked with Mihaela Aghirculesei, Fullstack Developer specializing in Angular, TypeScript, and Python."
+    },
+    "contact": {
+      "title": "Contact — Mihaela Aghirculesei",
+      "description": "Get in touch with Mihaela Aghirculesei, Fullstack Developer based in Germany, available for new projects involving Angular, TypeScript, and Python."
+    }
   }
 }

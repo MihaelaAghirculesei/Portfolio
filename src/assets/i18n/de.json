@@ -186,5 +186,11 @@
     "location": "Wohnhaft in Wolfsburg",
     "skills": "Angular · Python · TypeScript",
     "passion": "Leidenschaftlich für sauberen Code"
+  },
+  "seo": {
+    "datenschutz": {
+      "title": "Datenschutzerklärung — Mihaela Aghirculesei",
+      "description": "Datenschutzerklärung für das Portfolio von Mihaela Melania Aghirculesei. Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO."
+    }
   }
 }
