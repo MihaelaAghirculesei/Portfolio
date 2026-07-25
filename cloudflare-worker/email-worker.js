@@ -4,6 +4,12 @@
  * ENV Variables da impostare nel Cloudflare Dashboard:
  *   RESEND_API_KEY  → la tua chiave API Resend (re_xxxxxxxxx)
  *   TO_EMAIL        → aghirculesei@gmail.com
+ *
+ * KV Namespace richiesto per il rate limiting (binding RATE_LIMIT_KV):
+ *   1. Crea il namespace:  wrangler kv namespace create RATE_LIMIT_KV
+ *   2. Collega l'id generato al binding "RATE_LIMIT_KV" in wrangler.toml
+ *      (già presente sotto [[kv_namespaces]]) oppure dal Cloudflare Dashboard:
+ *      Workers & Pages → api → Settings → Bindings → KV Namespace Bindings.
  */
 
 const ALLOWED_ORIGINS = [
@@ -11,6 +17,39 @@ const ALLOWED_ORIGINS = [
   /^https:\/\/[a-z0-9]+\.aghirculesei\.pages\.dev$/, // preview deployments
   'http://localhost:4200',                    // local development
 ];
+
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const RATE_LIMIT_WINDOW_SECONDS = 10 * 60; // 10 minuti
+
+async function isRateLimited(env, ip) {
+  if (!env.RATE_LIMIT_KV || !ip) {
+    return false;
+  }
+
+  const key = `ratelimit:${ip}`;
+  const now = Date.now();
+  const stored = await env.RATE_LIMIT_KV.get(key, 'json');
+
+  if (stored && stored.resetAt > now) {
+    if (stored.count >= RATE_LIMIT_MAX_REQUESTS) {
+      return true;
+    }
+    await env.RATE_LIMIT_KV.put(
+      key,
+      JSON.stringify({ count: stored.count + 1, resetAt: stored.resetAt }),
+      { expirationTtl: Math.ceil((stored.resetAt - now) / 1000) }
+    );
+    return false;
+  }
+
+  const resetAt = now + RATE_LIMIT_WINDOW_SECONDS * 1000;
+  await env.RATE_LIMIT_KV.put(
+    key,
+    JSON.stringify({ count: 1, resetAt }),
+    { expirationTtl: RATE_LIMIT_WINDOW_SECONDS }
+  );
+  return false;
+}
 
 function getAllowedOrigin(request) {
   const origin = request.headers.get('Origin') || '';
@@ -31,6 +70,11 @@ export default {
 
     if (request.method !== 'POST') {
       return corsResponse(JSON.stringify({ error: 'Method not allowed' }), 405, request);
+    }
+
+    const ip = request.headers.get('CF-Connecting-IP');
+    if (await isRateLimited(env, ip)) {
+      return corsResponse(JSON.stringify({ error: 'Too many requests' }), 429, request);
     }
 
     let body;
