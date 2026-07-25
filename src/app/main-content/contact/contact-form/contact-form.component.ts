@@ -25,6 +25,7 @@ interface ContactData {
   email: string;
   message: string;
   privacyPolicy: boolean;
+  website: string;
 }
 
 interface ContactResponse {
@@ -80,6 +81,7 @@ export class ContactFormComponent implements OnInit {
     email: ['', [Validators.required, Validators.pattern(VALIDATION_CONFIG.EMAIL_PATTERN)]],
     message: ['', [Validators.required, trimmedMinLength(VALIDATION_CONFIG.MIN_MESSAGE_LENGTH)]],
     privacyPolicy: [false, Validators.requiredTrue],
+    website: [''], // honeypot anti-spam: campo nascosto, i bot lo compilano
   });
 
   private readonly postConfig = {
@@ -177,12 +179,13 @@ export class ContactFormComponent implements OnInit {
   }
 
   private sanitizeContactData(): ContactData {
-    const { name, email, message, privacyPolicy } = this.form.getRawValue();
+    const { name, email, message, privacyPolicy, website } = this.form.getRawValue();
     return {
       name: name.trim(),
       email: email.trim().toLowerCase(),
       message: message.trim(),
       privacyPolicy,
+      website,
     };
   }
 

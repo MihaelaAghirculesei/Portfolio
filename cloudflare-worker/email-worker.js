@@ -88,7 +88,7 @@ export default {
       return corsResponse(JSON.stringify({ error: 'Invalid JSON' }), 400, request);
     }
 
-    const { name, email, message } = body;
+    const { name, email, message, website } = body;
 
     if (!name || !email || !message) {
       return corsResponse(JSON.stringify({ error: 'Missing required fields' }), 400, request);
@@ -100,6 +100,11 @@ export default {
       message.length > MAX_MESSAGE_LENGTH
     ) {
       return corsResponse(JSON.stringify({ error: 'Field too long' }), 400, request);
+    }
+
+    // Honeypot: campo nascosto compilato solo dai bot. Rispondiamo 200 senza inviare l'email.
+    if (website) {
+      return corsResponse(JSON.stringify({ success: true }), 200, request);
     }
 
     // Basic email validation
