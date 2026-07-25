@@ -18,6 +18,10 @@ const ALLOWED_ORIGINS = [
   'http://localhost:4200',                    // local development
 ];
 
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 200;
+const MAX_MESSAGE_LENGTH = 5000;
+
 const RATE_LIMIT_MAX_REQUESTS = 5;
 const RATE_LIMIT_WINDOW_SECONDS = 10 * 60; // 10 minuti
 
@@ -88,6 +92,14 @@ export default {
 
     if (!name || !email || !message) {
       return corsResponse(JSON.stringify({ error: 'Missing required fields' }), 400, request);
+    }
+
+    if (
+      name.length > MAX_NAME_LENGTH ||
+      email.length > MAX_EMAIL_LENGTH ||
+      message.length > MAX_MESSAGE_LENGTH
+    ) {
+      return corsResponse(JSON.stringify({ error: 'Field too long' }), 400, request);
     }
 
     // Basic email validation
