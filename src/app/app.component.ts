@@ -1,6 +1,6 @@
 import { Component, OnInit, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { TranslationService } from './shared/services/translation.service';
+import { TranslationService, Lang } from './shared/services/translation.service';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HeaderComponent } from './shared/header/header.component';
@@ -12,65 +12,22 @@ import { environment } from '../environments/environment';
 
 const SITE_URL = environment.siteUrl;
 
-const SEO_CONFIGS = new Map<string, SeoConfig>([
-  ['/', {
-    title: 'Mihaela Melania Aghirculesei — Fullstack Developer',
-    description:
-      'Mihaela Aghirculesei — Fullstack Developer based in Germany, ' +
-      'specializing in Angular, TypeScript, and modern web design. ' +
-      'Available for new projects.',
-    ogUrl: SITE_URL,
-    ogType: 'profile',
-  }],
-  ['/legal-notice', {
-    title: 'Legal Notice — Mihaela Aghirculesei',
-    description:
-      'Legal notice and imprint for the portfolio of Mihaela Melania Aghirculesei, ' +
-      'Fullstack Developer based in Wolfsburg, Germany. Contact and legal information.',
-    ogUrl: `${SITE_URL}/legal-notice`,
-  }],
-  ['/datenschutz', {
-    title: 'Datenschutzerklärung — Mihaela Aghirculesei',
-    description:
-      'Datenschutzerklärung für das Portfolio von Mihaela Melania Aghirculesei. ' +
-      'Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO.',
-    ogUrl: `${SITE_URL}/datenschutz`,
-  }],
-  ['/skills', {
-    title: 'Skills — Mihaela Aghirculesei',
-    description:
-      'Technical skills of Mihaela Aghirculesei, Fullstack Developer — Angular, TypeScript, ' +
-      'SASS and Material Design on the frontend, Python, FastAPI and SQLAlchemy on the backend.',
-    ogUrl: `${SITE_URL}/skills`,
-  }],
-  ['/projects', {
-    title: 'All Projects — Mihaela Aghirculesei',
-    description:
-      'Full list of projects by Mihaela Aghirculesei, Fullstack Developer — ' +
-      'Angular, TypeScript, Python and FastAPI applications.',
-    ogUrl: `${SITE_URL}/projects`,
-  }],
-  ['/feedback', {
-    title: 'Feedback — Mihaela Aghirculesei',
-    description:
-      'Feedback and recommendations from colleagues who worked with Mihaela Aghirculesei, ' +
-      'Fullstack Developer specializing in Angular, TypeScript, and Python.',
-    ogUrl: `${SITE_URL}/feedback`,
-  }],
-  ['/contact', {
-    title: 'Contact — Mihaela Aghirculesei',
-    description:
-      'Get in touch with Mihaela Aghirculesei, Fullstack Developer based in Germany, ' +
-      'available for new projects involving Angular, TypeScript, and Python.',
-    ogUrl: `${SITE_URL}/contact`,
-  }],
-  ['/privacy-policy', {
-    title: 'Privacy Policy — Mihaela Aghirculesei',
-    description:
-      'Privacy policy for the portfolio of Mihaela Melania Aghirculesei, ' +
-      'Fullstack Developer. Information on data processing in accordance with GDPR.',
-    ogUrl: `${SITE_URL}/privacy-policy`,
-  }],
+interface RouteSeoMeta {
+  i18nKey: string;
+  lang: Lang;
+  ogPath: string;
+  ogType?: string;
+}
+
+const ROUTE_SEO_META = new Map<string, RouteSeoMeta>([
+  ['/', { i18nKey: 'home', lang: 'en', ogPath: '', ogType: 'profile' }],
+  ['/legal-notice', { i18nKey: 'legalNotice', lang: 'en', ogPath: '/legal-notice' }],
+  ['/datenschutz', { i18nKey: 'datenschutz', lang: 'de', ogPath: '/datenschutz' }],
+  ['/skills', { i18nKey: 'skills', lang: 'en', ogPath: '/skills' }],
+  ['/projects', { i18nKey: 'projects', lang: 'en', ogPath: '/projects' }],
+  ['/feedback', { i18nKey: 'feedback', lang: 'en', ogPath: '/feedback' }],
+  ['/contact', { i18nKey: 'contact', lang: 'en', ogPath: '/contact' }],
+  ['/privacy-policy', { i18nKey: 'privacyPolicy', lang: 'en', ogPath: '/privacy-policy' }],
 ]);
 
 @Component({
@@ -119,7 +76,13 @@ export class AppComponent implements OnInit {
   }
 
   private updateSeo(path: string): void {
-    const config = SEO_CONFIGS.get(path) ?? SEO_CONFIGS.get('/')!;
+    const meta = ROUTE_SEO_META.get(path) ?? ROUTE_SEO_META.get('/')!;
+    const config: SeoConfig = {
+      title: this.translate.instant(`seo.${meta.i18nKey}.title`, undefined, meta.lang),
+      description: this.translate.instant(`seo.${meta.i18nKey}.description`, undefined, meta.lang),
+      ogUrl: `${SITE_URL}${meta.ogPath}`,
+      ...(meta.ogType ? { ogType: meta.ogType } : {}),
+    };
     this.seoService.update(config);
   }
 }
