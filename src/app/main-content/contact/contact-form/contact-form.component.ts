@@ -16,6 +16,7 @@ import { AriaAnnouncerService } from '../../../shared/services/aria-announcer.se
 import { LoggerService } from '../../../shared/services/logger.service';
 import { FocusTrapService } from '../../../shared/services/focus-trap.service';
 import { ScrollService } from '../../../shared/services/scroll.service';
+import { PlatformService } from '../../../shared/services/platform.service';
 import { VALIDATION_CONFIG, HTTP_CONFIG, TIMING_CONFIG } from '../../../shared/constants/app.constants';
 import { environment } from '../../../../environments/environment';
 
@@ -62,6 +63,7 @@ export class ContactFormComponent implements OnInit {
   private readonly logger = inject(LoggerService);
   private readonly scrollService = inject(ScrollService);
   private readonly focusTrap = inject(FocusTrapService);
+  private readonly platformService = inject(PlatformService);
   private readonly fb = inject(FormBuilder);
   private readonly document = inject(DOCUMENT);
 
@@ -104,6 +106,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   private saveFormData(): void {
+    if (!this.platformService.isBrowser) { return; }
     try {
       const { name, email, privacyPolicy } = this.form.getRawValue();
       sessionStorage.setItem(this.FORM_STORAGE_KEY, JSON.stringify({ name, email, privacyPolicy }));
@@ -113,6 +116,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   private loadFormData(): void {
+    if (!this.platformService.isBrowser) { return; }
     try {
       const savedData = sessionStorage.getItem(this.FORM_STORAGE_KEY);
       if (savedData) {
@@ -125,6 +129,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   private clearFormData(): void {
+    if (!this.platformService.isBrowser) { return; }
     try {
       sessionStorage.removeItem(this.FORM_STORAGE_KEY);
     } catch (error) {
