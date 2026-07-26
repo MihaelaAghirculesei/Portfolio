@@ -51,8 +51,8 @@
                     />
                   }
                   {{ tech }}
+                  @if (!last) {<span class="tech-separator"> |</span>}
                 </span>
-                @if (!last) {<span class="tech-separator"> | </span>}
               }
             </td>
           </tr>
@@ -93,10 +93,11 @@
     } @else {
     <div class="view-all-wrapper">
       <a
-        routerLink="/"
+        href="/#projects"
         class="link-button animated"
         [attr.data-text]="'portfolio.viewFeaturedProjects' | translate"
         [attr.aria-label]="'portfolio.viewFeaturedProjectsAriaLabel' | translate"
+        (click)="goToFeaturedProjects($event)"
       >
         <span>{{ "portfolio.viewFeaturedProjects" | translate }}</span>
       </a>
@@ -167,15 +168,20 @@
 
           <div class="project-buttons">
             <a
-              [href]="selectedProject.githubUrl"
+              [href]="selectedProject.githubUrl || null"
+              [class.link-button2--disabled]="!selectedProject.githubUrl"
+              [attr.aria-disabled]="!selectedProject.githubUrl ? 'true' : null"
+              [attr.tabindex]="!selectedProject.githubUrl ? '-1' : null"
               target="_blank"
               rel="noopener noreferrer"
               class="link-button2"
               [attr.aria-label]="
-                'View ' + selectedProject.name + ' source code on GitHub'
+                selectedProject.githubUrl
+                  ? 'View ' + selectedProject.name + ' source code on GitHub'
+                  : ('portfolio.githubOnRequest' | translate)
               "
             >
-              {{ "portfolio.github" | translate }}
+              {{ selectedProject.githubUrl ? ("portfolio.github" | translate) : ("portfolio.githubOnRequest" | translate) }}
             </a>
             <a
               [href]="selectedProject.liveUrl || null"
@@ -190,6 +196,9 @@
               {{ "portfolio.liveTest" | translate }}
             </a>
           </div>
+          @if (!selectedProject.githubUrl) {
+          <p class="not-live-notice">{{ "portfolio.sourceOnRequest" | translate }}</p>
+          }
           @if (!selectedProject.liveUrl) {
           <p class="not-live-notice">{{ "portfolio.notLiveYet" | translate }}</p>
           }
