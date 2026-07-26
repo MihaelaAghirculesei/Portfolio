@@ -1,5 +1,18 @@
 [
   {
+    "id": "alinaMoments",
+    "name": "Alina Moments Photography",
+    "technologies": [
+      "Next.js", "TypeScript", "Tailwind CSS", "next-intl", "Cal.com",
+      "Resend", "Neon", "Drizzle ORM", "Vercel KV", "GSAP", "Framer Motion", "Lenis"
+    ],
+    "previewImg": "assets/img/projects/alina-moments.webp",
+    "previewImgSrcset": "assets/img/projects/alina-moments-400w.webp 400w, assets/img/projects/alina-moments-800w.webp 800w, assets/img/projects/alina-moments-1200w.webp 1200w",
+    "liveUrl": "https://alina-moments-photography.vercel.app/it",
+    "isPersonal": true,
+    "hoverOffset": { "base": 70, "smallPreview": -10 }
+  },
+  {
     "id": "birthdayReminder",
     "name": "Birthday Reminder Pro",
     "technologies": [
@@ -13,7 +26,7 @@
     "liveUrl": "https://birthday-reminder-aghirculesei.pages.dev",
     "isPersonal": true,
     "inProgress": true,
-    "hoverOffset": { "base": 70, "smallPreview": -10 }
+    "hoverOffset": { "base": 15, "smallPreview": 30 }
   },
   {
     "id": "join",
@@ -24,7 +37,7 @@
     "githubUrl": "https://github.com/MihaelaAghirculesei/join-kanban-board",
     "liveUrl": "https://join-aghirculesei.pages.dev",
     "isTeam": true,
-    "hoverOffset": { "base": 15, "smallPreview": 30 }
+    "hoverOffset": { "base": -40, "smallPreview": 70 }
   },
   {
     "id": "todoApi",
@@ -51,6 +64,7 @@
     "previewImgSrcset": "assets/img/projects/pokedex-400w.webp 400w, assets/img/projects/pokedex-800w.webp 800w, assets/img/projects/pokedex-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/Pokedex",
     "liveUrl": "https://pokedex-aghirculesei.pages.dev",
+    "featured": false,
     "hoverOffset": { "base": -40, "smallPreview": 70 }
   },
   {
