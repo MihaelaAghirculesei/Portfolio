@@ -22,11 +22,17 @@ export class SkillsComponent {
     { url: 'assets/img/skills/javascript.svg', name: 'JavaScript' },
     { url: 'assets/img/skills/typescript.svg', name: 'TypeScript' },
     { url: 'assets/img/skills/sass.svg', name: 'SASS' },
+    { url: 'assets/img/skills/tailwindcss.svg', name: 'Tailwind CSS' },
     // Angular ecosystem
     { url: 'assets/img/skills/angular.svg', name: 'Angular' },
     { url: 'assets/img/skills/ngrx.svg', name: 'NgRx' },
     { url: 'assets/img/skills/rxjs.svg', name: 'RxJS' },
     { url: 'assets/img/skills/materialDesign.svg', name: 'Material Design' },
+    // React ecosystem
+    { url: 'assets/img/skills/nextjs.svg', name: 'Next.js' },
+    // Animation
+    { url: 'assets/img/skills/gsap.svg', name: 'GSAP' },
+    { url: 'assets/img/skills/framermotion.svg', name: 'Framer Motion' },
     // Servizi & API
     { url: 'assets/img/skills/firebase.svg', name: 'Firebase' },
     { url: 'assets/img/skills/rest-api.svg', name: 'Rest-API' },
