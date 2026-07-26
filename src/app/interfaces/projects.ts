@@ -10,7 +10,7 @@ export interface Projects {
   previewImg: string;
   previewImgSrcset?: string;
   description?: string;
-  githubUrl: string;
+  githubUrl?: string;
   liveUrl: string;
   isPersonal?: boolean;
   isTeam?: boolean;

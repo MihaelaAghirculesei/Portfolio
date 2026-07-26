@@ -75,7 +75,7 @@ describe('OverlayComponent', () => {
         .queryAll(By.css('a'))
         .find(a => (a.nativeElement as HTMLAnchorElement).href.includes('github'));
       expect(link).toBeTruthy();
-      expect((link!.nativeElement as HTMLAnchorElement).href).toBe(MOCK_PROJECT.githubUrl);
+      expect((link!.nativeElement as HTMLAnchorElement).href).toBe(MOCK_PROJECT.githubUrl!);
     });
 
     it('should set the live URL href', () => {
