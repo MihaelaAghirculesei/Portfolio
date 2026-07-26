@@ -6,6 +6,7 @@ import { PlatformService } from '../../shared/services/platform.service';
 import { Component, ElementRef, PLATFORM_ID } from '@angular/core';
 import { PortfolioOverlayService } from './services/portfolio-overlay.service';
 import { ProjectDataService } from './services/project-data.service';
+import { NavigationService } from '../../shared/services/navigation.service';
 
 @Component({ selector: 'app-stub-projects-target', template: '', standalone: true })
 class StubProjectsRouteComponent {}
@@ -57,18 +58,26 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have 4 featured projects on the home page (El Pollo Loco excluded)', () => {
+    it('should have 4 featured projects on the home page (Pokédex and El Pollo Loco excluded)', () => {
       expect(component.projects).toBeDefined();
       expect(component.projects.length).toBe(4);
+      expect(component.projects.some((p) => p.name === 'Pokédex')).toBe(false);
       expect(component.projects.some((p) => p.name === 'El Pollo Loco')).toBe(false);
     });
 
     it('should have correct project data structure', () => {
-      const project = component.projects[0];
+      const project = component.projects[1];
       expect(project.name).toBeDefined();
       expect(project.technologies).toBeDefined();
       expect(project.previewImg).toBeDefined();
       expect(project.githubUrl).toBeDefined();
+      expect(project.liveUrl).toBeDefined();
+    });
+
+    it('should allow a project without a public GitHub repo (private/available on request)', () => {
+      const project = component.projects[0];
+      expect(project.name).toBe('Alina Moments Photography');
+      expect(project.githubUrl).toBeUndefined();
       expect(project.liveUrl).toBeDefined();
     });
   });
@@ -159,6 +168,20 @@ describe('PortfolioComponent', () => {
       component.nextProject();
 
       expect(fakeEl.nativeElement.scrollTop).toBe(0);
+    });
+  });
+
+  describe('goToFeaturedProjects', () => {
+    it('should prevent default navigation and scroll to the projects section', () => {
+      const navigationService = TestBed.inject(NavigationService);
+      spyOn(navigationService, 'scrollToSection');
+      const event = new MouseEvent('click');
+      spyOn(event, 'preventDefault');
+
+      component.goToFeaturedProjects(event);
+
+      expect(event.preventDefault).toHaveBeenCalled();
+      expect(navigationService.scrollToSection).toHaveBeenCalledWith('projects');
     });
   });
 
@@ -332,7 +355,7 @@ describe('PortfolioComponent', () => {
 
   describe('Helper Methods', () => {
     it('should get project screenshot alt text', () => {
-      const alt = component.getProjectScreenshotAlt(1);
+      const alt = component.getProjectScreenshotAlt(2);
       expect(alt).toBe('Join screenshot');
     });
 
@@ -400,18 +423,18 @@ describe('PortfolioComponent', () => {
   });
 
   describe('Todo Platform API Project', () => {
-    it('should have Todo Platform API as the third project', () => {
-      const todoProject = component.projects[2];
+    it('should have Todo Platform API as the fourth project', () => {
+      const todoProject = component.projects[3];
       expect(todoProject.name).toBe('Todo Platform API');
     });
 
     it('should not have inProgress flag set', () => {
-      const todoProject = component.projects[2];
+      const todoProject = component.projects[3];
       expect(todoProject.inProgress).toBeFalsy();
     });
 
     it('should have isTeam flag set to true', () => {
-      const todoProject = component.projects[2];
+      const todoProject = component.projects[3];
       expect(todoProject.isTeam).toBe(true);
     });
 
@@ -436,7 +459,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should return correct screenshot alt for Todo Platform API', () => {
-      const alt = component.getProjectScreenshotAlt(2);
+      const alt = component.getProjectScreenshotAlt(3);
       expect(alt).toBe('Todo Platform API screenshot');
     });
 
@@ -529,8 +552,9 @@ describe('PortfolioComponent', () => {
         { id: 'noOffset', name: 'NoOffset', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' }
       ];
 
-      // index 4 in the featured (home) list: El Pollo Loco (index 4 in the raw
-      // array) is filtered out, so the appended item lands at featured index 4
+      // index 4 in the featured (home) list: Pokédex (index 4) and El Pollo
+      // Loco (index 5) in the raw array are filtered out, so the appended
+      // item lands at featured index 4
       component.setActiveProject(4, mockEvent);
       tick(16);
 
@@ -719,9 +743,9 @@ describe('PortfolioComponent', () => {
       projFixture.detectChanges();
     }));
 
-    it('should show all 5 projects including El Pollo Loco', () => {
+    it('should show all 6 projects including El Pollo Loco', () => {
       expect(projComponent['isProjectsPage']).toBe(true);
-      expect(projComponent.projects.length).toBe(5);
+      expect(projComponent.projects.length).toBe(6);
       expect(projComponent.projects.some((p) => p.name === 'El Pollo Loco')).toBe(true);
     });
 
