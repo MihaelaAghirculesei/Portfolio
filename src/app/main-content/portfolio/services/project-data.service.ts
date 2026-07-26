@@ -42,6 +42,17 @@ export class ProjectDataService {
     sentry: 'sentry.svg',
     cypress: 'cypress.svg',
     zod: 'zod.svg',
+    nextjs: 'next-js.svg',
+    tailwindcss: 'tailwind-css.svg',
+    calcom: 'cal-com.svg',
+    resend: 'resend.svg',
+    neon: 'neon.svg',
+    drizzleorm: 'drizzle-orm.svg',
+    gsap: 'gsap.svg',
+    framermotion: 'framer-motion.svg',
+    vercelkv: 'vercel-kv.svg',
+    lenis: 'lenis.svg',
+    nextintl: 'next-intl.svg',
   };
 
   hasTechIcon(technology: string): boolean {
