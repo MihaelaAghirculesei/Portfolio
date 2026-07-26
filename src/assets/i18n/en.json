@@ -84,6 +84,8 @@
     "teamProject": "Team Project",
     "workInProgress": "Work in Progress",
     "notLiveYet": "Live version not available yet — this project is currently in development.",
+    "githubOnRequest": "Available on request",
+    "sourceOnRequest": "Source code is private — available on request.",
     "viewAllProjects": "View all projects",
     "viewAllProjectsAriaLabel": "View all projects in a dedicated page",
     "viewFeaturedProjects": "Back to featured projects",
@@ -155,6 +157,10 @@
     }
   },
   "projects": {
+    "alinaMoments": {
+      "description": "A professional portfolio and booking website for a family and newborn photographer, built solo with Next.js and TypeScript. The site is available in four languages via next-intl (German, English, Romanian, Italian) with locale-prefixed routing throughout, and integrates Cal.com for shoot bookings. A review system backed by Neon Postgres and Drizzle ORM lets clients submit testimonials, while Resend handles both the contact form and email notifications for new reviews. Caching runs through Vercel KV in production, with a file-based store as a local development fallback. Scroll-driven storytelling is powered by GSAP, Framer Motion, and Lenis smooth scrolling, creating an editorial, gallery-like browsing experience across the portfolio, services, and pricing sections. Styled with Tailwind CSS and deployed on Vercel.",
+      "shortDescription": "Photography Portfolio & Booking Site"
+    },
     "join": {
       "description": "Built collaboratively in a 5-person team, Join is a real-time Kanban task management application developed with Angular and Firebase. The board delivers live task synchronization via Firebase Firestore, user authentication, drag-and-drop workflow management across status columns, and a full contact system with task assignment, priority levels, and due dates. A summary dashboard provides an at-a-glance view of task statistics and upcoming deadlines. Working across five developers required coordinating component ownership, aligning on shared service interfaces, and Git workflows that mirror professional Angular development environments. Fully responsive and deployed live.",
       "shortDescription": "Kanban Board Application"
