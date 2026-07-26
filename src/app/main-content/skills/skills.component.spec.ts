@@ -30,8 +30,8 @@ describe('SkillsComponent', () => {
   });
 
   describe('Skill Items', () => {
-    it('should have exactly 33 skill items', () => {
-      expect(component.skillItems.length).toBe(33);
+    it('should have exactly 37 skill items', () => {
+      expect(component.skillItems.length).toBe(37);
     });
 
     it('should have all required skills', () => {
@@ -173,7 +173,7 @@ describe('SkillsComponent', () => {
   describe('Data Integrity', () => {
     it('should have immutable skill items', () => {
       const originalLength = component.skillItems.length;
-      expect(component.skillItems.length).toBe(33);
+      expect(component.skillItems.length).toBe(37);
     });
 
     it('should have immutable future skills', () => {
