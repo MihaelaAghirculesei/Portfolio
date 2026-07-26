@@ -136,6 +136,19 @@ describe('NavigationService', () => {
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(1);
       });
+
+      it('should re-scroll once more after the correction delay, to correct for deferred sections still growing', fakeAsync(() => {
+        service.scrollToSection('skills');
+
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(1);
+
+        tick(349);
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(1);
+
+        tick(1);
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(2);
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('skills', 'start');
+      }));
     });
 
     describe('When on empty URL (considered home)', () => {
@@ -175,6 +188,7 @@ describe('NavigationService', () => {
         tick(100);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start');
+        flush();
       }));
 
       it('should use custom delay when provided', fakeAsync(() => {
@@ -187,6 +201,7 @@ describe('NavigationService', () => {
         tick(customDelay);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start');
+        flush();
       }));
 
       it('should not scroll before delay expires', fakeAsync(() => {
@@ -201,6 +216,7 @@ describe('NavigationService', () => {
 
         tick(1);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
+        flush();
       }));
 
       it('should scroll to correct section after navigation', fakeAsync(() => {
@@ -212,6 +228,7 @@ describe('NavigationService', () => {
         tick(100);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('skills', 'start');
+        flush();
       }));
 
       it('should handle navigation error and log it', fakeAsync(() => {
@@ -250,6 +267,7 @@ describe('NavigationService', () => {
           tick(100);
           expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith(section, 'start');
         });
+        flush();
       }));
     });
 
@@ -265,6 +283,7 @@ describe('NavigationService', () => {
 
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
+        flush();
       }));
 
       it('should handle deep routes', fakeAsync(() => {
@@ -277,6 +296,7 @@ describe('NavigationService', () => {
         tick(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+        flush();
       }));
 
       it('should handle routes with query parameters', fakeAsync(() => {
@@ -289,6 +309,7 @@ describe('NavigationService', () => {
         tick(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+        flush();
       }));
 
       it('should handle routes with fragments', fakeAsync(() => {
@@ -301,6 +322,7 @@ describe('NavigationService', () => {
         tick(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+        flush();
       }));
     });
 
@@ -311,6 +333,7 @@ describe('NavigationService', () => {
         service.scrollToSection('');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('', 'start');
+        flush();
       }));
 
       it('should handle zero delay', fakeAsync(() => {
@@ -323,6 +346,7 @@ describe('NavigationService', () => {
         tick(0);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
+        flush();
       }));
 
       it('should handle large delay value', fakeAsync(() => {
@@ -335,6 +359,7 @@ describe('NavigationService', () => {
         tick(5000);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
+        flush();
       }));
 
       it('should handle special characters in section ID', fakeAsync(() => {
@@ -346,6 +371,7 @@ describe('NavigationService', () => {
           'section-with-special_chars123',
           'start'
         );
+        flush();
       }));
 
       it('should always use "start" as scroll behavior', fakeAsync(() => {
@@ -354,6 +380,7 @@ describe('NavigationService', () => {
         service.scrollToSection('any-section');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('any-section', 'start');
+        flush();
       }));
     });
 
@@ -384,6 +411,7 @@ describe('NavigationService', () => {
 
         tick(100);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
+        flush();
       }));
 
       it('should handle immediate navigation resolution', fakeAsync(() => {
@@ -395,6 +423,7 @@ describe('NavigationService', () => {
         tick(50);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
+        flush();
       }));
     });
 
@@ -420,6 +449,7 @@ describe('NavigationService', () => {
         tick(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledTimes(2);
+        flush();
       }));
     });
   });
