@@ -17,6 +17,7 @@ import { PassiveTouchStartDirective, PassiveTouchEndDirective } from '../../shar
 import { BREAKPOINTS, PORTFOLIO_CONFIG } from '../../shared/constants/app.constants';
 import { ProjectDataService } from './services/project-data.service';
 import { PortfolioOverlayService } from './services/portfolio-overlay.service';
+import { NavigationService } from '../../shared/services/navigation.service';
 
 @Component({
   selector: 'app-portfolio',
@@ -36,6 +37,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   private readonly platformService = inject(PlatformService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
 
   protected readonly isProjectsPage = this.router.url.startsWith('/projects');
 
@@ -149,6 +151,11 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   nextProject(): void {
     this.overlay.next(this.projects, this.descriptionEl);
     this.cdr.markForCheck();
+  }
+
+  goToFeaturedProjects(event: Event): void {
+    event.preventDefault();
+    this.navigationService.scrollToSection('projects');
   }
 
   // ── Template helpers delegated to ProjectDataService ───────────────────────
