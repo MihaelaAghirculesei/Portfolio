@@ -84,6 +84,8 @@
     "teamProject": "Teamprojekt",
     "workInProgress": "In Entwicklung",
     "notLiveYet": "Live-Version noch nicht verfügbar — dieses Projekt befindet sich derzeit in Entwicklung.",
+    "githubOnRequest": "Auf Anfrage verfügbar",
+    "sourceOnRequest": "Der Quellcode ist privat — auf Anfrage verfügbar.",
     "viewAllProjects": "Alle Projekte ansehen",
     "viewAllProjectsAriaLabel": "Alle Projekte auf einer eigenen Seite ansehen",
     "viewFeaturedProjects": "Zurück zu den ausgewählten Projekten",
@@ -155,6 +157,10 @@
     }
   },
   "projects": {
+    "alinaMoments": {
+      "description": "Eine professionelle Portfolio- und Buchungswebsite für eine Familien- und Neugeborenenfotografin, solo entwickelt mit Next.js und TypeScript. Die Seite ist über next-intl in vier Sprachen verfügbar (Deutsch, Englisch, Rumänisch, Italienisch) mit durchgängigem Locale-Prefix-Routing und bindet Cal.com für die Buchung von Fotoshootings ein. Ein Bewertungssystem auf Basis von Neon Postgres und Drizzle ORM erlaubt Kund:innen, Testimonials einzureichen; Resend übernimmt sowohl das Kontaktformular als auch die E-Mail-Benachrichtigungen bei neuen Bewertungen. In Produktion läuft das Caching über Vercel KV, lokal dient ein dateibasierter Store als Entwicklungs-Fallback. Scrollgesteuertes Storytelling wird durch GSAP, Framer Motion und Lenis Smooth Scrolling umgesetzt und erzeugt ein editoriales, galerieartiges Nutzererlebnis über Portfolio-, Leistungs- und Preissektionen hinweg. Gestylt mit Tailwind CSS und auf Vercel deployed.",
+      "shortDescription": "Fotografie-Portfolio & Buchungsseite"
+    },
     "join": {
       "description": "Im Rahmen eines 5-köpfigen Teams entwickelt, ist Join eine Echtzeit-Kanban-Aufgabenverwaltung mit Angular und Firebase. Das Board bietet Live-Synchronisierung über Firebase Firestore, Benutzerauthentifizierung, Drag-and-Drop-Workflow-Management über Status-Spalten sowie ein vollständiges Kontaktsystem mit Aufgabenzuweisung, Prioritätsstufen und Fälligkeitsterminen. Ein Summary-Dashboard liefert einen schnellen Überblick über Task-Statistiken und anstehende Deadlines. Die Entwicklung im 5-köpfigen Team erforderte koordiniertes Component-Ownership, abgestimmte Service-Interfaces und Git-Workflows, die professionelle Angular-Entwicklungsumgebungen widerspiegeln. Vollständig responsiv und live deployed.",
       "shortDescription": "Kanban Board Anwendung"
