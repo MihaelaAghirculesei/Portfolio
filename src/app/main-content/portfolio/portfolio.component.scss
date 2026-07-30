@@ -722,6 +722,13 @@ $header-padding-top: 98px;
     }
   }
 
+  .link-button2__hint {
+    margin-left: 6px;
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
   &.link-button2--disabled {
     opacity: 0.35;
     cursor: not-allowed;

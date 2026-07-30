@@ -84,7 +84,7 @@
     "teamProject": "Team Project",
     "workInProgress": "Work in Progress",
     "notLiveYet": "Live version not available yet — this project is currently in development.",
-    "githubOnRequest": "Available on request",
+    "onRequest": "on request",
     "sourceOnRequest": "Source code is private — available on request.",
     "viewAllProjects": "View all projects",
     "viewAllProjectsAriaLabel": "View all projects in a dedicated page",
