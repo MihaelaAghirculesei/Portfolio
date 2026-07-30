@@ -3,7 +3,6 @@
 @use "../../../styles/mixins";
 
 $section-min-height: 700px;
-$text-min-width: 580px;
 $skill-div-height: 108px;
 $skill-div-height-md: 90px;
 $skill-div-height-sm: 80px;
@@ -38,21 +37,24 @@ $scale-hover-small: 1.05;
 .contentWrapper {
   max-width: variables.$content-max-width;
   width: 100%;
-  gap: 60px;
+  gap: 40px;
   margin: 0;
   padding: 0;
   color: variables.$white;
   position: relative;
   z-index: 2;
-  @include mixins.dFlex(space-between, center);
+  flex-direction: column;
+  text-align: center;
+  @include mixins.dFlex(flex-start, center);
 }
 
 .textWrapper {
-  flex: 1;
+  width: 100%;
   flex-direction: column;
   margin: 0;
   padding: 0;
-  @include mixins.dFlex(flex-start, flex-start);
+  text-align: center;
+  @include mixins.dFlex(flex-start, center);
 
   .overContent {
     @include mixins.primary-font;
@@ -62,7 +64,7 @@ $scale-hover-small: 1.05;
     font-weight: 700;
     opacity: $opacity-overlay;
     color: variables.$main-color;
-    text-align: left;
+    text-align: center;
 
     @media (max-width: variables.$tablet-max) {
       font-size: map.get(variables.$typography-tablet, h2);
@@ -86,7 +88,7 @@ $scale-hover-small: 1.05;
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     width: 100%;
-    min-width: $text-min-width;
+    text-align: center;
 
     strong {
       color: variables.$white;
@@ -310,62 +312,24 @@ $scale-hover-small: 1.05;
 }
 
 @media (min-width: 2000px) {
-  .contentWrapper {
-    gap: 100px;
-    max-width: variables.$content-max-width;
-  }
-  .textWrapper .textDiv {
-    min-width: 720px;
-  }
   .skillButtons {
     gap: 20px;
   }
 }
 
 @media (min-width: 1600px) {
-  .contentWrapper {
-    gap: 80px;
-  }
-  .textWrapper .textDiv {
-    min-width: 620px;
-  }
   .skillButtons {
     gap: 18px;
   }
 }
 
-@media (max-width: 1200px) {
-  .contentWrapper {
-    gap: 40px;
-  }
-  .textWrapper .textDiv {
-    min-width: 460px;
-  }
-  .skillButtons {
-    gap: 15px;
-  }
-}
-
 @media (max-width: 1024px) {
-  .contentWrapper {
-    gap: 35px;
-  }
-  .textWrapper .textDiv {
-    min-width: 420px;
-    padding: 15px;
-  }
   .skillButtons {
     gap: 12px;
   }
 }
 
 @media (min-width: 1200px) and (max-height: 900px) {
-  .contentWrapper {
-    gap: 40px;
-  }
-  .textWrapper .textDiv {
-    min-width: 400px;
-  }
   .skillButtons {
     gap: 12px;
   }
@@ -382,36 +346,10 @@ $scale-hover-small: 1.05;
     min-height: auto;
   }
   .contentWrapper {
-    flex-direction: column;
     gap: 30px;
-    text-align: center;
-  }
-  .textWrapper {
-    text-align: center;
-    .overContent {
-      text-align: center;
-    }
   }
   .textWrapper .textDiv {
-    min-width: auto;
-    max-width: 100%;
-    padding: 15px;
     border-radius: 35px;
-
-    h3 {
-      text-align: left;
-    }
-    h2 {
-      text-align: left;
-    }
-    .skillIntroduction,
-    > span:last-of-type {
-      max-width: 100%;
-      text-align: left;
-    }
-    .link-button {
-      align-self: center;
-    }
   }
   .skillButtons {
     gap: 12px;
@@ -424,37 +362,10 @@ $scale-hover-small: 1.05;
     min-height: auto;
   }
   .contentWrapper {
-    flex-direction: column;
     gap: 40px;
-    text-align: center;
-  }
-  .textWrapper {
-    text-align: center;
-    .overContent {
-      text-align: center;
-    }
   }
   .textWrapper .textDiv {
-    min-width: auto;
-    max-width: 100%;
-    padding: 15px;
     border-radius: 30px;
-    text-align: center;
-
-    h3 {
-      text-align: left;
-    }
-    h2 {
-      text-align: left;
-    }
-    .skillIntroduction,
-    > span:last-of-type {
-      max-width: 100%;
-      text-align: left;
-    }
-    .link-button {
-      align-self: center;
-    }
   }
   .skillButtons {
     gap: 12px;
@@ -479,14 +390,7 @@ $scale-hover-small: 1.05;
     padding: 15px 15px 20px 15px;
   }
   .textWrapper .textDiv {
-    max-width: 100%;
-    padding: 15px;
     border-radius: variables.$border-radius-base;
-
-    .skillIntroduction,
-    > span:last-of-type {
-      text-align: left;
-    }
   }
   .skillButtons {
     gap: 8px;
