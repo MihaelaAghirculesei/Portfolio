@@ -178,10 +178,13 @@
               [attr.aria-label]="
                 selectedProject.githubUrl
                   ? 'View ' + selectedProject.name + ' source code on GitHub'
-                  : ('portfolio.githubOnRequest' | translate)
+                  : selectedProject.name + ' source code on GitHub is available on request'
               "
             >
-              {{ selectedProject.githubUrl ? ("portfolio.github" | translate) : ("portfolio.githubOnRequest" | translate) }}
+              <span class="link-button2__label">{{ "portfolio.github" | translate }}</span>
+              @if (!selectedProject.githubUrl) {
+              <span class="link-button2__hint">({{ "portfolio.onRequest" | translate }})</span>
+              }
             </a>
             <a
               [href]="selectedProject.liveUrl || null"
