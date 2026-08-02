@@ -25,6 +25,7 @@ const ROUTE_SEO_META = new Map<string, RouteSeoMeta>([
   ['/datenschutz', { i18nKey: 'datenschutz', lang: 'de', ogPath: '/datenschutz' }],
   ['/skills', { i18nKey: 'skills', lang: 'en', ogPath: '/skills' }],
   ['/projects', { i18nKey: 'projects', lang: 'en', ogPath: '/projects' }],
+  ['/case-study/alina-moments', { i18nKey: 'caseStudyAlinaMoments', lang: 'en', ogPath: '/case-study/alina-moments' }],
   ['/feedback', { i18nKey: 'feedback', lang: 'en', ogPath: '/feedback' }],
   ['/contact', { i18nKey: 'contact', lang: 'en', ogPath: '/contact' }],
   ['/privacy-policy', { i18nKey: 'privacyPolicy', lang: 'en', ogPath: '/privacy-policy' }],

@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { LoggerService } from './shared/services/logger.service';
 import { SeoService } from './shared/services/seo.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'router-outlet',
@@ -105,6 +106,20 @@ describe('AppComponent', () => {
     routerEventsSubject.next(new NavigationEnd(1, '/contact', '/contact'));
     expect(mockSeoService.update).toHaveBeenCalledWith(
       jasmine.objectContaining({ title: 'Contact — Mihaela Aghirculesei' })
+    );
+  });
+
+  it('should update SEO when navigating to the Alina Moments case study', () => {
+    component.ngOnInit();
+    mockSeoService.update.calls.reset();
+    routerEventsSubject.next(
+      new NavigationEnd(1, '/case-study/alina-moments', '/case-study/alina-moments')
+    );
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        title: 'Case Study: Alina Moments Photography — Mihaela Aghirculesei',
+        ogUrl: `${environment.siteUrl}/case-study/alina-moments`,
+      })
     );
   });
 
