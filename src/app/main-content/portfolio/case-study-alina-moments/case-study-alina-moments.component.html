@@ -1,0 +1,128 @@
+<article class="case-study-page" aria-labelledby="case-study-title">
+  <div class="content-width">
+    <a routerLink="/projects" class="back-link">
+      <span aria-hidden="true">←</span> {{ "caseStudyAlinaMoments.backLink" | translate }}
+    </a>
+
+    <header class="cs-hero">
+      <p class="eyebrow">{{ "caseStudyAlinaMoments.eyebrow" | translate }}</p>
+      <h1 id="case-study-title">{{ "caseStudyAlinaMoments.title" | translate }}</h1>
+      <h2 class="cs-subtitle">{{ "caseStudyAlinaMoments.subtitle" | translate }}</h2>
+      <p class="solo-note">{{ "caseStudyAlinaMoments.soloNote" | translate }}</p>
+
+      <dl class="cs-meta">
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyAlinaMoments.roleLabel" | translate }}</dt>
+          <dd>{{ "caseStudyAlinaMoments.role" | translate }}</dd>
+        </div>
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyAlinaMoments.periodLabel" | translate }}</dt>
+          <dd>
+            {{ "caseStudyAlinaMoments.period" | translate }}
+            <span class="cs-meta-note">{{ "caseStudyAlinaMoments.periodNote" | translate }}</span>
+          </dd>
+        </div>
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyAlinaMoments.liveLabel" | translate }}</dt>
+          <dd>
+            <a [href]="liveUrl" target="_blank" rel="noopener noreferrer">{{ liveUrlDisplay }}</a>
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="cs-section" aria-labelledby="cs-intro-heading">
+      <h2 id="cs-intro-heading">{{ "caseStudyAlinaMoments.intro.heading" | translate }}</h2>
+      <p>{{ "caseStudyAlinaMoments.intro.body" | translate }}</p>
+      <p>{{ "caseStudyAlinaMoments.intro.body2" | translate }}</p>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-results-heading">
+      <h2 id="cs-results-heading">{{ "caseStudyAlinaMoments.results.heading" | translate }}</h2>
+
+      <ul class="cs-stats-grid">
+        @for (stat of stats; track stat.labelKey) {
+        <li class="cs-stat-tile">
+          <span class="cs-stat-value">{{ stat.value }}</span>
+          <span class="cs-stat-label">{{ stat.labelKey | translate }}</span>
+          @if (stat.detailKey) {
+          <span class="cs-stat-detail">{{ stat.detailKey | translate }}</span>
+          }
+        </li>
+        }
+      </ul>
+
+      <p class="cs-callout">{{ "caseStudyAlinaMoments.results.methodologyNote" | translate }}</p>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-live-heading">
+      <h2 id="cs-live-heading">{{ "caseStudyAlinaMoments.liveFeatures.heading" | translate }}</h2>
+      <p>{{ "caseStudyAlinaMoments.liveFeatures.body" | translate }}</p>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-testimonial-heading">
+      <h2 id="cs-testimonial-heading">{{ "caseStudyAlinaMoments.testimonial.heading" | translate }}</h2>
+      <blockquote class="cs-testimonial">
+        <p>{{ "caseStudyAlinaMoments.testimonial.quote" | translate }}</p>
+        <footer>— {{ "caseStudyAlinaMoments.testimonial.author" | translate }}</footer>
+      </blockquote>
+      <p>{{ "caseStudyAlinaMoments.testimonial.flow" | translate }}</p>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-engineering-heading">
+      <h2 id="cs-engineering-heading">{{ "caseStudyAlinaMoments.engineering.heading" | translate }}</h2>
+
+      <ol class="cs-engineering-list">
+        @for (item of engineeringItems; track item.titleKey) {
+        <li>
+          <h3>{{ item.titleKey | translate }}</h3>
+          <p>{{ item.bodyKey | translate }}</p>
+        </li>
+        }
+      </ol>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-tech-heading">
+      <h2 id="cs-tech-heading">{{ "caseStudyAlinaMoments.techStack.heading" | translate }}</h2>
+      <ul class="cs-tech-chips">
+        @for (tech of techStack; track tech) {
+        <li class="cs-tech-chip">{{ tech }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-honest-heading">
+      <h2 id="cs-honest-heading">{{ "caseStudyAlinaMoments.honestStatus.heading" | translate }}</h2>
+      <ul class="cs-honest-list">
+        @for (key of honestStatusKeys; track key) {
+        <li>{{ key | translate }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-screenshots-heading">
+      <h2 id="cs-screenshots-heading">{{ "caseStudyAlinaMoments.screenshots.heading" | translate }}</h2>
+      <ul class="cs-screenshot-grid">
+        @for (shot of screenshots; track shot.file) {
+        <li class="cs-screenshot-item">
+          <img [src]="screenshotSrc(shot.file)" [alt]="shot.altKey | translate" loading="lazy" />
+        </li>
+        }
+      </ul>
+    </section>
+
+    <div class="cs-footer-actions">
+      <a routerLink="/projects" class="link-button2">{{ "caseStudyAlinaMoments.backLink" | translate }}</a>
+      <a
+        class="link-button2 link-button2--disabled"
+        aria-disabled="true"
+        tabindex="-1"
+        [attr.aria-label]="'portfolio.sourceOnRequest' | translate"
+      >
+        <span class="link-button2__label">{{ "portfolio.github" | translate }}</span>
+        <span class="link-button2__hint">({{ "portfolio.onRequest" | translate }})</span>
+      </a>
+      <a [href]="liveUrl" target="_blank" rel="noopener noreferrer" class="link-button2">{{ "portfolio.liveTest" | translate }}</a>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,396 @@
+@use "../../../../styles/variables";
+@use "../../../../styles/mixins";
+
+:host {
+  display: block;
+}
+
+.case-study-page {
+  min-height: 100vh;
+  background-color: variables.$gradient-start;
+  background: linear-gradient(180deg, variables.$gradient-start 0%, variables.$gradient-end 140%);
+  padding: 120px 20px 80px 20px;
+  box-sizing: border-box;
+
+  @media (max-width: variables.$mobile-max) {
+    padding: 100px 16px 60px 16px;
+  }
+}
+
+.content-width {
+  max-width: variables.$content-max-width;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: variables.$main-color;
+  text-decoration: none;
+  @include mixins.primary-font;
+  font-size: 16px;
+  margin-bottom: 32px;
+  transition: transform variables.$transition-base;
+
+  &:hover {
+    transform: translateX(-4px);
+  }
+}
+
+.cs-hero {
+  margin-bottom: 56px;
+
+  .eyebrow {
+    @include mixins.primary-font;
+    color: variables.$main-color;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+  }
+
+  h1 {
+    @include mixins.code-font;
+    color: variables.$white;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    font-size: 56px;
+
+    @media (max-width: variables.$desktop-max) {
+      font-size: 48px;
+    }
+
+    @media (max-width: variables.$tablet-max) {
+      font-size: 36px;
+    }
+
+    @media (max-width: variables.$mobile-max) {
+      font-size: 30px;
+    }
+  }
+
+  .cs-subtitle {
+    @include mixins.primary-font;
+    color: variables.$white-dimmed;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0 0 20px 0;
+
+    @media (max-width: variables.$mobile-max) {
+      font-size: 18px;
+    }
+  }
+
+  .solo-note {
+    @include mixins.primary-font;
+    color: variables.$white-dimmed;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 760px;
+    margin: 0 0 28px 0;
+  }
+}
+
+.cs-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin: 0;
+
+  .cs-meta-item {
+    dt {
+      @include mixins.primary-font;
+      color: variables.$main-color;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    dd {
+      @include mixins.primary-font;
+      color: variables.$white;
+      font-size: 16px;
+      margin: 0;
+
+      a {
+        color: variables.$white;
+        text-decoration: none;
+        border-bottom: 1px solid variables.$main-color;
+
+        &:hover {
+          color: variables.$main-color;
+        }
+      }
+
+      .cs-meta-note {
+        display: block;
+        color: variables.$white-dimmed;
+        font-size: 12px;
+        font-style: italic;
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+.cs-section {
+  margin-bottom: 56px;
+  padding-top: 40px;
+  border-top: 1px solid variables.$white-transparent-light;
+
+  h2 {
+    @include mixins.code-font;
+    color: variables.$main-color;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    font-size: 32px;
+
+    @media (max-width: variables.$mobile-max) {
+      font-size: 25px;
+    }
+  }
+
+  h3 {
+    @include mixins.code-font;
+    color: variables.$white;
+    font-size: 19px;
+    margin: 0 0 10px 0;
+  }
+
+  p {
+    @include mixins.primary-font;
+    color: variables.$white-dimmed;
+    line-height: 1.7;
+    font-size: 17px;
+    margin: 0 0 16px 0;
+
+    @media (max-width: variables.$mobile-max) {
+      font-size: 16px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.cs-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 0 0 24px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-stat-tile {
+  @include mixins.textBox(20px, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .cs-stat-value {
+    @include mixins.code-font;
+    color: variables.$main-color;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .cs-stat-label {
+    @include mixins.primary-font;
+    color: variables.$white;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .cs-stat-detail {
+    @include mixins.primary-font;
+    color: variables.$white-dimmed;
+    font-size: 12px;
+    line-height: 1.4;
+    font-style: italic;
+  }
+}
+
+.cs-callout {
+  border-left: 3px solid variables.$main-color;
+  background-color: variables.$main-color-lighter;
+  padding: 16px 20px;
+  border-radius: 0 12px 12px 0;
+  font-size: 15px !important;
+}
+
+.cs-testimonial {
+  @include mixins.textBox(28px, 20px);
+  margin: 0 0 24px 0;
+  border-color: variables.$main-color-light;
+
+  p {
+    color: variables.$white;
+    font-size: 19px;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    @include mixins.primary-font;
+    color: variables.$main-color;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+.cs-engineering-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  li {
+    border-left: 2px solid variables.$main-color-light;
+    padding-left: 20px;
+  }
+}
+
+.cs-tech-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-tech-chip {
+  @include mixins.primary-font;
+  color: variables.$white;
+  font-size: 14px;
+  padding: 8px 16px;
+  border: 1px solid variables.$main-color-light;
+  border-radius: 20px;
+  background-color: variables.$main-color-lighter;
+}
+
+.cs-honest-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  li {
+    @include mixins.primary-font;
+    color: variables.$white-dimmed;
+    font-size: 16px;
+    line-height: 1.6;
+    padding-left: 24px;
+    position: relative;
+
+    &::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: variables.$main-color;
+    }
+  }
+}
+
+.cs-screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-screenshot-item {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid variables.$white-transparent-light;
+  box-shadow: 0 8px 24px variables.$shadow-medium;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    background-color: variables.$black-pure;
+  }
+}
+
+.cs-footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 40px;
+  border-top: 1px solid variables.$white-transparent-light;
+}
+
+.link-button2 {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid variables.$white;
+  padding: 18px 28px;
+  border-radius: 32px;
+  color: variables.$white;
+  text-decoration: none;
+  @include mixins.primary-font;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all variables.$transition-base;
+  -webkit-tap-highlight-color: variables.$main-color-light;
+
+  &::after {
+    content: "↗";
+    margin-left: 8px;
+    transition: all variables.$transition-base;
+    color: variables.$main-color;
+    font-size: 16px;
+  }
+
+  &:hover,
+  &:active {
+    border: 1px solid variables.$main-color;
+
+    &::after {
+      transform: translate(4px, -4px);
+      color: variables.$main-color;
+    }
+  }
+
+  .link-button2__hint {
+    margin-left: 6px;
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  &.link-button2--disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    &:hover,
+    &:active {
+      border: 1px solid variables.$white;
+
+      &::after {
+        transform: none;
+        color: variables.$main-color;
+      }
+    }
+  }
+}
