@@ -45,6 +45,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'case-study/alina-moments',
+    loadComponent: () =>
+      import(
+        './main-content/portfolio/case-study-alina-moments/case-study-alina-moments.component'
+      ).then((m) => m.CaseStudyAlinaMomentsComponent),
+  },
+  {
     path: 'feedback',
     loadComponent: () =>
       import('./main-content/feedback/feedback.component').then(
