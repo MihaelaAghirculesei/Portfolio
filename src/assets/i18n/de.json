@@ -86,6 +86,7 @@
     "notLiveYet": "Live-Version noch nicht verfügbar — dieses Projekt befindet sich derzeit in Entwicklung.",
     "onRequest": "auf Anfrage",
     "sourceOnRequest": "Der Quellcode ist privat — auf Anfrage verfügbar.",
+    "caseStudy": "Case Study",
     "viewAllProjects": "Alle Projekte ansehen",
     "viewAllProjectsAriaLabel": "Alle Projekte auf einer eigenen Seite ansehen",
     "viewFeaturedProjects": "Zurück zu den ausgewählten Projekten",
@@ -183,6 +184,81 @@
     },
     "default": {
       "shortDescription": "Web Anwendung"
+    }
+  },
+  "caseStudyAlinaMoments": {
+    "backLink": "Zurück zu den Projekten",
+    "eyebrow": "Case Study",
+    "title": "Alina Moments Photography",
+    "subtitle": "Full-Stack-Website für eine freiberufliche Fotografin",
+    "soloNote": "Solo-Projekt: Konzeption, Entwicklung, Produktion und Wartung — vom ersten Commit bis zum Live-Deploy",
+    "roleLabel": "Rolle",
+    "role": "Fullstack-Entwicklerin",
+    "periodLabel": "Zeitraum",
+    "period": "27. Mai – 1. Juni 2026 (Launch)",
+    "periodNote": "laufende Updates seit Go-live",
+    "liveLabel": "Live",
+    "intro": {
+      "heading": "Ausgangslage",
+      "body": "Alina ist freiberufliche Fotografin in Wolfsburg mit Schwerpunkt Newborn-, Familien-, Paar- und Eventfotografie. Vor diesem Projekt hatte sie keine eigene Website — nur ein Instagram-Profil. Ziel war eine mehrsprachige (DE/EN/RO/IT) professionelle Website mit Online-Buchung, Kontaktformular und einem moderierten Bewertungssystem — ohne CMS, ohne Agentur, ohne zweite Entwicklerin im Team.",
+      "body2": "Jeder Teil des Stacks — von der Bewertungsdatenbank über die Content-Security-Policy bis zur CI-Pipeline und dem Deployment — wurde von einer einzigen Person konzipiert, geschrieben und in Produktion gebracht, mit demselben Anspruch, den man von einem Team erwarten würde: eigener Branch und Pull Request für jede Änderung, automatisierte Qualitäts-Gates, End-to-End-Tests bei jedem Merge."
+    },
+    "results": {
+      "heading": "Ergebnisse — heute live gemessen",
+      "performanceLabel": "Lighthouse Performance",
+      "performanceDetail": "Desktop, gegen die Produktions-URL gemessen, gleiche Methodik wie das CI-Gate: RTT 40 ms, 10 Mbit/s, kein CPU-Throttling",
+      "accessibilityLabel": "Accessibility",
+      "seoLabel": "SEO",
+      "bestPracticesLabel": "Best Practices",
+      "unitTestsLabel": "Unit-Tests, 100 % Code-Coverage (Statements/Branches/Functions/Lines, Vitest)",
+      "e2eTestsLabel": "End-to-End-Tests in der CI-Pipeline (Playwright, 4 Browser-Engines)",
+      "commitsLabel": "Commits",
+      "pullRequestsLabel": "gemergte Pull Requests",
+      "bundleSizeLabel": "Shared-JS-Bundle (automatisches Gate in der CI)",
+      "methodologyNote": "Methodik-Hinweis, der auch im Original steht: Auf einem realen Mobilfunknetz mit Standard-Throttling sinkt der Performance-Wert auf 63–68/100 — das spiegelt die tatsächlichen Kosten hochauflösender Bilder auf einer Fotografie-Website wider, nicht einen Messfehler. Die CI-Pipeline (lokaler Build, gleiches Desktop-Preset) verzeichnet über mehrere Durchläufe konstant 83–84/100."
+    },
+    "liveFeatures": {
+      "heading": "Was live in Produktion läuft",
+      "body": "Online-Buchung über Cal.com (Lazy-Loading erst beim ersten Hover/Fokus, damit Drittanbieter-Cookies nicht ungefragt geladen werden), Kontaktformular mit Zod-Validierung und E-Mail-Versand über Resend, seitenspezifische OG-Bilder, Sitemap/Robots, PWA-Manifest, natives Dark Mode, vier Sprachen mit korrektem hreflang."
+    },
+    "testimonial": {
+      "heading": "Eine echte, veröffentlichte Bewertung",
+      "quote": "„Ein Fotoshooting vom Feinsten: keine steifen Posen, nur echtes Lachen und echte Gesichter. Die Fotos wirken wie aus einem Reel, nur besser. Alles ging blitzschnell und das Ergebnis ist der Hammer. Das sind keine Fotos, das sind echte Erinnerungen. Note: 10/10“",
+      "author": "Giuseppe, Geburtstagsshooting",
+      "flow": "Der komplette Ablauf ist real: Die Kundin reicht eine Bewertung über das öffentliche Formular ein → das System schreibt eine Zeile mit Status pending in Postgres (Neon) → eine Moderations-E-Mail mit HMAC-signiertem Link wird verschickt (One-Click Approve/Reject, keine sensiblen Daten im Token) → nach Freigabe wird die Bewertung veröffentlicht und die Startseite über revalidateTag neu validiert. Live getestet am 1. Juni 2026 mit einer echten Bewertung, von der Kundin bestätigt. Aktueller Stand der Datenbank: 1 freigegebene, 1 wartende Bewertung — ehrlich noch wenig, weil die Seite erst wenige Wochen online ist, aber die Infrastruktur ist verifiziert und produktionsreif."
+    },
+    "engineering": {
+      "heading": "Engineering, nicht nur Design",
+      "item1Title": "Ein „harmloser“ Node-Import brach die CSP auf jeder Seite.",
+      "item1Body": "lib/utils.ts importierte Node's crypto.timingSafeEqual in derselben Datei, die cn() exportiert — die CSS-Klassen-Utility, die von jeder Client-Komponente genutzt wird. Next.js bündelte dadurch auch das vm-browserify-Polyfill (das intern eval() nutzt) in jeden Browser-Bundle und verletzte die strict-dynamic-CSP. Gefunden per empirischer Bisektion (schrittweises Stubben von Komponenten + Analyse der kompilierten Chunks), nicht durch Raten. Fix: Funktion in ein server-only Modul ausgelagert. Lighthouse Best Practices: 78 → 100 (CI).",
+      "item2Title": "Rate-Limiting war unter Nebenläufigkeit umgehbar.",
+      "item2Body": "Der Rate-Limiter führte get und set in zwei getrennten Schritten aus (TOCTOU) — gleichzeitige Requests konnten das Limit umgehen, bevor der Zähler aktualisiert war. Fix: atomares kv.incr(), sowohl für Vercel KV als auch für den lokalen Dev-Fallback.",
+      "item3Title": "Secret-Vergleich war nicht zeitkonstant.",
+      "item3Body": "Moderations-Token und Admin-Secrets wurden an vier verschiedenen Endpunkten mit === verglichen — theoretisch anfällig für Timing-Angriffe. Fix: zentrales timingSafeStringEqual(), überall dort eingesetzt, wo ein Secret geprüft wird.",
+      "item4Title": "Zwei parallele E2E-Runs blockierten sich gegenseitig.",
+      "item4Body": "Das Concurrency-Gate in ci.yml verglich github.ref (Push-Event) mit github.head_ref (Pull-Request-Event) — zwei Werte, die nie übereinstimmen. Ergebnis: jeder Commit löste zwei gleichzeitige E2E-Runs auf denselben Shared-Runnern aus, mit intermittierenden Timeouts auf WebKit (live reproduziert: derselben Commit, ein Run grün in 9:42 Min, der andere rot in 16:51 Min, gleichzeitig). Fix: github.ref_name statt github.ref. Verifiziert: der doppelte Run wird nun innerhalb von 2 Sekunden gecancelt.",
+      "item5Title": "API-Routen wurden unbemerkt unter das Sprachpräfix umgeleitet.",
+      "item5Body": "Die i18n-Middleware schloss /api/* nicht von ihrem Matcher aus: mit localePrefix: \"always\" wurde jeder Aufruf von /api/admin/reviews still auf /de/api/admin/reviews umgeleitet (nicht existent). Entdeckt durch manuelle Prüfung, dass ein erwarteter 401-Status wirklich vom App-Code stammte und nicht von Vercel. Fix: api explizit vom next-intl-Matcher ausgeschlossen."
+    },
+    "techStack": {
+      "heading": "Tech-Stack"
+    },
+    "honestStatus": {
+      "heading": "Ehrlicher Stand, kein Mockup",
+      "item1": "Live seit 1. Juni 2026 — keine Staging-Umgebung: öffentliche Domain, echte Datenbank, echte Transaktions-E-Mails.",
+      "item2": "Keine Custom-Domain — bewusste, bestätigte Entscheidung der Kundin, kein technisches Limit.",
+      "item3": "Repository mit nur einer Autorin — alle 48 Pull Requests wurden von derselben Person geöffnet, per CI-Gate geprüft und gemergt; kein zweiter Mensch hat Code Review gemacht.",
+      "item4": "Bewertungsvolumen noch gering — 1 freigegeben, 1 in Moderation: die Seite ist erst seit wenigen Wochen online, der Ablauf ist verifiziert, aber noch nicht in großem Umfang getestet."
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "hero": "Startseite auf einem großen Desktop-Viewport, oberhalb der Falz",
+      "homeMobile": "Startseite auf einem Smartphone, kompletter Seiten-Scroll",
+      "portfolio": "Portfolio-Seite mit den ersten Arbeiten im Raster",
+      "leistungen": "Leistungen-Seite mit Paketen und Preisen",
+      "testimonialShot": "Testimonial-Sektion auf der Startseite mit Giuseppes echter Bewertung",
+      "lighthouse": "Lighthouse-Report (Desktop): Performance 86, Accessibility 100, Best Practices 96, SEO 100",
+      "ci": "Grüner CI-Lauf in GitHub Actions"
     }
   },
   "banner": {

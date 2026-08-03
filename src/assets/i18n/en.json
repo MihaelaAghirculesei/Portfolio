@@ -86,6 +86,7 @@
     "notLiveYet": "Live version not available yet — this project is currently in development.",
     "onRequest": "on request",
     "sourceOnRequest": "Source code is private — available on request.",
+    "caseStudy": "Case Study",
     "viewAllProjects": "View all projects",
     "viewAllProjectsAriaLabel": "View all projects in a dedicated page",
     "viewFeaturedProjects": "Back to featured projects",
@@ -185,6 +186,81 @@
       "shortDescription": "Web Application"
     }
   },
+  "caseStudyAlinaMoments": {
+    "backLink": "Back to projects",
+    "eyebrow": "Case Study",
+    "title": "Alina Moments Photography",
+    "subtitle": "A full-stack website for a freelance photographer",
+    "soloNote": "Solo project: concept, development, production, and maintenance — from the first commit to the live deploy",
+    "roleLabel": "Role",
+    "role": "Full-Stack Developer",
+    "periodLabel": "Timeframe",
+    "period": "May 27 – June 1, 2026 (launch)",
+    "periodNote": "ongoing updates since go-live",
+    "liveLabel": "Live",
+    "intro": {
+      "heading": "Starting point",
+      "body": "Alina is a freelance photographer in Wolfsburg specializing in newborn, family, couple, and event photography. Before this project she had no website of her own — only an Instagram profile. The goal was a multilingual (DE/EN/RO/IT) professional website with online booking, a contact form, and a moderated review system — no CMS, no agency, no second developer on the team.",
+      "body2": "Every part of the stack — from the review database to the Content Security Policy to the CI pipeline and deployment — was designed, written, and shipped to production by a single person, held to the same bar a team would set for itself: a dedicated branch and pull request for every change, automated quality gates, end-to-end tests on every merge."
+    },
+    "results": {
+      "heading": "Results — measured live today",
+      "performanceLabel": "Lighthouse Performance",
+      "performanceDetail": "Desktop, measured against the production URL, same methodology as the CI gate: 40ms RTT, 10 Mbps, no CPU throttling",
+      "accessibilityLabel": "Accessibility",
+      "seoLabel": "SEO",
+      "bestPracticesLabel": "Best Practices",
+      "unitTestsLabel": "unit tests, 100% code coverage (statements/branches/functions/lines, Vitest)",
+      "e2eTestsLabel": "end-to-end tests in the CI pipeline (Playwright, 4 browser engines)",
+      "commitsLabel": "commits",
+      "pullRequestsLabel": "merged pull requests",
+      "bundleSizeLabel": "shared JS bundle (automated gate in CI)",
+      "methodologyNote": "A methodology note that also appears in the original write-up: on a real mobile network with standard throttling, the performance score drops to 63–68/100 — that reflects the actual cost of high-resolution images on a photography website, not a measurement error. The CI pipeline (local build, same desktop preset) consistently logs 83–84/100 across multiple runs."
+    },
+    "liveFeatures": {
+      "heading": "What's live in production",
+      "body": "Online booking through Cal.com (lazy-loaded only on first hover/focus, so third-party cookies aren't loaded unasked), a contact form with Zod validation and email delivery via Resend, page-specific OG images, sitemap/robots, a PWA manifest, native dark mode, and four languages with correct hreflang."
+    },
+    "testimonial": {
+      "heading": "A real, published review",
+      "quote": "“A shoot at its finest: no stiff poses, just real laughter and real faces. The photos look like they're straight out of a reel, only better. Everything happened in a flash and the result is amazing. These aren't photos, they're real memories. Rating: 10/10”",
+      "author": "Giuseppe, birthday shoot",
+      "flow": "The full flow is real: the client submits a review through the public form → the system writes a row with status pending to Postgres (Neon) → a moderation email with an HMAC-signed link goes out (one-click approve/reject, no sensitive data in the token) → once approved, the review is published and the homepage is revalidated via revalidateTag. Tested live on June 1, 2026 with a real review, confirmed by the client. Current state of the database: 1 approved, 1 pending review — honestly still a small number, since the site has only been live for a few weeks, but the infrastructure is verified and production-ready."
+    },
+    "engineering": {
+      "heading": "Engineering, not just design",
+      "item1Title": "A “harmless” Node import broke the CSP on every page.",
+      "item1Body": "lib/utils.ts imported Node's crypto.timingSafeEqual in the same file that exports cn() — the CSS class utility used by every client component. As a result, Next.js also bundled the vm-browserify polyfill (which uses eval() internally) into every browser bundle, violating the strict-dynamic CSP. Found through empirical bisection (progressively stubbing components and inspecting the compiled chunks), not by guessing. Fix: moved the function into a server-only module. Lighthouse Best Practices: 78 → 100 (CI).",
+      "item2Title": "Rate limiting could be bypassed under concurrency.",
+      "item2Body": "The rate limiter ran get and set as two separate steps (TOCTOU) — concurrent requests could slip past the limit before the counter updated. Fix: atomic kv.incr(), for both Vercel KV and the local dev fallback.",
+      "item3Title": "Secret comparison wasn't constant-time.",
+      "item3Body": "Moderation tokens and admin secrets were compared with === across four different endpoints — theoretically vulnerable to timing attacks. Fix: a central timingSafeStringEqual(), used everywhere a secret is checked.",
+      "item4Title": "Two parallel E2E runs were blocking each other.",
+      "item4Body": "The concurrency gate in ci.yml compared github.ref (push event) against github.head_ref (pull request event) — two values that never match. Result: every commit triggered two simultaneous E2E runs on the same shared runners, with intermittent timeouts on WebKit (reproduced live: same commit, one run green in 9:42, the other red in 16:51, running at the same time). Fix: github.ref_name instead of github.ref. Verified: the duplicate run is now cancelled within 2 seconds.",
+      "item5Title": "API routes were silently redirected under the locale prefix.",
+      "item5Body": "The i18n middleware didn't exclude /api/* from its matcher: with localePrefix: \"always\", every call to /api/admin/reviews was silently redirected to /de/api/admin/reviews (which doesn't exist). Discovered by manually checking that an expected 401 status actually came from the app code and not from Vercel. Fix: explicitly excluded api from the next-intl matcher."
+    },
+    "techStack": {
+      "heading": "Tech stack"
+    },
+    "honestStatus": {
+      "heading": "Honest status, not a mockup",
+      "item1": "Live since June 1, 2026 — no staging environment: public domain, real database, real transactional emails.",
+      "item2": "No custom domain — a deliberate, confirmed decision by the client, not a technical limitation.",
+      "item3": "Single-author repository — all 48 pull requests were opened by the same person, checked by the CI gate, and merged; no second person did code review.",
+      "item4": "Review volume is still low — 1 approved, 1 in moderation: the site has only been live for a few weeks, so the flow is verified but not yet tested at scale."
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "hero": "Homepage on a wide desktop viewport, above the fold",
+      "homeMobile": "Homepage on a smartphone, full-page scroll",
+      "portfolio": "Portfolio page with the first works in the grid",
+      "leistungen": "Services page with packages and pricing",
+      "testimonialShot": "Testimonial section on the homepage featuring Giuseppe's real review",
+      "lighthouse": "Lighthouse report (desktop): Performance 86, Accessibility 100, Best Practices 96, SEO 100",
+      "ci": "A green CI run in GitHub Actions"
+    }
+  },
   "banner": {
     "remoteWork": "Available for remote work",
     "role": "Fullstack Developer",
@@ -221,6 +297,10 @@
     "contact": {
       "title": "Contact — Mihaela Aghirculesei",
       "description": "Get in touch with Mihaela Aghirculesei, Fullstack Developer based in Germany, available for new projects involving Angular, TypeScript, and Python."
+    },
+    "caseStudyAlinaMoments": {
+      "title": "Case Study: Alina Moments Photography — Mihaela Aghirculesei",
+      "description": "How a solo full-stack developer shipped a multilingual Next.js booking site for a freelance photographer, with 100% test coverage, a Lighthouse Accessibility/SEO score of 100, and a documented CI/security engineering log."
     }
   }
 }

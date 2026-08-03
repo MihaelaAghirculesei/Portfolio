@@ -17,4 +17,5 @@ export interface Projects {
   inProgress?: boolean;
   hoverOffset?: HoverOffset;
   featured?: boolean;
+  caseStudyRoute?: string;
 }
