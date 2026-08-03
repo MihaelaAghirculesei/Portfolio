@@ -2,6 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SkillsComponent } from './skills.component';
 import { ScrollService } from '../../shared/services/scroll.service';
 
+const EXPECTED_SKILL_NAMES = [
+  'HTML', 'CSS', 'JavaScript', 'TypeScript', 'SASS', 'Tailwind CSS',
+  'Angular', 'NgRx', 'RxJS', 'Material Design',
+  'Next.js',
+  'GSAP', 'Framer Motion',
+  'Firebase', 'Rest-API',
+  'PWA', 'SSR', 'Capacitor',
+  'Python', 'FastAPI', 'SQLAlchemy', 'Pydantic 2', 'SQLite', 'PostgreSQL', 'Pytest',
+  'Vite', 'Vitest', 'Playwright', 'Cypress', 'Workbox', 'Sentry', 'IndexedDB', 'Zod',
+  'Git', 'Figma', 'Scrum',
+  'Growth Mindset',
+];
+
 describe('SkillsComponent', () => {
   let component: SkillsComponent;
   let fixture: ComponentFixture<SkillsComponent>;
@@ -30,57 +43,34 @@ describe('SkillsComponent', () => {
   });
 
   describe('Skill Items', () => {
-    it('should have exactly 37 skill items', () => {
-      expect(component.skillItems.length).toBe(37);
+    it('should have the expected number of skill items', () => {
+      expect(component.skillItems.length).toBe(EXPECTED_SKILL_NAMES.length);
     });
 
-    it('should have all required skills', () => {
+    it('should contain exactly the expected skills, no more and no less', () => {
       const skillNames = component.skillItems.map(item => item.name);
-      expect(skillNames).toContain('Angular');
-      expect(skillNames).toContain('TypeScript');
-      expect(skillNames).toContain('JavaScript');
-      expect(skillNames).toContain('HTML');
-      expect(skillNames).toContain('CSS');
-      expect(skillNames).toContain('SASS');
-      expect(skillNames).toContain('Firebase');
-      expect(skillNames).toContain('Git');
-      expect(skillNames).toContain('Figma');
-      expect(skillNames).toContain('Material Design');
-      expect(skillNames).toContain('Rest-API');
-      expect(skillNames).toContain('Scrum');
-      expect(skillNames).toContain('NgRx');
-      expect(skillNames).toContain('RxJS');
-      expect(skillNames).toContain('Capacitor');
-      expect(skillNames).toContain('PWA');
-      expect(skillNames).toContain('SSR');
-      expect(skillNames).toContain('Python');
-      expect(skillNames).toContain('FastAPI');
-      expect(skillNames).toContain('SQLAlchemy');
-      expect(skillNames).toContain('Pydantic 2');
-      expect(skillNames).toContain('SQLite');
-      expect(skillNames).toContain('Pytest');
-      expect(skillNames).toContain('Vite');
-      expect(skillNames).toContain('Vitest');
-      expect(skillNames).toContain('Playwright');
-      expect(skillNames).toContain('Workbox');
-      expect(skillNames).toContain('Growth Mindset');
-      expect(skillNames).toContain('PostgreSQL');
-      expect(skillNames).toContain('Cypress');
-      expect(skillNames).toContain('Sentry');
-      expect(skillNames).toContain('IndexedDB');
-      expect(skillNames).toContain('Zod');
+      expect(skillNames.slice().sort()).toEqual(EXPECTED_SKILL_NAMES.slice().sort());
     });
 
     it('should have correct image paths', () => {
       component.skillItems.forEach(skill => {
-        expect(skill.url).toMatch(/assets\/img\/skills\/.+\.svg/);
+        expect(skill.url).toMatch(/^assets\/img\/skills\/.+\.svg$/);
       });
     });
 
-    it('should have readonly skill items', () => {
-      expect(component.skillItems).toBeTruthy();
-      // Test that it's readonly by checking it's defined
-      expect(Array.isArray(component.skillItems)).toBe(true);
+    it('should have Python in main skill items', () => {
+      const python = component.skillItems.find(s => s.name === 'Python');
+      expect(python?.url).toBe('assets/img/skills/python.svg');
+    });
+
+    it('should not contain duplicate skill names', () => {
+      const names = component.skillItems.map(item => item.name);
+      expect(new Set(names).size).toBe(names.length);
+    });
+
+    it('should not contain duplicate icon paths', () => {
+      const urls = component.skillItems.map(item => item.url);
+      expect(new Set(urls).size).toBe(urls.length);
     });
   });
 
@@ -97,11 +87,6 @@ describe('SkillsComponent', () => {
     it('should have correct React icon path', () => {
       const react = component.futureSkills.find(s => s.name === 'React');
       expect(react?.url).toBe('assets/img/skills/react.svg');
-    });
-
-    it('should have Python in main skill items', () => {
-      const python = component.skillItems.find(s => s.name === 'Python');
-      expect(python?.url).toBe('assets/img/skills/python.svg');
     });
   });
 
@@ -170,17 +155,7 @@ describe('SkillsComponent', () => {
     });
   });
 
-  describe('Data Integrity', () => {
-    it('should have immutable skill items', () => {
-      const originalLength = component.skillItems.length;
-      expect(component.skillItems.length).toBe(37);
-    });
-
-    it('should have immutable future skills', () => {
-      const originalLength = component.futureSkills.length;
-      expect(originalLength).toBe(1);
-    });
-
+  describe('Data Shape', () => {
     it('should have all skills with both url and name properties', () => {
       component.skillItems.forEach(skill => {
         expect(skill.url).toBeDefined();
@@ -195,6 +170,57 @@ describe('SkillsComponent', () => {
         expect(skill.url).toBeDefined();
         expect(skill.name).toBeDefined();
       });
+    });
+  });
+
+  describe('Template Rendering', () => {
+    it('should render one .skillDiv per skill item', () => {
+      const skillDivs = fixture.nativeElement.querySelectorAll('.skillDiv');
+      expect(skillDivs.length).toBe(component.skillItems.length);
+    });
+
+    it('should render the tooltip only on the last skill item', () => {
+      const skillDivs: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('.skillDiv');
+
+      skillDivs.forEach((div, index) => {
+        const tooltip = div.querySelector('.tooltip');
+        if (index === skillDivs.length - 1) {
+          expect(tooltip).withContext(`item ${index} should have a tooltip`).not.toBeNull();
+        } else {
+          expect(tooltip).withContext(`item ${index} should not have a tooltip`).toBeNull();
+        }
+      });
+    });
+
+    it('should render each future skill inside the tooltip', () => {
+      const futureSkillItems = fixture.nativeElement.querySelectorAll('.future-skills .skillItem');
+      expect(futureSkillItems.length).toBe(component.futureSkills.length);
+    });
+
+    it('should render skill items in data order with matching name and icon', () => {
+      const skillDivs: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('.skillDiv');
+
+      skillDivs.forEach((div, index) => {
+        const expected = component.skillItems[index];
+        const img = div.querySelector('img');
+
+        expect(img?.getAttribute('src')).toBe(expected.url);
+        expect(img?.getAttribute('alt')).toBe(`${expected.name} logo`);
+        expect(div.querySelector('p')?.textContent?.trim()).toBe(expected.name);
+      });
+    });
+  });
+
+  describe('Accessibility', () => {
+    it('should mark the tooltip with role="tooltip"', () => {
+      const tooltip: HTMLElement | null = fixture.nativeElement.querySelector('.tooltip');
+      expect(tooltip?.getAttribute('role')).toBe('tooltip');
+    });
+
+    it('should give the contact CTA a button role and a non-empty aria-label', () => {
+      const cta: HTMLElement | null = fixture.nativeElement.querySelector('.link-button');
+      expect(cta?.getAttribute('role')).toBe('button');
+      expect(cta?.getAttribute('aria-label')).toBeTruthy();
     });
   });
 });
