@@ -743,6 +743,22 @@ $header-padding-top: 98px;
       }
     }
   }
+
+  &.link-button2--case {
+    cursor: pointer;
+    border: 1px solid variables.$main-color-light;
+    background-color: variables.$main-color-lighter;
+
+    &::after {
+      content: none;
+    }
+
+    &:hover,
+    &:active {
+      border: 1px solid variables.$main-color;
+      background-color: variables.$main-color-light;
+    }
+  }
 }
 
 @media only screen and (min-width: 1440px) and (max-width: 1919px) {

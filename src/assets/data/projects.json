@@ -10,6 +10,7 @@
     "previewImgSrcset": "assets/img/projects/alina-moments-400w.webp 400w, assets/img/projects/alina-moments-800w.webp 800w, assets/img/projects/alina-moments-1200w.webp 1200w",
     "liveUrl": "https://alina-moments-photography.vercel.app/it",
     "isPersonal": true,
+    "caseStudyRoute": "case-study/alina-moments",
     "hoverOffset": { "base": 70, "smallPreview": -10 }
   },
   {
