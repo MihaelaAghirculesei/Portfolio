@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, OnDestroy, OnInit, Output, inject } from '@angular/core';
 
+@Directive()
 abstract class PassiveListenerDirective implements OnInit, OnDestroy {
   protected abstract readonly eventName: 'touchstart' | 'touchend';
   protected abstract emit(event: TouchEvent): void;
