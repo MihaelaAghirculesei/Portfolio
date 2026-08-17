@@ -182,7 +182,7 @@
 
 .cs-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
   gap: 16px;
   margin: 0 0 24px 0;
   padding: 0;
@@ -194,6 +194,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
+  overflow-wrap: break-word;
 
   .cs-stat-value {
     @include mixins.code-font;
@@ -307,7 +309,7 @@
 
 .cs-screenshot-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 16px;
   margin: 0;
   padding: 0;
