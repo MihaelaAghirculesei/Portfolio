@@ -46,10 +46,14 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   hoverPosition: number | null = null;
   activePreview = '';
   isLandscape = false;
+  // On the home page, "view all" expands the list in place instead of
+  // navigating to /projects — no route change, so no scroll/timing dance.
+  showAll = false;
 
   // ── Delegating accessors — keep the template and tests unchanged ────────────
   get projects(): Projects[] {
-    return this.isProjectsPage ? this.data.projects : this.data.projects.filter((p) => p.featured !== false);
+    if (this.isProjectsPage) { return this.data.projects; }
+    return this.showAll ? this.data.projects : this.data.projects.filter((p) => p.featured !== false);
   }
 
   get selectedProject(): Projects | null { return this.overlay.selectedProject; }
@@ -156,6 +160,12 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   goToFeaturedProjects(event: Event): void {
     event.preventDefault();
     this.navigationService.scrollToSection('projects');
+  }
+
+  toggleShowAll(event: Event): void {
+    event.preventDefault();
+    this.showAll = !this.showAll;
+    this.cdr.markForCheck();
   }
 
   // ── Template helpers delegated to ProjectDataService ───────────────────────

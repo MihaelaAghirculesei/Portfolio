@@ -82,12 +82,13 @@
     @if (!isProjectsPage) {
     <div class="view-all-wrapper">
       <a
-        routerLink="/projects"
+        href="/projects"
         class="link-button animated"
-        [attr.data-text]="'portfolio.viewAllProjects' | translate"
-        [attr.aria-label]="'portfolio.viewAllProjectsAriaLabel' | translate"
+        [attr.data-text]="(showAll ? 'portfolio.viewFeaturedProjects' : 'portfolio.viewAllProjects') | translate"
+        [attr.aria-label]="(showAll ? 'portfolio.viewFeaturedProjectsAriaLabel' : 'portfolio.viewAllProjectsAriaLabel') | translate"
+        (click)="toggleShowAll($event)"
       >
-        <span>{{ "portfolio.viewAllProjects" | translate }}</span>
+        <span>{{ (showAll ? "portfolio.viewFeaturedProjects" : "portfolio.viewAllProjects") | translate }}</span>
       </a>
     </div>
     } @else {

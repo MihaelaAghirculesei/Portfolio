@@ -2,25 +2,25 @@
 
 <app-about-me></app-about-me>
 
-@defer (on viewport) {
+@defer (on viewport; when deferGate.revealAll()) {
   <app-skills></app-skills>
 } @placeholder {
   <div id="skills" class="defer-ph defer-ph--700"></div>
 }
 
-@defer (on viewport) {
+@defer (on viewport; when deferGate.revealAll()) {
   <app-portfolio></app-portfolio>
 } @placeholder {
   <div id="projects" class="defer-ph defer-ph--700"></div>
 }
 
-@defer (on viewport) {
+@defer (on viewport; when deferGate.revealAll()) {
   <app-feedbacks></app-feedbacks>
 } @placeholder {
   <div class="defer-ph defer-ph--450"></div>
 }
 
-@defer (on viewport) {
+@defer (on viewport; when deferGate.revealAll()) {
   <app-contact></app-contact>
 } @placeholder {
   <div id="contact" class="defer-ph defer-ph--100vh"></div>

@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PLATFORM_ID, DOCUMENT } from '@angular/core';
 
 import { ScrollService } from './scroll.service';
@@ -9,6 +9,7 @@ interface MockWindow {
   scrollY: number | undefined;
   pageYOffset: number | undefined;
   innerWidth: number;
+  setTimeout: (fn: () => void, ms: number) => number;
 }
 
 interface MockDocument {
@@ -29,7 +30,8 @@ describe('ScrollService', () => {
       scrollTo: jasmine.createSpy('scrollTo'),
       scrollY: 0,
       pageYOffset: 0,
-      innerWidth: 1920
+      innerWidth: 1920,
+      setTimeout: (fn: () => void, ms: number) => window.setTimeout(fn, ms) as unknown as number
     };
 
     mockDocument = {
@@ -144,6 +146,74 @@ describe('ScrollService', () => {
 
       expect(mockWindow.scrollTo).toHaveBeenCalledTimes(3);
     });
+  });
+
+  describe('waitForLayoutStable', () => {
+    it('should resolve once offsetTop stops changing across consecutive polls', fakeAsync(() => {
+      const mockElement = { offsetTop: 500 } as HTMLElement;
+      mockDocument.getElementById.and.returnValue(mockElement);
+
+      let resolved = false;
+      service.waitForLayoutStable('test').then(() => { resolved = true; });
+
+      tick(47);
+      expect(resolved).toBe(false);
+
+      tick(1);
+      expect(resolved).toBe(true);
+    }));
+
+    it('should keep waiting while the position keeps shifting, then resolve once it settles', fakeAsync(() => {
+      const mockElement: { offsetTop: number } = { offsetTop: 100 };
+      mockDocument.getElementById.and.returnValue(mockElement as unknown as HTMLElement);
+
+      let resolved = false;
+      service.waitForLayoutStable('test').then(() => { resolved = true; });
+
+      tick(16);
+      mockElement.offsetTop = 300;
+      tick(30);
+      expect(resolved).toBe(false);
+
+      tick(50);
+      expect(resolved).toBe(true);
+    }));
+
+    it('should give up and resolve after maxWaitMs if the position never settles', fakeAsync(() => {
+      const mockElement = { offsetTop: 0 } as HTMLElement;
+      mockDocument.getElementById.and.returnValue(mockElement);
+      let counter = 0;
+      Object.defineProperty(mockElement, 'offsetTop', { get: () => counter++ });
+
+      let resolved = false;
+      service.waitForLayoutStable('test', 100).then(() => { resolved = true; });
+
+      tick(80);
+      expect(resolved).toBe(false);
+
+      tick(200);
+      expect(resolved).toBe(true);
+    }));
+
+    it('should resolve immediately if the element is never found', fakeAsync(() => {
+      mockDocument.getElementById.and.returnValue(null);
+
+      let resolved = false;
+      service.waitForLayoutStable('missing').then(() => { resolved = true; });
+
+      tick(60);
+      expect(resolved).toBe(true);
+    }));
+
+    it('should resolve immediately if window is null', fakeAsync(() => {
+      mockDocument.defaultView = null;
+
+      let resolved = false;
+      service.waitForLayoutStable('test').then(() => { resolved = true; });
+      tick();
+
+      expect(resolved).toBe(true);
+    }));
   });
 
   describe('scrollToPosition', () => {
@@ -372,6 +442,13 @@ describe('ScrollService - SSR (server platform)', () => {
     ssrService.scrollToPosition(300);
 
     expect(ssrMockWindow.scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('waitForLayoutStable should resolve immediately on server', async () => {
+    const mockEl = { offsetTop: 500 } as HTMLElement;
+    ssrMockDocument.getElementById.and.returnValue(mockEl);
+
+    await expectAsync(ssrService.waitForLayoutStable('test')).toBeResolved();
   });
 
   it('getCurrentScrollPosition should return 0 on server', () => {

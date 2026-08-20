@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, DeferBlockBehavior, DeferBlockState } from '
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { HomeComponent } from './home.component';
+import { DeferGateService } from '../../shared/services/defer-gate.service';
 
 @Component({ selector: 'app-landing-page', template: '', standalone: true })
 class StubLandingPageComponent {}
@@ -119,6 +120,13 @@ describe('HomeComponent', () => {
       expect(fixture.debugElement.query(By.css('app-portfolio'))).toBeTruthy();
       expect(fixture.debugElement.query(By.css('app-feedbacks'))).toBeTruthy();
       expect(fixture.debugElement.query(By.css('app-contact'))).toBeTruthy();
+    });
+  });
+
+  describe('DeferGateService wiring', () => {
+    it('should expose the shared defer gate for the template to bind to', () => {
+      const deferGate = TestBed.inject(DeferGateService);
+      expect(component['deferGate']).toBe(deferGate);
     });
   });
 });

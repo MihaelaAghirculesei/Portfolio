@@ -21,7 +21,9 @@ export class ScrollService {
 
   scrollToElement(
     elementId: string,
-    _block: 'start' | 'center' | 'end' = 'start'
+    _block: 'start' | 'center' | 'end' = 'start',
+    behavior: ScrollBehavior = 'smooth',
+    preOffset = 0
   ): void {
     if (!this.platformService.isBrowser) {return;}
 
@@ -39,11 +41,58 @@ export class ScrollService {
     }
 
     const elementPosition =
-      element.offsetTop - SCROLL_CONFIG.HEADER_HEIGHT - extraOffset;
+      element.offsetTop - SCROLL_CONFIG.HEADER_HEIGHT - extraOffset - preOffset;
 
     window.scrollTo({
       top: elementPosition,
-      behavior: 'smooth',
+      behavior,
+    });
+  }
+
+  /**
+   * Resolves once an element's `offsetTop` has stopped changing (or after
+   * `maxWaitMs`, whichever comes first). Elements sitting behind an
+   * `@defer (on viewport)` block can keep shifting position as preceding
+   * sections swap their placeholder for real content — scrolling before
+   * that settles lands short, then has to visibly re-scroll once the real
+   * layout is in. Polling avoids guessing a fixed delay that may be too
+   * short (a slow chunk load) or needlessly long (already-cached content).
+   */
+  waitForLayoutStable(elementId: string, maxWaitMs: number = SCROLL_CONFIG.LAYOUT_STABLE_MAX_WAIT): Promise<void> {
+    if (!this.platformService.isBrowser) { return Promise.resolve(); }
+
+    const window = this.document.defaultView;
+    if (!window) { return Promise.resolve(); }
+
+    const pollIntervalMs = 16;
+    const requiredStableReadings = 3;
+
+    return new Promise<void>((resolve) => {
+      let elapsed = 0;
+      let lastTop: number | null = null;
+      let stableCount = 0;
+
+      const check = (): void => {
+        const element = this.document.getElementById(elementId);
+        const top = element ? element.offsetTop : null;
+
+        if (top === lastTop) {
+          stableCount++;
+        } else {
+          stableCount = 0;
+          lastTop = top;
+        }
+
+        if (stableCount >= requiredStableReadings || elapsed >= maxWaitMs) {
+          resolve();
+          return;
+        }
+
+        elapsed += pollIntervalMs;
+        window.setTimeout(check, pollIntervalMs);
+      };
+
+      check();
     });
   }
 
