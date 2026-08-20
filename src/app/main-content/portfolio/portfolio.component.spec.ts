@@ -18,6 +18,7 @@ describe('PortfolioComponent', () => {
   let translateService: TranslationService;
   let overlayService: PortfolioOverlayService;
   let projectDataService: ProjectDataService;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -35,6 +36,7 @@ describe('PortfolioComponent', () => {
     translateService = TestBed.inject(TranslationService);
     overlayService = fixture.debugElement.injector.get(PortfolioOverlayService);
     projectDataService = TestBed.inject(ProjectDataService);
+    router = TestBed.inject(Router);
 
     // Mock projectsTable ViewChild
     component.projectsTable = {
@@ -58,9 +60,10 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have 4 featured projects on the home page (Pokédex and El Pollo Loco excluded)', () => {
+    it('should have 3 featured projects on the home page (Join, Pokédex and El Pollo Loco excluded)', () => {
       expect(component.projects).toBeDefined();
-      expect(component.projects.length).toBe(4);
+      expect(component.projects.length).toBe(3);
+      expect(component.projects.some((p) => p.name === 'Join')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Pokédex')).toBe(false);
       expect(component.projects.some((p) => p.name === 'El Pollo Loco')).toBe(false);
     });
@@ -79,6 +82,44 @@ describe('PortfolioComponent', () => {
       expect(project.name).toBe('Alina Moments Photography');
       expect(project.githubUrl).toBeUndefined();
       expect(project.liveUrl).toBeDefined();
+    });
+  });
+
+  describe('toggleShowAll', () => {
+    it('should expand to all projects in place, without navigating', () => {
+      const event = new MouseEvent('click');
+      spyOn(event, 'preventDefault');
+
+      component.toggleShowAll(event);
+
+      expect(event.preventDefault).toHaveBeenCalled();
+      expect(component.showAll).toBe(true);
+      expect(component.projects.length).toBe(projectDataService.projects.length);
+      expect(component.projects.some((p) => p.name === 'Join')).toBe(true);
+    });
+
+    it('should collapse back to the featured projects on a second toggle', () => {
+      const event = new MouseEvent('click');
+
+      component.toggleShowAll(event);
+      component.toggleShowAll(event);
+
+      expect(component.showAll).toBe(false);
+      expect(component.projects.length).toBe(3);
+    });
+
+    it('should swap the "view all" link to "back to featured" in place, without a route change', () => {
+      spyOn(router, 'navigateByUrl');
+      const link: HTMLAnchorElement = fixture.nativeElement.querySelector('.view-all-wrapper a');
+      expect(link.textContent?.trim()).toBe('View all projects');
+
+      link.click();
+      fixture.detectChanges();
+
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
+      expect(component.showAll).toBe(true);
+      const updatedLink: HTMLAnchorElement = fixture.nativeElement.querySelector('.view-all-wrapper a');
+      expect(updatedLink.textContent?.trim()).toBe('Back to featured projects');
     });
   });
 
@@ -355,8 +396,8 @@ describe('PortfolioComponent', () => {
 
   describe('Helper Methods', () => {
     it('should get project screenshot alt text', () => {
-      const alt = component.getProjectScreenshotAlt(2);
-      expect(alt).toBe('Join screenshot');
+      const alt = component.getProjectScreenshotAlt(0);
+      expect(alt).toBe('Alina Moments Photography screenshot');
     });
 
     it('should return default alt text for null index', () => {
@@ -383,7 +424,7 @@ describe('PortfolioComponent', () => {
 
     it('should get project short description with translation', () => {
       spyOn(translateService, 'instant').and.returnValue('Test description');
-      const joinProject = component.projects.find(p => p.name === 'Join')!;
+      const joinProject = projectDataService.projects.find(p => p.name === 'Join')!;
 
       const desc = component.getProjectShortDescription(joinProject);
 
@@ -393,7 +434,7 @@ describe('PortfolioComponent', () => {
 
     it('should get project description with translation', () => {
       spyOn(translateService, 'instant').and.returnValue('Test description');
-      const joinProject = component.projects.find(p => p.name === 'Join')!;
+      const joinProject = projectDataService.projects.find(p => p.name === 'Join')!;
 
       const desc = component.getProjectDescription(joinProject);
 
@@ -423,18 +464,18 @@ describe('PortfolioComponent', () => {
   });
 
   describe('Todo Platform API Project', () => {
-    it('should have Todo Platform API as the fourth project', () => {
-      const todoProject = component.projects[3];
+    it('should have Todo Platform API as the third project', () => {
+      const todoProject = component.projects[2];
       expect(todoProject.name).toBe('Todo Platform API');
     });
 
     it('should not have inProgress flag set', () => {
-      const todoProject = component.projects[3];
+      const todoProject = component.projects[2];
       expect(todoProject.inProgress).toBeFalsy();
     });
 
     it('should have isTeam flag set to true', () => {
-      const todoProject = component.projects[3];
+      const todoProject = component.projects[2];
       expect(todoProject.isTeam).toBe(true);
     });
 
@@ -459,7 +500,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should return correct screenshot alt for Todo Platform API', () => {
-      const alt = component.getProjectScreenshotAlt(3);
+      const alt = component.getProjectScreenshotAlt(2);
       expect(alt).toBe('Todo Platform API screenshot');
     });
 
@@ -552,10 +593,10 @@ describe('PortfolioComponent', () => {
         { id: 'noOffset', name: 'NoOffset', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' }
       ];
 
-      // index 4 in the featured (home) list: Pokédex (index 4) and El Pollo
-      // Loco (index 5) in the raw array are filtered out, so the appended
-      // item lands at featured index 4
-      component.setActiveProject(4, mockEvent);
+      // index 3 in the featured (home) list: Join, Pokédex and El Pollo Loco
+      // in the raw array are filtered out, so the appended item lands at
+      // featured index 3
+      component.setActiveProject(3, mockEvent);
       tick(16);
 
       expect(component.hoverPosition).not.toBeNull();

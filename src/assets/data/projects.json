@@ -30,17 +30,6 @@
     "hoverOffset": { "base": 15, "smallPreview": 30 }
   },
   {
-    "id": "join",
-    "name": "Join",
-    "technologies": ["Firebase", "Angular", "TypeScript", "HTML", "SCSS"],
-    "previewImg": "assets/img/projects/join.webp",
-    "previewImgSrcset": "assets/img/projects/join-400w.webp 400w, assets/img/projects/join-800w.webp 800w, assets/img/projects/join-1200w.webp 1200w",
-    "githubUrl": "https://github.com/MihaelaAghirculesei/join-kanban-board",
-    "liveUrl": "https://join-aghirculesei.pages.dev",
-    "isTeam": true,
-    "hoverOffset": { "base": -40, "smallPreview": 70 }
-  },
-  {
     "id": "todoApi",
     "name": "Todo Platform API",
     "technologies": [
@@ -52,6 +41,18 @@
     "githubUrl": "https://github.com/MihaelaAghirculesei/todo-platform",
     "liveUrl": "https://todo-frontend-aghirculesei.onrender.com",
     "isTeam": true,
+    "hoverOffset": { "base": -40, "smallPreview": 70 }
+  },
+  {
+    "id": "join",
+    "name": "Join",
+    "technologies": ["Firebase", "Angular", "TypeScript", "HTML", "SCSS"],
+    "previewImg": "assets/img/projects/join.webp",
+    "previewImgSrcset": "assets/img/projects/join-400w.webp 400w, assets/img/projects/join-800w.webp 800w, assets/img/projects/join-1200w.webp 1200w",
+    "githubUrl": "https://github.com/MihaelaAghirculesei/join-kanban-board",
+    "liveUrl": "https://join-aghirculesei.pages.dev",
+    "isTeam": true,
+    "featured": false,
     "hoverOffset": { "base": -40, "smallPreview": 70 }
   },
   {

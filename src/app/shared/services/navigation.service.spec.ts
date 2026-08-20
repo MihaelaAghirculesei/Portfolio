@@ -3,19 +3,22 @@ import { Router } from '@angular/router';
 import { NavigationService } from './navigation.service';
 import { ScrollService } from './scroll.service';
 import { LoggerService } from './logger.service';
+import { DeferGateService } from './defer-gate.service';
 
 describe('NavigationService', () => {
   let service: NavigationService;
   let mockRouter: { navigate: jasmine.Spy; url: string };
   let scrollServiceSpy: jasmine.SpyObj<ScrollService>;
   let loggerSpy: jasmine.SpyObj<LoggerService>;
+  let deferGate: DeferGateService;
 
   beforeEach(() => {
     mockRouter = {
       navigate: jasmine.createSpy('navigate'),
       url: '/'
     };
-    const scrollServiceSpyObj = jasmine.createSpyObj('ScrollService', ['scrollToElement']);
+    const scrollServiceSpyObj = jasmine.createSpyObj('ScrollService', ['scrollToElement', 'waitForLayoutStable']);
+    scrollServiceSpyObj.waitForLayoutStable.and.returnValue(Promise.resolve());
     const loggerSpyObj = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
 
     TestBed.configureTestingModule({
@@ -30,6 +33,7 @@ describe('NavigationService', () => {
     service = TestBed.inject(NavigationService);
     scrollServiceSpy = TestBed.inject(ScrollService) as jasmine.SpyObj<ScrollService>;
     loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
+    deferGate = TestBed.inject(DeferGateService);
   });
 
   describe('Service Creation', () => {
@@ -116,19 +120,19 @@ describe('NavigationService', () => {
         service.scrollToSection('contact');
 
         expect(mockRouter.navigate).not.toHaveBeenCalled();
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start', 'smooth');
       });
 
       it('should scroll to specified section', () => {
         service.scrollToSection('about-me');
 
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('about-me', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('about-me', 'start', 'smooth');
       });
 
       it('should scroll to portfolio section', () => {
         service.scrollToSection('portfolio');
 
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start', 'smooth');
       });
 
       it('should not delay scroll when already on home', () => {
@@ -147,7 +151,7 @@ describe('NavigationService', () => {
 
         tick(1);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(2);
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('skills', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('skills', 'start', 'smooth');
       }));
     });
 
@@ -160,7 +164,7 @@ describe('NavigationService', () => {
         service.scrollToSection('contact');
 
         expect(mockRouter.navigate).not.toHaveBeenCalled();
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start', 'smooth');
       });
     });
 
@@ -179,6 +183,21 @@ describe('NavigationService', () => {
         flush();
       }));
 
+      it('should force deferred home sections to reveal immediately, then release the gate once settled', fakeAsync(() => {
+        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+
+        service.scrollToSection('contact');
+
+        expect(deferGate.revealAll()).toBe(true);
+
+        tick(100 + 1200 + 199);
+        expect(deferGate.revealAll()).toBe(true);
+
+        tick(1);
+        expect(deferGate.revealAll()).toBe(false);
+        flush();
+      }));
+
       it('should scroll after navigation with default delay', fakeAsync(() => {
         mockRouter.navigate.and.returnValue(Promise.resolve(true));
 
@@ -187,7 +206,8 @@ describe('NavigationService', () => {
         tick();
         tick(100);
 
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start', 'instant', 320);
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start', 'smooth');
         flush();
       }));
 
@@ -200,7 +220,8 @@ describe('NavigationService', () => {
         tick();
         tick(customDelay);
 
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start', 'instant', 320);
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start', 'smooth');
         flush();
       }));
 
@@ -227,7 +248,41 @@ describe('NavigationService', () => {
         tick();
         tick(100);
 
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('skills', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('skills', 'start', 'instant', 320);
+        flush();
+      }));
+
+      it('should wait for the layout to settle, then land short instantly and glide in smoothly', fakeAsync(() => {
+        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+
+        service.scrollToSection('portfolio');
+
+        tick();
+        tick(100);
+
+        expect(scrollServiceSpy.waitForLayoutStable).toHaveBeenCalledWith('portfolio');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(2);
+        expect(scrollServiceSpy.scrollToElement.calls.argsFor(0)).toEqual(['portfolio', 'start', 'instant', 320]);
+        expect(scrollServiceSpy.scrollToElement.calls.argsFor(1)).toEqual(['portfolio', 'start', 'smooth']);
+        flush();
+      }));
+
+      it('should not land until the layout-stability wait resolves', fakeAsync(() => {
+        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        let resolveStable!: () => void;
+        scrollServiceSpy.waitForLayoutStable.and.returnValue(
+          new Promise<void>(resolve => { resolveStable = resolve; })
+        );
+
+        service.scrollToSection('portfolio');
+
+        tick();
+        tick(100);
+        expect(scrollServiceSpy.scrollToElement).not.toHaveBeenCalled();
+
+        resolveStable();
+        tick();
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(2);
         flush();
       }));
 
@@ -265,7 +320,7 @@ describe('NavigationService', () => {
           service.scrollToSection(section);
           tick();
           tick(100);
-          expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith(section, 'start');
+          expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith(section, 'start', 'instant', 320);
         });
         flush();
       }));
@@ -332,7 +387,7 @@ describe('NavigationService', () => {
 
         service.scrollToSection('');
 
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('', 'start', 'smooth');
         flush();
       }));
 
@@ -369,7 +424,8 @@ describe('NavigationService', () => {
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith(
           'section-with-special_chars123',
-          'start'
+          'start',
+          'smooth'
         );
         flush();
       }));
@@ -379,7 +435,7 @@ describe('NavigationService', () => {
 
         service.scrollToSection('any-section');
 
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('any-section', 'start');
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('any-section', 'start', 'smooth');
         flush();
       }));
     });
