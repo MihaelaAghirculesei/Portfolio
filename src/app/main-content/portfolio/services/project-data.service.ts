@@ -53,6 +53,12 @@ export class ProjectDataService {
     vercelkv: 'vercel-kv.svg',
     lenis: 'lenis.svg',
     nextintl: 'next-intl.svg',
+    nuxt: 'nuxt.svg',
+    vue: 'vue.svg',
+    vuetify: 'vuetify.svg',
+    pinia: 'pinia.svg',
+    maplibregl: 'maplibre.svg',
+    chartjs: 'chart-js.svg',
   };
 
   hasTechIcon(technology: string): boolean {
