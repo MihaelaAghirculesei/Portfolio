@@ -60,9 +60,9 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have 3 featured projects on the home page (Join, Pokédex and El Pollo Loco excluded)', () => {
+    it('should have 4 featured projects on the home page (Join, Pokédex and El Pollo Loco excluded)', () => {
       expect(component.projects).toBeDefined();
-      expect(component.projects.length).toBe(3);
+      expect(component.projects.length).toBe(4);
       expect(component.projects.some((p) => p.name === 'Join')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Pokédex')).toBe(false);
       expect(component.projects.some((p) => p.name === 'El Pollo Loco')).toBe(false);
@@ -105,7 +105,7 @@ describe('PortfolioComponent', () => {
       component.toggleShowAll(event);
 
       expect(component.showAll).toBe(false);
-      expect(component.projects.length).toBe(3);
+      expect(component.projects.length).toBe(4);
     });
 
     it('should swap the "view all" link to "back to featured" in place, without a route change', () => {
@@ -464,18 +464,18 @@ describe('PortfolioComponent', () => {
   });
 
   describe('Todo Platform API Project', () => {
-    it('should have Todo Platform API as the third project', () => {
-      const todoProject = component.projects[2];
+    it('should have Todo Platform API as the fourth project', () => {
+      const todoProject = component.projects[3];
       expect(todoProject.name).toBe('Todo Platform API');
     });
 
     it('should not have inProgress flag set', () => {
-      const todoProject = component.projects[2];
+      const todoProject = component.projects[3];
       expect(todoProject.inProgress).toBeFalsy();
     });
 
     it('should have isTeam flag set to true', () => {
-      const todoProject = component.projects[2];
+      const todoProject = component.projects[3];
       expect(todoProject.isTeam).toBe(true);
     });
 
@@ -500,7 +500,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should return correct screenshot alt for Todo Platform API', () => {
-      const alt = component.getProjectScreenshotAlt(2);
+      const alt = component.getProjectScreenshotAlt(3);
       expect(alt).toBe('Todo Platform API screenshot');
     });
 
@@ -784,9 +784,9 @@ describe('PortfolioComponent', () => {
       projFixture.detectChanges();
     }));
 
-    it('should show all 6 projects including El Pollo Loco', () => {
+    it('should show all 7 projects including El Pollo Loco', () => {
       expect(projComponent['isProjectsPage']).toBe(true);
-      expect(projComponent.projects.length).toBe(6);
+      expect(projComponent.projects.length).toBe(7);
       expect(projComponent.projects.some((p) => p.name === 'El Pollo Loco')).toBe(true);
     });
 
