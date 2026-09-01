@@ -60,6 +60,10 @@ export class ProjectDataService {
     pinia: 'pinia.svg',
     maplibregl: 'maplibre.svg',
     chartjs: 'chart-js.svg',
+    nodejs: 'nodejs.svg',
+    npm: 'npm.svg',
+    githubactions: 'github-actions.svg',
+    biome: 'biome.svg',
   };
 
   hasTechIcon(technology: string): boolean {
