@@ -265,6 +265,86 @@
       "ci": "Grüner CI-Lauf in GitHub Actions"
     }
   },
+  "caseStudyBfsgScanner": {
+    "backLink": "Zurück zu den Projekten",
+    "eyebrow": "Case Study",
+    "title": "bfsg-scanner",
+    "subtitle": "Ein Accessibility-Scanner für WCAG 2.1 AA / EN 301 549 / BFSG",
+    "soloNote": "Open-Source-Nebenprojekt: Konzept, Architektur, Implementierung, Tests, CI/CD, Release und Dokumentation — eine einzige Entwicklerin.",
+    "roleLabel": "Rolle",
+    "role": "Alleinige Entwicklerin & Maintainerin",
+    "periodLabel": "Zeitraum",
+    "period": "2026 — v0.1.0 am 1. September 2026 auf npm veröffentlicht",
+    "periodNote": "veröffentlicht und lauffähig: npx bfsg-scanner <url>",
+    "npmLabel": "npm",
+    "intro": {
+      "heading": "Kontext / Problem",
+      "body": "Seit dem 28. Juni 2025 macht das BFSG (Barrierefreiheitsstärkungsgesetz) digitale Barrierefreiheit in Deutschland für viele B2C-Unternehmen zur gesetzlichen Pflicht: E-Commerce, Banken, Buchungen, Ticketing. Wer solche Seiten baut oder betreibt, muss die Konformität nachweisen können.",
+      "body2": "Die vorhandenen Tools (axe, Lighthouse) liefern Regel-IDs, keine normativen Fundstellen, und prüfen jeweils nur eine Seite. bfsg-scanner prüft eine ganze Website und bildet jeden Befund auf die EN 301 549 / BFSG-Klausel ab, die er verletzt — als zitierfähigen Konformitätsbericht in JSON, HTML oder PDF."
+    },
+    "whatItDoes": {
+      "heading": "Was es macht",
+      "item1": "Ermittelt die Seiten der Website — zuerst sitemap.xml, dann ein Breadth-First-Crawl, der robots.txt respektiert, mit konfigurierbarem Seitenlimit.",
+      "item2": "Analysiert jede Seite in einem echten Chromium über Playwright + axe-core, mit Concurrency-Pool, Rate-Limit pro Host und identifizierbarem User-Agent.",
+      "item3": "Bildet jede Verletzung auf das WCAG-2.1-Erfolgskriterium und die zugehörige EN-301-549-Klausel ab — und über § 4 BFSG auf die gesetzliche Konformitätsvermutung.",
+      "item4": "Erzeugt den Bericht als report.json (versioniertes JSON Schema), report.html (DE/EN, eigenständige Datei) und report.pdf (A4, zur Archivierung als Nachweis).",
+      "item5": "Beendet sich mit einem Exit-Code ≠ 0, sobald die Verstöße eine konfigurierbare Schwere-Schwelle erreichen — so kann eine CI-Pipeline den Merge an der Barrierefreiheit blockieren."
+    },
+    "results": {
+      "heading": "In Zahlen",
+      "testsLabel": "automatisierte Tests (Vitest)",
+      "pullRequestsLabel": "gemergte Pull Requests, jeder mit eigenem Architecture Decision Record",
+      "osLabel": "Betriebssysteme in der CI — Linux, Windows, macOS",
+      "exitCodesLabel": "dokumentierte semantische Exit-Codes, mit begründeter Hierarchie, damit die CI weiß, warum sie gestoppt hat",
+      "reportFormatsLabel": "Berichtsformate, aus demselben Lauf",
+      "provenanceLabel": "Provenance auf npm über OIDC Trusted Publishing — kein langlebiges Token im Release-Workflow",
+      "demoViolationsLabel": "Verstöße auf der bewusst nicht barrierefreien Demo-Seite des W3C",
+      "demoViolationsDetail": "über 5 Seiten — 11 kritisch, 13 ernst — jeweils mit WCAG-Kriterium und EN-301-549-Klausel, in einem einzigen PDF",
+      "mappingLabel": "jeder Befund vom WCAG-2.1-Kriterium auf die EN 301 549 / BFSG-Klausel abgebildet"
+    },
+    "highlights": {
+      "heading": "Technische Highlights",
+      "item1Title": "Auf npm veröffentlicht mit SLSA-Provenance.",
+      "item1Body": "Release über OIDC Trusted Publishing — nirgends im Release-Workflow ein langlebiges Token, dazu npm-2FA auf dem Account.",
+      "item2Title": "28 kleine Pull Requests, einzeln reviewt.",
+      "item2Body": "Jeder trägt ein Architecture Decision Record, das die getroffene Entscheidung erklärt, plus eine eigene Aufgaben-Checkliste.",
+      "item3Title": "146 Tests, CI auf drei Betriebssystemen.",
+      "item3Body": "Die Vitest-Suite läuft bei jedem Push auf Linux, Windows und macOS.",
+      "item4Title": "Die Ausgabe ist ein stabiler Vertrag, kein Ad-hoc-Format.",
+      "item4Body": "Ein versioniertes JSON Schema beschreibt report.json, abgesichert durch Anti-Drift-Tests mit ajv, damit sich die Struktur nicht unbemerkt ändert.",
+      "item5Title": "Semantische Exit-Codes (0/1/2/3).",
+      "item5Body": "Dokumentiert mit begründeter Hierarchie, sodass eine Pipeline einen Barrierefreiheits-Fehler von einem Crawl-Fehler oder einer Fehlbedienung unterscheiden kann.",
+      "item6Title": "Scan-Ethik schriftlich festgehalten.",
+      "item6Body": "docs/SCANNING-ETHICS.md — nur Seiten scannen, die einem gehören oder für deren Prüfung man autorisiert ist; Rate-Limit, robots.txt und ein identifizierbarer User-Agent sind standardmäßig aktiv."
+    },
+    "techStack": {
+      "heading": "Tech-Stack"
+    },
+    "demoResult": {
+      "heading": "Nachgewiesenes Ergebnis",
+      "body": "Ausgeführt auf der bewusst nicht barrierefreien Demo-Seite des W3C → 24 Verstöße über 5 Seiten (11 kritisch, 13 ernst), jeweils mit WCAG-Kriterium und EN-301-549-Klausel, in einem einzigen PDF."
+    },
+    "learned": {
+      "heading": "Was ich gelernt habe",
+      "item1": "Echtes Release-Engineering: Provenance, OIDC Trusted Publishing, npm-2FA, Publish-on-Tag.",
+      "item2": "Die Ausgabe als stabilen Vertrag entwerfen (versioniertes JSON Schema), nicht als Ad-hoc-Format.",
+      "item3": "Kontrollierte Nebenläufigkeit und Scan-„Netiquette“ — Rate-Limit, robots.txt, identifizierbarer UA.",
+      "item4": "Normative Anforderungen (BFSG → EN 301 549 → WCAG) in verifizierbare, getestete Logik übersetzen."
+    },
+    "links": {
+      "heading": "Links",
+      "npm": "npm-Paket",
+      "report": "Live-Beispielbericht",
+      "code": "Quellcode"
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "reportOverview": "Der eigenständige HTML-Bericht: Ziel, Tool, das Urteil „Failed“ über der Schwere-Schwelle und die Scan-Zusammenfassung",
+      "clauseMapping": "Aufschlüsselung nach Impact und die verletzten Klauseln — jedes WCAG-2.1-Kriterium neben seiner EN-301-549-Klausel, mit dem § 4 BFSG-Hinweis",
+      "findings": "Ein einzelner Befund im Detail: Regel, Impact, WCAG-SC, EN-301-549-Klausel, ein How-to-fix-Link und die betroffenen Elemente",
+      "pullRequests": "Die Pull Requests des Repositories auf GitHub — 28 gemergt, jeder mit eigener Aufgaben-Checkliste"
+    }
+  },
   "banner": {
     "remoteWork": "Verfügbar für Remote-Arbeit",
     "role": "Fullstack Entwicklerin",

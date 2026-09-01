@@ -265,6 +265,86 @@
       "ci": "A green CI run in GitHub Actions"
     }
   },
+  "caseStudyBfsgScanner": {
+    "backLink": "Back to projects",
+    "eyebrow": "Case Study",
+    "title": "bfsg-scanner",
+    "subtitle": "An accessibility scanner for WCAG 2.1 AA / EN 301 549 / BFSG",
+    "soloNote": "Open-source side project: concept, architecture, implementation, tests, CI/CD, release, and documentation — single developer.",
+    "roleLabel": "Role",
+    "role": "Solo developer & maintainer",
+    "periodLabel": "Timeframe",
+    "period": "2026 — v0.1.0 published to npm on September 1, 2026",
+    "periodNote": "published and working: npx bfsg-scanner <url>",
+    "npmLabel": "npm",
+    "intro": {
+      "heading": "Context / problem",
+      "body": "Since June 28, 2025 the BFSG (Barrierefreiheitsstärkungsgesetz) has made digital accessibility a legal requirement in Germany for many B2C businesses: e-commerce, banking, bookings, ticketing. Anyone who builds or operates these sites has to be able to demonstrate conformance.",
+      "body2": "The existing tools (axe, Lighthouse) return rule IDs, not legal citations, and analyze one page at a time. bfsg-scanner scans a whole site and maps every finding to the EN 301 549 / BFSG clause it breaks, producing a citable compliance report in JSON, HTML, or PDF."
+    },
+    "whatItDoes": {
+      "heading": "What it does",
+      "item1": "Discovers the site's pages — sitemap.xml first, then a breadth-first crawl that respects robots.txt, with a configurable page limit.",
+      "item2": "Analyzes every page in a real Chromium via Playwright + axe-core, with a concurrency pool, per-host rate limiting, and an identifiable User-Agent.",
+      "item3": "Maps each violation to its WCAG 2.1 success criterion and the corresponding EN 301 549 clause — and, via § 4 BFSG, to the statutory presumption of conformity.",
+      "item4": "Produces the report as report.json (versioned JSON Schema), report.html (DE/EN, self-contained file), and report.pdf (A4, to be archived as a record).",
+      "item5": "Exits with a non-zero code once violations reach a configurable severity threshold, so a CI pipeline can block a merge on accessibility."
+    },
+    "results": {
+      "heading": "In numbers",
+      "testsLabel": "automated tests (Vitest)",
+      "pullRequestsLabel": "merged pull requests, each with its own Architecture Decision Record",
+      "osLabel": "operating systems in CI — Linux, Windows, macOS",
+      "exitCodesLabel": "documented semantic exit codes, with a reasoned hierarchy so CI knows why it stopped",
+      "reportFormatsLabel": "report formats, from the same run",
+      "provenanceLabel": "provenance on npm via OIDC trusted publishing — no long-lived token in the release workflow",
+      "demoViolationsLabel": "violations found on the W3C's deliberately inaccessible demo site",
+      "demoViolationsDetail": "across 5 pages — 11 critical, 13 serious — each with its WCAG criterion and EN 301 549 clause, in a single PDF",
+      "mappingLabel": "every finding mapped from its WCAG 2.1 criterion to the EN 301 549 / BFSG clause"
+    },
+    "highlights": {
+      "heading": "Technical highlights",
+      "item1Title": "Published to npm with SLSA provenance.",
+      "item1Body": "Released via OIDC trusted publishing — no long-lived token anywhere in the release workflow, and npm 2FA on the account.",
+      "item2Title": "28 small pull requests, each reviewed on its own.",
+      "item2Body": "Every one carries an Architecture Decision Record explaining the choice it makes, and its own task checklist.",
+      "item3Title": "146 tests, CI on three operating systems.",
+      "item3Body": "The Vitest suite runs on Linux, Windows, and macOS on every push.",
+      "item4Title": "The output is a stable contract, not an ad-hoc format.",
+      "item4Body": "A versioned JSON Schema describes report.json, guarded by anti-drift tests with ajv so the shape can't silently change.",
+      "item5Title": "Semantic exit codes (0/1/2/3).",
+      "item5Body": "Documented with a reasoned hierarchy, so a pipeline can tell an accessibility failure apart from a crawl error or a usage mistake.",
+      "item6Title": "Scanning ethics written down.",
+      "item6Body": "docs/SCANNING-ETHICS.md — scan only sites you own or are authorized to test; rate limiting, robots.txt, and an identifiable User-Agent are on by default."
+    },
+    "techStack": {
+      "heading": "Tech stack"
+    },
+    "demoResult": {
+      "heading": "Demonstrated result",
+      "body": "Run against the W3C's deliberately inaccessible demo site → 24 violations across 5 pages (11 critical, 13 serious), each with its WCAG criterion and EN 301 549 clause, in a single PDF."
+    },
+    "learned": {
+      "heading": "What I learned",
+      "item1": "Real release engineering: provenance, OIDC trusted publishing, npm 2FA, publish-on-tag.",
+      "item2": "Designing the output as a stable contract (versioned JSON Schema), not an ad-hoc format.",
+      "item3": "Controlled concurrency and scanning \"netiquette\" — rate limiting, robots.txt, an identifiable UA.",
+      "item4": "Translating legal requirements (BFSG → EN 301 549 → WCAG) into verifiable, tested logic."
+    },
+    "links": {
+      "heading": "Links",
+      "npm": "npm package",
+      "report": "Live example report",
+      "code": "Source code"
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "reportOverview": "The self-contained HTML report: target, tool, the \"Failed\" verdict above the severity threshold, and the scan summary",
+      "clauseMapping": "Breakdown by impact, and the breached clauses — every WCAG 2.1 criterion beside its EN 301 549 clause, with the § 4 BFSG note",
+      "findings": "A single finding in detail: rule, impact, WCAG SC, EN 301 549 clause, a how-to-fix link, and the affected elements",
+      "pullRequests": "The repository's pull requests on GitHub — 28 merged, each with its own task checklist"
+    }
+  },
   "banner": {
     "remoteWork": "Available for remote work",
     "role": "Fullstack Developer",
@@ -305,6 +385,10 @@
     "caseStudyAlinaMoments": {
       "title": "Case Study: Alina Moments Photography — Mihaela Aghirculesei",
       "description": "How a solo full-stack developer shipped a multilingual Next.js booking site for a freelance photographer, with 100% test coverage, a Lighthouse Accessibility/SEO score of 100, and a documented CI/security engineering log."
+    },
+    "caseStudyBfsgScanner": {
+      "title": "Case Study: bfsg-scanner — Mihaela Aghirculesei",
+      "description": "How a solo developer built and shipped bfsg-scanner: an open-source npm CLI that scans a whole site for WCAG 2.1 AA issues and maps every finding to the EN 301 549 / BFSG clause it breaks, with SLSA provenance, 146 tests, and cross-OS CI."
     }
   }
 }
