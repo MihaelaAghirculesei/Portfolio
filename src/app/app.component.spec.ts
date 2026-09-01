@@ -123,6 +123,20 @@ describe('AppComponent', () => {
     );
   });
 
+  it('should update SEO when navigating to the bfsg-scanner case study', () => {
+    component.ngOnInit();
+    mockSeoService.update.calls.reset();
+    routerEventsSubject.next(
+      new NavigationEnd(1, '/case-study/bfsg-scanner', '/case-study/bfsg-scanner')
+    );
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        title: 'Case Study: bfsg-scanner — Mihaela Aghirculesei',
+        ogUrl: `${environment.siteUrl}/case-study/bfsg-scanner`,
+      })
+    );
+  });
+
   it('should update SEO when navigating back to home', () => {
     component.ngOnInit();
     routerEventsSubject.next(new NavigationEnd(1, '/legal-notice', '/legal-notice'));

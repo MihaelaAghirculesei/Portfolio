@@ -1,0 +1,130 @@
+<article class="case-study-page" aria-labelledby="case-study-title">
+  <div class="content-width">
+    <a routerLink="/projects" class="back-link">
+      <span aria-hidden="true">←</span> {{ "caseStudyBfsgScanner.backLink" | translate }}
+    </a>
+
+    <header class="cs-hero">
+      <p class="eyebrow">{{ "caseStudyBfsgScanner.eyebrow" | translate }}</p>
+      <h1 id="case-study-title">{{ "caseStudyBfsgScanner.title" | translate }}</h1>
+      <h2 class="cs-subtitle">{{ "caseStudyBfsgScanner.subtitle" | translate }}</h2>
+      <p class="solo-note">{{ "caseStudyBfsgScanner.soloNote" | translate }}</p>
+
+      <dl class="cs-meta">
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyBfsgScanner.roleLabel" | translate }}</dt>
+          <dd>{{ "caseStudyBfsgScanner.role" | translate }}</dd>
+        </div>
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyBfsgScanner.periodLabel" | translate }}</dt>
+          <dd>
+            {{ "caseStudyBfsgScanner.period" | translate }}
+            <span class="cs-meta-note">{{ "caseStudyBfsgScanner.periodNote" | translate }}</span>
+          </dd>
+        </div>
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyBfsgScanner.npmLabel" | translate }}</dt>
+          <dd>
+            <a [href]="npmUrl" target="_blank" rel="noopener noreferrer">{{ npmUrlDisplay }}</a>
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="cs-section" aria-labelledby="cs-intro-heading">
+      <h2 id="cs-intro-heading">{{ "caseStudyBfsgScanner.intro.heading" | translate }}</h2>
+      <p>{{ "caseStudyBfsgScanner.intro.body" | translate }}</p>
+      <p>{{ "caseStudyBfsgScanner.intro.body2" | translate }}</p>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-what-heading">
+      <h2 id="cs-what-heading">{{ "caseStudyBfsgScanner.whatItDoes.heading" | translate }}</h2>
+      <ol class="cs-steps-list">
+        @for (key of whatItDoesKeys; track key) {
+        <li>{{ key | translate }}</li>
+        }
+      </ol>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-results-heading">
+      <h2 id="cs-results-heading">{{ "caseStudyBfsgScanner.results.heading" | translate }}</h2>
+
+      <ul class="cs-stats-grid">
+        @for (stat of stats; track stat.labelKey) {
+        <li class="cs-stat-tile">
+          <span class="cs-stat-value">{{ stat.value }}</span>
+          <span class="cs-stat-label">{{ stat.labelKey | translate }}</span>
+          @if (stat.detailKey) {
+          <span class="cs-stat-detail">{{ stat.detailKey | translate }}</span>
+          }
+        </li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-highlights-heading">
+      <h2 id="cs-highlights-heading">{{ "caseStudyBfsgScanner.highlights.heading" | translate }}</h2>
+
+      <ol class="cs-engineering-list">
+        @for (item of highlightItems; track item.titleKey) {
+        <li>
+          <h3>{{ item.titleKey | translate }}</h3>
+          <p>{{ item.bodyKey | translate }}</p>
+        </li>
+        }
+      </ol>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-tech-heading">
+      <h2 id="cs-tech-heading">{{ "caseStudyBfsgScanner.techStack.heading" | translate }}</h2>
+      <ul class="cs-tech-chips">
+        @for (tech of techStack; track tech) {
+        <li class="cs-tech-chip">{{ tech }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-demo-heading">
+      <h2 id="cs-demo-heading">{{ "caseStudyBfsgScanner.demoResult.heading" | translate }}</h2>
+      <p class="cs-callout">{{ "caseStudyBfsgScanner.demoResult.body" | translate }}</p>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-learned-heading">
+      <h2 id="cs-learned-heading">{{ "caseStudyBfsgScanner.learned.heading" | translate }}</h2>
+      <ul class="cs-honest-list">
+        @for (key of learnedKeys; track key) {
+        <li>{{ key | translate }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-links-heading">
+      <h2 id="cs-links-heading">{{ "caseStudyBfsgScanner.links.heading" | translate }}</h2>
+      <ul class="cs-link-list">
+        @for (link of links; track link.href) {
+        <li>
+          <span class="cs-link-label">{{ link.labelKey | translate }}</span>
+          <a [href]="link.href" target="_blank" rel="noopener noreferrer">{{ link.display }}</a>
+        </li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-screenshots-heading">
+      <h2 id="cs-screenshots-heading">{{ "caseStudyBfsgScanner.screenshots.heading" | translate }}</h2>
+      <ul class="cs-screenshot-grid">
+        @for (shot of screenshots; track shot.file) {
+        <li class="cs-screenshot-item">
+          <img [src]="screenshotSrc(shot.file)" [alt]="shot.altKey | translate" loading="lazy" />
+        </li>
+        }
+      </ul>
+    </section>
+
+    <div class="cs-footer-actions">
+      <a routerLink="/projects" class="link-button2">{{ "caseStudyBfsgScanner.backLink" | translate }}</a>
+      <a [href]="codeUrl" target="_blank" rel="noopener noreferrer" class="link-button2">{{ "portfolio.github" | translate }}</a>
+      <a [href]="reportUrl" target="_blank" rel="noopener noreferrer" class="link-button2">{{ "portfolio.liveTest" | translate }}</a>
+    </div>
+  </div>
+</article>

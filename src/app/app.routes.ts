@@ -52,6 +52,13 @@ export const routes: Routes = [
       ).then((m) => m.CaseStudyAlinaMomentsComponent),
   },
   {
+    path: 'case-study/bfsg-scanner',
+    loadComponent: () =>
+      import(
+        './main-content/portfolio/case-study-bfsg-scanner/case-study-bfsg-scanner.component'
+      ).then((m) => m.CaseStudyBfsgScannerComponent),
+  },
+  {
     path: 'feedback',
     loadComponent: () =>
       import('./main-content/feedback/feedback.component').then(
