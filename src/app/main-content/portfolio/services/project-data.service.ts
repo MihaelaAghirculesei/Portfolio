@@ -18,6 +18,7 @@ export class ProjectDataService {
     css: 'css.svg',
     scss: 'sass.svg',
     javascript: 'javascript.svg',
+    canvasapi: 'canvas.svg',
     restapi: 'rest-api.svg',
     ngrx: 'ngrx.svg',
     rxjs: 'rxjs.svg',
