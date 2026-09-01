@@ -60,9 +60,9 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have 4 featured projects on the home page (Join, Pokédex and El Pollo Loco excluded)', () => {
+    it('should have 5 featured projects on the home page (Join, Pokédex and El Pollo Loco excluded)', () => {
       expect(component.projects).toBeDefined();
-      expect(component.projects.length).toBe(4);
+      expect(component.projects.length).toBe(5);
       expect(component.projects.some((p) => p.name === 'Join')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Pokédex')).toBe(false);
       expect(component.projects.some((p) => p.name === 'El Pollo Loco')).toBe(false);
@@ -105,7 +105,7 @@ describe('PortfolioComponent', () => {
       component.toggleShowAll(event);
 
       expect(component.showAll).toBe(false);
-      expect(component.projects.length).toBe(4);
+      expect(component.projects.length).toBe(5);
     });
 
     it('should swap the "view all" link to "back to featured" in place, without a route change', () => {
@@ -593,10 +593,11 @@ describe('PortfolioComponent', () => {
         { id: 'noOffset', name: 'NoOffset', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' }
       ];
 
-      // index 3 in the featured (home) list: Join, Pokédex and El Pollo Loco
-      // in the raw array are filtered out, so the appended item lands at
-      // featured index 3
-      component.setActiveProject(3, mockEvent);
+      // Join, Pokédex and El Pollo Loco are filtered out of the featured
+      // (home) list, so the appended item lands right after the featured
+      // projects, at the end of the list.
+      const appendedIndex = component.projects.length - 1;
+      component.setActiveProject(appendedIndex, mockEvent);
       tick(16);
 
       expect(component.hoverPosition).not.toBeNull();
@@ -784,9 +785,9 @@ describe('PortfolioComponent', () => {
       projFixture.detectChanges();
     }));
 
-    it('should show all 7 projects including El Pollo Loco', () => {
+    it('should show all 8 projects including El Pollo Loco', () => {
       expect(projComponent['isProjectsPage']).toBe(true);
-      expect(projComponent.projects.length).toBe(7);
+      expect(projComponent.projects.length).toBe(8);
       expect(projComponent.projects.some((p) => p.name === 'El Pollo Loco')).toBe(true);
     });
 

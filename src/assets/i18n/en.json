@@ -186,6 +186,10 @@
       "description": "A 2-person team project where Mihaela owned the entire backend architecture from scratch. Built with Python 3.11, FastAPI 0.115, and SQLAlchemy 2.0, the API follows a strict four-layer architecture (Router → Service → Repository → Database) with Pydantic 2 for input validation and custom exception handling. Runs on SQLite locally and PostgreSQL in production, with ISO 8601 UTC timestamps and automatic schema creation on startup. A comprehensive test suite of 23 tests — 13 unit tests covering business logic and 10 integration tests — all pass against an in-memory SQLite database in under 0.2 seconds. Deployed live on Render with interactive Swagger/OpenAPI docs, paired with a React + TypeScript + Vite frontend.",
       "shortDescription": "RESTful Todo API with clean layered architecture"
     },
+    "bfsgScanner": {
+      "description": "An open-source CLI, published to npm with SLSA provenance, that scans an entire site for WCAG 2.1 AA violations and maps every finding to the EN 301 549 / BFSG clause it breaks, producing a citable compliance report in JSON, HTML, or PDF. It exits with a non-zero code once violations pass a configurable severity threshold, so a CI pipeline can block a merge on accessibility. Page discovery runs from sitemap.xml, then a breadth-first crawl that respects robots.txt; each page is analyzed in a real Chromium via Playwright and axe-core, with a concurrency pool, per-host rate limiting, and an identifiable User-Agent. The report.json output is described by a versioned JSON Schema and guarded by anti-drift tests with ajv. Built in TypeScript on Node.js 24, with 146 Vitest tests, CI across Linux, Windows and macOS, and 28 merged pull requests each carrying an Architecture Decision Record. Released via OIDC trusted publishing, with no long-lived token in the release workflow.",
+      "shortDescription": "WCAG / EN 301 549 / BFSG Accessibility Scanner"
+    },
     "default": {
       "shortDescription": "Web Application"
     }
