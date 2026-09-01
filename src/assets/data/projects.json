@@ -87,7 +87,7 @@
   {
     "id": "elPolloLoco",
     "name": "El Pollo Loco",
-    "technologies": ["JavaScript", "HTML", "CSS"],
+    "technologies": ["JavaScript", "Canvas API", "HTML", "CSS"],
     "previewImg": "assets/img/projects/el-pollo-locco.webp",
     "previewImgSrcset": "assets/img/projects/el-pollo-locco-400w.webp 400w, assets/img/projects/el-pollo-locco-800w.webp 800w, assets/img/projects/el-pollo-locco-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/El-Pollo-Loco",
