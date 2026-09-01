@@ -5,3 +5,5 @@
 /legal-notice
 /datenschutz
 /privacy-policy
+/case-study/alina-moments
+/case-study/bfsg-scanner
