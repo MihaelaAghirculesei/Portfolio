@@ -171,8 +171,8 @@
       "shortDescription": "Kanban Board Anwendung"
     },
     "elPolloLoco": {
-      "description": "Ein lebendiges 2D-Plattform-Abenteuer, gebaut mit reinem Vanilla JavaScript und HTML5 Canvas – keine Frameworks, nur pure Performance. Spiele als Pepe, ein mutiger Held auf der Mission, den bösen Endboss-Hahn in herausfordernden Leveln zu besiegen. Bekämpfe verschiedene Gegnertypen mit Sprung-Attacken oder werfbaren Flaschen und sammle Münzen für ein Extra-Leben. Das Spiel bietet eine saubere objektorientierte Architektur mit vollständigem Kampfsystem, dynamischen Lebensbalken für Spieler und Boss, steigendem Schwierigkeitsgrad und einem Audio-Pooling-System für verzögerungsfreie Soundeffekte. Vollständig responsiv mit nativen Touch-Steuerungen für Mobilgeräte und flüssigem 60fps-Gameplay auf jedem Gerät.",
-      "shortDescription": "Abenteuer Spiel"
+      "description": "Ein von Grund auf mit der HTML5 Canvas 2D API gebautes 2D-Jump-'n'-Run — keine Game-Engine, keine Rendering-Bibliothek, null Runtime-Abhängigkeiten. Spiele als Pepe, einen Dorfbewohner, der sich durch eine parallax-gescrollte Wüste gegen einen Schwarm wilder Hühner wehrt: Gegner per Sprung besiegen oder gesammelte Salsa-Flaschen werfen, Münzen für Extra-Leben sammeln und den 200-HP-Endboss erledigen, der seine eigene Zustandsmaschine aus Laufen → Alarm → Angriff → Sprung durchläuft. Die Engine basiert auf klassenbasierter OOP entlang einer gemeinsamen Vererbungskette DrawableObject → MovableObject, mit eigener Schwerkraft- und Sprungphysik sowie mehrschichtiger, pro Interaktion abgestimmter Kollisionserkennung mit Damage-Cooldowns. Eine einzelne requestAnimationFrame-Schleife im World-Objekt treibt die Simulation in festen 35-ms-Schritten aus einem Delta-Time-Akkumulator voran, sodass das Gameplay frameratenunabhängig bleibt und ein Hintergrund-Tab nicht schlagartig aufholen kann. Ein gemeinsamer Image-Pool dekodiert jedes Sprite nur einmal und wärmt es vor, damit der erste Frame nie an einer kalten Dekodierung hängt; jedes Interval und Timeout wird bei Game Over oder Neustart deterministisch abgebaut, und eine Play-Again-Schaltfläche baut die Welt ohne Seiten-Reload neu auf. Audioeffekte laufen aus einem Round-Robin-Pool ohne Neustart-Latenz, der Mute-Status wird in localStorage persistiert. Die reine Spiellogik — Kollisionsboxen, Sprunggültigkeit, Damage-Cooldowns, Item-Aufnahme — ist durch eine abhängigkeitsfreie node:test-Suite abgedeckt, die die klassischen Skripte in eine node:vm-Sandbox lädt, ergänzt durch einen Headless-Chromium-Smoke-Test (puppeteer-core), der das Spiel startet und prüft, dass der Canvas tatsächlich ohne Konsolenfehler zeichnet. Lint-sauber gegen eine ESLint-10-Flat-Config, mit JSDoc an jeder Klasse und Funktion. Deployed auf Cloudflare Pages hinter einer strikten Content-Security-Policy ohne unsafe-inline, plus X-Frame-Options, Permissions-Policy, Cross-Origin-Opener-Policy und langlebigem, unveränderlichem Asset-Caching. Vollständig responsiv, mit On-Screen-Touch-Steuerung, die auf Touch-Geräten automatisch erscheint, und einem Rotate-to-Landscape-Hinweis im Hochformat.",
+      "shortDescription": "Canvas-2D Jump-'n'-Run"
     },
     "pokedex": {
       "description": "Eine Offline-First Pokédex PWA, die in zwei Phasen entstanden ist: zuerst vollständig in Vanilla JavaScript — ohne Frameworks, nur native Browser-APIs — um die Plattform von Grund auf zu verstehen. Danach zu TypeScript Strict Mode und Vite migriert, ohne eine einzige Funktion zu ändern. Der Service Worker nutzt Workbox mit getrennten Caches für API-Antworten (7 Tage, 300 Einträge) und Sprites (30 Tage, 600 Einträge). Tastaturzugänglichkeit folgt den WAI-ARIA-Richtlinien: Focus Trap im Modal, ESC zum Schließen, Pfeiltastennavigation und Fokusrückgabe zum zuvor aktiven Element. Der holografische Schimmereffekt repliziert physische Sammelkarten: Mausposition via mousemove in CSS Custom Properties --x/--y injiziert, gerendert über mix-blend-mode: color-dodge. 251 Vitest-Unit-Tests, eine Playwright-E2E-Suite (funktional, Barrierefreiheit via axe WCAG 2.1 AA, visuelle Regression und Mobile) sowie ESLint mit typescript-eslint strict sichern die Korrektheit der migrierten Codebasis.",
@@ -185,6 +185,10 @@
     "todoApi": {
       "description": "Ein 2-köpfiges Teamprojekt, bei dem Mihaela die gesamte Backend-Architektur von Grund auf verantwortete. Gebaut mit Python 3.11, FastAPI 0.115 und SQLAlchemy 2.0, folgt die API einer strikten Vier-Schicht-Architektur (Router → Service → Repository → Datenbank) mit Pydantic 2 zur Eingabevalidierung und benutzerdefiniertem Exception-Handling. Lokal mit SQLite, in Produktion mit PostgreSQL — ISO 8601 UTC-Zeitstempel und automatische Schema-Erstellung beim Start inklusive. Eine umfassende Test-Suite mit 23 Tests — 13 Unit-Tests für die Business-Logik und 10 Integrationstests — läuft gegen eine In-Memory-SQLite-Datenbank in unter 0,2 Sekunden durch. Live auf Render deployed mit interaktiver Swagger/OpenAPI-Dokumentation, kombiniert mit einem React + TypeScript + Vite Frontend.",
       "shortDescription": "RESTful Todo-API mit sauberer Schichtarchitektur"
+    },
+    "bfsgScanner": {
+      "description": "Eine Open-Source-CLI, auf npm mit SLSA-Provenance veröffentlicht, die eine ganze Website auf WCAG-2.1-AA-Verstöße prüft und jeden Befund auf die EN 301 549 / BFSG-Klausel abbildet, die er verletzt — als zitierfähigen Konformitätsbericht in JSON, HTML oder PDF. Sobald die Verstöße eine konfigurierbare Schwere-Schwelle überschreiten, endet sie mit einem Exit-Code ≠ 0, sodass eine CI-Pipeline den Merge an der Barrierefreiheit blockieren kann. Die Seitenermittlung läuft über sitemap.xml und danach über einen Breadth-First-Crawl, der robots.txt respektiert; jede Seite wird in einem echten Chromium über Playwright und axe-core analysiert, mit Concurrency-Pool, Rate-Limit pro Host und identifizierbarem User-Agent. Die report.json-Ausgabe ist durch ein versioniertes JSON Schema beschrieben und mit Anti-Drift-Tests via ajv abgesichert. Gebaut mit TypeScript auf Node.js 24, mit 146 Vitest-Tests, CI auf Linux, Windows und macOS sowie 28 gemergten Pull Requests, jeder mit einem Architecture Decision Record. Release über OIDC Trusted Publishing, ohne langlebiges Token im Release-Workflow.",
+      "shortDescription": "Accessibility-Scanner für WCAG / EN 301 549 / BFSG"
     },
     "default": {
       "shortDescription": "Web Anwendung"
@@ -263,6 +267,86 @@
       "testimonialShot": "Testimonial-Sektion auf der Startseite mit Giuseppes echter Bewertung",
       "lighthouse": "Lighthouse-Report (Desktop): Performance 86, Accessibility 100, Best Practices 96, SEO 100",
       "ci": "Grüner CI-Lauf in GitHub Actions"
+    }
+  },
+  "caseStudyBfsgScanner": {
+    "backLink": "Zurück zu den Projekten",
+    "eyebrow": "Case Study",
+    "title": "bfsg-scanner",
+    "subtitle": "Ein Accessibility-Scanner für WCAG 2.1 AA / EN 301 549 / BFSG",
+    "soloNote": "Open-Source-Nebenprojekt: Konzept, Architektur, Implementierung, Tests, CI/CD, Release und Dokumentation — eine einzige Entwicklerin.",
+    "roleLabel": "Rolle",
+    "role": "Alleinige Entwicklerin & Maintainerin",
+    "periodLabel": "Zeitraum",
+    "period": "2026 — v0.1.0 am 1. September 2026 auf npm veröffentlicht",
+    "periodNote": "veröffentlicht und lauffähig: npx bfsg-scanner <url>",
+    "npmLabel": "npm",
+    "intro": {
+      "heading": "Kontext / Problem",
+      "body": "Seit dem 28. Juni 2025 macht das BFSG (Barrierefreiheitsstärkungsgesetz) digitale Barrierefreiheit in Deutschland für viele B2C-Unternehmen zur gesetzlichen Pflicht: E-Commerce, Banken, Buchungen, Ticketing. Wer solche Seiten baut oder betreibt, muss die Konformität nachweisen können.",
+      "body2": "Die vorhandenen Tools (axe, Lighthouse) liefern Regel-IDs, keine normativen Fundstellen, und prüfen jeweils nur eine Seite. bfsg-scanner prüft eine ganze Website und bildet jeden Befund auf die EN 301 549 / BFSG-Klausel ab, die er verletzt — als zitierfähigen Konformitätsbericht in JSON, HTML oder PDF."
+    },
+    "whatItDoes": {
+      "heading": "Was es macht",
+      "item1": "Ermittelt die Seiten der Website — zuerst sitemap.xml, dann ein Breadth-First-Crawl, der robots.txt respektiert, mit konfigurierbarem Seitenlimit.",
+      "item2": "Analysiert jede Seite in einem echten Chromium über Playwright + axe-core, mit Concurrency-Pool, Rate-Limit pro Host und identifizierbarem User-Agent.",
+      "item3": "Bildet jede Verletzung auf das WCAG-2.1-Erfolgskriterium und die zugehörige EN-301-549-Klausel ab — und über § 4 BFSG auf die gesetzliche Konformitätsvermutung.",
+      "item4": "Erzeugt den Bericht als report.json (versioniertes JSON Schema), report.html (DE/EN, eigenständige Datei) und report.pdf (A4, zur Archivierung als Nachweis).",
+      "item5": "Beendet sich mit einem Exit-Code ≠ 0, sobald die Verstöße eine konfigurierbare Schwere-Schwelle erreichen — so kann eine CI-Pipeline den Merge an der Barrierefreiheit blockieren."
+    },
+    "results": {
+      "heading": "In Zahlen",
+      "testsLabel": "automatisierte Tests (Vitest)",
+      "pullRequestsLabel": "gemergte Pull Requests, jeder mit eigenem Architecture Decision Record",
+      "osLabel": "Betriebssysteme in der CI — Linux, Windows, macOS",
+      "exitCodesLabel": "dokumentierte semantische Exit-Codes, mit begründeter Hierarchie, damit die CI weiß, warum sie gestoppt hat",
+      "reportFormatsLabel": "Berichtsformate, aus demselben Lauf",
+      "provenanceLabel": "Provenance auf npm über OIDC Trusted Publishing — kein langlebiges Token im Release-Workflow",
+      "demoViolationsLabel": "Verstöße auf der bewusst nicht barrierefreien Demo-Seite des W3C",
+      "demoViolationsDetail": "über 5 Seiten — 11 kritisch, 13 ernst — jeweils mit WCAG-Kriterium und EN-301-549-Klausel, in einem einzigen PDF",
+      "mappingLabel": "jeder Befund vom WCAG-2.1-Kriterium auf die EN 301 549 / BFSG-Klausel abgebildet"
+    },
+    "highlights": {
+      "heading": "Technische Highlights",
+      "item1Title": "Auf npm veröffentlicht mit SLSA-Provenance.",
+      "item1Body": "Release über OIDC Trusted Publishing — nirgends im Release-Workflow ein langlebiges Token, dazu npm-2FA auf dem Account.",
+      "item2Title": "28 kleine Pull Requests, einzeln reviewt.",
+      "item2Body": "Jeder trägt ein Architecture Decision Record, das die getroffene Entscheidung erklärt, plus eine eigene Aufgaben-Checkliste.",
+      "item3Title": "146 Tests, CI auf drei Betriebssystemen.",
+      "item3Body": "Die Vitest-Suite läuft bei jedem Push auf Linux, Windows und macOS.",
+      "item4Title": "Die Ausgabe ist ein stabiler Vertrag, kein Ad-hoc-Format.",
+      "item4Body": "Ein versioniertes JSON Schema beschreibt report.json, abgesichert durch Anti-Drift-Tests mit ajv, damit sich die Struktur nicht unbemerkt ändert.",
+      "item5Title": "Semantische Exit-Codes (0/1/2/3).",
+      "item5Body": "Dokumentiert mit begründeter Hierarchie, sodass eine Pipeline einen Barrierefreiheits-Fehler von einem Crawl-Fehler oder einer Fehlbedienung unterscheiden kann.",
+      "item6Title": "Scan-Ethik schriftlich festgehalten.",
+      "item6Body": "docs/SCANNING-ETHICS.md — nur Seiten scannen, die einem gehören oder für deren Prüfung man autorisiert ist; Rate-Limit, robots.txt und ein identifizierbarer User-Agent sind standardmäßig aktiv."
+    },
+    "techStack": {
+      "heading": "Tech-Stack"
+    },
+    "demoResult": {
+      "heading": "Nachgewiesenes Ergebnis",
+      "body": "Ausgeführt auf der bewusst nicht barrierefreien Demo-Seite des W3C → 24 Verstöße über 5 Seiten (11 kritisch, 13 ernst), jeweils mit WCAG-Kriterium und EN-301-549-Klausel, in einem einzigen PDF."
+    },
+    "learned": {
+      "heading": "Was ich gelernt habe",
+      "item1": "Echtes Release-Engineering: Provenance, OIDC Trusted Publishing, npm-2FA, Publish-on-Tag.",
+      "item2": "Die Ausgabe als stabilen Vertrag entwerfen (versioniertes JSON Schema), nicht als Ad-hoc-Format.",
+      "item3": "Kontrollierte Nebenläufigkeit und Scan-„Netiquette“ — Rate-Limit, robots.txt, identifizierbarer UA.",
+      "item4": "Normative Anforderungen (BFSG → EN 301 549 → WCAG) in verifizierbare, getestete Logik übersetzen."
+    },
+    "links": {
+      "heading": "Links",
+      "npm": "npm-Paket",
+      "report": "Live-Beispielbericht",
+      "code": "Quellcode"
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "reportOverview": "Der eigenständige HTML-Bericht: Ziel, Tool, das Urteil „Failed“ über der Schwere-Schwelle und die Scan-Zusammenfassung",
+      "clauseMapping": "Aufschlüsselung nach Impact und die verletzten Klauseln — jedes WCAG-2.1-Kriterium neben seiner EN-301-549-Klausel, mit dem § 4 BFSG-Hinweis",
+      "findings": "Ein einzelner Befund im Detail: Regel, Impact, WCAG-SC, EN-301-549-Klausel, ein How-to-fix-Link und die betroffenen Elemente",
+      "pullRequests": "Die Pull Requests des Repositories auf GitHub — 28 gemergt, jeder mit eigener Aufgaben-Checkliste"
     }
   },
   "banner": {

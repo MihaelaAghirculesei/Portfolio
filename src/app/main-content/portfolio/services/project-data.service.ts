@@ -18,6 +18,7 @@ export class ProjectDataService {
     css: 'css.svg',
     scss: 'sass.svg',
     javascript: 'javascript.svg',
+    canvasapi: 'canvas.svg',
     restapi: 'rest-api.svg',
     ngrx: 'ngrx.svg',
     rxjs: 'rxjs.svg',
@@ -59,6 +60,10 @@ export class ProjectDataService {
     pinia: 'pinia.svg',
     maplibregl: 'maplibre.svg',
     chartjs: 'chart-js.svg',
+    nodejs: 'nodejs.svg',
+    npm: 'npm.svg',
+    githubactions: 'github-actions.svg',
+    biome: 'biome.svg',
   };
 
   hasTechIcon(technology: string): boolean {

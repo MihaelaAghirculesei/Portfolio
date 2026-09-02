@@ -87,12 +87,27 @@
   {
     "id": "elPolloLoco",
     "name": "El Pollo Loco",
-    "technologies": ["JavaScript", "HTML", "CSS"],
+    "technologies": ["JavaScript", "Canvas API", "HTML", "CSS"],
     "previewImg": "assets/img/projects/el-pollo-locco.webp",
     "previewImgSrcset": "assets/img/projects/el-pollo-locco-400w.webp 400w, assets/img/projects/el-pollo-locco-800w.webp 800w, assets/img/projects/el-pollo-locco-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/El-Pollo-Loco",
     "liveUrl": "https://el-pollo-loco-aghirculesei.pages.dev",
     "featured": false,
     "hoverOffset": { "base": -40, "smallPreview": 70 }
+  },
+  {
+    "id": "bfsgScanner",
+    "name": "bfsg-scanner",
+    "technologies": [
+      "TypeScript", "Node.js", "Playwright", "axe-core", "Zod",
+      "Vitest", "Biome", "GitHub Actions", "npm"
+    ],
+    "previewImg": "assets/img/projects/bfsg-scanner.webp",
+    "previewImgSrcset": "assets/img/projects/bfsg-scanner-400w.webp 400w, assets/img/projects/bfsg-scanner-800w.webp 800w, assets/img/projects/bfsg-scanner-1200w.webp 1200w",
+    "githubUrl": "https://github.com/MihaelaAghirculesei/bfsg-scanner",
+    "liveUrl": "https://mihaelaaghirculesei.github.io/bfsg-scanner/",
+    "isPersonal": true,
+    "caseStudyRoute": "case-study/bfsg-scanner",
+    "hoverOffset": { "base": 20, "smallPreview": 20 }
   }
 ]
