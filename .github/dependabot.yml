@@ -25,6 +25,13 @@ updates:
         update-types:
           - minor
           - patch
+        # Angular packages (incl. build/cli/compiler-cli) belong to the angular
+        # group above; without this exclude they get split across two PRs and
+        # neither resolves (compiler-cli pins an exact @angular/compiler peer).
+        exclude-patterns:
+          - '@angular/*'
+          - '@angular-eslint/*'
+          - 'angular-eslint'
     ignore:
       - dependency-name: '*'
         update-types:
