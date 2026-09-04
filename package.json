@@ -14,7 +14,7 @@
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
     "e2e:report": "playwright show-report",
-    "ci:security": "npm audit --omit=dev --audit-level=moderate",
+    "ci:security": "node scripts/security-audit.mjs",
     "ci:quality": "npm run lint && ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage",
     "ci:build": "ng build --configuration=production",
     "outdated:check": "npm outdated || node -e \"console.log('Outdated check complete (informational only, not blocking).')\"",
