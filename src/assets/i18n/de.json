@@ -298,7 +298,7 @@
     "results": {
       "heading": "In Zahlen",
       "testsLabel": "automatisierte Tests (Vitest)",
-      "pullRequestsLabel": "gemergte Pull Requests, jeder mit eigenem Architecture Decision Record",
+      "pullRequestsLabel": "gemergte Pull Requests, jeder mit eigener Aufgaben-Checkliste",
       "osLabel": "Betriebssysteme in der CI — Linux, Windows, macOS",
       "exitCodesLabel": "dokumentierte semantische Exit-Codes, mit begründeter Hierarchie, damit die CI weiß, warum sie gestoppt hat",
       "reportFormatsLabel": "Berichtsformate, aus demselben Lauf",
@@ -310,9 +310,9 @@
     "highlights": {
       "heading": "Technische Highlights",
       "item1Title": "Auf npm veröffentlicht mit SLSA-Provenance.",
-      "item1Body": "Release über OIDC Trusted Publishing — nirgends im Release-Workflow ein langlebiges Token, dazu npm-2FA auf dem Account.",
+      "item1Body": "Der Release-Workflow veröffentlicht über OIDC Trusted Publishing — nirgends darin ein langlebiges Token, dazu npm-2FA auf dem Account.",
       "item2Title": "28 kleine Pull Requests, einzeln reviewt.",
-      "item2Body": "Jeder trägt ein Architecture Decision Record, das die getroffene Entscheidung erklärt, plus eine eigene Aufgaben-Checkliste.",
+      "item2Body": "Jeder trägt eine Aufgaben-Checkliste; die acht Entscheidungen, die die Architektur geprägt haben, haben zusätzlich ein Architecture Decision Record.",
       "item3Title": "146 Tests, CI auf drei Betriebssystemen.",
       "item3Body": "Die Vitest-Suite läuft bei jedem Push auf Linux, Windows und macOS.",
       "item4Title": "Die Ausgabe ist ein stabiler Vertrag, kein Ad-hoc-Format.",
