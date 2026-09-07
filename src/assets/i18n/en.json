@@ -188,7 +188,7 @@
       "shortDescription": "RESTful Todo API with clean layered architecture"
     },
     "bfsgScanner": {
-      "description": "An open-source CLI, published to npm with SLSA provenance, that scans an entire site for WCAG 2.1 AA violations and maps every finding to the EN 301 549 / BFSG clause it breaks, producing a citable compliance report in JSON, HTML, or PDF. It exits with a non-zero code once violations pass a configurable severity threshold, so a CI pipeline can block a merge on accessibility. Page discovery runs from sitemap.xml, then a breadth-first crawl that respects robots.txt; each page is analyzed in a real Chromium via Playwright and axe-core, with a concurrency pool, per-host rate limiting, and an identifiable User-Agent. The report.json output is described by a versioned JSON Schema and guarded by anti-drift tests with ajv. Built in TypeScript on Node.js 24, with 146 Vitest tests, CI across Linux, Windows and macOS, and 28 merged pull requests each carrying an Architecture Decision Record. Released via OIDC trusted publishing, with no long-lived token in the release workflow.",
+      "description": "An open-source CLI, published to npm with SLSA provenance, that scans an entire site for WCAG 2.1 AA violations and maps every finding to the EN 301 549 / BFSG clause it breaks, producing a citable compliance report in JSON, HTML, or PDF. It exits with a non-zero code once violations pass a configurable severity threshold, so a CI pipeline can block a merge on accessibility. Page discovery runs from sitemap.xml, then a breadth-first crawl that respects robots.txt; each page is analyzed in a real Chromium via Playwright and axe-core, with a concurrency pool, per-host rate limiting, and an identifiable User-Agent. The report.json output is described by a versioned JSON Schema and guarded by anti-drift tests with ajv. Built in TypeScript on Node.js, with 146 Vitest tests, CI across Linux, Windows and macOS, and developed as a sequence of small, individually reviewed pull requests; the eight decisions that shaped the architecture each carry an Architecture Decision Record. The release workflow publishes to npm via OIDC trusted publishing, with no long-lived token.",
       "shortDescription": "WCAG / EN 301 549 / BFSG Accessibility Scanner"
     },
     "default": {
@@ -311,7 +311,7 @@
       "heading": "Technical highlights",
       "item1Title": "Published to npm with SLSA provenance.",
       "item1Body": "The release workflow publishes via OIDC trusted publishing — no long-lived token anywhere in it — with npm 2FA on the account.",
-      "item2Title": "28 small pull requests, each reviewed on its own.",
+      "item2Title": "Small pull requests, each reviewed on its own.",
       "item2Body": "Every one carries a task checklist; the eight decisions that shaped the architecture also have an Architecture Decision Record.",
       "item3Title": "146 tests, CI on three operating systems.",
       "item3Body": "The Vitest suite runs on Linux, Windows, and macOS on every push.",
@@ -347,7 +347,7 @@
       "reportOverview": "The self-contained HTML report: target, tool, the \"Failed\" verdict above the severity threshold, and the scan summary",
       "clauseMapping": "Breakdown by impact, and the breached clauses — every WCAG 2.1 criterion beside its EN 301 549 clause, with the § 4 BFSG note",
       "findings": "A single finding in detail: rule, impact, WCAG SC, EN 301 549 clause, a how-to-fix link, and the affected elements",
-      "pullRequests": "The repository's pull requests on GitHub — 28 merged, each with its own task checklist"
+      "pullRequests": "The repository's pull requests on GitHub — each merged with its own task checklist"
     }
   },
   "banner": {
