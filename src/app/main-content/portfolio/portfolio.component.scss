@@ -199,14 +199,17 @@ $preview-lift: 20px;
         &.active-touch {
           background-color: variables.$main-color-light;
 
-          .project-name {
-            &::after {
-              content: "↗";
-              position: absolute;
-              margin-left: 8px;
-              font-size: 18px;
-              color: variables.$main-color;
-            }
+          // The arrow is anchored inside the name's own reserved padding, so it
+          // never drifts past the badges into the preview image.
+          .project-name__text::after {
+            content: "↗";
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            line-height: 1;
+            color: variables.$main-color;
           }
         }
 
@@ -219,9 +222,10 @@ $preview-lift: 20px;
           color: variables.$white;
           position: relative;
 
-          .arrow-icon {
+          .project-name__text {
+            position: relative;
             display: inline-block;
-            margin-left: 8px;
+            padding-right: 26px; // reserves room for the hover arrow (no layout shift)
           }
 
           .personal-badge {

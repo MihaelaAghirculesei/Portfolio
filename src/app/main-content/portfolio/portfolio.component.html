@@ -27,7 +27,7 @@
             [attr.aria-label]="'View details for ' + project.name + ' project'"
           >
             <td class="project-name">
-              {{ project.name }}
+              <span class="project-name__text">{{ project.name }}</span>
               @if (project.isPersonal) {
               <span class="personal-badge">{{ "portfolio.personalProject" | translate }}</span>
               }
