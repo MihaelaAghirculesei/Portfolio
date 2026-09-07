@@ -191,15 +191,17 @@ p {
 
   }
 
+  // Inline links in prose must be distinguishable without relying on colour
+  // alone (WCAG 1.4.1), so the underline is always on, not just on hover.
   a {
     color: variables.$main-color;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: variables.$main-color;
+    text-underline-offset: 4px;
     transition: color variables.$transition-base;
     &:hover {
       color: variables.$white-dimmed;
-      text-decoration: underline;
-      text-decoration-color: variables.$main-color;
-      text-underline-offset: 4px;
+      text-decoration-color: variables.$white-dimmed;
     }
   }
 

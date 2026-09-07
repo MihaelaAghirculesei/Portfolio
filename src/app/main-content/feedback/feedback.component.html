@@ -16,10 +16,10 @@
         [ngClass]="getCardClass(i)"
         [class.active]="i === middleIndex"
         [attr.aria-hidden]="i !== middleIndex"
-        role="tabpanel"
+        role="group"
         [attr.aria-label]="'references.feedback' | translate"
       >
-        <p [attr.aria-live]="i === middleIndex ? 'polite' : 'off'">{{ comment.feedbackKey | translate }}</p>
+        <p [attr.tabindex]="i === middleIndex ? 0 : null" [attr.aria-live]="i === middleIndex ? 'polite' : 'off'">{{ comment.feedbackKey | translate }}</p>
         <div class="feedbackBottom">
           <div class="lineDiv" aria-hidden="true"></div>
           <span>{{ comment.name }} - {{ comment.role || 'Frontend Developer' }}</span>
@@ -36,7 +36,7 @@
          role="presentation"
          loading="lazy">
 
-    <div class="dots" role="tablist" [attr.aria-label]="'references.navigation' | translate">
+    <div class="dots" role="group" [attr.aria-label]="'references.navigation' | translate">
       <button
         class="nav-btn left-btn"
         (click)="slideRight()"
@@ -51,9 +51,8 @@
         [class.active]="i === middleIndex"
         (click)="goToSlide(i)"
         [attr.aria-label]="'references.goToSlide' | translate: {index: i + 1}"
-        [attr.aria-selected]="i === middleIndex"
+        [attr.aria-current]="i === middleIndex ? 'true' : null"
         [disabled]="isTransitioning"
-        role="tab"
         type="button">
         <span class="sr-only">{{ 'references.slide' | translate }} {{ i + 1 }}</span>
       </button>
