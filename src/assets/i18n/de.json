@@ -188,7 +188,7 @@
       "shortDescription": "RESTful Todo-API mit sauberer Schichtarchitektur"
     },
     "bfsgScanner": {
-      "description": "Eine Open-Source-CLI, auf npm mit SLSA-Provenance veröffentlicht, die eine ganze Website auf WCAG-2.1-AA-Verstöße prüft und jeden Befund auf die EN 301 549 / BFSG-Klausel abbildet, die er verletzt — als zitierfähigen Konformitätsbericht in JSON, HTML oder PDF. Sobald die Verstöße eine konfigurierbare Schwere-Schwelle überschreiten, endet sie mit einem Exit-Code ≠ 0, sodass eine CI-Pipeline den Merge an der Barrierefreiheit blockieren kann. Die Seitenermittlung läuft über sitemap.xml und danach über einen Breadth-First-Crawl, der robots.txt respektiert; jede Seite wird in einem echten Chromium über Playwright und axe-core analysiert, mit Concurrency-Pool, Rate-Limit pro Host und identifizierbarem User-Agent. Die report.json-Ausgabe ist durch ein versioniertes JSON Schema beschrieben und mit Anti-Drift-Tests via ajv abgesichert. Gebaut mit TypeScript auf Node.js 24, mit 146 Vitest-Tests, CI auf Linux, Windows und macOS sowie 28 gemergten Pull Requests, jeder mit einem Architecture Decision Record. Release über OIDC Trusted Publishing, ohne langlebiges Token im Release-Workflow.",
+      "description": "Eine Open-Source-CLI, auf npm mit SLSA-Provenance veröffentlicht, die eine ganze Website auf WCAG-2.1-AA-Verstöße prüft und jeden Befund auf die EN 301 549 / BFSG-Klausel abbildet, die er verletzt — als zitierfähigen Konformitätsbericht in JSON, HTML oder PDF. Sobald die Verstöße eine konfigurierbare Schwere-Schwelle überschreiten, endet sie mit einem Exit-Code ≠ 0, sodass eine CI-Pipeline den Merge an der Barrierefreiheit blockieren kann. Die Seitenermittlung läuft über sitemap.xml und danach über einen Breadth-First-Crawl, der robots.txt respektiert; jede Seite wird in einem echten Chromium über Playwright und axe-core analysiert, mit Concurrency-Pool, Rate-Limit pro Host und identifizierbarem User-Agent. Die report.json-Ausgabe ist durch ein versioniertes JSON Schema beschrieben und mit Anti-Drift-Tests via ajv abgesichert. Gebaut mit TypeScript auf Node.js, mit 146 Vitest-Tests, CI auf Linux, Windows und macOS, entwickelt als Folge kleiner, einzeln reviewter Pull Requests; die acht Entscheidungen, die die Architektur geprägt haben, tragen je ein Architecture Decision Record. Der Release-Workflow veröffentlicht auf npm über OIDC Trusted Publishing, ohne langlebiges Token.",
       "shortDescription": "Accessibility-Scanner für WCAG / EN 301 549 / BFSG"
     },
     "default": {
@@ -311,7 +311,7 @@
       "heading": "Technische Highlights",
       "item1Title": "Auf npm veröffentlicht mit SLSA-Provenance.",
       "item1Body": "Der Release-Workflow veröffentlicht über OIDC Trusted Publishing — nirgends darin ein langlebiges Token, dazu npm-2FA auf dem Account.",
-      "item2Title": "28 kleine Pull Requests, einzeln reviewt.",
+      "item2Title": "Kleine Pull Requests, einzeln reviewt.",
       "item2Body": "Jeder trägt eine Aufgaben-Checkliste; die acht Entscheidungen, die die Architektur geprägt haben, haben zusätzlich ein Architecture Decision Record.",
       "item3Title": "146 Tests, CI auf drei Betriebssystemen.",
       "item3Body": "Die Vitest-Suite läuft bei jedem Push auf Linux, Windows und macOS.",
@@ -347,7 +347,7 @@
       "reportOverview": "Der eigenständige HTML-Bericht: Ziel, Tool, das Urteil „Failed“ über der Schwere-Schwelle und die Scan-Zusammenfassung",
       "clauseMapping": "Aufschlüsselung nach Impact und die verletzten Klauseln — jedes WCAG-2.1-Kriterium neben seiner EN-301-549-Klausel, mit dem § 4 BFSG-Hinweis",
       "findings": "Ein einzelner Befund im Detail: Regel, Impact, WCAG-SC, EN-301-549-Klausel, ein How-to-fix-Link und die betroffenen Elemente",
-      "pullRequests": "Die Pull Requests des Repositories auf GitHub — 28 gemergt, jeder mit eigener Aufgaben-Checkliste"
+      "pullRequests": "Die Pull Requests des Repositories auf GitHub — jeder mit eigener Aufgaben-Checkliste gemergt"
     }
   },
   "banner": {
