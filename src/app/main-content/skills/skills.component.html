@@ -30,9 +30,9 @@
       </div>
     </div>
 
-    <div class="skillButtons">
+    <div class="skillButtons" #skillGrid>
       @for (skill of skillItems; track skill.name; let i = $index) {
-      <div class="skillDiv">
+      <div class="skillDiv" (mouseenter)="updateTooltipSide(i, $event)">
         <img
           [src]="skill.url"
           [alt]="skill.name + ' logo'"
@@ -43,7 +43,12 @@
         <p>{{ skill.name }}</p>
 
         @if (isLastItem(i)) {
-        <div class="tooltip" role="tooltip">
+        <div
+          class="tooltip"
+          [class.tooltip--left]="tooltipOpensLeft"
+          [class.tooltip--right]="!tooltipOpensLeft"
+          role="tooltip"
+        >
           <span>{{ "skills.tooltipText" | translate }}</span>
           <div class="future-skills">
             @for (futureSkill of futureSkills; track futureSkill.name) {

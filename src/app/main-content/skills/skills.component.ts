@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ElementRef, ViewChild, inject } from '@angular/core';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
@@ -70,8 +70,30 @@ export class SkillsComponent {
 
   private readonly scrollService = inject(ScrollService);
 
+  @ViewChild('skillGrid') private readonly skillGrid?: ElementRef<HTMLElement>;
+
+  /**
+   * Whether the last skill's tooltip should open to the left of its icon.
+   * Recomputed on hover from the icon's actual position so the tooltip always
+   * expands toward the roomier side and stays inside the grid at any breakpoint.
+   */
+  protected tooltipOpensLeft = true;
+
   isLastItem(index: number): boolean {
     return index === this.skillItems.length - 1;
+  }
+
+  updateTooltipSide(index: number, event: Event): void {
+    if (!this.isLastItem(index)) { return; }
+    const grid = this.skillGrid?.nativeElement;
+    const cell = event.currentTarget as HTMLElement | null;
+    if (!grid || !cell) { return; }
+
+    const gridRect = grid.getBoundingClientRect();
+    const cellRect = cell.getBoundingClientRect();
+    const roomLeft = cellRect.right - gridRect.left;
+    const roomRight = gridRect.right - cellRect.left;
+    this.tooltipOpensLeft = roomLeft >= roomRight;
   }
 
   handleContactClick(event: Event): void {
