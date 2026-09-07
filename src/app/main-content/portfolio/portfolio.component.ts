@@ -53,7 +53,12 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   // ── Delegating accessors — keep the template and tests unchanged ────────────
   get projects(): Projects[] {
     if (this.isProjectsPage) { return this.data.projects; }
-    return this.showAll ? this.data.projects : this.data.projects.filter((p) => p.featured !== false);
+    const featured = this.data.projects.filter((p) => p.featured !== false);
+    if (!this.showAll) { return featured; }
+    // Keep the featured projects in place and append the rest below them,
+    // so expanding the list never reshuffles what was already on screen.
+    const rest = this.data.projects.filter((p) => p.featured === false);
+    return [...featured, ...rest];
   }
 
   get selectedProject(): Projects | null { return this.overlay.selectedProject; }
