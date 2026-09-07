@@ -207,7 +207,10 @@ $scale-hover-small: 1.05;
 }
 
 .skillDiv {
-  height: $skill-div-height;
+  // min-height, not a fixed height: a label that wraps to two lines (e.g.
+  // "Growth Mindset", "Material Design") grows the cell instead of spilling
+  // out and being clipped by the section's overflow: hidden.
+  min-height: $skill-div-height;
   margin: 0;
   padding: 12px 0 0 0;
   flex-direction: column;
@@ -236,6 +239,10 @@ $scale-hover-small: 1.05;
     margin: 0;
     line-height: 1.2;
     text-align: center;
+    // Always reserve two lines so one- and two-line labels line up and the
+    // grid rows stay even at every breakpoint.
+    min-height: 2.4em;
+    @include mixins.dFlex(center, center);
   }
 
   &:last-child > img:hover + p {
@@ -251,28 +258,52 @@ $scale-hover-small: 1.05;
 
 .tooltip {
   @include mixins.tooltip();
-  right: -30px;
-  top: -165px;
-  width: $tooltip-width;
-  height: $tooltip-height;
+  @include mixins.dFlex(center, center);
   flex-direction: column;
   gap: 12px;
   pointer-events: none;
-  @include mixins.dFlex(center, center);
+  // Sits above the icon (the hover state lifts it another 10px, leaving room
+  // for the arrow). min-height, not a fixed height, so the React logo and its
+  // label are never clipped.
+  bottom: 100%;
+  width: $tooltip-width;
+  min-height: $tooltip-height;
+  max-width: calc(100vw - 32px);
 
   > span {
     color: variables.$main-color;
     line-height: 1.4;
   }
 
+  // Downward arrow. Its horizontal offset is set per direction below.
   &::after {
     content: "";
     position: absolute;
     top: 100%;
-    left: 50%;
     border: $tooltip-arrow-size solid;
     border-color: variables.$white transparent transparent transparent;
-    transform: translateX(-50%);
+  }
+
+  // The component picks the side with more room, then anchors the tooltip to
+  // that edge of the icon so it always expands into the grid — never off it.
+  &.tooltip--right {
+    left: 0;
+    right: auto;
+
+    &::after {
+      left: 24px;
+      right: auto;
+    }
+  }
+
+  &.tooltip--left {
+    right: 0;
+    left: auto;
+
+    &::after {
+      right: 24px;
+      left: auto;
+    }
   }
 }
 
@@ -381,7 +412,7 @@ $scale-hover-small: 1.05;
 
 @media (max-width: 600px) {
   .skillDiv {
-    height: $skill-div-height-md;
+    min-height: $skill-div-height-md;
   }
 }
 
@@ -396,7 +427,7 @@ $scale-hover-small: 1.05;
     gap: 8px;
   }
   .skillDiv {
-    height: $skill-div-height-sm;
+    min-height: $skill-div-height-sm;
     > img {
       width: $skill-icon-size-sm;
       height: $skill-icon-size-sm;
@@ -404,34 +435,16 @@ $scale-hover-small: 1.05;
   }
 }
 
-@media (min-width: 1025px) and (max-width: 1250px) {
-  .tooltip {
-    left: auto;
-    right: 100%;
-    margin-right: -80px;
-    top: -155px;
-    &::after {
-      left: auto;
-      right: 40px;
-      transform: none;
-    }
-  }
-}
-
 @media (max-width: 1024px) {
+  // Size only — the open direction is handled by .tooltip--left / --right.
   .tooltip {
-    left: auto;
-    right: 100%;
-    margin-right: -80px;
     width: 180px;
-    height: 120px;
+    min-height: 120px;
     padding: 16px;
     font-size: 14px;
-    top: -110px;
+    gap: 8px;
+
     &::after {
-      left: auto;
-      right: 20px;
-      transform: none;
       border-width: 8px;
     }
 
