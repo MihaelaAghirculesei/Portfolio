@@ -272,6 +272,13 @@ describe('ContactFormComponent', () => {
       expect(component.errorMessage()).toBe('contact.form.errors.client');
     }));
 
+    it('should handle rate-limit error (status 429)', fakeAsync(() => {
+      component['handleError']({ status: 429 });
+      flush();
+      expect(component.submissionStatus()).toBe('error');
+      expect(component.errorMessage()).toBe('contact.form.errors.rateLimit');
+    }));
+
     it('should handle timeout error', fakeAsync(() => {
       component['handleError']({ name: 'TimeoutError' });
       flush();
