@@ -86,11 +86,12 @@
           formControlName="privacyPolicy"
           type="checkbox"
           id="data-privacy-checkbox"
+          aria-labelledby="data-privacy-label"
           [class.invalid]="isInvalid('privacyPolicy')"
           [attr.aria-describedby]="isInvalid('privacyPolicy') ? 'privacy-error' : null"
         />
         <div class="checkmark"></div>
-        <span>
+        <span id="data-privacy-label">
           {{ "contact.form.privacyText" | translate }}
           <a
             routerLink="/privacy-policy"
