@@ -123,6 +123,7 @@
         "timeout": "Request timeout. Please try again.",
         "network": "Network error. Please check your connection.",
         "server": "Server error. Please try again later.",
+        "rateLimit": "Too many messages sent. Please wait a few minutes and try again.",
         "client": "Bad request. Please check your input.",
         "generic": "An error occurred while sending your message."
       },

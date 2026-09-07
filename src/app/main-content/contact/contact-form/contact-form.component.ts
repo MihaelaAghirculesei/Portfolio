@@ -222,6 +222,8 @@ export class ContactFormComponent implements OnInit {
       (errorLike.status && errorLike.status >= HTTP_CONFIG.STATUS_SERVER_ERROR)
     ) {
       errorKey = 'contact.form.errors.server';
+    } else if (errorStatus === HTTP_CONFIG.STATUS_TOO_MANY_REQUESTS) {
+      errorKey = 'contact.form.errors.rateLimit';
     } else if (
       (error instanceof HttpErrorResponse &&
         error.status >= HTTP_CONFIG.STATUS_CLIENT_ERROR) ||

@@ -123,6 +123,7 @@
         "timeout": "Zeitüberschreitung. Bitte versuchen Sie es erneut.",
         "network": "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung.",
         "server": "Serverfehler. Bitte versuchen Sie es später erneut.",
+        "rateLimit": "Zu viele Nachrichten gesendet. Bitte warten Sie einige Minuten und versuchen Sie es erneut.",
         "client": "Ungültige Anfrage. Bitte überprüfen Sie Ihre Eingabe.",
         "generic": "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten."
       },

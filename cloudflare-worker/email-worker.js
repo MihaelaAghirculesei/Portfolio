@@ -1,9 +1,16 @@
 /**
  * Cloudflare Worker – Portfolio Email via Resend
  *
- * ENV Variables da impostare nel Cloudflare Dashboard:
+ * ENV Variables da impostare nel Cloudflare Dashboard
+ * (Workers & Pages → api → Settings → Variables and Secrets):
  *   RESEND_API_KEY  → la tua chiave API Resend (re_xxxxxxxxx)
  *   TO_EMAIL        → aghirculesei@gmail.com
+ *   FROM_EMAIL      → mittente su un dominio VERIFICATO in Resend,
+ *                     es. "Portfolio <noreply@mail.tuodominio.com>".
+ *                     Senza questa variabile si usa "onboarding@resend.dev",
+ *                     che Resend accetta ma consegna solo all'indirizzo del
+ *                     titolare dell'account e Gmail lo mette in spam / lo
+ *                     scarta: è la causa tipica delle email che "non arrivano".
  *
  * KV Namespace richiesto per il rate limiting (binding RATE_LIMIT_KV):
  *   1. Crea il namespace:  wrangler kv namespace create RATE_LIMIT_KV
@@ -12,17 +19,28 @@
  *      Workers & Pages → api → Settings → Bindings → KV Namespace Bindings.
  */
 
+const DEFAULT_FROM_EMAIL = 'Portfolio Contact <onboarding@resend.dev>';
+
 const ALLOWED_ORIGINS = [
-  'https://aghirculesei.pages.dev',           // production
-  /^https:\/\/[a-z0-9]+\.aghirculesei\.pages\.dev$/, // preview deployments
-  'http://localhost:4200',                    // local development
+  'https://aghirculesei.pages.dev',                    // production
+  /^https:\/\/[a-z0-9-]+\.aghirculesei\.pages\.dev$/,  // preview deployments
+  /^http:\/\/localhost(:\d+)?$/,                       // local dev, any port
+  /^http:\/\/127\.0\.0\.1(:\d+)?$/,                    // local dev, any port
 ];
+
+function isAllowedOrigin(origin) {
+  return ALLOWED_ORIGINS.some((allowed) =>
+    typeof allowed === 'string' ? origin === allowed : allowed.test(origin)
+  );
+}
 
 const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 200;
 const MAX_MESSAGE_LENGTH = 5000;
 
-const RATE_LIMIT_MAX_REQUESTS = 5;
+// Anti-abuse only: counts just genuine, validated send attempts (not
+// validation errors or honeypot hits), so normal use and testing never trip it.
+const RATE_LIMIT_MAX_REQUESTS = 10;
 const RATE_LIMIT_WINDOW_SECONDS = 10 * 60; // 10 minuti
 
 async function isRateLimited(env, ip) {
@@ -57,12 +75,7 @@ async function isRateLimited(env, ip) {
 
 function getAllowedOrigin(request) {
   const origin = request.headers.get('Origin') || '';
-  for (const allowed of ALLOWED_ORIGINS) {
-    if (typeof allowed === 'string' ? origin === allowed : allowed.test(origin)) {
-      return origin;
-    }
-  }
-  return ALLOWED_ORIGINS[0]; // fallback to production
+  return isAllowedOrigin(origin) ? origin : ALLOWED_ORIGINS[0]; // fallback to production
 }
 
 export default {
@@ -76,9 +89,11 @@ export default {
       return corsResponse(JSON.stringify({ error: 'Method not allowed' }), 405, request);
     }
 
-    const ip = request.headers.get('CF-Connecting-IP');
-    if (await isRateLimited(env, ip)) {
-      return corsResponse(JSON.stringify({ error: 'Too many requests' }), 429, request);
+    // Reject browser requests coming from any site other than the allow-list.
+    // (Non-browser callers send no Origin header and are left to the rate limiter.)
+    const origin = request.headers.get('Origin');
+    if (origin && !isAllowedOrigin(origin)) {
+      return corsResponse(JSON.stringify({ error: 'Origin not allowed' }), 403, request);
     }
 
     let body;
@@ -113,6 +128,23 @@ export default {
       return corsResponse(JSON.stringify({ error: 'Invalid email address' }), 400, request);
     }
 
+    // Rate limit only real, validated attempts — a few typos in the form never
+    // eat into the quota, and only a genuine send counts toward it.
+    const ip = request.headers.get('CF-Connecting-IP');
+    if (await isRateLimited(env, ip)) {
+      return corsResponse(JSON.stringify({ error: 'Too many requests' }), 429, request);
+    }
+
+    if (!env.RESEND_API_KEY || !env.TO_EMAIL) {
+      console.error('Email service misconfigured: RESEND_API_KEY or TO_EMAIL is not set');
+      return corsResponse(JSON.stringify({ error: 'Email service not configured' }), 500, request);
+    }
+
+    const fromEmail = env.FROM_EMAIL || DEFAULT_FROM_EMAIL;
+    if (fromEmail === DEFAULT_FROM_EMAIL) {
+      console.warn('FROM_EMAIL is not set — using the Resend sandbox sender; delivery to arbitrary inboxes is unreliable.');
+    }
+
     try {
       const resendResponse = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -121,10 +153,17 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Portfolio Contact <onboarding@resend.dev>',
+          from: fromEmail,
           to: [env.TO_EMAIL],
           reply_to: email,
           subject: `Portfolio Kontakt von ${name}`,
+          // Plain-text part alongside the HTML — HTML-only mail scores worse
+          // with spam filters.
+          text:
+            `Neue Nachricht vom Portfolio\n\n` +
+            `Name: ${name}\n` +
+            `E-Mail: ${email}\n\n` +
+            `Nachricht:\n${message}\n`,
           html: `
             <h2>Neue Nachricht vom Portfolio</h2>
             <p><strong>Name:</strong> ${escapeHtml(name)}</p>
@@ -135,13 +174,19 @@ export default {
         }),
       });
 
+      const resendBody = await resendResponse.json().catch(() => ({}));
+
       if (!resendResponse.ok) {
-        const errorText = await resendResponse.text();
-        console.error('Resend error:', errorText);
-        return corsResponse(JSON.stringify({ error: 'Failed to send email', detail: errorText }), 500, request);
+        // Log the full upstream error so it shows up in `wrangler tail`, but
+        // don't leak Resend internals to the browser.
+        console.error('Resend rejected the send:', resendResponse.status, JSON.stringify(resendBody));
+        return corsResponse(JSON.stringify({ error: 'Failed to send email' }), 502, request);
       }
 
-      return corsResponse(JSON.stringify({ success: true }), 200, request);
+      // The id lets you trace this message in the Resend dashboard → Emails
+      // (Delivered / Bounced / Complained).
+      console.log('Resend accepted message:', resendBody.id);
+      return corsResponse(JSON.stringify({ success: true, id: resendBody.id ?? null }), 200, request);
 
     } catch (err) {
       console.error('Worker error:', err);
