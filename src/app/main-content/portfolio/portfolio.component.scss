@@ -130,6 +130,13 @@
 
 $header-padding-top: 98px;
 
+// Decorative offset applied to every hover-preview image (and its dashed
+// backdrop) so it "floats" up and to the left of its box. Mirrors
+// PORTFOLIO_CONFIG.PREVIEW_LIFT in app.constants.ts — keep the two in sync.
+// The component adds this amount back onto the computed `top`, so the image's
+// visible top edge lands exactly on the hovered row's top border line.
+$preview-lift: 20px;
+
 #projects {
   padding: 15px;
   background-color: variables.$gradient-start;
@@ -300,16 +307,8 @@ $header-padding-top: 98px;
   right: 15px;
   transition: opacity variables.$transition-base;
   opacity: 1;
-
-  &[data-project-id="0"],
-  &[data-project-id="1"],
-  &[data-project-id="2"],
-  &[data-project-id="3"],
-  &[data-project-id="4"],
-  &[data-project-id="5"] {
-    top: 50% !important;
-    transform: translateY(-50%);
-  }
+  // `top` is set inline by the component so the image's visible top edge lines
+  // up with the hovered row's top border (see calculatePreviewPosition).
 
   .imageContainer {
     position: relative;
@@ -322,7 +321,7 @@ $header-padding-top: 98px;
       aspect-ratio: 370 / 250;
       object-fit: cover;
       object-position: left center;
-      transform: translate(-20px, -20px);
+      transform: translate(-#{$preview-lift}, -#{$preview-lift});
       box-shadow: 0 8px 32px variables.$shadow-medium;
       position: relative;
       z-index: 2;
@@ -762,36 +761,6 @@ $header-padding-top: 98px;
   }
 }
 
-@media only screen and (min-width: 1440px) and (max-width: 1919px) {
-  #projects .projectWrapper .projects-hover-content {
-    &[data-project-id="0"],
-    &[data-project-id="1"],
-    &[data-project-id="2"],
-    &[data-project-id="3"],
-    &[data-project-id="4"],
-    &[data-project-id="5"] {
-      top: 50% !important;
-      transform: translateY(-50%);
-    }
-  }
-
-}
-
-@media only screen and (min-width: 1920px) {
-  #projects .projectWrapper .projects-hover-content {
-    &[data-project-id="0"],
-    &[data-project-id="1"],
-    &[data-project-id="2"],
-    &[data-project-id="3"],
-    &[data-project-id="4"],
-    &[data-project-id="5"] {
-      top: 50% !important;
-      transform: translateY(-50%);
-    }
-  }
-
-}
-
 @media (min-width: variables.$tablet-large-min) {
   #projects .projectWrapper .projects-table.projects-table {
     width: 55%;
@@ -812,21 +781,6 @@ $header-padding-top: 98px;
   .project-image-container {
     padding: 8px;
   }
-}
-
-@media (min-width: variables.$tablet-min) and (max-width: variables.$desktop-max) {
-  #projects .projectWrapper .projects-hover-content {
-    &[data-project-id="0"],
-    &[data-project-id="1"],
-    &[data-project-id="2"],
-    &[data-project-id="3"],
-    &[data-project-id="4"],
-    &[data-project-id="5"] {
-      top: 50% !important;
-      transform: translateY(-50%);
-    }
-  }
-
 }
 
 
@@ -954,31 +908,7 @@ $header-padding-top: 98px;
   }
 }
 
-@media (max-width: 1123px) {
-  .projects-hover-content {
-    &[data-project-id="0"],
-    &[data-project-id="1"],
-    &[data-project-id="2"],
-    &[data-project-id="3"],
-    &[data-project-id="4"],
-    &[data-project-id="5"] {
-      top: calc(50% + 40px) !important;
-    }
-  }
-}
-
 @media (max-width: 1070px) {
-  #projects .projectWrapper .projects-hover-content {
-    &[data-project-id="0"],
-    &[data-project-id="1"],
-    &[data-project-id="2"],
-    &[data-project-id="3"],
-    &[data-project-id="4"],
-    &[data-project-id="5"] {
-      top: calc(50% + 60px) !important;
-    }
-  }
-
   .project-modal-overlay {
     z-index: calc(variables.$z-modal-overlay + 10);
 

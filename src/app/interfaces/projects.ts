@@ -1,8 +1,3 @@
-export interface HoverOffset {
-  base: number;
-  smallPreview: number;
-}
-
 export interface Projects {
   id: string;
   name: string;
@@ -15,7 +10,6 @@ export interface Projects {
   isPersonal?: boolean;
   isTeam?: boolean;
   inProgress?: boolean;
-  hoverOffset?: HoverOffset;
   featured?: boolean;
   caseStudyRoute?: string;
 }

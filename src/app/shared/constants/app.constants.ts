@@ -28,7 +28,9 @@ export const ANIMATION_CONFIG = {
 
 export const PORTFOLIO_CONFIG = {
   TOUCH_THRESHOLD: 10,
-  PREVIEW_BASE_OFFSET: 100,
+  // Decorative upward shift of the hover-preview image. Mirrors the CSS
+  // `$preview-lift` in portfolio.component.scss — keep the two in sync.
+  PREVIEW_LIFT: 20,
 } as const;
 
 export const TIMING_CONFIG = {
