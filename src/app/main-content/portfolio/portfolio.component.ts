@@ -109,11 +109,11 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
     this.activeProjectId = index;
     this.activePreview = this.projects[index].previewImg;
-    const trElement = event.currentTarget as HTMLElement;
+    const rowEl = event.currentTarget as HTMLElement;
 
     this.pendingRafId = requestAnimationFrame(() => {
       this.pendingRafId = null;
-      this.hoverPosition = this.calculatePreviewPosition(trElement, index, win);
+      this.hoverPosition = this.calculatePreviewPosition(rowEl);
       this.cdr.markForCheck();
     });
   }
@@ -132,11 +132,10 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     this.touchMoved = false;
     this.activeProjectId = index;
     this.activePreview = this.projects[index].previewImg;
+    const rowEl = event.currentTarget as HTMLElement;
 
     requestAnimationFrame(() => {
-      const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
-      const trRect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-      this.hoverPosition = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
+      this.hoverPosition = this.calculatePreviewPosition(rowEl);
       this.cdr.markForCheck();
     });
   }
@@ -198,13 +197,33 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     }
   }
 
-  private calculatePreviewPosition(trElement: HTMLElement, index: number, win: Window): number {
-    const tableRect = this.projectsTable.nativeElement.getBoundingClientRect();
-    const trRect = trElement.getBoundingClientRect();
-    const base = trRect.top - tableRect.top + trRect.height / 2 - PORTFOLIO_CONFIG.PREVIEW_BASE_OFFSET;
-    const hoverOffset = this.projects[index]?.hoverOffset;
-    if (!hoverOffset) { return base; }
-    const isSmall = win.innerWidth <= BREAKPOINTS.SMALL_PREVIEW_MAX;
-    return base + hoverOffset.base + (isSmall ? hoverOffset.smallPreview : 0);
+  /**
+   * Vertical position (px, relative to the table) for the hover preview of the
+   * given project row. The image's visible top edge is aligned with that row's
+   * top border line, so previews line up with the project regardless of how
+   * tall each row is. The result is clamped so the preview never spills past
+   * the bottom of the table (which would overlap the button below it).
+   */
+  private calculatePreviewPosition(rowEl: HTMLElement): number {
+    const tableEl = this.projectsTable.nativeElement as HTMLElement;
+    const tableRect = tableEl.getBoundingClientRect();
+    const wrapperRect = tableEl.parentElement?.getBoundingClientRect() ?? tableRect;
+    const rowRect = rowEl.getBoundingClientRect();
+
+    // The preview column mirrors the table width: it starts one gutter past the
+    // table's right edge and ends at the wrapper's right inset (which collapses
+    // to 0 on narrow viewports). Deriving the preview height from that lets us
+    // clamp the bottom without measuring the (not-yet-rendered) node.
+    const gutter = 36;
+    const rightInset = (this.platformService.window?.innerWidth ?? 0) <= 944 ? 0 : 15;
+    const previewWidth = Math.max(wrapperRect.width - tableRect.width - gutter - rightInset, 0);
+    const previewHeight = previewWidth * (250 / 370);
+
+    // $preview-lift cancels the image's own translate, so `top` here places the
+    // image's *visible* top edge exactly on the row's top border.
+    const lift = PORTFOLIO_CONFIG.PREVIEW_LIFT;
+    const alignedTop = rowRect.top - tableRect.top + lift;
+    const maxTop = Math.max(tableRect.height - previewHeight + lift, lift);
+    return Math.round(Math.min(Math.max(alignedTop, lift), maxTop));
   }
 }

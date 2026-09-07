@@ -10,8 +10,7 @@
     "previewImgSrcset": "assets/img/projects/alina-moments-400w.webp 400w, assets/img/projects/alina-moments-800w.webp 800w, assets/img/projects/alina-moments-1200w.webp 1200w",
     "liveUrl": "https://alina-moments-photography.vercel.app/it",
     "isPersonal": true,
-    "caseStudyRoute": "case-study/alina-moments",
-    "hoverOffset": { "base": 70, "smallPreview": -10 }
+    "caseStudyRoute": "case-study/alina-moments"
   },
   {
     "id": "chargeHub",
@@ -25,8 +24,7 @@
     "githubUrl": "https://github.com/MihaelaAghirculesei/ChargeHub",
     "liveUrl": "https://charge-hub-one.vercel.app/de",
     "isPersonal": true,
-    "inProgress": true,
-    "hoverOffset": { "base": 15, "smallPreview": 30 }
+    "inProgress": true
   },
   {
     "id": "birthdayReminder",
@@ -41,8 +39,7 @@
     "githubUrl": "https://github.com/MihaelaAghirculesei/birthday-reminder-app",
     "liveUrl": "https://birthday-reminder-aghirculesei.pages.dev",
     "isPersonal": true,
-    "inProgress": true,
-    "hoverOffset": { "base": 15, "smallPreview": 30 }
+    "inProgress": true
   },
   {
     "id": "todoApi",
@@ -55,8 +52,7 @@
     "previewImgSrcset": "assets/img/projects/todo-api-400w.webp 400w, assets/img/projects/todo-api-800w.webp 800w, assets/img/projects/todo-api-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/todo-platform",
     "liveUrl": "https://todo-frontend-aghirculesei.onrender.com",
-    "isTeam": true,
-    "hoverOffset": { "base": -40, "smallPreview": 70 }
+    "isTeam": true
   },
   {
     "id": "join",
@@ -67,8 +63,7 @@
     "githubUrl": "https://github.com/MihaelaAghirculesei/join-kanban-board",
     "liveUrl": "https://join-aghirculesei.pages.dev",
     "isTeam": true,
-    "featured": false,
-    "hoverOffset": { "base": -40, "smallPreview": 70 }
+    "featured": false
   },
   {
     "id": "pokedex",
@@ -81,8 +76,7 @@
     "previewImgSrcset": "assets/img/projects/pokedex-400w.webp 400w, assets/img/projects/pokedex-800w.webp 800w, assets/img/projects/pokedex-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/Pokedex",
     "liveUrl": "https://pokedex-aghirculesei.pages.dev",
-    "featured": false,
-    "hoverOffset": { "base": -40, "smallPreview": 70 }
+    "featured": false
   },
   {
     "id": "elPolloLoco",
@@ -92,8 +86,7 @@
     "previewImgSrcset": "assets/img/projects/el-pollo-locco-400w.webp 400w, assets/img/projects/el-pollo-locco-800w.webp 800w, assets/img/projects/el-pollo-locco-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/El-Pollo-Loco",
     "liveUrl": "https://el-pollo-loco-aghirculesei.pages.dev",
-    "featured": false,
-    "hoverOffset": { "base": -40, "smallPreview": 70 }
+    "featured": false
   },
   {
     "id": "bfsgScanner",
@@ -107,7 +100,6 @@
     "githubUrl": "https://github.com/MihaelaAghirculesei/bfsg-scanner",
     "liveUrl": "https://mihaelaaghirculesei.github.io/bfsg-scanner/",
     "isPersonal": true,
-    "caseStudyRoute": "case-study/bfsg-scanner",
-    "hoverOffset": { "base": 20, "smallPreview": 20 }
+    "caseStudyRoute": "case-study/bfsg-scanner"
   }
 ]
