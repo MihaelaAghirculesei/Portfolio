@@ -148,29 +148,36 @@ header {
   text-shadow: 0 1px 0 rgba(variables.$black-pure, 0.06);
   width: 50%;
   text-align: center;
+  border-radius: $switch-border-radius-small;
+  transition: color variables.$transition-base, background-color variables.$transition-base;
 }
 
-// The active label sits on the teal knob, the inactive one on the dark track.
-// Dark-on-teal and white-on-dark both clear WCAG AA contrast; the previous
-// $white / $main-color-60 pairing failed it in every state.
+// The active label reads dark-on-teal, the inactive one white-on-dark — both
+// clear WCAG AA (the old $white / $main-color-60 pairing failed it in every
+// state). The teal sits behind the active label as a real background, not only
+// on the knob's ::after pseudo-element, so a contrast checker sees it too.
 input.check-toggle-round-flat:checked ~ .off {
   color: variables.$background-color;
+  background-color: variables.$main-color;
 }
 
 input.check-toggle-round-flat:checked ~ .on {
   color: variables.$white;
+  background-color: transparent;
 }
 
 .switch > span.on {
   left: 0;
   padding-left: $switch-padding;
   color: variables.$background-color;
+  background-color: variables.$main-color;
 }
 
 .switch > span.off {
   right: 0;
   padding-right: $switch-padding;
   color: variables.$white;
+  background-color: transparent;
 }
 
 .check-toggle {
@@ -191,7 +198,10 @@ input.check-toggle-round-flat + label {
   padding: $switch-padding;
   width: $switch-width;
   height: $switch-height;
-  background-color: $main-color-60;
+  // Solid, not the old translucent $main-color-60: a contrast checker resolves
+  // the inactive label against this track colour, and white-on-teal-tint only
+  // reached 4.31:1. The teal now lives on the knob and the active label.
+  background-color: variables.$background-color;
   border-radius: $switch-border-radius;
 }
 
