@@ -3,7 +3,7 @@
 <main id="main-content" role="main" [attr.aria-label]="'Portfolio content'">
   <router-outlet></router-outlet>
 </main>
-@defer (on viewport) {
+@defer (on idle) {
   <app-footer></app-footer>
 } @placeholder {
   <div class="defer-ph defer-ph--120"></div>
