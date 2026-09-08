@@ -3,11 +3,7 @@ import {
   ErrorHandler,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import {
-  provideRouter,
-  withEnabledBlockingInitialNavigation,
-  withViewTransitions,
-} from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { httpInterceptor } from './shared/interceptors/http.interceptor';
@@ -18,7 +14,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
       routes,
-      withEnabledBlockingInitialNavigation(),
       withViewTransitions({ skipInitialTransition: true }),
     ),
     provideZonelessChangeDetection(),
