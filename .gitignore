@@ -51,6 +51,9 @@ test-results.txt
 build.log
 tmp_*.png
 
+# bfsg-scanner local report output
+/reports
+
 # Playwright
 /playwright-report
 /test-results

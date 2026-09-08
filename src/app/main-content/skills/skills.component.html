@@ -21,7 +21,7 @@
           href="#contact"
           class="link-button animated"
           [attr.data-text]="'skills.ctaText' | translate"
-          [attr.aria-label]="'skills.ctaAriaLabel' | translate"
+          [attr.aria-label]="('skills.ctaAriaLabel' | translate) || 'Contact me'"
           (click)="handleContactClick($event)"
           role="button"
         >
