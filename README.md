@@ -90,7 +90,7 @@ Built with standalone components and a clean separation of concerns, aiming for 
 - **Framework:** Angular 21.2 (Standalone Components)
 - **Language:** TypeScript 5.9
 - **Styling:** SCSS with responsive design
-- **Internationalization:** @ngx-translate
+- **Internationalization:** custom lightweight i18n service (no runtime dependency)
 
 ### **Development**
 - **Testing:** Karma, Jasmine (unit) · Playwright (e2e)
@@ -110,7 +110,7 @@ Built with standalone components and a clean separation of concerns, aiming for 
 ## 📦 Installation
 
 ### Prerequisites
-- Node.js (v20.x or higher)
+- Node.js 22.x (see `.nvmrc` / `engines`)
 - npm (v10.x or higher)
 
 ### Setup
@@ -198,11 +198,15 @@ src/
 │   │   ├── contact/
 │   │   │   └── contact-form/
 │   │   ├── feedback/
+│   │   ├── home/               # Composes the single-page sections
 │   │   ├── landing-page/
 │   │   │   └── banner-section/
 │   │   ├── legal-notice/
 │   │   ├── overlay/
 │   │   ├── portfolio/
+│   │   │   ├── case-study-alina-moments/
+│   │   │   ├── case-study-bfsg-scanner/
+│   │   │   └── services/
 │   │   ├── privacy-policy/
 │   │   └── skills/
 │   ├── shared/                 # Shared resources
@@ -210,12 +214,17 @@ src/
 │   │   ├── directives/
 │   │   ├── footer/
 │   │   ├── header/
+│   │   ├── interceptors/
+│   │   ├── pipes/
 │   │   └── services/
 │   └── interfaces/             # TypeScript interfaces
 ├── assets/                     # Static assets
+│   ├── data/                  # projects.json
+│   ├── fonts/
 │   ├── i18n/                  # Translation files (en, de)
 │   └── img/                   # Images
-└── environments/              # Environment configs
+├── environments/              # Environment configs
+└── styles/                    # Global SCSS (variables, mixins, buttons)
 ```
 
 ---
@@ -394,9 +403,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Statistics
 
-- **Components:** 15 standalone components
-- **Services:** 11 specialized services (Navigation, Logger, Scroll, Platform, Translation, SEO, FocusTrap, AriaAnnouncer, GlobalErrorHandler, PortfolioOverlay, ProjectData)
-- **Test Coverage:** 100% (statements, branches, functions, lines) · 23 Playwright e2e tests
+- **Components:** 18 standalone components
+- **Services:** 13 specialized services (Navigation, Logger, Scroll, Platform, Translation, SEO, FocusTrap, AriaAnnouncer, GlobalErrorHandler, PortfolioOverlay, ProjectData, DeferGate, TranslatedTitleStrategy)
+- **Test Coverage:** ~99% lines/statements, 97% branches (712 unit tests) · 23 Playwright e2e tests
 - **TypeScript:** 100% type-safe code (zero `any` types)
 - **Accessibility:** WCAG 2.1 Level AA compliant
 - **Languages:** 2 (English, German)
