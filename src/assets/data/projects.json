@@ -16,15 +16,15 @@
     "id": "chargeHub",
     "name": "ChargeHub",
     "technologies": [
-      "Nuxt", "Vue", "Vuetify", "TypeScript", "Pinia",
-      "MapLibre GL", "Chart.js", "Zod", "Playwright", "Vitest"
+      "Nuxt", "Vue", "Vuetify", "TypeScript", "SCSS", "Pinia",
+      "MapLibre GL", "Chart.js", "Zod", "Playwright", "Vitest", "axe-core"
     ],
     "previewImg": "assets/img/projects/charge-hub.webp",
     "previewImgSrcset": "assets/img/projects/charge-hub-400w.webp 400w, assets/img/projects/charge-hub-800w.webp 800w, assets/img/projects/charge-hub-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/ChargeHub",
     "liveUrl": "https://charge-hub-one.vercel.app/de",
     "isPersonal": true,
-    "inProgress": true
+    "inProgress": false
   },
   {
     "id": "birthdayReminder",
