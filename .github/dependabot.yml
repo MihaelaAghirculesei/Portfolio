@@ -1,3 +1,14 @@
+# Dependency update policy
+# -------------------------
+# - Minor / patch updates: handled automatically by Dependabot, grouped (see
+#   `groups` below) to keep PR noise low. Merge once CI is green.
+# - Major updates: intentionally ignored here (`ignore` block) and done by hand,
+#   because they routinely need code changes and lockstep peer bumps. Track each
+#   one in its own issue and run it as a dedicated PR — typically alongside the
+#   matching Angular major (`ng update`), which is what unblocks tooling majors
+#   (angular-eslint, eslint, typescript, jasmine, @types/node, ...).
+# - Security majors are the exception: if Dependabot opens a security PR for a
+#   major, treat it as a normal manual major upgrade and prioritise it.
 version: 2
 updates:
   - package-ecosystem: github-actions
@@ -33,6 +44,7 @@ updates:
           - '@angular-eslint/*'
           - 'angular-eslint'
     ignore:
+      # Majors are handled manually — see the policy note at the top of this file.
       - dependency-name: '*'
         update-types:
           - version-update:semver-major
