@@ -18,7 +18,17 @@ module.exports = function (config) {
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/angular-portofolio'),
       subdir: '.',
-      reporters: [{ type: 'html' }, { type: 'text-summary' }],
+      reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly' }],
+      // Safety net: fail the run if coverage regresses well below current levels
+      // (currently ~99% lines / 97% branches). Not a target — a tripwire.
+      check: {
+        global: {
+          statements: 96,
+          branches: 92,
+          functions: 96,
+          lines: 96,
+        },
+      },
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
