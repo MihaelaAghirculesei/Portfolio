@@ -10,10 +10,33 @@ module.exports = tseslint.config(
       "dist/**",
       "coverage/**",
       ".angular/**",
-      "**/*.js",
       "**/*.d.ts",
-      "!eslint.config.js"
+      "eslint.config.js",
+      "karma.conf.js"
     ]
+  },
+  {
+    // Node/Cloudflare-Workers runtime code: plain JS, module syntax, console allowed.
+    files: ["cloudflare-worker/**/*.js", "scripts/**/*.mjs"],
+    extends: [eslint.configs.recommended],
+    languageOptions: {
+      ecmaVersion: 2023,
+      sourceType: "module",
+      globals: {
+        console: "readonly",
+        fetch: "readonly",
+        Response: "readonly",
+        URL: "readonly",
+        crypto: "readonly",
+        process: "readonly",
+        Atomics: "readonly",
+        SharedArrayBuffer: "readonly",
+        Int32Array: "readonly",
+      },
+    },
+    rules: {
+      "no-console": "off",
+    },
   },
   {
     files: ["**/*.ts"],
