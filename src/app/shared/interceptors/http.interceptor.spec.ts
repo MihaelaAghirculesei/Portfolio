@@ -196,6 +196,19 @@ describe('httpInterceptor', () => {
       expect(errorCaught).toBeTrue();
     }));
 
+    it('should not retry non-idempotent requests (POST) even on 500', fakeAsync(() => {
+      let errorCaught = false;
+
+      http.post('/api/contact', { name: 'x' }).subscribe({ error: () => (errorCaught = true) });
+
+      httpMock.expectOne('/api/contact').flush('error', { status: 500, statusText: 'Server Error' });
+      tick(5000);
+
+      // No retry: a replayed POST could send a duplicate email
+      httpMock.verify();
+      expect(errorCaught).toBeTrue();
+    }));
+
     it('should retry on 500 server error and succeed on retry', fakeAsync(() => {
       let result: unknown;
 
