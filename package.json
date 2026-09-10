@@ -70,7 +70,7 @@
     "@angular/build": "^21.2.23",
     "@angular/cli": "^21.2.23",
     "@angular/compiler-cli": "^21.2.22",
-    "@playwright/test": "^1.59.1",
+    "@playwright/test": "^1.63.0",
     "@types/express": "^5.0.6",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^22.10.0",
