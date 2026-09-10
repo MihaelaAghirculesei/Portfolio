@@ -47,8 +47,8 @@ export class CaseStudyBfsgScannerComponent implements OnInit {
   protected readonly screenshotsBasePath = 'assets/img/case-studies/bfsg-scanner/';
 
   protected readonly stats: CaseStudyStat[] = [
-    { value: '146', labelKey: 'caseStudyBfsgScanner.results.testsLabel' },
-    { value: '29', labelKey: 'caseStudyBfsgScanner.results.pullRequestsLabel' },
+    { value: '150', labelKey: 'caseStudyBfsgScanner.results.testsLabel' },
+    { value: '39', labelKey: 'caseStudyBfsgScanner.results.pullRequestsLabel' },
     { value: '3', labelKey: 'caseStudyBfsgScanner.results.osLabel' },
     { value: '0·1·2·3', labelKey: 'caseStudyBfsgScanner.results.exitCodesLabel' },
     { value: 'JSON · HTML · PDF', labelKey: 'caseStudyBfsgScanner.results.reportFormatsLabel' },
@@ -75,7 +75,7 @@ export class CaseStudyBfsgScannerComponent implements OnInit {
   );
 
   protected readonly techStack: string[] = [
-    'TypeScript', 'Node.js 24', 'Playwright', 'axe-core', 'Zod', 'Vitest', 'Biome',
+    'TypeScript', 'Node.js 22+', 'Playwright', 'axe-core', 'Zod', 'Vitest', 'Biome',
     'GitHub Actions', 'npm (SLSA provenance)', 'ajv', 'JSON Schema',
   ];
 
