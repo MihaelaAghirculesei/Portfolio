@@ -14,6 +14,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { parse } from 'parse5';
 
 const browserDist = join('dist', 'angular-portofolio', 'browser');
 const headersPath = join(browserDist, '_headers');
@@ -34,32 +35,40 @@ function findIndexHtmlFiles(dir) {
   return found;
 }
 
+// A real HTML parser rather than a hand-rolled regex: a regex match on
+// <script>...</script> is a flagged CodeQL pattern (js/bad-tag-filter) for
+// good reason in general — it's easy to miss case variants, unusual
+// whitespace, or malformed markup — and parse5 (already in node_modules via
+// Angular's own tooling) sidesteps the whole class of edge cases instead of
+// chasing them one CodeQL finding at a time.
 function extractInlineScripts(html) {
   const scripts = [];
-  // Case-insensitive and whitespace-tolerant on the end tag: this parses
-  // Angular's own deterministic build output, not untrusted input, but a
-  // loose HTML tag match is a flagged CodeQL pattern (js/bad-tag-filter)
-  // regardless of what the match feeds into — match <SCRIPT>/<Script> and
-  // </script > (space before >) too rather than carry the finding.
-  const re = /<script(\s[^>]*)?>([\s\S]*?)<\/script\s*>/gi;
-  let match;
-  while ((match = re.exec(html)) !== null) {
-    const attrs = match[1] ?? '';
-    if (/\bsrc\s*=/i.test(attrs)) continue; // external bundle, not inline
-    // CSP script-src only gates JavaScript-executing <script> elements: a
-    // non-empty, non-JS, non-"module" type attribute (e.g. the JSON-LD and
-    // Angular transfer-state blocks this build emits) is exempt per the CSP3
-    // spec, so browsers never check it against script-src. Hashing it anyway
-    // would just be dead weight in the header — and the transfer-state block
-    // embeds non-deterministic component ids, so its hash isn't even stable
-    // across builds of identical content.
-    const typeMatch = attrs.match(/\btype\s*=\s*["']?([^"'\s>]*)/i);
-    const type = typeMatch?.[1]?.toLowerCase() ?? '';
-    if (NON_EXECUTABLE_SCRIPT_TYPES.has(type)) continue;
-    const content = match[2];
-    if (content.trim().length === 0) continue;
-    scripts.push(content);
+  const document = parse(html);
+
+  function walk(node) {
+    if (node.nodeName === 'script') {
+      const attrs = node.attrs ?? [];
+      const hasSrc = attrs.some((attr) => attr.name === 'src');
+      // CSP script-src only gates JavaScript-executing <script> elements: a
+      // non-empty, non-JS, non-"module" type attribute (e.g. the JSON-LD and
+      // Angular transfer-state blocks this build emits) is exempt per the
+      // CSP3 spec, so browsers never check it against script-src. Hashing it
+      // anyway would just be dead weight in the header — and the
+      // transfer-state block embeds non-deterministic component ids, so its
+      // hash isn't even stable across builds of identical content.
+      const type = attrs.find((attr) => attr.name === 'type')?.value.toLowerCase() ?? '';
+      if (!hasSrc && !NON_EXECUTABLE_SCRIPT_TYPES.has(type)) {
+        const text = (node.childNodes ?? [])
+          .filter((child) => child.nodeName === '#text')
+          .map((child) => child.value)
+          .join('');
+        if (text.trim().length > 0) scripts.push(text);
+      }
+    }
+    for (const child of node.childNodes ?? []) walk(child);
   }
+  walk(document);
+
   return scripts;
 }
 
