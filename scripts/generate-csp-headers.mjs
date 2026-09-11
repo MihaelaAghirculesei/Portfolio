@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 // Postbuild step: the prerendered build emits several inline <script> blocks
 // per route (jsaction event replay, Angular transfer-state __nghData__,
-// JSON-LD structured data), several of which differ per route because their
-// content is route-specific. Hand-maintaining a CSP script-src hash for that
-// is exactly how the site's CSP broke last time (one hardcoded hash, ten
-// routes each needing a different one). This scans every prerendered
-// index.html, hashes every distinct inline script it actually finds, and
-// injects the deduplicated set into dist/.../browser/_headers in place of
-// the __CSP_SCRIPT_HASHES__ placeholder that src/_headers ships with.
+// JSON-LD structured data). Of those, only the jsaction bootstrap is actually
+// JS-executing and CSP-gated — and its content (the event types that route's
+// components bind) differs per route. Hand-maintaining a CSP script-src hash
+// for that is exactly how the site's CSP broke last time (one hardcoded
+// hash, ten routes each needing a different one). This scans every
+// prerendered index.html, hashes every distinct inline, JS-executing script
+// it actually finds (skipping non-JS `type`s like JSON-LD/transfer-state,
+// which CSP script-src doesn't gate anyway), and injects the deduplicated
+// set into dist/.../browser/_headers in place of the __CSP_SCRIPT_HASHES__
+// placeholder that src/_headers ships with.
 import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -15,6 +18,10 @@ import { join } from 'node:path';
 const browserDist = join('dist', 'angular-portofolio', 'browser');
 const headersPath = join(browserDist, '_headers');
 const placeholder = '__CSP_SCRIPT_HASHES__';
+
+// Non-JS `type` values this build actually emits (JSON-LD, Angular transfer-state).
+// CSP script-src exempts any <script> whose type is set and isn't a JS/module type.
+const NON_EXECUTABLE_SCRIPT_TYPES = new Set(['application/ld+json', 'application/json']);
 
 function findIndexHtmlFiles(dir) {
   const found = [];
@@ -29,15 +36,26 @@ function findIndexHtmlFiles(dir) {
 
 function extractInlineScripts(html) {
   const scripts = [];
-  // Case-insensitive: this parses Angular's own deterministic build output,
-  // not untrusted input, but a case-sensitive HTML tag match is a flagged
-  // CodeQL pattern (js/bad-tag-filter) regardless of what the match feeds
-  // into, so match <SCRIPT>/<Script> too rather than carry the finding.
-  const re = /<script(\s[^>]*)?>([\s\S]*?)<\/script>/gi;
+  // Case-insensitive and whitespace-tolerant on the end tag: this parses
+  // Angular's own deterministic build output, not untrusted input, but a
+  // loose HTML tag match is a flagged CodeQL pattern (js/bad-tag-filter)
+  // regardless of what the match feeds into — match <SCRIPT>/<Script> and
+  // </script > (space before >) too rather than carry the finding.
+  const re = /<script(\s[^>]*)?>([\s\S]*?)<\/script\s*>/gi;
   let match;
   while ((match = re.exec(html)) !== null) {
     const attrs = match[1] ?? '';
     if (/\bsrc\s*=/i.test(attrs)) continue; // external bundle, not inline
+    // CSP script-src only gates JavaScript-executing <script> elements: a
+    // non-empty, non-JS, non-"module" type attribute (e.g. the JSON-LD and
+    // Angular transfer-state blocks this build emits) is exempt per the CSP3
+    // spec, so browsers never check it against script-src. Hashing it anyway
+    // would just be dead weight in the header — and the transfer-state block
+    // embeds non-deterministic component ids, so its hash isn't even stable
+    // across builds of identical content.
+    const typeMatch = attrs.match(/\btype\s*=\s*["']?([^"'\s>]*)/i);
+    const type = typeMatch?.[1]?.toLowerCase() ?? '';
+    if (NON_EXECUTABLE_SCRIPT_TYPES.has(type)) continue;
     const content = match[2];
     if (content.trim().length === 0) continue;
     scripts.push(content);
