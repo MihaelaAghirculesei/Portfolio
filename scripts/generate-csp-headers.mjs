@@ -11,6 +11,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { parse } from 'parse5';
 
 const browserDist = join('dist', 'angular-portofolio', 'browser');
 const headersPath = join(browserDist, '_headers');
@@ -27,21 +28,31 @@ function findIndexHtmlFiles(dir) {
   return found;
 }
 
+// A real HTML parser rather than a hand-rolled regex: a regex match on
+// <script>...</script> is a flagged CodeQL pattern (js/bad-tag-filter) for
+// good reason in general — it's easy to miss case variants, unusual
+// whitespace, or malformed markup — and parse5 (already in node_modules via
+// Angular's own tooling) sidesteps the whole class of edge cases instead of
+// chasing them one CodeQL finding at a time.
 function extractInlineScripts(html) {
   const scripts = [];
-  // Case-insensitive: this parses Angular's own deterministic build output,
-  // not untrusted input, but a case-sensitive HTML tag match is a flagged
-  // CodeQL pattern (js/bad-tag-filter) regardless of what the match feeds
-  // into, so match <SCRIPT>/<Script> too rather than carry the finding.
-  const re = /<script(\s[^>]*)?>([\s\S]*?)<\/script>/gi;
-  let match;
-  while ((match = re.exec(html)) !== null) {
-    const attrs = match[1] ?? '';
-    if (/\bsrc\s*=/i.test(attrs)) continue; // external bundle, not inline
-    const content = match[2];
-    if (content.trim().length === 0) continue;
-    scripts.push(content);
+  const document = parse(html);
+
+  function walk(node) {
+    if (node.nodeName === 'script') {
+      const hasSrc = (node.attrs ?? []).some((attr) => attr.name === 'src');
+      if (!hasSrc) {
+        const text = (node.childNodes ?? [])
+          .filter((child) => child.nodeName === '#text')
+          .map((child) => child.value)
+          .join('');
+        if (text.trim().length > 0) scripts.push(text);
+      }
+    }
+    for (const child of node.childNodes ?? []) walk(child);
   }
+  walk(document);
+
   return scripts;
 }
 
