@@ -137,6 +137,20 @@ describe('AppComponent', () => {
     );
   });
 
+  it('should update SEO when navigating to the ChargeHub case study', () => {
+    component.ngOnInit();
+    mockSeoService.update.calls.reset();
+    routerEventsSubject.next(
+      new NavigationEnd(1, '/case-study/charge-hub', '/case-study/charge-hub')
+    );
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        title: 'Case Study: ChargeHub — Mihaela Aghirculesei',
+        ogUrl: `${environment.siteUrl}/case-study/charge-hub`,
+      })
+    );
+  });
+
   it('should update SEO when navigating back to home', () => {
     component.ngOnInit();
     routerEventsSubject.next(new NavigationEnd(1, '/legal-notice', '/legal-notice'));
