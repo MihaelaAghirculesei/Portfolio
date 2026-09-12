@@ -47,7 +47,7 @@ export class CaseStudyChargeHubComponent implements OnInit {
   protected readonly screenshotsBasePath = 'assets/img/case-studies/charge-hub/';
 
   protected readonly stats: CaseStudyStat[] = [
-    { value: '226', labelKey: 'caseStudyChargeHub.results.commitsLabel' },
+    { value: '232', labelKey: 'caseStudyChargeHub.results.commitsLabel' },
     { value: '40+', labelKey: 'caseStudyChargeHub.results.pullRequestsLabel' },
     { value: '7', labelKey: 'caseStudyChargeHub.results.adrLabel' },
     { value: '~92%', labelKey: 'caseStudyChargeHub.results.coverageLabel' },
@@ -58,7 +58,7 @@ export class CaseStudyChargeHubComponent implements OnInit {
     },
     { value: '19', labelKey: 'caseStudyChargeHub.results.evalLabel' },
     {
-      value: '46 → ≥80',
+      value: '46 → ≥82',
       labelKey: 'caseStudyChargeHub.results.perfLabel',
       detailKey: 'caseStudyChargeHub.results.perfDetail',
     },
