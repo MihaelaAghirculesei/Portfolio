@@ -372,7 +372,7 @@
       "item1": "Lists and maps real charge points from the Open Charge Map registry, fetched through a server-side BFF route that keeps the API key off the client and caches the responses.",
       "item2": "Shows live status, power draw, and current sessions per station — produced server-side by a deterministic simulation that sits behind a swappable transport interface, so a real telemetry feed can replace it without touching the UI.",
       "item3": "Aggregates historical sessions into KPIs and time-series charts — utilisation, energy delivered, revenue — rendered with Chart.js.",
-      "item4": "Lets an operator search the fleet in plain language (\"CCS chargers over 150 kW near Braunschweig that are online\"): Claude Haiku 4.5 returns a structured filter, validated with Zod and grounded in real station IDs.",
+      "item4": "Lets an operator search the fleet in plain language (\"fast CCS chargers over 150 kW from Ionity that are online\"): Claude Haiku 4.5 returns a structured filter, validated with Zod and grounded in real station IDs.",
       "item5": "Separates an operator role (manage tariffs) from a read-only viewer role, with server-side sessions and localized DE / EN routing."
     },
     "results": {
@@ -384,7 +384,7 @@
       "e2eLabel": "Playwright browser / viewport targets",
       "e2eDetail": "Chromium, WebKit, Pixel 7, iPhone 14",
       "evalLabel": "hand-labelled queries in the eval suite for the natural-language search",
-      "perfLabel": "Lighthouse Performance on the dashboard: initial score → blocking CI gate",
+      "perfLabel": "Lighthouse Performance on the station detail page: initial score → blocking CI gate",
       "perfDetail": "throttled mobile, 3-run median in Lighthouse CI",
       "a11ySeoLabel": "Lighthouse Accessibility · SEO, required on every page (CLS < 0.1 everywhere)"
     },
@@ -398,8 +398,8 @@
       "item1Body": "Open Charge Map is called only from a Nitro server route that injects the key and caches the response; the client receives a narrowed, typed payload and never sees a credential.",
       "item2Title": "Simulated telemetry — but deterministic and stateless.",
       "item2Body": "ADR 0002: live status and history are derived from station ID plus timestamp, so every serverless invocation returns the same value with no shared state. ADR 0003: the whole feed sits behind one interface (polling, not WebSocket) that a real source can implement later.",
-      "item3Title": "Dashboard performance rebuilt from 46 to the CI gate.",
-      "item3Body": "The dashboard started at 46/100 on throttled mobile. MapLibre is now lazy-loaded on demand, the icon set was cut from a 403 kB webfont to a 3.7 kB subset, and responses ship Brotli-compressed — enough to hold ≥ 80/100 as a blocking Lighthouse CI check.",
+      "item3Title": "Station detail performance rebuilt from 46 to the CI gate.",
+      "item3Body": "The station detail page started at 46/100 on throttled mobile. MapLibre is now lazy-loaded on demand, the icon set was cut from a 403 kB webfont to a 3.7 kB subset, and responses ship Brotli-compressed — enough to hold ≥ 82/100 as a blocking Lighthouse CI check.",
       "item4Title": "Per-page Lighthouse budgets, not one global number.",
       "item4Body": "Each route carries its own thresholds — station detail ≥ 82, dashboard ≥ 80, analytics ≥ 78, sessions ≥ 70, with Accessibility 100 and CLS < 0.1 everywhere — measured as a 3-run median in CI.",
       "item5Title": "The natural-language search has its own eval suite.",
