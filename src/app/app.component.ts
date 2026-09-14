@@ -1,5 +1,5 @@
 import { Component, OnInit, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd, NavigationError } from '@angular/router';
 import { TranslationService, Lang } from './shared/services/translation.service';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -11,6 +11,7 @@ import { PlatformService } from './shared/services/platform.service';
 import { environment } from '../environments/environment';
 
 const SITE_URL = environment.siteUrl;
+const STALE_CHUNK_RELOAD_KEY = 'stale-chunk-reload';
 
 interface RouteSeoMeta {
   i18nKey: string;
@@ -66,16 +67,54 @@ export class AppComponent implements OnInit {
 
     this.router.events
       .pipe(
-        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        filter(
+          (event): event is NavigationEnd | NavigationError =>
+            event instanceof NavigationEnd || event instanceof NavigationError
+        ),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
-        next: (event: NavigationEnd) => {
-          const path = event.urlAfterRedirects.split('?')[0].split('#')[0];
-          this.updateSeo(path);
+        next: (event) => {
+          if (event instanceof NavigationEnd) {
+            const path = event.urlAfterRedirects.split('?')[0].split('#')[0];
+            this.updateSeo(path);
+            // A successful navigation means chunks are loading fine again —
+            // re-arm the stale-chunk recovery for any future deploy.
+            this.platformService.window?.sessionStorage.removeItem(STALE_CHUNK_RELOAD_KEY);
+          } else {
+            this.handleNavigationError(event);
+          }
         },
         error: (error) => this.logger.error('Router events error:', error),
       });
+  }
+
+  private handleNavigationError(event: NavigationError): void {
+    const message = event.error instanceof Error ? event.error.message : String(event.error ?? '');
+    const isStaleChunk = /Failed to fetch dynamically imported module|Loading chunk .* failed|ChunkLoadError/i.test(
+      message
+    );
+    if (!isStaleChunk) {
+      this.logger.error('Navigation error:', event.error);
+      return;
+    }
+
+    const win = this.platformService.window;
+    if (!win) {
+      return;
+    }
+
+    // Cloudflare Pages replaces JS assets atomically on every deploy. A tab
+    // left open across a deploy can still reference a chunk filename that no
+    // longer exists on the new deployment. A hard reload fetches the current
+    // index.html (and its matching chunks); the sessionStorage guard stops a
+    // genuinely broken deployment from reload-looping.
+    if (win.sessionStorage.getItem(STALE_CHUNK_RELOAD_KEY)) {
+      this.logger.error('Stale-chunk reload already attempted, giving up:', event.error);
+      return;
+    }
+    win.sessionStorage.setItem(STALE_CHUNK_RELOAD_KEY, '1');
+    win.location.href = event.url;
   }
 
   private updateSeo(path: string): void {
