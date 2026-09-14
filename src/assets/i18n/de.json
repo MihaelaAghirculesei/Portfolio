@@ -234,7 +234,7 @@
       "heading": "Eine echte, veröffentlichte Bewertung",
       "quote": "„Ein Fotoshooting vom Feinsten: keine steifen Posen, nur echtes Lachen und echte Gesichter. Die Fotos wirken wie aus einem Reel, nur besser. Alles ging blitzschnell und das Ergebnis ist der Hammer. Das sind keine Fotos, das sind echte Erinnerungen. Note: 10/10“",
       "author": "Giuseppe, Geburtstagsshooting",
-      "flow": "Der komplette Ablauf ist real: Die Kundin reicht eine Bewertung über das öffentliche Formular ein → das System schreibt eine Zeile mit Status pending in Postgres (Neon) → eine Moderations-E-Mail mit HMAC-signiertem Link wird verschickt (One-Click Approve/Reject, keine sensiblen Daten im Token) → nach Freigabe wird die Bewertung veröffentlicht und die Startseite über revalidateTag neu validiert. Live getestet am 1. Juni 2026 mit einer echten Bewertung, von der Kundin bestätigt. Aktueller Stand der Datenbank: 1 freigegebene, 1 wartende Bewertung — ehrlich noch wenig, weil die Seite erst wenige Wochen online ist, aber die Infrastruktur ist verifiziert und produktionsreif."
+      "flow": "Der komplette Ablauf ist real: Die Kundin reicht eine Bewertung über das öffentliche Formular ein → das System schreibt eine Zeile mit Status pending in Postgres (Neon) → eine Moderations-E-Mail mit HMAC-signiertem Link wird verschickt (One-Click Approve/Reject, keine sensiblen Daten im Token) → nach Freigabe wird die Bewertung veröffentlicht und die Startseite über revalidateTag neu validiert. Live getestet am 1. Juni 2026 mit einer echten Bewertung, von der Kundin bestätigt. Aktueller Stand der Datenbank (Stand September 2026): 5 freigegebene, 1 wartende Bewertung — noch überschaubar, aber organisch wachsend seit dem Go-live, und die Infrastruktur ist durchgehend verifiziert und produktionsreif geblieben."
     },
     "engineering": {
       "heading": "Engineering, nicht nur Design",
@@ -257,7 +257,7 @@
       "item1": "Live seit 1. Juni 2026 — keine Staging-Umgebung: öffentliche Domain, echte Datenbank, echte Transaktions-E-Mails.",
       "item2": "Keine Custom-Domain — bewusste, bestätigte Entscheidung der Kundin, kein technisches Limit.",
       "item3": "Repository mit nur einer Autorin — alle 48 Pull Requests wurden von derselben Person geöffnet, per CI-Gate geprüft und gemergt; kein zweiter Mensch hat Code Review gemacht.",
-      "item4": "Bewertungsvolumen noch gering — 1 freigegeben, 1 in Moderation: die Seite ist erst seit wenigen Wochen online, der Ablauf ist verifiziert, aber noch nicht in großem Umfang getestet."
+      "item4": "Bewertungsvolumen noch überschaubar — 5 freigegeben, 1 in Moderation: wächst organisch seit dem Go-live, aber der Ablauf ist noch nicht in großem Umfang getestet."
     },
     "screenshots": {
       "heading": "Screenshots",
