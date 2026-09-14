@@ -234,7 +234,7 @@
       "heading": "A real, published review",
       "quote": "“A shoot at its finest: no stiff poses, just real laughter and real faces. The photos look like they're straight out of a reel, only better. Everything happened in a flash and the result is amazing. These aren't photos, they're real memories. Rating: 10/10”",
       "author": "Giuseppe, birthday shoot",
-      "flow": "The full flow is real: the client submits a review through the public form → the system writes a row with status pending to Postgres (Neon) → a moderation email with an HMAC-signed link goes out (one-click approve/reject, no sensitive data in the token) → once approved, the review is published and the homepage is revalidated via revalidateTag. Tested live on June 1, 2026 with a real review, confirmed by the client. Current state of the database: 1 approved, 1 pending review — honestly still a small number, since the site has only been live for a few weeks, but the infrastructure is verified and production-ready."
+      "flow": "The full flow is real: the client submits a review through the public form → the system writes a row with status pending to Postgres (Neon) → a moderation email with an HMAC-signed link goes out (one-click approve/reject, no sensitive data in the token) → once approved, the review is published and the homepage is revalidated via revalidateTag. Tested live on June 1, 2026 with a real review, confirmed by the client. Current state of the database (as of September 2026): 5 approved, 1 pending review — a modest but real number, growing organically since go-live, and the infrastructure has stayed verified and production-ready throughout."
     },
     "engineering": {
       "heading": "Engineering, not just design",
@@ -257,7 +257,7 @@
       "item1": "Live since June 1, 2026 — no staging environment: public domain, real database, real transactional emails.",
       "item2": "No custom domain — a deliberate, confirmed decision by the client, not a technical limitation.",
       "item3": "Single-author repository — all 48 pull requests were opened by the same person, checked by the CI gate, and merged; no second person did code review.",
-      "item4": "Review volume is still low — 1 approved, 1 in moderation: the site has only been live for a few weeks, so the flow is verified but not yet tested at scale."
+      "item4": "Review volume is still modest — 5 approved, 1 in moderation: growing organically since go-live, but the flow is not yet tested at real scale."
     },
     "screenshots": {
       "heading": "Screenshots",
