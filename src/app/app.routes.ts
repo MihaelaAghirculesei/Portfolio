@@ -59,6 +59,13 @@ export const routes: Routes = [
       ).then((m) => m.CaseStudyBfsgScannerComponent),
   },
   {
+    path: 'case-study/charge-hub',
+    loadComponent: () =>
+      import(
+        './main-content/portfolio/case-study-charge-hub/case-study-charge-hub.component'
+      ).then((m) => m.CaseStudyChargeHubComponent),
+  },
+  {
     path: 'feedback',
     loadComponent: () =>
       import('./main-content/feedback/feedback.component').then(
