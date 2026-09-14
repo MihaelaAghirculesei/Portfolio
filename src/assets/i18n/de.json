@@ -372,7 +372,7 @@
       "item1": "Listet und kartiert echte Ladepunkte aus dem Open-Charge-Map-Verzeichnis, abgerufen über eine serverseitige BFF-Route, die den API-Key vom Client fernhält und die Antworten cacht.",
       "item2": "Zeigt Live-Status, Leistungsabgabe und laufende Ladevorgänge pro Station — serverseitig erzeugt von einer deterministischen Simulation hinter einer austauschbaren Transport-Schnittstelle, sodass ein echter Telemetrie-Feed sie ersetzen kann, ohne die UI anzufassen.",
       "item3": "Verdichtet historische Ladevorgänge zu KPIs und Zeitreihen-Diagrammen — Auslastung, gelieferte Energie, Umsatz — gerendert mit Chart.js.",
-      "item4": "Lässt eine Betreiberin das Netz in natürlicher Sprache durchsuchen (\"CCS-Lader über 150 kW bei Braunschweig, die online sind\"): Claude Haiku 4.5 liefert einen strukturierten Filter, mit Zod validiert und auf echte Stations-IDs geerdet.",
+      "item4": "Lässt eine Betreiberin das Netz in natürlicher Sprache durchsuchen (\"schnelle CCS-Lader über 150 kW von Ionity, die online sind\"): Claude Haiku 4.5 liefert einen strukturierten Filter, mit Zod validiert und auf echte Stations-IDs geerdet.",
       "item5": "Trennt eine Betreiber-Rolle (Tarife verwalten) von einer reinen Lese-Rolle, mit serverseitigen Sessions und lokalisiertem DE-/EN-Routing."
     },
     "results": {
@@ -384,7 +384,7 @@
       "e2eLabel": "Playwright-Ziele für Browser / Viewport",
       "e2eDetail": "Chromium, WebKit, Pixel 7, iPhone 14",
       "evalLabel": "handgelabelte Anfragen in der Eval-Suite für die natürlichsprachige Suche",
-      "perfLabel": "Lighthouse Performance auf dem Dashboard: Ausgangswert → blockierendes CI-Gate",
+      "perfLabel": "Lighthouse Performance auf der Stationsdetailseite: Ausgangswert → blockierendes CI-Gate",
       "perfDetail": "gedrosseltes Mobil, Median aus 3 Läufen in Lighthouse CI",
       "a11ySeoLabel": "Lighthouse Accessibility · SEO, auf jeder Seite Pflicht (CLS < 0,1 überall)"
     },
@@ -398,8 +398,8 @@
       "item1Body": "Open Charge Map wird nur aus einer Nitro-Server-Route aufgerufen, die den Key einsetzt und die Antwort cacht; der Client bekommt eine verschmälerte, typisierte Payload und sieht nie ein Credential.",
       "item2Title": "Simulierte Telemetrie — aber deterministisch und zustandslos.",
       "item2Body": "ADR 0002: Live-Status und Historie werden aus Stations-ID plus Zeitstempel abgeleitet, sodass jeder Serverless-Aufruf denselben Wert ohne geteilten State liefert. ADR 0003: Der ganze Feed sitzt hinter einer Schnittstelle (Polling, kein WebSocket), die eine echte Quelle später implementieren kann.",
-      "item3Title": "Dashboard-Performance von 46 auf das CI-Gate gehoben.",
-      "item3Body": "Das Dashboard startete bei 46/100 auf gedrosseltem Mobil. MapLibre wird jetzt bei Bedarf lazy geladen, das Icon-Set von einer 403-kB-Webfont auf ein 3,7-kB-Subset reduziert und Antworten werden Brotli-komprimiert ausgeliefert — genug, um ≥ 80/100 als blockierenden Lighthouse-CI-Check zu halten.",
+      "item3Title": "Stationsdetail-Performance von 46 auf das CI-Gate gehoben.",
+      "item3Body": "Die Stationsdetailseite startete bei 46/100 auf gedrosseltem Mobil. MapLibre wird jetzt bei Bedarf lazy geladen, das Icon-Set von einer 403-kB-Webfont auf ein 3,7-kB-Subset reduziert und Antworten werden Brotli-komprimiert ausgeliefert — genug, um ≥ 82/100 als blockierenden Lighthouse-CI-Check zu halten.",
       "item4Title": "Pro-Seite-Lighthouse-Budgets, keine einzelne globale Zahl.",
       "item4Body": "Jede Route trägt eigene Schwellen — Stationsdetail ≥ 82, Dashboard ≥ 80, Analytics ≥ 78, Sessions ≥ 70, dazu Accessibility 100 und CLS < 0,1 überall — gemessen als Median aus 3 Läufen in der CI.",
       "item5Title": "Die natürlichsprachige Suche hat ihre eigene Eval-Suite.",
