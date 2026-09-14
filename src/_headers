@@ -2,12 +2,31 @@
   # CSP for static Cloudflare Pages serving (pre-rendered Angular build).
   # - unsafe-eval removed: AOT compilation does not require dynamic eval.
   # - unsafe-inline removed from script-src: Angular's application builder
-  #   emits only external JS bundles — no inline <script> in the HTML output.
+  #   emits only external JS bundles for actual application code — but
+  #   prerendering + hydration's jsaction event-replay bootstrap DOES emit
+  #   one inline <script> per route, and its content (the list of event
+  #   types that route's components bind) differs per route. A single
+  #   hardcoded hash here goes stale the moment any route's bindings change
+  #   — see the incident this replaced. (Prerendering also emits inline
+  #   JSON-LD and Angular transfer-state blocks, but those use non-JS
+  #   `type` attributes, which CSP script-src doesn't gate at all — the
+  #   generator below skips them rather than hash content that's exempt
+  #   and, for transfer-state, not even stable across builds.) `npm run
+  #   build` now runs scripts/generate-csp-headers.mjs as a postbuild step,
+  #   which scans every prerendered index.html, hashes every distinct
+  #   inline, JS-executing <script>, and rewrites the placeholder token in
+  #   the Content-Security-Policy line below (in dist/, not this file) with
+  #   the exact deduplicated set for that build. Keep this file as the
+  #   template; do not hand-edit a hash back in here, and do not repeat the
+  #   placeholder token itself anywhere in this comment block — the
+  #   generator script does a single, literal, first-match replace, and a
+  #   second occurrence earlier in the file (e.g. in this comment) silently
+  #   steals it instead of the real header line.
   # - style-src retains unsafe-inline: Angular injects component CSS as <style>
   #   elements at hydration time. Nonce-based style enforcement is handled by
   #   the SSR Express server (server.ts) for Node.js deployments; the static
   #   fallback here keeps unsafe-inline scoped to styles only.
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-hashes' 'sha256-MhtPZXr7+LpJUY5qtMutB+qWfQtMaPccfe7QXtCcEYc='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.aghirculesei.workers.dev; base-uri 'self'; form-action 'self';
+  Content-Security-Policy: default-src 'self'; script-src 'self' __CSP_SCRIPT_HASHES__; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.aghirculesei.workers.dev; base-uri 'self'; form-action 'self';
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
