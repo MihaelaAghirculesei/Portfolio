@@ -24,7 +24,8 @@
     "githubUrl": "https://github.com/MihaelaAghirculesei/ChargeHub",
     "liveUrl": "https://charge-hub-one.vercel.app/de",
     "isPersonal": true,
-    "inProgress": false
+    "inProgress": false,
+    "caseStudyRoute": "case-study/charge-hub"
   },
   {
     "id": "birthdayReminder",

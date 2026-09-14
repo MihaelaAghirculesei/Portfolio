@@ -350,6 +350,95 @@
       "pullRequests": "Die Pull Requests des Repositories auf GitHub — jeder mit eigener Aufgaben-Checkliste gemergt"
     }
   },
+  "caseStudyChargeHub": {
+    "backLink": "Zurück zu den Projekten",
+    "eyebrow": "Case Study",
+    "title": "ChargeHub",
+    "subtitle": "Ein Betriebs-Dashboard für einen Ladepunkt-Betreiber",
+    "soloNote": "Solo-Projekt: Architektur, Implementierung, Tests, CI/CD und Deployment — eine einzige Entwicklerin, am Maßstab eines Teams.",
+    "roleLabel": "Rolle",
+    "role": "Fullstack-Entwicklerin",
+    "periodLabel": "Zeitraum",
+    "period": "2026 — nach einem 24-Tage-Plan gebaut",
+    "periodNote": "live und funktional vollständig",
+    "liveLabel": "Live",
+    "intro": {
+      "heading": "Ausgangslage",
+      "body": "Ein Ladepunkt-Betreiber braucht einen operativen Blick auf sein Netz: wo die Stationen stehen, welche online sind, wie viel Energie und Umsatz sie erzeugen. ChargeHub ist dieses Dashboard, solo als Portfolio-Projekt in genau dieser Domäne gebaut. Die Stammdaten der Stationen kommen aus einem echten öffentlichen Verzeichnis, Open Charge Map; alles, was ein öffentliches Verzeichnis nicht liefern kann — Live-Status, Ladevorgänge, KPIs — erzeugt eine deterministische serverseitige Simulation.",
+      "body2": "Gebaut am Maßstab, den ein Team an sich selbst anlegen würde: ein Branch und Pull Request für jede Änderung, Branch Protection auf main und eine CI-Pipeline, die lintet, typprüft, hinter einem Coverage-Gate testet, baut, Playwright über vier Browser und Viewports laufen lässt und jede Seite an ihrem eigenen Lighthouse-Budget misst. Jede wesentliche Entscheidung hat ein Architecture Decision Record."
+    },
+    "whatItDoes": {
+      "heading": "Was das Dashboard macht",
+      "item1": "Listet und kartiert echte Ladepunkte aus dem Open-Charge-Map-Verzeichnis, abgerufen über eine serverseitige BFF-Route, die den API-Key vom Client fernhält und die Antworten cacht.",
+      "item2": "Zeigt Live-Status, Leistungsabgabe und laufende Ladevorgänge pro Station — serverseitig erzeugt von einer deterministischen Simulation hinter einer austauschbaren Transport-Schnittstelle, sodass ein echter Telemetrie-Feed sie ersetzen kann, ohne die UI anzufassen.",
+      "item3": "Verdichtet historische Ladevorgänge zu KPIs und Zeitreihen-Diagrammen — Auslastung, gelieferte Energie, Umsatz — gerendert mit Chart.js.",
+      "item4": "Lässt eine Betreiberin das Netz in natürlicher Sprache durchsuchen (\"CCS-Lader über 150 kW bei Braunschweig, die online sind\"): Claude Haiku 4.5 liefert einen strukturierten Filter, mit Zod validiert und auf echte Stations-IDs geerdet.",
+      "item5": "Trennt eine Betreiber-Rolle (Tarife verwalten) von einer reinen Lese-Rolle, mit serverseitigen Sessions und lokalisiertem DE-/EN-Routing."
+    },
+    "results": {
+      "heading": "In Zahlen",
+      "commitsLabel": "Commits",
+      "pullRequestsLabel": "gemergte Pull Requests, jeder auf eigenem Branch hinter Branch Protection",
+      "adrLabel": "Architecture Decision Records (docs/adr) — Design-System, Telemetrie-Simulation, Live-Update-Transport, Modulstruktur, Pinia-Geltungsbereich, Rendering-Strategie, KI-Suche",
+      "coverageLabel": "Coverage-Gate für Unit-Tests, in der CI erzwungen (Vitest + @nuxt/test-utils)",
+      "e2eLabel": "Playwright-Ziele für Browser / Viewport",
+      "e2eDetail": "Chromium, WebKit, Pixel 7, iPhone 14",
+      "evalLabel": "handgelabelte Anfragen in der Eval-Suite für die natürlichsprachige Suche",
+      "perfLabel": "Lighthouse Performance auf dem Dashboard: Ausgangswert → blockierendes CI-Gate",
+      "perfDetail": "gedrosseltes Mobil, Median aus 3 Läufen in Lighthouse CI",
+      "a11ySeoLabel": "Lighthouse Accessibility · SEO, auf jeder Seite Pflicht (CLS < 0,1 überall)"
+    },
+    "aiSearch": {
+      "heading": "Natürlichsprachige Stationssuche",
+      "body": "Über der normalen Filterleiste kann eine Betreiberin eine Anfrage tippen, statt sich durch Dropdowns zu klicken. Claude Haiku 4.5 liefert ein strukturiertes Objekt — keinen Freitext —, das gegen ein Zod-Schema validiert und auf denselben Filter-State angewendet wird, den auch die UI-Bedienelemente nutzen. Stations-Referenzen sind auf echte Open-Charge-Map-IDs beschränkt, sodass das Modell keinen Ort erfinden kann. Das Feature ist optional: ohne API-Key läuft das Dashboard genau wie vorher, nur mit den klassischen Filtern."
+    },
+    "highlights": {
+      "heading": "Engineering, nicht nur Demo",
+      "item1Title": "Der API-Key erreicht den Browser nie.",
+      "item1Body": "Open Charge Map wird nur aus einer Nitro-Server-Route aufgerufen, die den Key einsetzt und die Antwort cacht; der Client bekommt eine verschmälerte, typisierte Payload und sieht nie ein Credential.",
+      "item2Title": "Simulierte Telemetrie — aber deterministisch und zustandslos.",
+      "item2Body": "ADR 0002: Live-Status und Historie werden aus Stations-ID plus Zeitstempel abgeleitet, sodass jeder Serverless-Aufruf denselben Wert ohne geteilten State liefert. ADR 0003: Der ganze Feed sitzt hinter einer Schnittstelle (Polling, kein WebSocket), die eine echte Quelle später implementieren kann.",
+      "item3Title": "Dashboard-Performance von 46 auf das CI-Gate gehoben.",
+      "item3Body": "Das Dashboard startete bei 46/100 auf gedrosseltem Mobil. MapLibre wird jetzt bei Bedarf lazy geladen, das Icon-Set von einer 403-kB-Webfont auf ein 3,7-kB-Subset reduziert und Antworten werden Brotli-komprimiert ausgeliefert — genug, um ≥ 80/100 als blockierenden Lighthouse-CI-Check zu halten.",
+      "item4Title": "Pro-Seite-Lighthouse-Budgets, keine einzelne globale Zahl.",
+      "item4Body": "Jede Route trägt eigene Schwellen — Stationsdetail ≥ 82, Dashboard ≥ 80, Analytics ≥ 78, Sessions ≥ 70, dazu Accessibility 100 und CLS < 0,1 überall — gemessen als Median aus 3 Läufen in der CI.",
+      "item5Title": "Die natürlichsprachige Suche hat ihre eigene Eval-Suite.",
+      "item5Body": "19 handgelabelte Anfragen prüfen, dass die strukturierte Ausgabe des Modells auf die richtigen Filter abbildet. Sie läuft auf Anforderung, bewusst außerhalb der CI, weil jeder Lauf API-Kosten verursacht.",
+      "item6Title": "Jede Architekturentscheidung ist schriftlich festgehalten.",
+      "item6Body": "Sieben ADRs decken Design-System, Telemetrie-Simulation, Live-Update-Transport, Modulstruktur, Pinia-Geltungsbereich, Rendering pro Route und die KI-Suche ab — jeweils mit Kontext und Trade-off, nicht nur dem Ergebnis."
+    },
+    "techStack": {
+      "heading": "Tech-Stack"
+    },
+    "limitations": {
+      "heading": "Ehrliche Grenzen",
+      "item1": "Die Telemetrie ist simuliert. Sie ist deterministisch und austauschbar, aber es steckt keine echte Hardware und kein Live-Feed dahinter.",
+      "item2": "Die Authentifizierung ist gemockt — zwei fest hinterlegte Konten (operator, viewer). Genug, um Rollentrennung zu zeigen, kein echtes Identitätssystem.",
+      "item3": "Stationsdetail-Seiten nutzen kein App-Level-HTTP-Caching (swr / ISR): Es kollidierte mit der Hydration und wurde weggelassen, statt halbfertig ausgeliefert zu werden.",
+      "item4": "MapLibre-Marker-Klicks sind nicht durch pixelgenaue E2E-Tests abgedeckt — Canvas- / WebGL-Projektion macht sie zu unzuverlässig für Assertions.",
+      "item5": "Repository mit einer Autorin — jeder Pull Request wurde von derselben Person geöffnet, von der CI geprüft und gemergt; keine zweite Review."
+    },
+    "learned": {
+      "heading": "Was ich mitgenommen habe",
+      "item1": "Eine Simulation entwerfen, die man wegwerfen kann: eine deterministische, zustandslose Telemetriequelle hinter einer Schnittstelle, sodass der Wechsel auf einen echten Feed eine Konfigurationsänderung ist, kein Umbau.",
+      "item2": "Performance als Vertrag behandeln — Pro-Seite-Lighthouse-Budgets in der CI — statt als Zahl, die man einmal prüft und vergisst.",
+      "item3": "Ein LLM-Feature ehrlich halten: strukturierte Ausgabe, Schema-Validierung, auf echte Daten geerdete IDs und eine Eval-Suite getrennt von den Unit-Tests.",
+      "item4": "ADRs beim Entscheiden schreiben, nicht danach — am meisten gebracht haben die unspektakulären (Pinia-Geltungsbereich, Rendering-Strategie)."
+    },
+    "links": {
+      "heading": "Links",
+      "code": "Quellcode",
+      "live": "Live-Demo",
+      "data": "Datenquelle"
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "dashboard": "Das Betreiber-Dashboard: Netzkarte, Live-Status-Kacheln und die KPI-Leiste",
+      "stationDetail": "Eine einzelne Station: Anschlüsse, aktuelle Leistungsabgabe und die letzten Ladevorgänge",
+      "analytics": "Die Analytics-Seite: Auslastung, gelieferte Energie und Umsatz über die Zeit",
+      "nlSearch": "Die natürlichsprachige Suche, die eine Klartext-Anfrage in strukturierte Filter auflöst"
+    }
+  },
   "banner": {
     "remoteWork": "Verfügbar für Remote-Arbeit",
     "role": "Fullstack Entwicklerin",
