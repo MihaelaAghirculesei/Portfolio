@@ -40,7 +40,7 @@ export class CaseStudyAlinaMomentsComponent implements OnInit {
 
   protected readonly stats: CaseStudyStat[] = [
     {
-      value: '86/100',
+      value: '90/100',
       labelKey: 'caseStudyAlinaMoments.results.performanceLabel',
       detailKey: 'caseStudyAlinaMoments.results.performanceDetail',
     },
