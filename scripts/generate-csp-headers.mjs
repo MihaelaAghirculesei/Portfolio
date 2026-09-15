@@ -11,6 +11,18 @@
 // which CSP script-src doesn't gate anyway), and injects the deduplicated
 // set into dist/.../browser/_headers in place of the __CSP_SCRIPT_HASHES__
 // placeholder that src/_headers ships with.
+//
+// It also hashes inline event-handler attributes (e.g. the `onload` Angular
+// CLI's `optimization.styles.inlineCritical` build option stamps onto the
+// deferred stylesheet <link>, `<link ... media="print" onload="this.media=
+// 'all'">`, to swap it to screen media once loaded without blocking first
+// paint). CSP hashes only cover those when 'unsafe-hashes' is present in
+// script-src — omitting it silently blocks the handler, leaving the
+// stylesheet stuck at media="print" forever (never applying to screen), with
+// no console error pointing at the stylesheet itself. Same reasoning as the
+// script hashes above: scan for it and add 'unsafe-hashes' automatically
+// rather than hardcoding it as always-on, so a future removal of this
+// pattern removes the keyword too instead of leaving unused CSP surface.
 import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -72,6 +84,26 @@ function extractInlineScripts(html) {
   return scripts;
 }
 
+// Inline event-handler attributes (onload, onclick, ...). CSP3 hashes these
+// separately from <script> content: the hash-source is the attribute value
+// text, and it only takes effect when 'unsafe-hashes' is in script-src.
+function extractInlineEventHandlers(html) {
+  const handlers = [];
+  const document = parse(html);
+
+  function walk(node) {
+    for (const attr of node.attrs ?? []) {
+      if (/^on[a-z]+$/i.test(attr.name) && attr.value.trim().length > 0) {
+        handlers.push(attr.value);
+      }
+    }
+    for (const child of node.childNodes ?? []) walk(child);
+  }
+  walk(document);
+
+  return handlers;
+}
+
 const indexFiles = findIndexHtmlFiles(browserDist);
 if (indexFiles.length === 0) {
   console.error(`[generate-csp-headers] no index.html found under ${browserDist} — did the build run first?`);
@@ -79,10 +111,14 @@ if (indexFiles.length === 0) {
 }
 
 const hashes = new Set();
+const handlerHashes = new Set();
 for (const file of indexFiles) {
   const html = readFileSync(file, 'utf8');
   for (const script of extractInlineScripts(html)) {
     hashes.add(`'sha256-${createHash('sha256').update(script, 'utf8').digest('base64')}'`);
+  }
+  for (const handler of extractInlineEventHandlers(html)) {
+    handlerHashes.add(`'sha256-${createHash('sha256').update(handler, 'utf8').digest('base64')}'`);
   }
 }
 
@@ -103,7 +139,10 @@ if (occurrences !== 1) {
   process.exit(1);
 }
 
-const hashList = [...hashes].sort().join(' ');
+const allTokens = handlerHashes.size > 0 ? ["'unsafe-hashes'", ...hashes, ...handlerHashes] : [...hashes];
+const hashList = allTokens.sort().join(' ');
 writeFileSync(headersPath, headers.replace(placeholder, hashList));
 
-console.log(`[generate-csp-headers] wrote ${hashes.size} inline script hash(es) across ${indexFiles.length} route(s) into ${headersPath}`);
+console.log(
+  `[generate-csp-headers] wrote ${hashes.size} inline script hash(es) and ${handlerHashes.size} event-handler hash(es) across ${indexFiles.length} route(s) into ${headersPath}`,
+);
