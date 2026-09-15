@@ -48,7 +48,7 @@ export class CaseStudyBfsgScannerComponent implements OnInit {
 
   protected readonly stats: CaseStudyStat[] = [
     { value: '150', labelKey: 'caseStudyBfsgScanner.results.testsLabel' },
-    { value: '39', labelKey: 'caseStudyBfsgScanner.results.pullRequestsLabel' },
+    { value: '41', labelKey: 'caseStudyBfsgScanner.results.pullRequestsLabel' },
     { value: '3', labelKey: 'caseStudyBfsgScanner.results.osLabel' },
     { value: '0·1·2·3', labelKey: 'caseStudyBfsgScanner.results.exitCodesLabel' },
     { value: 'JSON · HTML · PDF', labelKey: 'caseStudyBfsgScanner.results.reportFormatsLabel' },
