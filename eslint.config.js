@@ -32,10 +32,22 @@ module.exports = tseslint.config(
         Atomics: "readonly",
         SharedArrayBuffer: "readonly",
         Int32Array: "readonly",
+        setTimeout: "readonly",
       },
     },
     rules: {
       "no-console": "off",
+    },
+  },
+  {
+    // scripts/smoke-test-production.mjs drives Playwright's page.evaluate(),
+    // whose callbacks run in the browser, not Node — `document` only exists
+    // there.
+    files: ["scripts/smoke-test-production.mjs"],
+    languageOptions: {
+      globals: {
+        document: "readonly",
+      },
     },
   },
   {
