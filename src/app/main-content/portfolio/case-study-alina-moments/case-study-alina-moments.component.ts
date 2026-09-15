@@ -40,18 +40,18 @@ export class CaseStudyAlinaMomentsComponent implements OnInit {
 
   protected readonly stats: CaseStudyStat[] = [
     {
-      value: '86/100',
+      value: '90/100',
       labelKey: 'caseStudyAlinaMoments.results.performanceLabel',
       detailKey: 'caseStudyAlinaMoments.results.performanceDetail',
     },
     { value: '100/100', labelKey: 'caseStudyAlinaMoments.results.accessibilityLabel' },
     { value: '100/100', labelKey: 'caseStudyAlinaMoments.results.seoLabel' },
     { value: '96/100', labelKey: 'caseStudyAlinaMoments.results.bestPracticesLabel' },
-    { value: '279', labelKey: 'caseStudyAlinaMoments.results.unitTestsLabel' },
-    { value: '192', labelKey: 'caseStudyAlinaMoments.results.e2eTestsLabel' },
-    { value: '374', labelKey: 'caseStudyAlinaMoments.results.commitsLabel' },
-    { value: '48', labelKey: 'caseStudyAlinaMoments.results.pullRequestsLabel' },
-    { value: '447/500 KB', labelKey: 'caseStudyAlinaMoments.results.bundleSizeLabel' },
+    { value: '288', labelKey: 'caseStudyAlinaMoments.results.unitTestsLabel' },
+    { value: '212', labelKey: 'caseStudyAlinaMoments.results.e2eTestsLabel' },
+    { value: '475', labelKey: 'caseStudyAlinaMoments.results.commitsLabel' },
+    { value: '73', labelKey: 'caseStudyAlinaMoments.results.pullRequestsLabel' },
+    { value: '431/500 KB', labelKey: 'caseStudyAlinaMoments.results.bundleSizeLabel' },
   ];
 
   protected readonly engineeringItems: CaseStudyEngineeringItem[] = [1, 2, 3, 4, 5].map((n) => ({
