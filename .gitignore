@@ -46,6 +46,9 @@ cloudflare-worker/.dev.vars
 cloudflare-worker/.wrangler/
 cloudflare-worker/test.ps1
 
+# wrangler pages dev local state (scripts/smoke-test-production.mjs)
+/.wrangler/
+
 # Test output
 test-results.txt
 build.log
