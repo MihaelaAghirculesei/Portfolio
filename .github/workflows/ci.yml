@@ -46,6 +46,12 @@ jobs:
       - name: Build production
         run: npm run build -- --configuration=production
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Smoke test production artifact
+        run: npm run ci:smoke
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7
         with:
