@@ -16,10 +16,15 @@
   #   which scans every prerendered index.html, hashes every distinct
   #   inline, JS-executing <script>, and rewrites the placeholder token in
   #   the Content-Security-Policy line below (in dist/, not this file) with
-  #   the exact deduplicated set for that build. Keep this file as the
-  #   template; do not hand-edit a hash back in here, and do not repeat the
-  #   placeholder token itself anywhere in this comment block — the
-  #   generator script does a single, literal, first-match replace, and a
+  #   the exact deduplicated set for that build. It also hashes the inline
+  #   `onload` handler Angular's inlineCritical build option stamps onto the
+  #   deferred stylesheet <link> and adds 'unsafe-hashes' automatically when
+  #   it finds one — without it, that handler never runs, the stylesheet
+  #   stays at media="print" forever, and everything that only lives in the
+  #   external (non-critical) stylesheet silently stops applying. Keep this
+  #   file as the template; do not hand-edit a hash back in here, and do not
+  #   repeat the placeholder token itself anywhere in this comment block —
+  #   the generator script does a single, literal, first-match replace, and a
   #   second occurrence earlier in the file (e.g. in this comment) silently
   #   steals it instead of the real header line.
   # - style-src retains unsafe-inline: Angular injects component CSS as <style>
