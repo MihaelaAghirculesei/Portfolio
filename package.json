@@ -74,7 +74,7 @@
     "@playwright/test": "^1.63.0",
     "@types/express": "^5.0.6",
     "@types/jasmine": "~5.1.0",
-    "@types/node": "^22.10.0",
+    "@types/node": "^22.20.2",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
     "angular-eslint": "^20.3.0",
