@@ -224,7 +224,7 @@
       "commitsLabel": "Commits",
       "pullRequestsLabel": "gemergte Pull Requests",
       "bundleSizeLabel": "Shared-JS-Bundle (automatisches Gate in der CI)",
-      "methodologyNote": "Methodik-Hinweis, der auch im Original steht: Auf einem realen Mobilfunknetz mit Standard-Throttling sinkt der Performance-Wert auf 63–68/100 — das spiegelt die tatsächlichen Kosten hochauflösender Bilder auf einer Fotografie-Website wider, nicht einen Messfehler. Die CI-Pipeline (lokaler Build, gleiches Desktop-Preset) verzeichnet über mehrere Durchläufe konstant 83–84/100."
+      "methodologyNote": "Methodik-Hinweis, der auch im Original steht: Auf einem realen Mobilfunknetz mit Standard-Throttling schwankt der Performance-Wert zwischen etwa 53–73/100 — das spiegelt die tatsächlichen Kosten hochauflösender Bilder auf einer Fotografie-Website wider, nicht einen Messfehler. Die CI-Pipeline (Produktions-URL, Desktop-Preset, Median über 5 Durchläufe) liegt konstant bei 93–96/100."
     },
     "liveFeatures": {
       "heading": "Was live in Produktion läuft",

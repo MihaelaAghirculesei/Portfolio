@@ -224,7 +224,7 @@
       "commitsLabel": "commits",
       "pullRequestsLabel": "merged pull requests",
       "bundleSizeLabel": "shared JS bundle (automated gate in CI)",
-      "methodologyNote": "A methodology note that also appears in the original write-up: on a real mobile network with standard throttling, the performance score drops to 63–68/100 — that reflects the actual cost of high-resolution images on a photography website, not a measurement error. The CI pipeline (local build, same desktop preset) consistently logs 83–84/100 across multiple runs."
+      "methodologyNote": "A methodology note that also appears in the original write-up: on a real mobile network with standard throttling, the performance score swings between roughly 53–73/100 — that reflects the actual cost of high-resolution images on a photography website, not a measurement error. The CI pipeline (production URL, desktop preset, median of 5 runs) consistently lands at 93–96/100."
     },
     "liveFeatures": {
       "heading": "What's live in production",
