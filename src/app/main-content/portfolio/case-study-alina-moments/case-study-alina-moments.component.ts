@@ -40,18 +40,18 @@ export class CaseStudyAlinaMomentsComponent implements OnInit {
 
   protected readonly stats: CaseStudyStat[] = [
     {
-      value: '90/100',
+      value: '95/100',
       labelKey: 'caseStudyAlinaMoments.results.performanceLabel',
       detailKey: 'caseStudyAlinaMoments.results.performanceDetail',
     },
     { value: '100/100', labelKey: 'caseStudyAlinaMoments.results.accessibilityLabel' },
     { value: '100/100', labelKey: 'caseStudyAlinaMoments.results.seoLabel' },
-    { value: '96/100', labelKey: 'caseStudyAlinaMoments.results.bestPracticesLabel' },
+    { value: '100/100', labelKey: 'caseStudyAlinaMoments.results.bestPracticesLabel' },
     { value: '288', labelKey: 'caseStudyAlinaMoments.results.unitTestsLabel' },
     { value: '212', labelKey: 'caseStudyAlinaMoments.results.e2eTestsLabel' },
-    { value: '475', labelKey: 'caseStudyAlinaMoments.results.commitsLabel' },
-    { value: '73', labelKey: 'caseStudyAlinaMoments.results.pullRequestsLabel' },
-    { value: '431/500 KB', labelKey: 'caseStudyAlinaMoments.results.bundleSizeLabel' },
+    { value: '491', labelKey: 'caseStudyAlinaMoments.results.commitsLabel' },
+    { value: '79', labelKey: 'caseStudyAlinaMoments.results.pullRequestsLabel' },
+    { value: '436/500 KB', labelKey: 'caseStudyAlinaMoments.results.bundleSizeLabel' },
   ];
 
   protected readonly engineeringItems: CaseStudyEngineeringItem[] = [1, 2, 3, 4, 5].map((n) => ({
