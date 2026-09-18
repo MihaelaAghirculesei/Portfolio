@@ -49,8 +49,8 @@ export class CaseStudyAlinaMomentsComponent implements OnInit {
     { value: '100/100', labelKey: 'caseStudyAlinaMoments.results.bestPracticesLabel' },
     { value: '288', labelKey: 'caseStudyAlinaMoments.results.unitTestsLabel' },
     { value: '212', labelKey: 'caseStudyAlinaMoments.results.e2eTestsLabel' },
-    { value: '483', labelKey: 'caseStudyAlinaMoments.results.commitsLabel' },
-    { value: '76', labelKey: 'caseStudyAlinaMoments.results.pullRequestsLabel' },
+    { value: '491', labelKey: 'caseStudyAlinaMoments.results.commitsLabel' },
+    { value: '79', labelKey: 'caseStudyAlinaMoments.results.pullRequestsLabel' },
     { value: '436/500 KB', labelKey: 'caseStudyAlinaMoments.results.bundleSizeLabel' },
   ];
 
