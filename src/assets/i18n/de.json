@@ -188,7 +188,7 @@
       "shortDescription": "RESTful Todo-API mit sauberer Schichtarchitektur"
     },
     "bfsgScanner": {
-      "description": "Eine Open-Source-CLI, auf npm mit SLSA-Provenance veröffentlicht, die eine ganze Website auf WCAG-2.1-AA-Verstöße prüft und jeden Befund auf die EN 301 549 / BFSG-Klausel abbildet, die er verletzt — als zitierfähigen Konformitätsbericht in JSON, HTML oder PDF. Sobald die Verstöße eine konfigurierbare Schwere-Schwelle überschreiten, endet sie mit einem Exit-Code ≠ 0, sodass eine CI-Pipeline den Merge an der Barrierefreiheit blockieren kann. Die Seitenermittlung läuft über sitemap.xml und danach über einen Breadth-First-Crawl, der robots.txt respektiert; jede Seite wird in einem echten Chromium über Playwright und axe-core analysiert, mit Concurrency-Pool, Rate-Limit pro Host, identifizierbarem User-Agent und optionaler Settle-Verzögerung, damit clientseitig gerenderte Seiten erst im hydratisierten Zustand geprüft werden. Die report.json-Ausgabe ist durch ein versioniertes JSON Schema beschrieben und mit Anti-Drift-Tests via ajv abgesichert. Gebaut mit TypeScript auf Node.js, mit 150 Vitest-Tests, CI auf Linux, Windows und macOS, entwickelt als Folge kleiner, einzeln reviewter Pull Requests; die zehn Entscheidungen, die die Architektur geprägt haben, tragen je ein Architecture Decision Record. Der Release-Workflow veröffentlicht auf npm über OIDC Trusted Publishing, ohne langlebiges Token.",
+      "description": "Eine Open-Source-CLI, auf npm mit SLSA-Provenance veröffentlicht, die eine ganze Website auf WCAG-2.1-AA-Verstöße prüft und jeden Befund auf die EN 301 549 / BFSG-Klausel abbildet, die er verletzt — als zitierfähigen Konformitätsbericht in JSON, HTML oder PDF. Sobald die Verstöße eine konfigurierbare Schwere-Schwelle überschreiten, endet sie mit einem Exit-Code ≠ 0, sodass eine CI-Pipeline den Merge an der Barrierefreiheit blockieren kann. Die Seitenermittlung läuft über sitemap.xml und danach über einen Breadth-First-Crawl, der robots.txt respektiert; jede Seite wird in einem echten Chromium über Playwright und axe-core analysiert, mit Concurrency-Pool, Rate-Limit pro Host, identifizierbarem User-Agent und optionaler Settle-Verzögerung, damit clientseitig gerenderte Seiten erst im hydratisierten Zustand geprüft werden. Die report.json-Ausgabe ist durch ein versioniertes JSON Schema beschrieben und mit Anti-Drift-Tests via ajv abgesichert. Gebaut mit TypeScript auf Node.js, mit 153 Vitest-Tests, CI auf Linux, Windows und macOS, entwickelt als Folge kleiner, einzeln reviewter Pull Requests; die elf Entscheidungen, die die Architektur geprägt haben, tragen je ein Architecture Decision Record. Der Release-Workflow veröffentlicht auf npm über OIDC Trusted Publishing, ohne langlebiges Token.",
       "shortDescription": "Accessibility-Scanner für WCAG / EN 301 549 / BFSG"
     },
     "default": {
@@ -279,7 +279,7 @@
     "roleLabel": "Rolle",
     "role": "Alleinige Entwicklerin & Maintainerin",
     "periodLabel": "Zeitraum",
-    "period": "2026 — v0.1.0 am 1. September 2026 auf npm veröffentlicht; v0.2.0 am 10. September 2026",
+    "period": "2026 — v0.1.0 am 1. September 2026 auf npm veröffentlicht; v0.2.0 am 10. September 2026; v0.2.2 am 29. September 2026",
     "periodNote": "veröffentlicht und lauffähig: npx bfsg-scanner <url>",
     "npmLabel": "npm",
     "intro": {
@@ -312,13 +312,13 @@
       "item1Title": "Auf npm veröffentlicht mit SLSA-Provenance.",
       "item1Body": "Der Release-Workflow veröffentlicht über OIDC Trusted Publishing — nirgends darin ein langlebiges Token, dazu npm-2FA auf dem Account.",
       "item2Title": "Kleine Pull Requests, einzeln reviewt.",
-      "item2Body": "Jeder trägt eine Aufgaben-Checkliste; die zehn Entscheidungen, die die Architektur geprägt haben, haben zusätzlich ein Architecture Decision Record.",
-      "item3Title": "150 Tests, CI auf drei Betriebssystemen.",
+      "item2Body": "Jeder trägt eine Aufgaben-Checkliste; die elf Entscheidungen, die die Architektur geprägt haben, haben zusätzlich ein Architecture Decision Record.",
+      "item3Title": "153 Tests, CI auf drei Betriebssystemen.",
       "item3Body": "Die Vitest-Suite läuft bei jedem Push auf Linux, Windows und macOS.",
       "item4Title": "Die Ausgabe ist ein stabiler Vertrag, kein Ad-hoc-Format.",
       "item4Body": "Ein versioniertes JSON Schema beschreibt report.json, abgesichert durch Anti-Drift-Tests mit ajv, damit sich die Struktur nicht unbemerkt ändert.",
-      "item5Title": "Semantische Exit-Codes (0/1/2/3).",
-      "item5Body": "Dokumentiert mit begründeter Hierarchie, sodass eine Pipeline einen Barrierefreiheits-Fehler von einem Crawl-Fehler oder einer Fehlbedienung unterscheiden kann.",
+      "item5Title": "Semantische Exit-Codes (0/1/2/3/4).",
+      "item5Body": "Dokumentiert mit begründeter Hierarchie, sodass eine Pipeline einen Barrierefreiheits-Fehler von einem Crawl-Fehler, einer Fehlbedienung oder einer defekten Laufzeitumgebung unterscheiden kann.",
       "item6Title": "Scan-Ethik schriftlich festgehalten.",
       "item6Body": "docs/SCANNING-ETHICS.md — nur Seiten scannen, die einem gehören oder für deren Prüfung man autorisiert ist; Rate-Limit, robots.txt und ein identifizierbarer User-Agent sind standardmäßig aktiv."
     },
