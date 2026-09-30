@@ -60,9 +60,9 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have 5 featured projects on the home page (Join, Pokédex and El Pollo Loco excluded)', () => {
+    it('should have 6 featured projects on the home page (Join, Pokédex and El Pollo Loco excluded)', () => {
       expect(component.projects).toBeDefined();
-      expect(component.projects.length).toBe(5);
+      expect(component.projects.length).toBe(6);
       expect(component.projects.some((p) => p.name === 'Join')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Pokédex')).toBe(false);
       expect(component.projects.some((p) => p.name === 'El Pollo Loco')).toBe(false);
@@ -105,7 +105,7 @@ describe('PortfolioComponent', () => {
       component.toggleShowAll(event);
 
       expect(component.showAll).toBe(false);
-      expect(component.projects.length).toBe(5);
+      expect(component.projects.length).toBe(6);
     });
 
     it('should swap the "view all" link to "back to featured" in place, without a route change', () => {
@@ -510,6 +510,48 @@ describe('PortfolioComponent', () => {
     });
   });
 
+  describe('SecureNotes Lab Project', () => {
+    const findProject = () => component.projects.find((p) => p.name === 'SecureNotes Lab')!;
+
+    it('should come right after Todo Platform API', () => {
+      expect(component.projects[4].name).toBe('SecureNotes Lab');
+    });
+
+    it('should be local-only, with a public repo and no live URL', () => {
+      const project = findProject();
+      expect(project.localOnly).toBe(true);
+      expect(project.githubUrl).toBeDefined();
+      expect(project.liveUrl).toBeUndefined();
+    });
+
+    it('should get translations for its descriptions', () => {
+      spyOn(translateService, 'instant').and.returnValue('SecureNotes Lab text');
+      const project = findProject();
+
+      component.getProjectDescription(project);
+      component.getProjectShortDescription(project);
+
+      expect(translateService.instant).toHaveBeenCalledWith('projects.secureNotesLab.description');
+      expect(translateService.instant).toHaveBeenCalledWith('projects.secureNotesLab.shortDescription');
+    });
+
+    it('should have icons for Python and Flask', () => {
+      expect(component.hasTechIcon('Python')).toBe(true);
+      expect(component.hasTechIcon('Flask')).toBe(true);
+    });
+
+    it('should explain why there is no live demo instead of the "in development" notice', () => {
+      component.openProjectOverlay(findProject(), 4);
+      fixture.detectChanges();
+
+      const notices: string[] = Array.from(
+        fixture.nativeElement.querySelectorAll('.not-live-notice') as NodeListOf<HTMLElement>
+      ).map((el) => el.textContent?.trim() ?? '');
+      expect(notices).toContain(translateService.instant('portfolio.localOnly'));
+      expect(notices).not.toContain(translateService.instant('portfolio.notLiveYet'));
+    });
+  });
+
   describe('Lifecycle Hooks', () => {
     it('should add touch event listener on init', () => {
       spyOn(document, 'addEventListener');
@@ -785,9 +827,9 @@ describe('PortfolioComponent', () => {
       projFixture.detectChanges();
     }));
 
-    it('should show all 8 projects including El Pollo Loco', () => {
+    it('should show all 9 projects including El Pollo Loco', () => {
       expect(projComponent['isProjectsPage']).toBe(true);
-      expect(projComponent.projects.length).toBe(8);
+      expect(projComponent.projects.length).toBe(9);
       expect(projComponent.projects.some((p) => p.name === 'El Pollo Loco')).toBe(true);
     });
 
