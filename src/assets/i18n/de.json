@@ -84,6 +84,7 @@
     "teamProject": "Teamprojekt",
     "workInProgress": "In Entwicklung",
     "notLiveYet": "Live-Version noch nicht verfügbar — dieses Projekt befindet sich derzeit in Entwicklung.",
+    "localOnly": "Bewusst ohne Live-Demo — das Projekt enthält absichtlich verwundbaren Code und läuft nur lokal.",
     "onRequest": "auf Anfrage",
     "sourceOnRequest": "Der Quellcode ist privat — auf Anfrage verfügbar.",
     "caseStudy": "Case Study",

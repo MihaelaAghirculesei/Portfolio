@@ -6,7 +6,8 @@ export interface Projects {
   previewImgSrcset?: string;
   description?: string;
   githubUrl?: string;
-  liveUrl: string;
+  liveUrl?: string;
+  localOnly?: boolean;
   isPersonal?: boolean;
   isTeam?: boolean;
   inProgress?: boolean;
