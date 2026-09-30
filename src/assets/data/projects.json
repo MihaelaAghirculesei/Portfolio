@@ -56,6 +56,19 @@
     "isTeam": true
   },
   {
+    "id": "secureNotesLab",
+    "name": "SecureNotes Lab",
+    "technologies": [
+      "Python", "Flask", "Jinja2", "SQLite", "Pytest",
+      "Bandit", "pip-audit", "GitHub Actions"
+    ],
+    "previewImg": "assets/img/projects/secure-notes-lab.webp",
+    "previewImgSrcset": "assets/img/projects/secure-notes-lab-400w.webp 400w, assets/img/projects/secure-notes-lab-800w.webp 800w, assets/img/projects/secure-notes-lab-1200w.webp 1200w",
+    "githubUrl": "https://github.com/MihaelaAghirculesei/secure-notes-lab",
+    "localOnly": true,
+    "isPersonal": true
+  },
+  {
     "id": "join",
     "name": "Join",
     "technologies": ["Firebase", "Angular", "TypeScript", "HTML", "SCSS"],
