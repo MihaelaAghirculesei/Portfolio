@@ -209,7 +209,7 @@
           <p class="not-live-notice">{{ "portfolio.sourceOnRequest" | translate }}</p>
           }
           @if (!selectedProject.liveUrl) {
-          <p class="not-live-notice">{{ "portfolio.notLiveYet" | translate }}</p>
+          <p class="not-live-notice">{{ (selectedProject.localOnly ? "portfolio.localOnly" : "portfolio.notLiveYet") | translate }}</p>
           }
         </div>
 

@@ -85,7 +85,7 @@ describe('OverlayComponent', () => {
       expect(link).toBeTruthy();
       // Browsers may normalize URLs by appending a trailing slash
       const href = (link!.nativeElement as HTMLAnchorElement).href;
-      expect(href.replace(/\/$/, '')).toBe(MOCK_PROJECT.liveUrl.replace(/\/$/, ''));
+      expect(href.replace(/\/$/, '')).toBe(MOCK_PROJECT.liveUrl!.replace(/\/$/, ''));
     });
 
     it('should set the preview image src', () => {
