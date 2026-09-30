@@ -36,6 +36,8 @@ describe('ProjectDataService', () => {
     it('should return the icon path for a known technology', () => {
       expect(service.getTechIconPath('Angular')).toBe('assets/img/projects/icons/angular.svg');
       expect(service.getTechIconPath('Firebase')).toBe('assets/img/projects/icons/firebase.svg');
+      expect(service.getTechIconPath('Python')).toBe('assets/img/projects/icons/python.svg');
+      expect(service.getTechIconPath('Flask')).toBe('assets/img/projects/icons/flask.svg');
     });
 
     it('should return null for an unknown technology', () => {
