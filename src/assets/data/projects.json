@@ -71,7 +71,7 @@
   {
     "id": "join",
     "name": "Join",
-    "technologies": ["Firebase", "Angular", "TypeScript", "HTML", "SCSS"],
+    "technologies": ["Firebase", "Angular", "TypeScript", "HTML", "SCSS", "GitHub Actions"],
     "previewImg": "assets/img/projects/join.webp",
     "previewImgSrcset": "assets/img/projects/join-400w.webp 400w, assets/img/projects/join-800w.webp 800w, assets/img/projects/join-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/join-kanban-board",
