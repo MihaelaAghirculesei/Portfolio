@@ -58,6 +58,7 @@
     "@hono/node-server": ">=2.0.5",
     "js-yaml": ">=5.4.1",
     "qs": ">=6.16.0",
+    "piscina": "^5.3.2",
     "minimatch@3": {
       "brace-expansion": "^1.1.21"
     }
