@@ -185,7 +185,7 @@
       "shortDescription": "Birthday Management App"
     },
     "todoApi": {
-      "description": "A 2-person team project where Mihaela owned the entire backend architecture from scratch. Built with Python 3.11, FastAPI 0.115, and SQLAlchemy 2.0, the API follows a strict four-layer architecture (Router → Service → Repository → Database) with Pydantic 2 for input validation and custom exception handling. Runs on SQLite locally and PostgreSQL in production, with ISO 8601 UTC timestamps and automatic schema creation on startup. A comprehensive test suite of 23 tests — 13 unit tests covering business logic and 10 integration tests — all pass against an in-memory SQLite database in under 0.2 seconds. Deployed live on Render with interactive Swagger/OpenAPI docs, paired with a React + TypeScript + Vite frontend.",
+      "description": "A 2-person team project where Mihaela owned the entire backend architecture from scratch. Built with Python 3.11, FastAPI 0.141, and SQLAlchemy 2.1, the API follows a strict four-layer architecture (Router → Service → Repository → Database) with Pydantic 2 for input validation and custom exception handling. Runs on SQLite locally and PostgreSQL in production, with ISO 8601 UTC timestamps and automatic schema creation on startup. A comprehensive test suite of 25 tests — 13 unit tests covering business logic and 12 integration tests — all pass against an in-memory SQLite database in under 0.2 seconds. Deployed live on Render with interactive Swagger/OpenAPI docs, paired with a React + TypeScript + Vite frontend.",
       "shortDescription": "RESTful Todo API with clean layered architecture"
     },
     "secureNotesLab": {

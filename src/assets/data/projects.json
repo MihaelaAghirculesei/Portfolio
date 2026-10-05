@@ -46,7 +46,7 @@
     "id": "todoApi",
     "name": "Todo Platform API",
     "technologies": [
-      "Python 3.11", "TypeScript", "FastAPI", "SQLAlchemy 2.0",
+      "Python 3.11", "TypeScript", "FastAPI", "SQLAlchemy 2.1",
       "Pydantic 2", "PostgreSQL", "SQLite", "Pytest", "React", "Vite"
     ],
     "previewImg": "assets/img/projects/todo-api.webp",
