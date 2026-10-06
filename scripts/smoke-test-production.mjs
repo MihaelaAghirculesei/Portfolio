@@ -11,58 +11,19 @@
 // stuck at media="print" forever, and the banner marquee (whose @keyframes
 // only live in that stylesheet) never animates.
 import { chromium } from '@playwright/test';
-import { spawn, spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { startPagesDevServer } from './lib/pages-dev-server.mjs';
 
 const PORT = 45678;
-const BASE_URL = `http://localhost:${PORT}`;
 const BROWSER_DIST = join('dist', 'angular-portofolio', 'browser');
 const ROUTES_TO_CHECK = ['/', '/contact', '/case-study/alina-moments'];
 
-function waitForServer(url, timeoutMs) {
-  const deadline = Date.now() + timeoutMs;
-  return new Promise((resolve, reject) => {
-    (function poll() {
-      fetch(url)
-        .then(() => resolve())
-        .catch(() => {
-          if (Date.now() > deadline) reject(new Error(`server did not come up within ${timeoutMs}ms`));
-          else setTimeout(poll, 500);
-        });
-    })();
-  });
-}
-
-// wrangler (via its .cmd shim on Windows, or directly on POSIX) spawns its
-// own workerd child to actually serve requests. `server.kill()` only signals
-// the immediate child — on Windows that's the cmd.exe shim, so the real
-// wrangler + workerd processes are orphaned and keep the port (and the
-// shared .wrangler/state SQLite files) locked for every run after. Kill the
-// whole tree instead: `taskkill /T` on Windows, or the detached process
-// group on POSIX.
-const wranglerBin = join('node_modules', '.bin', process.platform === 'win32' ? 'wrangler.cmd' : 'wrangler');
-const server = spawn(wranglerBin, ['pages', 'dev', BROWSER_DIST, '--port', String(PORT)], {
-  stdio: 'ignore',
-  shell: process.platform === 'win32',
-  detached: process.platform !== 'win32',
-});
-
-function stopServer() {
-  if (process.platform === 'win32') {
-    spawnSync('taskkill', ['/pid', String(server.pid), '/T', '/F'], { stdio: 'ignore' });
-  } else {
-    try {
-      process.kill(-server.pid, 'SIGKILL');
-    } catch {
-      server.kill('SIGKILL');
-    }
-  }
-}
-
 let exitCode = 0;
+let server;
 try {
-  await waitForServer(BASE_URL, 30_000);
+  server = await startPagesDevServer(BROWSER_DIST, PORT);
+  const BASE_URL = server.url;
 
   // There is no SPA catch-all any more: a route that isn't prerendered would
   // be a hard 404 in production. Every route the build prerendered must be 200.
@@ -162,7 +123,7 @@ try {
   exitCode = 1;
   console.error('[smoke-test]', err.message);
 } finally {
-  stopServer();
+  server?.stop();
 }
 
 if (exitCode === 0) {
