@@ -18,7 +18,10 @@ interface RouteSeoMeta {
   lang: Lang;
   ogPath: string;
   ogType?: string;
+  noIndex?: boolean;
 }
+
+const NOT_FOUND_SEO_META: RouteSeoMeta = { i18nKey: 'notFound', lang: 'en', ogPath: '/404', noIndex: true };
 
 const ROUTE_SEO_META = new Map<string, RouteSeoMeta>([
   ['/', { i18nKey: 'home', lang: 'en', ogPath: '', ogType: 'profile' }],
@@ -118,12 +121,13 @@ export class AppComponent implements OnInit {
   }
 
   private updateSeo(path: string): void {
-    const meta = ROUTE_SEO_META.get(path) ?? ROUTE_SEO_META.get('/')!;
+    const meta = ROUTE_SEO_META.get(path) ?? NOT_FOUND_SEO_META;
     const config: SeoConfig = {
       title: this.translate.instant(`seo.${meta.i18nKey}.title`, undefined, meta.lang),
       description: this.translate.instant(`seo.${meta.i18nKey}.description`, undefined, meta.lang),
       ogUrl: `${SITE_URL}${meta.ogPath}`,
       ...(meta.ogType ? { ogType: meta.ogType } : {}),
+      ...(meta.noIndex ? { noIndex: true } : {}),
     };
     this.seoService.update(config);
   }

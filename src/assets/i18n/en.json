@@ -141,6 +141,13 @@
     "email": "Email",
     "source": "Source"
   },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "navLabel": "Where to go next",
+    "home": "Back to home",
+    "projects": "View projects"
+  },
   "footer": {
     "logoAriaLabel": "Scroll to top of the page",
     "role": "Fullstack Developer",
@@ -453,6 +460,10 @@
     "passion": "Passionate about clean code"
   },
   "seo": {
+    "notFound": {
+      "title": "Page not found — Mihaela Aghirculesei",
+      "description": "This page does not exist. Head back to the portfolio of Mihaela Aghirculesei, Fullstack Developer."
+    },
     "home": {
       "title": "Mihaela Melania Aghirculesei — Fullstack Developer",
       "description": "Mihaela Aghirculesei — Fullstack Developer based in Germany, specializing in Angular, TypeScript, and modern web design. Available for new projects."

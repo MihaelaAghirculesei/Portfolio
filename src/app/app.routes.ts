@@ -80,7 +80,19 @@ export const routes: Routes = [
       ),
   },
   {
+    // Prerendered to /404/index.html and published as /404.html, which
+    // Cloudflare Pages serves with a real 404 status for unknown URLs.
+    path: '404',
+    loadComponent: () =>
+      import('./main-content/not-found/not-found.component').then(
+        (m) => m.NotFoundComponent
+      ),
+  },
+  {
     path: '**',
-    redirectTo: '/',
+    loadComponent: () =>
+      import('./main-content/not-found/not-found.component').then(
+        (m) => m.NotFoundComponent
+      ),
   },
 ];

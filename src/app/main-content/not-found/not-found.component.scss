@@ -1,0 +1,39 @@
+@use "../../../styles/variables";
+@use "../../../styles/mixins";
+
+.not-found {
+  @include mixins.dFlex(center, center);
+  flex-direction: column;
+  min-height: 70vh;
+  padding: 120px variables.$spacing-lg variables.$spacing-xxxl;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: variables.$background-color;
+  color: variables.$white;
+
+  .status-code {
+    @include mixins.code-font;
+    color: variables.$main-color;
+    font-size: clamp(4rem, 15vw, 8rem);
+    line-height: 1;
+    margin: 0 0 variables.$spacing-md;
+  }
+
+  h1 {
+    @include mixins.primary-font;
+    font-size: 2rem;
+    margin: 0 0 variables.$spacing-sm;
+  }
+
+  .description {
+    @include mixins.primary-font;
+    max-width: 480px;
+    margin: 0 0 variables.$spacing-xxxl;
+  }
+
+  .actions {
+    @include mixins.dFlex(center, center);
+    flex-wrap: wrap;
+    gap: variables.$spacing-lg;
+  }
+}

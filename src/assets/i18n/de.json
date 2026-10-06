@@ -141,6 +141,13 @@
     "email": "E-Mail",
     "source": "Quelle"
   },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "navLabel": "Wie geht es weiter",
+    "home": "Zur Startseite",
+    "projects": "Projekte ansehen"
+  },
   "footer": {
     "logoAriaLabel": "Zum Seitenanfang scrollen",
     "role": "Fullstack-Entwicklerin",
