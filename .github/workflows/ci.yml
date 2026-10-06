@@ -27,8 +27,12 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      # Unit tests (Vitest browser mode) and the smoke test both drive Playwright's Chromium.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
       - name: Run tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+        run: npm run test:coverage
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
@@ -45,9 +49,6 @@ jobs:
 
       - name: Build production
         run: npm run build -- --configuration=production
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
 
       - name: Smoke test production artifact
         run: npm run ci:smoke
