@@ -103,7 +103,20 @@ export default {
       return corsResponse(JSON.stringify({ error: 'Invalid JSON' }), 400, request);
     }
 
-    const { name, email, message, website } = body;
+    // `null`, arrays and primitives are valid JSON too — anything but a plain
+    // object would otherwise blow up the destructuring below.
+    if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+      return corsResponse(JSON.stringify({ error: 'Invalid request body' }), 400, request);
+    }
+
+    const { website } = body;
+    // Non-strings are rejected rather than coerced: `{}` has no length to
+    // check, and an array would reach Resend's `reply_to` as a list.
+    const fields = ['name', 'email', 'message'].map((key) => body[key]);
+    if (fields.some((value) => value !== undefined && typeof value !== 'string')) {
+      return corsResponse(JSON.stringify({ error: 'Invalid field type' }), 400, request);
+    }
+    const [name, email, message] = fields.map((value) => (value ?? '').trim());
 
     if (!name || !email || !message) {
       return corsResponse(JSON.stringify({ error: 'Missing required fields' }), 400, request);
@@ -156,7 +169,8 @@ export default {
           from: fromEmail,
           to: [env.TO_EMAIL],
           reply_to: email,
-          subject: `Portfolio Kontakt von ${name}`,
+          // A subject is a single header line: collapse any line breaks in the name.
+          subject: `Portfolio Kontakt von ${name.replace(/\s+/g, ' ')}`,
           // Plain-text part alongside the HTML — HTML-only mail scores worse
           // with spam filters.
           text:
@@ -208,6 +222,8 @@ function corsResponse(body, status, request) {
     'Access-Control-Allow-Origin': getAllowedOrigin(request),
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
+    // The allowed origin is echoed per request, so caches must key on it.
+    'Vary': 'Origin',
     'Content-Type': 'application/json',
   };
   return new Response(body, { status, headers });
