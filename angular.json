@@ -110,6 +110,7 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "runner": "vitest",
+            "runnerConfig": "vitest.config.mts",
             "browsers": ["chromiumHeadless"],
             "tsConfig": "tsconfig.spec.json",
             "include": ["src/**/*.spec.ts"],
