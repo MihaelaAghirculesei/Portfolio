@@ -1,21 +1,21 @@
 /**
  * Cloudflare Worker – Portfolio Email via Resend
  *
- * ENV Variables da impostare nel Cloudflare Dashboard
+ * Environment variables, set in the Cloudflare dashboard
  * (Workers & Pages → api → Settings → Variables and Secrets):
- *   RESEND_API_KEY  → la tua chiave API Resend (re_xxxxxxxxx)
- *   TO_EMAIL        → aghirculesei@gmail.com
- *   FROM_EMAIL      → mittente su un dominio VERIFICATO in Resend,
- *                     es. "Portfolio <noreply@mail.tuodominio.com>".
- *                     Senza questa variabile si usa "onboarding@resend.dev",
- *                     che Resend accetta ma consegna solo all'indirizzo del
- *                     titolare dell'account e Gmail lo mette in spam / lo
- *                     scarta: è la causa tipica delle email che "non arrivano".
+ *   RESEND_API_KEY  → Resend API key (re_xxxxxxxxx)
+ *   TO_EMAIL        → inbox that receives the contact messages
+ *   FROM_EMAIL      → sender on a domain VERIFIED in Resend,
+ *                     e.g. "Portfolio <noreply@mail.example.com>".
+ *                     Without it the Worker falls back to "onboarding@resend.dev",
+ *                     which Resend accepts but only delivers to the account
+ *                     owner's address, and Gmail spam-folders or drops it —
+ *                     the usual reason messages "never arrive".
  *
- * KV Namespace richiesto per il rate limiting (binding RATE_LIMIT_KV):
- *   1. Crea il namespace:  wrangler kv namespace create RATE_LIMIT_KV
- *   2. Collega l'id generato al binding "RATE_LIMIT_KV" in wrangler.toml
- *      (già presente sotto [[kv_namespaces]]) oppure dal Cloudflare Dashboard:
+ * KV namespace for rate limiting (binding RATE_LIMIT_KV):
+ *   1. Create it:  wrangler kv namespace create RATE_LIMIT_KV
+ *   2. Put the generated id on the "RATE_LIMIT_KV" binding in wrangler.toml
+ *      (already declared under [[kv_namespaces]]) or bind it in the dashboard:
  *      Workers & Pages → api → Settings → Bindings → KV Namespace Bindings.
  */
 
@@ -41,7 +41,7 @@ const MAX_MESSAGE_LENGTH = 5000;
 // Anti-abuse only: counts just genuine, validated send attempts (not
 // validation errors or honeypot hits), so normal use and testing never trip it.
 const RATE_LIMIT_MAX_REQUESTS = 10;
-const RATE_LIMIT_WINDOW_SECONDS = 10 * 60; // 10 minuti
+const RATE_LIMIT_WINDOW_SECONDS = 10 * 60; // 10 minutes
 
 async function isRateLimited(env, ip) {
   if (!env.RATE_LIMIT_KV || !ip) {
@@ -117,7 +117,7 @@ export default {
       return corsResponse(JSON.stringify({ error: 'Field too long' }), 400, request);
     }
 
-    // Honeypot: campo nascosto compilato solo dai bot. Rispondiamo 200 senza inviare l'email.
+    // Honeypot: a hidden field only bots fill in. Answer 200 without sending anything.
     if (website) {
       return corsResponse(JSON.stringify({ success: true }), 200, request);
     }

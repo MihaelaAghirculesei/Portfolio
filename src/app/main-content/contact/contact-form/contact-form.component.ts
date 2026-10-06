@@ -81,7 +81,7 @@ export class ContactFormComponent implements OnInit {
     email: ['', [Validators.required, Validators.pattern(VALIDATION_CONFIG.EMAIL_PATTERN)]],
     message: ['', [Validators.required, trimmedMinLength(VALIDATION_CONFIG.MIN_MESSAGE_LENGTH)]],
     privacyPolicy: [false, Validators.requiredTrue],
-    website: [''], // honeypot anti-spam: campo nascosto, i bot lo compilano
+    website: [''], // anti-spam honeypot: hidden field that only bots fill in
   });
 
   private readonly postConfig = {
