@@ -12,7 +12,6 @@
     "test": "ng test --watch=false",
     "test:watch": "ng test --watch",
     "test:coverage": "ng test --watch=false --coverage",
-    "serve:ssr:angular-portofolio": "node dist/angular-portofolio/server/server.mjs",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.html\" \"cloudflare-worker/**/*.js\" \"scripts/**/*.mjs\"",
     "lint:fix": "eslint \"src/**/*.ts\" \"src/**/*.html\" \"cloudflare-worker/**/*.js\" \"scripts/**/*.mjs\" --fix",
     "e2e": "playwright test",
@@ -27,7 +26,6 @@
     "build:purge": "ng build --configuration=production && node scripts/generate-csp-headers.mjs && npx purgecss --css \"dist/angular-portofolio/browser/**/*.css\" --content \"dist/angular-portofolio/browser/**/*.html\" \"dist/angular-portofolio/browser/**/*.js\" --output dist/angular-portofolio/browser/",
     "lighthouse:local": "npm run ci:build && npx lhci autorun",
     "lighthouse": "lighthouse http://localhost:4200 --output html --output-path ./lighthouse-report.html --chrome-flags=\"--headless --no-sandbox --no-first-run --disable-extensions --disable-gpu --user-data-dir=./tmp/chrome-profile\"",
-    "lighthouse:ssr": "lighthouse http://localhost:4000 --output html --output-path ./lighthouse-ssr-report.html --chrome-flags=\"--headless --no-sandbox --no-first-run --disable-extensions --disable-gpu --user-data-dir=./tmp/chrome-profile\"",
     "lighthouse:prod": "lighthouse https://aghirculesei.pages.dev --output html --output-path ./lighthouse-report.html --chrome-flags=\"--headless --no-sandbox --no-first-run --disable-extensions --disable-gpu --user-data-dir=./tmp/chrome-profile\""
   },
   "private": true,
@@ -40,9 +38,6 @@
     "@angular/platform-server": "^21.2.25",
     "@angular/router": "^21.2.25",
     "@angular/ssr": "^21.2.24",
-    "@types/compression": "^1.8.1",
-    "compression": "^1.8.2",
-    "express": "^5.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -69,7 +64,6 @@
     "@angular/compiler-cli": "^21.2.25",
     "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.63.0",
-    "@types/express": "^5.0.6",
     "@types/node": "^22.20.4",
     "@vitest/browser-playwright": "^4.1.11",
     "@vitest/coverage-v8": "^4.1.11",

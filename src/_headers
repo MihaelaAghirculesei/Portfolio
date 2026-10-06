@@ -28,9 +28,8 @@
   #   second occurrence earlier in the file (e.g. in this comment) silently
   #   steals it instead of the real header line.
   # - style-src retains unsafe-inline: Angular injects component CSS as <style>
-  #   elements at hydration time. Nonce-based style enforcement is handled by
-  #   the SSR Express server (server.ts) for Node.js deployments; the static
-  #   fallback here keeps unsafe-inline scoped to styles only.
+  #   elements at hydration time, and a static host has no per-request nonce
+  #   to offer instead. unsafe-inline stays scoped to styles only.
   Content-Security-Policy: default-src 'self'; script-src 'self' __CSP_SCRIPT_HASHES__; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.aghirculesei.workers.dev; base-uri 'self'; form-action 'self';
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
