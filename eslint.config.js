@@ -16,7 +16,7 @@ module.exports = tseslint.config(
   },
   {
     // Node/Cloudflare-Workers runtime code: plain JS, module syntax, console allowed.
-    files: ["cloudflare-worker/**/*.js", "scripts/**/*.mjs"],
+    files: ["cloudflare-worker/**/*.{js,mjs}", "scripts/**/*.mjs"],
     extends: [eslint.configs.recommended],
     languageOptions: {
       ecmaVersion: 2023,
@@ -24,6 +24,7 @@ module.exports = tseslint.config(
       globals: {
         console: "readonly",
         fetch: "readonly",
+        Request: "readonly",
         Response: "readonly",
         URL: "readonly",
         crypto: "readonly",
