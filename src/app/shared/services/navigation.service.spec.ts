@@ -1,4 +1,5 @@
-import { TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
+import type { Mock, MockedObject } from 'vitest';
+import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { NavigationService } from './navigation.service';
 import { ScrollService } from './scroll.service';
@@ -7,19 +8,30 @@ import { DeferGateService } from './defer-gate.service';
 
 describe('NavigationService', () => {
   let service: NavigationService;
-  let mockRouter: { navigate: jasmine.Spy; url: string };
-  let scrollServiceSpy: jasmine.SpyObj<ScrollService>;
-  let loggerSpy: jasmine.SpyObj<LoggerService>;
+  let mockRouter: {
+    navigate: Mock;
+    url: string;
+  };
+  let scrollServiceSpy: MockedObject<ScrollService>;
+  let loggerSpy: MockedObject<LoggerService>;
   let deferGate: DeferGateService;
 
   beforeEach(() => {
     mockRouter = {
-      navigate: jasmine.createSpy('navigate'),
+      navigate: vi.fn(),
       url: '/'
     };
-    const scrollServiceSpyObj = jasmine.createSpyObj('ScrollService', ['scrollToElement', 'waitForLayoutStable']);
-    scrollServiceSpyObj.waitForLayoutStable.and.returnValue(Promise.resolve());
-    const loggerSpyObj = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+    const scrollServiceSpyObj = {
+      scrollToElement: vi.fn().mockName('ScrollService.scrollToElement'),
+      waitForLayoutStable: vi.fn().mockName('ScrollService.waitForLayoutStable')
+    };
+    scrollServiceSpyObj.waitForLayoutStable.mockReturnValue(Promise.resolve());
+    const loggerSpyObj = {
+      error: vi.fn().mockName('LoggerService.error'),
+      warn: vi.fn().mockName('LoggerService.warn'),
+      info: vi.fn().mockName('LoggerService.info'),
+      debug: vi.fn().mockName('LoggerService.debug')
+    };
 
     TestBed.configureTestingModule({
       providers: [
@@ -31,8 +43,8 @@ describe('NavigationService', () => {
     });
 
     service = TestBed.inject(NavigationService);
-    scrollServiceSpy = TestBed.inject(ScrollService) as jasmine.SpyObj<ScrollService>;
-    loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
+    scrollServiceSpy = TestBed.inject(ScrollService) as MockedObject<ScrollService>;
+    loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
     deferGate = TestBed.inject(DeferGateService);
   });
 
@@ -50,7 +62,7 @@ describe('NavigationService', () => {
 
   describe('navigateToHome()', () => {
     it('should navigate to home route', async () => {
-      mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
       const result = await service.navigateToHome();
 
@@ -59,7 +71,7 @@ describe('NavigationService', () => {
     });
 
     it('should return true on successful navigation', async () => {
-      mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
       const result = await service.navigateToHome();
 
@@ -67,7 +79,7 @@ describe('NavigationService', () => {
     });
 
     it('should return false on failed navigation', async () => {
-      mockRouter.navigate.and.returnValue(Promise.resolve(false));
+      mockRouter.navigate.mockReturnValue(Promise.resolve(false));
 
       const result = await service.navigateToHome();
 
@@ -76,7 +88,7 @@ describe('NavigationService', () => {
 
     it('should handle navigation error and return false', async () => {
       const error = new Error('Navigation failed');
-      mockRouter.navigate.and.returnValue(Promise.reject(error));
+      mockRouter.navigate.mockReturnValue(Promise.reject(error));
 
       const result = await service.navigateToHome();
 
@@ -86,7 +98,7 @@ describe('NavigationService', () => {
 
     it('should log error when navigation fails', async () => {
       const error = new Error('Route not found');
-      mockRouter.navigate.and.returnValue(Promise.reject(error));
+      mockRouter.navigate.mockReturnValue(Promise.reject(error));
 
       await service.navigateToHome();
 
@@ -95,7 +107,7 @@ describe('NavigationService', () => {
     });
 
     it('should handle navigation rejection gracefully', async () => {
-      mockRouter.navigate.and.returnValue(Promise.reject('Navigation cancelled'));
+      mockRouter.navigate.mockReturnValue(Promise.reject('Navigation cancelled'));
 
       const result = await service.navigateToHome();
 
@@ -104,9 +116,9 @@ describe('NavigationService', () => {
     });
 
     it('should not throw error on navigation failure', async () => {
-      mockRouter.navigate.and.returnValue(Promise.reject(new Error('Test error')));
+      mockRouter.navigate.mockReturnValue(Promise.reject(new Error('Test error')));
 
-      await expectAsync(service.navigateToHome()).toBeResolved();
+      await expect(service.navigateToHome()).resolves.not.toThrow();
     });
   });
 
@@ -141,18 +153,19 @@ describe('NavigationService', () => {
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(1);
       });
 
-      it('should re-scroll once more after the correction delay, to correct for deferred sections still growing', fakeAsync(() => {
+      it('should re-scroll once more after the correction delay, to correct for deferred sections still growing', async () => {
+        vi.useFakeTimers();
         service.scrollToSection('skills');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(1);
 
-        tick(349);
+        await vi.advanceTimersByTimeAsync(349);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(1);
 
-        tick(1);
+        await vi.advanceTimersByTimeAsync(1);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(2);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('skills', 'start', 'smooth');
-      }));
+      });
     });
 
     describe('When on empty URL (considered home)', () => {
@@ -173,271 +186,285 @@ describe('NavigationService', () => {
         mockRouter.url = '/privacy-policy';
       });
 
-      it('should navigate to home first', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should navigate to home first', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('contact');
 
-        tick();
+        await vi.advanceTimersByTimeAsync(0);
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should force deferred home sections to reveal immediately, then release the gate once settled', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should force deferred home sections to reveal immediately, then release the gate once settled', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('contact');
 
         expect(deferGate.revealAll()).toBe(true);
 
-        tick(100 + 1200 + 199);
+        await vi.advanceTimersByTimeAsync(100 + 1200 + 199);
         expect(deferGate.revealAll()).toBe(true);
 
-        tick(1);
+        await vi.advanceTimersByTimeAsync(1);
         expect(deferGate.revealAll()).toBe(false);
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should scroll after navigation with default delay', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should scroll after navigation with default delay', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('contact');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start', 'instant', 320);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('contact', 'start', 'smooth');
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should use custom delay when provided', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should use custom delay when provided', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
         const customDelay = 500;
 
         service.scrollToSection('portfolio', customDelay);
 
-        tick();
-        tick(customDelay);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(customDelay);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start', 'instant', 320);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('portfolio', 'start', 'smooth');
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should not scroll before delay expires', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should not scroll before delay expires', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('about-me', 200);
 
-        tick();
-        tick(199);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(199);
 
         expect(scrollServiceSpy.scrollToElement).not.toHaveBeenCalled();
 
-        tick(1);
+        await vi.advanceTimersByTimeAsync(1);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should scroll to correct section after navigation', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should scroll to correct section after navigation', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('skills');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('skills', 'start', 'instant', 320);
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should wait for the layout to settle, then land short instantly and glide in smoothly', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should wait for the layout to settle, then land short instantly and glide in smoothly', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('portfolio');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(scrollServiceSpy.waitForLayoutStable).toHaveBeenCalledWith('portfolio');
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(2);
-        expect(scrollServiceSpy.scrollToElement.calls.argsFor(0)).toEqual(['portfolio', 'start', 'instant', 320]);
-        expect(scrollServiceSpy.scrollToElement.calls.argsFor(1)).toEqual(['portfolio', 'start', 'smooth']);
-        flush();
-      }));
+        expect(vi.mocked(scrollServiceSpy.scrollToElement).mock.calls[0]).toEqual(['portfolio', 'start', 'instant', 320]);
+        expect(vi.mocked(scrollServiceSpy.scrollToElement).mock.calls[1]).toEqual(['portfolio', 'start', 'smooth']);
+        await vi.runAllTimersAsync();
+      });
 
-      it('should not land until the layout-stability wait resolves', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should not land until the layout-stability wait resolves', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
         let resolveStable!: () => void;
-        scrollServiceSpy.waitForLayoutStable.and.returnValue(
-          new Promise<void>(resolve => { resolveStable = resolve; })
-        );
+        scrollServiceSpy.waitForLayoutStable.mockReturnValue(new Promise<void>(resolve => { resolveStable = resolve; }));
 
         service.scrollToSection('portfolio');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
         expect(scrollServiceSpy.scrollToElement).not.toHaveBeenCalled();
 
         resolveStable();
-        tick();
+        await vi.advanceTimersByTimeAsync(0);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(2);
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should handle navigation error and log it', fakeAsync(() => {
+      it('should handle navigation error and log it', async () => {
+        vi.useFakeTimers();
         const error = new Error('Navigation error');
-        mockRouter.navigate.and.returnValue(Promise.reject(error));
+        mockRouter.navigate.mockReturnValue(Promise.reject(error));
 
         service.scrollToSection('contact');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(loggerSpy.error).toHaveBeenCalledWith('Navigation to home failed:', error);
         expect(scrollServiceSpy.scrollToElement).not.toHaveBeenCalled();
-      }));
+      });
 
-      it('should not scroll when navigation fails', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.reject('Navigation cancelled'));
+      it('should not scroll when navigation fails', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.reject('Navigation cancelled'));
 
         service.scrollToSection('portfolio');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(scrollServiceSpy.scrollToElement).not.toHaveBeenCalled();
-      }));
+      });
 
-      it('should handle multiple section IDs correctly', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should handle multiple section IDs correctly', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         const sections = ['about-me', 'skills', 'portfolio', 'contact'];
 
-        sections.forEach(section => {
-          scrollServiceSpy.scrollToElement.calls.reset();
+        for (const section of sections) {
+          scrollServiceSpy.scrollToElement.mockClear();
           service.scrollToSection(section);
-          tick();
-          tick(100);
+          await vi.advanceTimersByTimeAsync(0);
+          await vi.advanceTimersByTimeAsync(100);
           expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith(section, 'start', 'instant', 320);
-        });
-        flush();
-      }));
+        }
+        await vi.runAllTimersAsync();
+      });
     });
 
     describe('Different route scenarios', () => {
-      it('should navigate from /legal-notice to home with scroll', fakeAsync(() => {
+      it('should navigate from /legal-notice to home with scroll', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/legal-notice';
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('contact');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should handle deep routes', fakeAsync(() => {
+      it('should handle deep routes', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/some/deep/route';
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('about-me');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should handle routes with query parameters', fakeAsync(() => {
+      it('should handle routes with query parameters', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/page?param=value';
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('skills');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should handle routes with fragments', fakeAsync(() => {
+      it('should handle routes with fragments', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/page#section';
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('portfolio');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
     });
 
     describe('Edge Cases', () => {
-      it('should handle empty section ID', fakeAsync(() => {
+      it('should handle empty section ID', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/';
 
         service.scrollToSection('');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('', 'start', 'smooth');
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should handle zero delay', fakeAsync(() => {
+      it('should handle zero delay', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/other';
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('contact', 0);
 
-        tick();
-        tick(0);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(0);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should handle large delay value', fakeAsync(() => {
+      it('should handle large delay value', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/other';
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('about-me', 5000);
 
-        tick();
-        tick(5000);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(5000);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should handle special characters in section ID', fakeAsync(() => {
+      it('should handle special characters in section ID', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/';
 
         service.scrollToSection('section-with-special_chars123');
 
-        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith(
-          'section-with-special_chars123',
-          'start',
-          'smooth'
-        );
-        flush();
-      }));
+        expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('section-with-special_chars123', 'start', 'smooth');
+        await vi.runAllTimersAsync();
+      });
 
-      it('should always use "start" as scroll behavior', fakeAsync(() => {
+      it('should always use "start" as scroll behavior', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/';
 
         service.scrollToSection('any-section');
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledWith('any-section', 'start', 'smooth');
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
     });
 
     describe('Timing and Asynchronous Behavior', () => {
@@ -445,42 +472,42 @@ describe('NavigationService', () => {
         mockRouter.url = '/other';
       });
 
-      it('should wait for navigation to complete before scheduling scroll', fakeAsync(() => {
+      it('should wait for navigation to complete before scheduling scroll', async () => {
+        vi.useFakeTimers();
         let navigationResolved = false;
-        mockRouter.navigate.and.returnValue(
-          new Promise(resolve => {
-            setTimeout(() => {
-              navigationResolved = true;
-              resolve(true);
-            }, 50);
-          })
-        );
+        mockRouter.navigate.mockReturnValue(new Promise(resolve => {
+          setTimeout(() => {
+            navigationResolved = true;
+            resolve(true);
+          }, 50);
+        }));
 
         service.scrollToSection('contact', 100);
 
-        tick(49);
+        await vi.advanceTimersByTimeAsync(49);
         expect(navigationResolved).toBe(false);
         expect(scrollServiceSpy.scrollToElement).not.toHaveBeenCalled();
 
-        tick(1);
+        await vi.advanceTimersByTimeAsync(1);
         expect(navigationResolved).toBe(true);
 
-        tick(100);
+        await vi.advanceTimersByTimeAsync(100);
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
 
-      it('should handle immediate navigation resolution', fakeAsync(() => {
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+      it('should handle immediate navigation resolution', async () => {
+        vi.useFakeTimers();
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('skills', 50);
 
-        tick();
-        tick(50);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(50);
 
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalled();
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
     });
 
     describe('Integration Scenarios', () => {
@@ -494,19 +521,20 @@ describe('NavigationService', () => {
         expect(scrollServiceSpy.scrollToElement).toHaveBeenCalledTimes(3);
       });
 
-      it('should handle rapid consecutive calls on different routes', fakeAsync(() => {
+      it('should handle rapid consecutive calls on different routes', async () => {
+        vi.useFakeTimers();
         mockRouter.url = '/other';
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        mockRouter.navigate.mockReturnValue(Promise.resolve(true));
 
         service.scrollToSection('about-me');
         service.scrollToSection('skills');
 
-        tick();
-        tick(100);
+        await vi.advanceTimersByTimeAsync(0);
+        await vi.advanceTimersByTimeAsync(100);
 
         expect(mockRouter.navigate).toHaveBeenCalledTimes(2);
-        flush();
-      }));
+        await vi.runAllTimersAsync();
+      });
     });
   });
 });

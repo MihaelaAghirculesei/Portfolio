@@ -40,10 +40,10 @@ describe('TranslationService', () => {
       expect(events).toEqual(['de', 'en']);
     });
 
-    it('should return an Observable of the translations dict', (done) => {
+    it('should return an Observable of the translations dict', async () => {
       service.use('de').subscribe(result => {
         expect(typeof result).toBe('object');
-        done();
+        ;
       });
     });
   });
@@ -88,11 +88,11 @@ describe('TranslationService', () => {
   });
 
   describe('get()', () => {
-    it('should return an Observable that emits the translated string', (done) => {
+    it('should return an Observable that emits the translated string', async () => {
       service.use('en');
       service.get('landingPage.role').subscribe(value => {
         expect(value).toBe('Fullstack Developer');
-        done();
+        ;
       });
     });
   });

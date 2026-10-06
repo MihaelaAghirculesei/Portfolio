@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { LoggerService } from './logger.service';
@@ -5,10 +6,10 @@ import { environment } from '../../../environments/environment';
 
 describe('LoggerService', () => {
   let service: LoggerService;
-  let consoleErrorSpy: jasmine.Spy;
-  let consoleWarnSpy: jasmine.Spy;
-  let consoleInfoSpy: jasmine.Spy;
-  let consoleDebugSpy: jasmine.Spy;
+  let consoleErrorSpy: Mock;
+  let consoleWarnSpy: Mock;
+  let consoleInfoSpy: Mock;
+  let consoleDebugSpy: Mock;
 
   describe('Browser Platform with Logging Enabled', () => {
     beforeEach(() => {
@@ -21,10 +22,10 @@ describe('LoggerService', () => {
 
       service = TestBed.inject(LoggerService);
 
-      consoleErrorSpy = spyOn(console, 'error');
-      consoleWarnSpy = spyOn(console, 'warn');
-      consoleInfoSpy = spyOn(console, 'info');
-      consoleDebugSpy = spyOn(console, 'debug');
+      consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+      consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      consoleInfoSpy = vi.spyOn(console, 'info').mockImplementation(() => undefined);
+      consoleDebugSpy = vi.spyOn(console, 'debug').mockImplementation(() => undefined);
     });
 
     describe('Service Creation', () => {
@@ -284,10 +285,10 @@ describe('LoggerService', () => {
 
       service = TestBed.inject(LoggerService);
 
-      consoleErrorSpy = spyOn(console, 'error');
-      consoleWarnSpy = spyOn(console, 'warn');
-      consoleInfoSpy = spyOn(console, 'info');
-      consoleDebugSpy = spyOn(console, 'debug');
+      consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+      consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      consoleInfoSpy = vi.spyOn(console, 'info').mockImplementation(() => undefined);
+      consoleDebugSpy = vi.spyOn(console, 'debug').mockImplementation(() => undefined);
     });
 
     it('should be created', () => {
@@ -354,10 +355,10 @@ describe('LoggerService', () => {
       });
 
       service = TestBed.inject(LoggerService);
-      consoleErrorSpy = spyOn(console, 'error');
-      consoleWarnSpy = spyOn(console, 'warn');
-      consoleInfoSpy = spyOn(console, 'info');
-      consoleDebugSpy = spyOn(console, 'debug');
+      consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+      consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      consoleInfoSpy = vi.spyOn(console, 'info').mockImplementation(() => undefined);
+      consoleDebugSpy = vi.spyOn(console, 'debug').mockImplementation(() => undefined);
     });
 
     afterEach(() => {

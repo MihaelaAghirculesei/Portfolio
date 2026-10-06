@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LandingPageComponent } from './landing-page.component';
 import { ScrollService } from '../../shared/services/scroll.service';
@@ -5,10 +6,12 @@ import { ScrollService } from '../../shared/services/scroll.service';
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
   let fixture: ComponentFixture<LandingPageComponent>;
-  let mockScrollService: jasmine.SpyObj<ScrollService>;
+  let mockScrollService: Pick<MockedObject<ScrollService>, 'scrollToElement'>;
 
   beforeEach(async () => {
-    mockScrollService = jasmine.createSpyObj('ScrollService', ['scrollToElement']);
+    mockScrollService = {
+      scrollToElement: vi.fn().mockName('ScrollService.scrollToElement')
+    };
 
     await TestBed.configureTestingModule({
       imports: [LandingPageComponent],
@@ -58,14 +61,14 @@ describe('LandingPageComponent', () => {
     });
 
     it('should scroll to projects when check work button action is called', () => {
-      spyOn(component, 'scrollTo');
+      vi.spyOn(component, 'scrollTo').mockImplementation(() => undefined);
       const checkWorkButton = component.actionButtons[0];
       checkWorkButton.action();
       expect(component.scrollTo).toHaveBeenCalledWith('projects');
     });
 
     it('should scroll to contact when contact button action is called', () => {
-      spyOn(component, 'scrollTo');
+      vi.spyOn(component, 'scrollTo').mockImplementation(() => undefined);
       const contactButton = component.actionButtons[1];
       contactButton.action();
       expect(component.scrollTo).toHaveBeenCalledWith('contact');
