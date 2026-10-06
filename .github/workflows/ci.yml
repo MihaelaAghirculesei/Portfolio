@@ -53,6 +53,17 @@ jobs:
       - name: Smoke test production artifact
         run: npm run ci:smoke
 
+      - name: Accessibility scan (WCAG 2.1 AA / BFSG)
+        run: npm run ci:a11y
+
+      - name: Upload accessibility report
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: accessibility-report
+          path: reports/a11y/
+          retention-days: 14
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7
         with:
