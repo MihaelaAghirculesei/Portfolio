@@ -2,16 +2,16 @@ name = "api"
 main = "email-worker.js"
 compatibility_date = "2026-04-08"
 
-# Variabili d'ambiente SEGRETE (RESEND_API_KEY, TO_EMAIL, FROM_EMAIL):
-# NON metterle qui — impostale nel Cloudflare Dashboard:
+# SECRET environment variables (RESEND_API_KEY, TO_EMAIL, FROM_EMAIL):
+# do NOT put them here — set them in the Cloudflare dashboard:
 # Workers & Pages → api → Settings → Variables and Secrets
-#   RESEND_API_KEY → chiave API Resend
-#   TO_EMAIL       → indirizzo destinatario (la tua casella)
-#   FROM_EMAIL     → mittente su un dominio VERIFICATO in Resend, es.
-#                    "Portfolio <noreply@mail.tuodominio.com>". Senza dominio
-#                    verificato + questa variabile, le email non arrivano.
+#   RESEND_API_KEY → Resend API key
+#   TO_EMAIL       → inbox that receives the contact messages
+#   FROM_EMAIL     → sender on a domain VERIFIED in Resend, e.g.
+#                    "Portfolio <noreply@mail.example.com>". Without a verified
+#                    domain and this variable, messages don't get delivered.
 
-# KV Namespace per il rate limiting per IP.
+# KV namespace for per-IP rate limiting.
 [[kv_namespaces]]
 binding = "RATE_LIMIT_KV"
 id = "79f9d66831cc46c5a441ad42bde517fe"
