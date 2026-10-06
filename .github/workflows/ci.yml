@@ -41,8 +41,8 @@ jobs:
           files: ./coverage/angular-portofolio/lcov.info
           fail_ci_if_error: false
 
-      - name: Check Worker syntax
-        run: node --check cloudflare-worker/email-worker.js
+      - name: Run Worker tests
+        run: npm run test:worker
 
       - name: Run security audit
         run: npm run ci:security
