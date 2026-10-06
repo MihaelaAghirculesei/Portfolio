@@ -16,7 +16,7 @@ import { join } from 'node:path';
 import { startPagesDevServer } from './lib/pages-dev-server.mjs';
 
 const PORT = 45678;
-const BROWSER_DIST = join('dist', 'angular-portofolio', 'browser');
+const BROWSER_DIST = join('dist', 'angular-portfolio', 'browser');
 const ROUTES_TO_CHECK = ['/', '/contact', '/case-study/alina-moments'];
 
 let exitCode = 0;
@@ -27,7 +27,7 @@ try {
 
   // There is no SPA catch-all any more: a route that isn't prerendered would
   // be a hard 404 in production. Every route the build prerendered must be 200.
-  const prerendered = JSON.parse(readFileSync(join('dist', 'angular-portofolio', 'prerendered-routes.json'), 'utf8'));
+  const prerendered = JSON.parse(readFileSync(join('dist', 'angular-portfolio', 'prerendered-routes.json'), 'utf8'));
   for (const route of Object.keys(prerendered.routes).filter((r) => r !== '/404')) {
     const { status } = await fetch(`${BASE_URL}${route}`);
     if (status !== 200) {
