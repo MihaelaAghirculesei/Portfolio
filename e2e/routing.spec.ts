@@ -2,7 +2,7 @@
  * E2E Scenario 3: Routing
  *
  * Verifies that the router correctly navigates to and from the Legal Notice
- * and Privacy Policy pages, and that an unknown URL redirects to home.
+ * and Privacy Policy pages, and that an unknown URL shows the not-found page.
  */
 import { test, expect } from '@playwright/test';
 
@@ -35,10 +35,15 @@ test.describe('Routing', () => {
     await expect(page).toHaveURL('/');
   });
 
-  test('redirects unknown routes to home', async ({ page }) => {
+  test('shows the not-found page for unknown routes', async ({ page }) => {
     await page.goto('/this-page-does-not-exist');
 
-    // The wildcard route redirects to ''
+    // The URL is kept (no silent redirect to home) and the page is excluded from indexing
+    await expect(page).toHaveURL('/this-page-does-not-exist');
+    await expect(page.locator('h1')).toHaveText('Page not found');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+
+    await page.locator('app-not-found a[href="/"]').click();
     await expect(page).toHaveURL('/');
   });
 
