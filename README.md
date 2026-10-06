@@ -157,7 +157,7 @@ The application will automatically reload when you make changes to the source fi
 # Production build
 npm run build
 
-# Output location: dist/angular-portofolio
+# Output location: dist/angular-portfolio
 ```
 
 The build artifacts will be optimized for production with:

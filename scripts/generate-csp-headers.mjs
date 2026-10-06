@@ -28,7 +28,7 @@ import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'parse5';
 
-const browserDist = join('dist', 'angular-portofolio', 'browser');
+const browserDist = join('dist', 'angular-portfolio', 'browser');
 const headersPath = join(browserDist, '_headers');
 const placeholder = '__CSP_SCRIPT_HASHES__';
 

@@ -14,7 +14,7 @@ const PORT = 45681; // keep in sync with BASE_URL in .lighthouserc.js
 let exitCode = 1;
 let server;
 try {
-  server = await startPagesDevServer(join('dist', 'angular-portofolio', 'browser'), PORT);
+  server = await startPagesDevServer(join('dist', 'angular-portfolio', 'browser'), PORT);
   const result = spawnSync('npx', ['--yes', `@lhci/cli@${LHCI_VERSION}`, 'autorun'], {
     stdio: 'inherit',
     shell: process.platform === 'win32',

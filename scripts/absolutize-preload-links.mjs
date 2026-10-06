@@ -18,7 +18,7 @@ import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'parse5';
 
-const browserDist = join('dist', 'angular-portofolio', 'browser');
+const browserDist = join('dist', 'angular-portfolio', 'browser');
 
 function findIndexHtmlFiles(dir) {
   const found = [];
