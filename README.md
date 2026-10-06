@@ -3,13 +3,13 @@
 [![CI](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?logo=angular)](https://angular.io/)
+[![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?logo=angular)](https://angular.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Deployed on Cloudflare Pages](https://img.shields.io/badge/Deployed-Cloudflare%20Pages-F38020?logo=cloudflare)](https://aghirculesei.pages.dev)
 
-> A modern, performant, and fully accessible portfolio website built with Angular 21, showcasing best practices in web development.
+> My developer portfolio: an Angular 21 site prerendered to static HTML, served from Cloudflare Pages, with a Cloudflare Worker behind the contact form. Every quality claim below is enforced by a check in CI.
 
-[🌐 Live Demo](https://aghirculesei.pages.dev) • [📧 Contact](mailto:aghirculesei@gmail.com)
+[🌐 Live site](https://aghirculesei.pages.dev) • [📧 Contact](mailto:aghirculesei@gmail.com)
 
 ---
 
@@ -19,334 +19,124 @@
 
 ### Landing Page
 ![Landing Page](./assets/screenshots/landing-page.png)
-*Clean and modern hero section with call-to-action buttons*
 
 <br>
 
 ### Portfolio Section
 ![Portfolio Preview](./assets/screenshots/portfolio-preview.png)
-*Interactive project showcase with hover effects and detailed technology stack*
 
 </div>
 
 ---
 
-## ✨ Features
+## 🏗️ Architecture
 
-### 🎨 **Modern User Experience**
-- ✅ Responsive design optimized for all devices
-- ✅ Smooth animations and transitions
-- ✅ Interactive project showcases with live previews
-- ✅ Multi-language support (English/German)
+```
+Browser ──► Cloudflare Pages ── prerendered HTML per route, _headers (CSP, HSTS, caching), 404.html
+   │
+   └──────► Cloudflare Worker "api" ── validates the contact form, rate-limits per IP (KV), sends via Resend
+```
 
-### ⚡ **Performance Optimized**
-- ✅ OnPush Change Detection Strategy
-- ✅ Lazy loading for routes
-- ✅ Server-Side Rendering (SSR) ready
-- ✅ Optimized bundle size
-
-### ♿ **Accessibility First**
-- ✅ WCAG 2.1 Level AA compliant
-- ✅ Full keyboard navigation
-- ✅ ARIA labels and live regions
-- ✅ Focus trap management
-- ✅ Screen reader optimized
-
-### 🔒 **Security & Quality**
-- ✅ Content Security Policy (CSP) headers
-- ✅ Automated security scanning with CodeQL
-- ✅ Comprehensive error handling
-- ✅ Input sanitization
-- ✅ Type-safe with TypeScript strict mode
-
-### 🧪 **Testing & CI/CD**
-- ✅ Automated testing with Karma/Jasmine
-- ✅ Code coverage tracking
-- ✅ ESLint with strict rules
-- ✅ GitHub Actions CI/CD pipeline
-- ✅ Automated dependency reviews
+- **Static prerendering (SSG):** `outputMode: "static"` renders every route to HTML at build time. There is no server runtime; the app hydrates in the browser (zoneless change detection, event replay).
+- **Real 404s:** unknown URLs get the prerendered not-found page with an HTTP 404 status (no SPA catch-all), marked `noindex`.
+- **Content Security Policy without `unsafe-inline` scripts:** a postbuild step hashes every inline script the prerender emits and writes the hashes into `_headers`.
+- **Contact form:** the Worker accepts only the site's origins, rejects malformed or oversized input, uses a honeypot against bots and a KV-backed per-IP rate limit, and never leaks upstream errors to the browser.
+- **i18n:** English/German through a small translation service and pipe; no runtime i18n dependency.
 
 ---
 
-## 💡 What Makes This Project Special
+## ✅ Quality gates
 
-This portfolio is built around a set of practices, each backed by a concrete check in CI:
+Everything here runs on every push and pull request ([`ci.yml`](.github/workflows/ci.yml)):
 
-- **🎯 Type Safety:** Zero `any` types throughout the entire codebase
-- **♿ Accessibility First:** WCAG 2.1 AA compliant with full keyboard navigation and screen reader support
-- **⚡ Performance:** OnPush change detection strategy, lazy loading, and optimized bundle sizes
-- **🛡️ Security:** CSP headers, automated CodeQL scanning, and input sanitization
-- **🧪 Quality Assurance:** Comprehensive test coverage with automated CI/CD pipeline
-- **🌍 Internationalization:** Full English and German language support
-- **📱 Responsive:** Mobile-first design approach ensuring perfect rendering on all devices
-
-Built with standalone components and a clean separation of concerns, aiming for a codebase that stays maintainable as it grows.
+| Check | What it enforces |
+|---|---|
+| ESLint | Strict TypeScript rules (no `any`, explicit return types, no `console`), OnPush everywhere, Angular template accessibility rules |
+| Unit tests | 735 tests with Vitest in headless Chromium; build fails below 96% statements/lines/functions and 92% branches |
+| Worker tests | 21 tests for CORS, input validation, rate limiting and the Resend call (`node:test`) |
+| Security audit | `npm audit` on production dependencies, plus CodeQL and dependency review on PRs |
+| Smoke test | Serves the real build through Cloudflare's local Pages runtime: every route returns 200 and is in the sitemap, unknown URLs return 404, no console errors under the production CSP |
+| Accessibility | [bfsg-scanner](https://github.com/MihaelaAghirculesei/bfsg-scanner) (axe-core) scans every page for WCAG 2.1 AA; any serious or critical finding fails the build, and the report is kept as an artifact |
+| E2E tests | 23 Playwright tests for navigation, routing, language switching and the contact form |
+| Lighthouse CI | Performance ≥ 65, accessibility/SEO/best practices ≥ 90 on five key pages (median of three runs) |
+| Post-deploy check | After each deploy: live pages return 200, unknown URLs 404, CSP present, Worker CORS preflight OK |
 
 ---
 
 ## 🛠️ Tech Stack
 
-### **Core**
-- **Framework:** Angular 21.2 (Standalone Components)
-- **Language:** TypeScript 5.9
-- **Styling:** SCSS with responsive design
-- **Internationalization:** custom lightweight i18n service (no runtime dependency)
-
-### **Development**
-- **Testing:** Karma, Jasmine (unit) · Playwright (e2e)
-- **Linting:** ESLint, @angular-eslint
-- **Build:** Angular CLI
-- **CI/CD:** GitHub Actions
-
-### **Key Features**
-- Reactive Forms with custom validation
-- RxJS for state management
-- Server-Side Rendering (Angular SSR)
-- Custom directives and pipes
-- Centralized logging service
+- **Framework:** Angular 21.2 (standalone components, signals, zoneless)
+- **Language:** TypeScript 5.9 (strict)
+- **Styling:** SCSS
+- **Testing:** Vitest (browser mode) · Playwright · node:test
+- **Hosting:** Cloudflare Pages + Cloudflare Workers (KV, Resend)
+- **CI/CD:** GitHub Actions, Dependabot
 
 ---
 
-## 📦 Installation
+## 🚀 Getting started
 
-### Prerequisites
-- Node.js 22.x (see `.nvmrc` / `engines`)
-- npm (v10.x or higher)
-
-### Setup
+Requires Node.js 22 (see `.nvmrc`).
 
 ```bash
-# Clone the repository
 git clone https://github.com/MihaelaAghirculesei/Portfolio.git
-
-# Navigate to project directory
 cd Portfolio
-
-# Install dependencies
-npm install
+npm ci
+npx playwright install chromium   # browser for unit, e2e and smoke tests
+npm start                         # http://localhost:4200
 ```
 
----
-
-## 🚀 Development
-
-```bash
-# Start development server
-npm start
-
-# Navigate to http://localhost:4200
-```
-
-The application will automatically reload when you make changes to the source files.
-
-### Available Scripts
+### Scripts
 
 | Command | Description |
-|---------|-------------|
-| `npm start` | Start development server |
-| `npm run build` | Build for production |
-| `npm test` | Run unit tests |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint errors automatically |
+|---|---|
+| `npm start` | Development server |
+| `npm run build` | Production build into `dist/angular-portfolio/browser` (prerender + postbuild steps) |
+| `npm test` | Unit tests (`test:watch`, `test:coverage` for variants) |
+| `npm run test:worker` | Contact-form Worker tests |
+| `npm run e2e` | Playwright end-to-end tests |
+| `npm run lint` / `lint:fix` | ESLint |
+| `npm run ci:smoke` | Smoke test of the production build |
+| `npm run ci:a11y` | Accessibility scan of the production build |
+| `npm run ci:lighthouse` | Lighthouse CI against the production build |
+| `npm run check:live` | Checks the deployed site |
+| `npm run ci:local` | The CI quality pipeline, locally |
 
 ---
 
-## 🏗️ Build
-
-```bash
-# Production build
-npm run build
-
-# Output location: dist/angular-portfolio
-```
-
-The build artifacts will be optimized for production with:
-- Minification
-- Tree-shaking
-- Ahead-of-Time (AOT) compilation
-- Bundle optimization
-
----
-
-## 🧪 Testing
-
-```bash
-# Run tests
-npm test
-
-# Run tests with coverage
-npm test -- --code-coverage
-
-# Run tests in headless mode (CI)
-npm test -- --watch=false --browsers=ChromeHeadless
-```
-
-### Test Coverage
-- Comprehensive unit tests for components and services
-- Integration tests for critical user flows
-- Mock implementations for external dependencies
-
----
-
-## 📁 Project Structure
+## 📁 Project structure
 
 ```
 src/
 ├── app/
-│   ├── main-content/           # Feature components
-│   │   ├── about-me/
-│   │   ├── contact/
-│   │   │   └── contact-form/
-│   │   ├── feedback/
-│   │   ├── home/               # Composes the single-page sections
-│   │   ├── landing-page/
-│   │   │   └── banner-section/
-│   │   ├── legal-notice/
-│   │   ├── overlay/
-│   │   ├── portfolio/
-│   │   │   ├── case-study-alina-moments/
-│   │   │   ├── case-study-bfsg-scanner/
-│   │   │   └── services/
-│   │   ├── privacy-policy/
-│   │   └── skills/
-│   ├── shared/                 # Shared resources
-│   │   ├── constants/
-│   │   ├── directives/
-│   │   ├── footer/
-│   │   ├── header/
-│   │   ├── interceptors/
-│   │   ├── pipes/
-│   │   └── services/
-│   └── interfaces/             # TypeScript interfaces
-├── assets/                     # Static assets
-│   ├── data/                  # projects.json
-│   ├── fonts/
-│   ├── i18n/                  # Translation files (en, de)
-│   └── img/                   # Images
-├── environments/              # Environment configs
-└── styles/                    # Global SCSS (variables, mixins, buttons)
+│   ├── main-content/        # Pages and sections (home, projects, case studies, contact, legal, 404)
+│   ├── shared/              # Header, footer, directives, pipes, interceptors, services
+│   ├── interfaces/
+│   ├── app.routes.ts        # Client routes (lazy-loaded)
+│   └── app.routes.server.ts # Prerender configuration
+├── assets/
+│   ├── data/projects.json   # Project cards (links, tech tags, preview images)
+│   └── i18n/                # en.json, de.json
+├── environments/
+├── styles/                  # Global SCSS (variables, mixins, buttons)
+├── _headers                 # Security and caching headers for Cloudflare Pages
+└── sitemap.xml
+cloudflare-worker/           # Contact-form Worker and its tests
+scripts/                     # Postbuild steps, smoke test, accessibility scan, live check
+e2e/                         # Playwright tests
 ```
-
----
-
-## 🔧 Configuration
-
-### Environment Variables
-
-The project uses environment-based configuration for different deployment stages:
-
-**Development** (`src/environments/environment.ts`)
-```typescript
-export const environment = {
-  production: false,
-  siteUrl: 'http://localhost:4200',
-  emailWorkerUrl: 'https://api.aghirculesei.workers.dev',
-  social: {
-    github: 'https://github.com/MihaelaAghirculesei',
-    linkedin: 'https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/'
-  },
-  enableLogging: true,
-};
-```
-
-**Production** (`src/environments/environment.prod.ts`)
-```typescript
-export const environment = {
-  production: true,
-  siteUrl: 'https://aghirculesei.pages.dev',
-  emailWorkerUrl: 'https://api.aghirculesei.workers.dev',
-  social: {
-    github: 'https://github.com/MihaelaAghirculesei',
-    linkedin: 'https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/'
-  },
-  enableLogging: false,
-};
-```
-
-Project data (GitHub and live links, tech tags, preview images) lives in `src/assets/data/projects.json`; descriptions are translated in `src/assets/i18n/*.json`.
-
-### ESLint Configuration
-
-The project enforces strict code quality standards:
-- No `any` types
-- No `console.*` calls in production
-- Explicit return types
-- Consistent naming conventions
-- OnPush change detection required
-- WCAG accessibility rules
-
----
-
-## 🎯 Key Highlights
-
-### **Code Quality**
-- ✅ **Zero `any` types** - Full type safety with TypeScript
-- ✅ **Centralized logging** - Custom LoggerService replacing console calls
-- ✅ **Environment configuration** - Externalized configuration for easy deployment
-- ✅ **Strict ESLint rules** - Automated code quality enforcement
-- ✅ **OnPush everywhere** - Optimized change detection
-
-### **Architecture**
-- ✅ **Standalone components** - Modern Angular architecture
-- ✅ **Lazy loading** - Optimized initial load time
-- ✅ **Service-based state** - Clean separation of concerns
-- ✅ **Interface-driven** - Strong typing throughout
-- ✅ **Reactive patterns** - RxJS for async operations
-
-### **User Experience**
-- ✅ **Mobile-first design** - Responsive across all devices
-- ✅ **Smooth interactions** - CSS animations and transitions
-- ✅ **Form validation** - Real-time feedback
-- ✅ **Error handling** - User-friendly error messages
-- ✅ **Loading states** - Clear visual feedback
 
 ---
 
 ## 🚢 Deployment
 
-### Production Build
-
-```bash
-npm run build -- --configuration=production
-```
-
-### CI/CD Pipeline
-
-The project uses GitHub Actions for automated:
-- ✅ Linting
-- ✅ Testing with coverage
-- ✅ Production builds
-- ✅ Security scanning (CodeQL)
-- ✅ Dependency reviews
-
----
-
-## 📊 Performance
-
-- Optimized bundle size with code splitting
-- Lazy loading for improved initial load time
-- OnPush change detection for better runtime performance
-- Production builds with AOT compilation
-
----
-
-## 🤝 Contributing
-
-This is a personal portfolio project, but suggestions and feedback are welcome!
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Pushes to `main` that pass the quality checks and E2E tests deploy automatically: the build goes to Cloudflare Pages, the Worker to Cloudflare Workers, and the live site is checked afterwards. The Worker's secrets (`RESEND_API_KEY`, `TO_EMAIL`, `FROM_EMAIL`) are set in the Cloudflare dashboard, never in the repository.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
+MIT — see [LICENSE](LICENSE).
 
 ## 👤 Author
 
@@ -356,19 +146,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 💼 LinkedIn: [mihaela-aghirculesei](https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/)
 - 📧 Email: aghirculesei@gmail.com
 - 💻 GitHub: [@MihaelaAghirculesei](https://github.com/MihaelaAghirculesei)
-
----
-
-## 📊 Project Statistics
-
-- **Components:** 18 standalone components
-- **Services:** 13 specialized services (Navigation, Logger, Scroll, Platform, Translation, SEO, FocusTrap, AriaAnnouncer, GlobalErrorHandler, PortfolioOverlay, ProjectData, DeferGate, TranslatedTitleStrategy)
-- **Test Coverage:** ~99% lines/statements, 97% branches (712 unit tests) · 23 Playwright e2e tests
-- **TypeScript:** 100% type-safe code (zero `any` types)
-- **Accessibility:** WCAG 2.1 Level AA compliant
-- **Languages:** 2 (English, German)
-- **Build Size:** Optimized production bundles with tree-shaking
-- **CI/CD:** Automated testing, linting, and security scanning
 
 ---
 
