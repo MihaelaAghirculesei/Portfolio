@@ -157,12 +157,25 @@ describe('AppComponent', () => {
     localStorage.removeItem('lang');
   });
 
-  it('should fall back to home SEO config for unknown routes', () => {
+  it('should use the noindex "not found" SEO config for unknown routes', () => {
     component.ngOnInit();
     mockSeoService.update.mockClear();
     routerEventsSubject.next(new NavigationEnd(1, '/unknown-route', '/unknown-route'));
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      expect.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' }),
+      expect.objectContaining({
+        title: 'Page not found — Mihaela Aghirculesei',
+        ogUrl: `${environment.siteUrl}/404`,
+        noIndex: true,
+      }),
+    );
+  });
+
+  it('should keep known routes indexable', () => {
+    component.ngOnInit();
+    mockSeoService.update.mockClear();
+    routerEventsSubject.next(new NavigationEnd(1, '/skills', '/skills'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      expect.not.objectContaining({ noIndex: true }),
     );
   });
 });

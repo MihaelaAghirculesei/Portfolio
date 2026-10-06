@@ -1,0 +1,9 @@
+<section class="not-found" aria-labelledby="not-found-title">
+  <p class="status-code" aria-hidden="true">404</p>
+  <h1 id="not-found-title">{{ 'notFound.title' | translate }}</h1>
+  <p class="description">{{ 'notFound.description' | translate }}</p>
+  <nav class="actions" [attr.aria-label]="'notFound.navLabel' | translate">
+    <a routerLink="/" class="link-button">{{ 'notFound.home' | translate }}</a>
+    <a routerLink="/projects" class="link-button">{{ 'notFound.projects' | translate }}</a>
+  </nav>
+</section>
