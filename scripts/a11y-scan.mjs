@@ -16,7 +16,7 @@ import { startPagesDevServer } from './lib/pages-dev-server.mjs';
 
 const PORT = 45679;
 const PRODUCTION_ORIGIN = 'https://aghirculesei.pages.dev';
-const BROWSER_DIST = join('dist', 'angular-portofolio', 'browser');
+const BROWSER_DIST = join('dist', 'angular-portfolio', 'browser');
 const OUTPUT_DIR = resolve('reports', 'a11y');
 
 const workDir = mkdtempSync(join(tmpdir(), 'a11y-scan-'));

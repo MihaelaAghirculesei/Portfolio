@@ -10,7 +10,7 @@
 import { copyFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-const browserDist = join('dist', 'angular-portofolio', 'browser');
+const browserDist = join('dist', 'angular-portfolio', 'browser');
 const source = join(browserDist, '404', 'index.html');
 const target = join(browserDist, '404.html');
 
