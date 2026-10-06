@@ -375,7 +375,7 @@ describe('HeaderComponent', () => {
   describe('Language Toggle with browser platform', () => {
     it('should save lang to localStorage when isBrowser is true', () => {
       (mockPlatformService as any).isBrowser = true;
-      vi.spyOn(localStorage, 'setItem').mockImplementation(() => undefined);
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => undefined);
       vi.spyOn(translateService, 'use').mockReturnValue(EMPTY);
       component.isGerman = false;
 

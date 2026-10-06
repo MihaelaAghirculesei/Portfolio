@@ -353,7 +353,7 @@ describe('ScrollService', () => {
     });
 
     it('should log error when sessionStorage is unavailable', () => {
-      vi.spyOn(sessionStorage, 'setItem').mockImplementation(() => {
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
         throw new Error('QuotaExceededError');
       });
 
@@ -387,7 +387,7 @@ describe('ScrollService', () => {
     });
 
     it('should log error when sessionStorage is unavailable', () => {
-      vi.spyOn(sessionStorage, 'getItem').mockImplementation(() => {
+      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
         throw new Error('SecurityError');
       });
 
