@@ -1,32 +1,36 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import type { MockedObject } from 'vitest';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslationService } from '../services/translation.service';
 import { HeaderComponent } from './header.component';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
 import { NavigationService } from '../services/navigation.service';
+import { EMPTY } from 'rxjs';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-  let mockScrollService: jasmine.SpyObj<ScrollService>;
-  let mockPlatformService: jasmine.SpyObj<PlatformService>;
-  let mockNavService: jasmine.SpyObj<NavigationService>;
+  let mockScrollService: Pick<MockedObject<ScrollService>, 'scrollToElement' | 'isScrolledBeyond'>;
+  let mockPlatformService: Pick<MockedObject<PlatformService>, 'isWindowDefined'>;
+  let mockNavService: Pick<MockedObject<NavigationService>, 'scrollToSection' | 'navigateToHome'>;
   let translateService: TranslationService;
 
   beforeEach(async () => {
-    mockScrollService = jasmine.createSpyObj('ScrollService', [
-      'scrollToElement',
-      'isScrolledBeyond'
-    ]);
-    mockPlatformService = jasmine.createSpyObj<PlatformService>(
-      'PlatformService',
-      ['isWindowDefined']
-    );
+    mockScrollService = {
+      scrollToElement: vi.fn().mockName('ScrollService.scrollToElement'),
+      isScrolledBeyond: vi.fn().mockName('ScrollService.isScrolledBeyond')
+    };
+    mockPlatformService = {
+      isWindowDefined: vi.fn().mockName('PlatformService.isWindowDefined')
+    };
     (mockPlatformService as any).window = window;
-    mockNavService = jasmine.createSpyObj('NavigationService', ['scrollToSection', 'navigateToHome']);
+    mockNavService = {
+      scrollToSection: vi.fn().mockName('NavigationService.scrollToSection'),
+      navigateToHome: vi.fn().mockName('NavigationService.navigateToHome')
+    };
 
-    mockScrollService.isScrolledBeyond.and.returnValue(false);
-    mockPlatformService.isWindowDefined.and.returnValue(true);
+    mockScrollService.isScrolledBeyond.mockReturnValue(false);
+    mockPlatformService.isWindowDefined.mockReturnValue(true);
 
     await TestBed.configureTestingModule({
       imports: [HeaderComponent],
@@ -58,19 +62,15 @@ describe('HeaderComponent', () => {
 
   describe('Lifecycle Hooks', () => {
     it('should setup scroll listener on init', () => {
-      spyOn(window, 'addEventListener');
+      vi.spyOn(window, 'addEventListener').mockImplementation(() => undefined);
 
       component.ngOnInit();
 
-      expect(window.addEventListener).toHaveBeenCalledWith(
-        'scroll',
-        jasmine.any(Function),
-        { passive: true }
-      );
+      expect(window.addEventListener).toHaveBeenCalledWith('scroll', expect.any(Function), { passive: true });
     });
 
     it('should check scroll on init', () => {
-      spyOn(component, 'checkScroll');
+      vi.spyOn(component, 'checkScroll').mockImplementation(() => undefined);
 
       component.ngOnInit();
 
@@ -78,8 +78,8 @@ describe('HeaderComponent', () => {
     });
 
     it('should not add scroll listener if not browser', () => {
-      mockPlatformService.isWindowDefined.and.returnValue(false);
-      spyOn(window, 'addEventListener');
+      mockPlatformService.isWindowDefined.mockReturnValue(false);
+      vi.spyOn(window, 'addEventListener').mockImplementation(() => undefined);
 
       component.ngOnInit();
 
@@ -87,20 +87,17 @@ describe('HeaderComponent', () => {
     });
 
     it('should remove scroll listener on destroy', () => {
-      spyOn(window, 'removeEventListener');
+      vi.spyOn(window, 'removeEventListener').mockImplementation(() => undefined);
       component.ngOnInit();
 
       component.ngOnDestroy();
 
-      expect(window.removeEventListener).toHaveBeenCalledWith(
-        'scroll',
-        jasmine.any(Function)
-      );
+      expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
     });
 
     it('should not remove listener on destroy if not browser', () => {
-      mockPlatformService.isWindowDefined.and.returnValue(false);
-      spyOn(window, 'removeEventListener');
+      mockPlatformService.isWindowDefined.mockReturnValue(false);
+      vi.spyOn(window, 'removeEventListener').mockImplementation(() => undefined);
 
       component.ngOnDestroy();
 
@@ -110,7 +107,7 @@ describe('HeaderComponent', () => {
 
   describe('Scroll Detection', () => {
     it('should detect when scrolled beyond threshold', () => {
-      mockScrollService.isScrolledBeyond.and.returnValue(true);
+      mockScrollService.isScrolledBeyond.mockReturnValue(true);
 
       component.checkScroll();
 
@@ -119,7 +116,7 @@ describe('HeaderComponent', () => {
     });
 
     it('should detect when not scrolled beyond threshold', () => {
-      mockScrollService.isScrolledBeyond.and.returnValue(false);
+      mockScrollService.isScrolledBeyond.mockReturnValue(false);
 
       component.checkScroll();
 
@@ -127,7 +124,7 @@ describe('HeaderComponent', () => {
     });
 
     it('should mark for check after scroll detection', () => {
-      spyOn(component['cdr'], 'markForCheck');
+      vi.spyOn(component['cdr'], 'markForCheck').mockImplementation(() => undefined);
 
       component.checkScroll();
 
@@ -137,7 +134,7 @@ describe('HeaderComponent', () => {
 
   describe('Language Toggle', () => {
     it('should toggle between German and English', () => {
-      spyOn(translateService, 'use');
+      vi.spyOn(translateService, 'use').mockReturnValue(EMPTY);
       component.isGerman = false;
 
       component.toggleLanguage();
@@ -161,17 +158,18 @@ describe('HeaderComponent', () => {
       expect(component.isMenuOpen).toBe(false);
     });
 
-    it('should activate focus trap when menu is still open after timeout fires', fakeAsync(() => {
-      spyOn(component['focusTrap'], 'activate');
+    it('should activate focus trap when menu is still open after timeout fires', async () => {
+      vi.useFakeTimers();
+      vi.spyOn(component['focusTrap'], 'activate').mockReturnValue(true);
       component.isMenuOpen = false;
 
       component.toggleMenu();
       expect(component.isMenuOpen).toBe(true);
 
-      tick(200);
+      await vi.advanceTimersByTimeAsync(200);
 
       expect(component['focusTrap'].activate).toHaveBeenCalledWith('.mobile-dropdown');
-    }));
+    });
   });
 
   describe('Logo Hover', () => {
@@ -268,7 +266,7 @@ describe('HeaderComponent', () => {
     });
 
     it('should not close menu if platform not defined', () => {
-      mockPlatformService.isWindowDefined.and.returnValue(false);
+      mockPlatformService.isWindowDefined.mockReturnValue(false);
       component.isMenuOpen = true;
       const event = new Event('resize');
       Object.defineProperty(event, 'target', { value: { innerWidth: 1920 }, configurable: true });
@@ -319,7 +317,7 @@ describe('HeaderComponent', () => {
 
   describe('Change Detection', () => {
     it('should trigger change detection on scroll check', () => {
-      spyOn(component['cdr'], 'markForCheck');
+      vi.spyOn(component['cdr'], 'markForCheck').mockImplementation(() => undefined);
 
       component.checkScroll();
 
@@ -330,7 +328,7 @@ describe('HeaderComponent', () => {
   describe('Document Click Handler (onDocumentClick)', () => {
     it('should return early when menu is closed', () => {
       component.isMenuOpen = false;
-      spyOn(component['cdr'], 'markForCheck');
+      vi.spyOn(component['cdr'], 'markForCheck').mockImplementation(() => undefined);
 
       const event = new MouseEvent('click');
       component.onDocumentClick(event);
@@ -341,10 +339,10 @@ describe('HeaderComponent', () => {
 
     it('should close menu when clicking outside the component', () => {
       component.isMenuOpen = true;
-      spyOn(component['cdr'], 'markForCheck');
-      spyOn(component['focusTrap'], 'deactivate');
+      vi.spyOn(component['cdr'], 'markForCheck').mockImplementation(() => undefined);
+      vi.spyOn(component['focusTrap'], 'deactivate').mockImplementation(() => undefined);
 
-      spyOn(component['elementRef'].nativeElement, 'contains').and.returnValue(false);
+      vi.spyOn(component['elementRef'].nativeElement, 'contains').mockReturnValue(false);
 
       const outsideElement = document.createElement('div');
       const event = new MouseEvent('click');
@@ -359,9 +357,9 @@ describe('HeaderComponent', () => {
 
     it('should keep menu open when clicking inside the component', () => {
       component.isMenuOpen = true;
-      spyOn(component['cdr'], 'markForCheck');
+      vi.spyOn(component['cdr'], 'markForCheck').mockImplementation(() => undefined);
 
-      spyOn(component['elementRef'].nativeElement, 'contains').and.returnValue(true);
+      vi.spyOn(component['elementRef'].nativeElement, 'contains').mockReturnValue(true);
 
       const insideElement = document.createElement('div');
       const event = new MouseEvent('click');
@@ -377,8 +375,8 @@ describe('HeaderComponent', () => {
   describe('Language Toggle with browser platform', () => {
     it('should save lang to localStorage when isBrowser is true', () => {
       (mockPlatformService as any).isBrowser = true;
-      spyOn(localStorage, 'setItem');
-      spyOn(translateService, 'use');
+      vi.spyOn(localStorage, 'setItem').mockImplementation(() => undefined);
+      vi.spyOn(translateService, 'use').mockReturnValue(EMPTY);
       component.isGerman = false;
 
       component.toggleLanguage();

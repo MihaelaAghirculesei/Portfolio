@@ -7,7 +7,9 @@ describe('FocusTrapService', () => {
 
   function makeButton(tabindex?: string): HTMLButtonElement {
     const btn = document.createElement('button');
-    if (tabindex !== undefined) { btn.setAttribute('tabindex', tabindex); }
+    if (tabindex !== undefined) {
+      btn.setAttribute('tabindex', tabindex);
+    }
     return btn;
   }
 
@@ -61,7 +63,7 @@ describe('FocusTrapService', () => {
       const btn2 = makeButton();
       container.appendChild(btn1);
       container.appendChild(btn2);
-      spyOn(btn1, 'focus');
+      vi.spyOn(btn1, 'focus').mockImplementation(() => undefined);
 
       service.activate(container);
 
@@ -71,7 +73,7 @@ describe('FocusTrapService', () => {
     it('does not focus first element when focusFirst=false', () => {
       const btn = makeButton();
       container.appendChild(btn);
-      spyOn(btn, 'focus');
+      vi.spyOn(btn, 'focus').mockImplementation(() => undefined);
 
       service.activate(container, false);
 
@@ -83,10 +85,10 @@ describe('FocusTrapService', () => {
       container.appendChild(makeButton());
       service.activate(container, false);
 
-      spyOn(container, 'removeEventListener').and.callThrough();
+      vi.spyOn(container, 'removeEventListener');
       service.activate(container, false);
 
-      expect(container.removeEventListener).toHaveBeenCalledWith('keydown', jasmine.any(Function));
+      expect(container.removeEventListener).toHaveBeenCalledWith('keydown', expect.any(Function));
     });
 
     it('saves the previously focused element', () => {
@@ -97,7 +99,7 @@ describe('FocusTrapService', () => {
       container.appendChild(makeButton());
       service.activate(container, false);
 
-      const restoreSpy = spyOn(trigger, 'focus');
+      const restoreSpy = vi.spyOn(trigger, 'focus').mockImplementation(() => undefined);
       service.deactivate(true);
 
       expect(restoreSpy).toHaveBeenCalled();
@@ -119,7 +121,7 @@ describe('FocusTrapService', () => {
 
     it('wraps forward from last to first on Tab', () => {
       last.focus();
-      spyOn(first, 'focus');
+      vi.spyOn(first, 'focus').mockImplementation(() => undefined);
 
       container.dispatchEvent(tabEvent(false));
 
@@ -128,7 +130,7 @@ describe('FocusTrapService', () => {
 
     it('wraps backward from first to last on Shift+Tab', () => {
       first.focus();
-      spyOn(last, 'focus');
+      vi.spyOn(last, 'focus').mockImplementation(() => undefined);
 
       container.dispatchEvent(tabEvent(true));
 
@@ -142,8 +144,8 @@ describe('FocusTrapService', () => {
       service.activate(container, false);
 
       middle.focus();
-      spyOn(first, 'focus');
-      spyOn(last, 'focus');
+      vi.spyOn(first, 'focus').mockImplementation(() => undefined);
+      vi.spyOn(last, 'focus').mockImplementation(() => undefined);
 
       container.dispatchEvent(tabEvent(false));
 
@@ -153,7 +155,7 @@ describe('FocusTrapService', () => {
 
     it('does not react to non-Tab keys', () => {
       last.focus();
-      spyOn(first, 'focus');
+      vi.spyOn(first, 'focus').mockImplementation(() => undefined);
 
       container.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
 
@@ -171,7 +173,7 @@ describe('FocusTrapService', () => {
       service.deactivate();
 
       btn2.focus();
-      spyOn(btn1, 'focus');
+      vi.spyOn(btn1, 'focus').mockImplementation(() => undefined);
       container.dispatchEvent(tabEvent(false));
 
       expect(btn1.focus).not.toHaveBeenCalled();
@@ -184,7 +186,7 @@ describe('FocusTrapService', () => {
 
       container.appendChild(makeButton());
       service.activate(container, false);
-      spyOn(trigger, 'focus');
+      vi.spyOn(trigger, 'focus').mockImplementation(() => undefined);
 
       service.deactivate(true);
 
@@ -199,7 +201,7 @@ describe('FocusTrapService', () => {
 
       container.appendChild(makeButton());
       service.activate(container, false);
-      spyOn(trigger, 'focus');
+      vi.spyOn(trigger, 'focus').mockImplementation(() => undefined);
 
       service.deactivate();
 
@@ -215,7 +217,7 @@ describe('FocusTrapService', () => {
       trigger.focus();
 
       service.saveFocus();
-      spyOn(trigger, 'focus');
+      vi.spyOn(trigger, 'focus').mockImplementation(() => undefined);
 
       service.restoreFocus();
 
@@ -232,7 +234,7 @@ describe('FocusTrapService', () => {
       service.restoreFocus();
 
       // Second call should be a no-op (previousFocus is null)
-      spyOn(trigger, 'focus');
+      vi.spyOn(trigger, 'focus').mockImplementation(() => undefined);
       service.restoreFocus();
 
       expect(trigger.focus).not.toHaveBeenCalled();
@@ -244,7 +246,7 @@ describe('FocusTrapService', () => {
       document.body.appendChild(trigger);
       trigger.focus();
 
-      service.saveFocus();  // saves trigger
+      service.saveFocus(); // saves trigger
 
       // Focus moves elsewhere before activate() is called (simulates setTimeout)
       const other = makeButton();
@@ -252,9 +254,9 @@ describe('FocusTrapService', () => {
       other.focus();
 
       container.appendChild(makeButton());
-      service.activate(container, false);  // should NOT overwrite saved focus
+      service.activate(container, false); // should NOT overwrite saved focus
 
-      spyOn(trigger, 'focus');
+      vi.spyOn(trigger, 'focus').mockImplementation(() => undefined);
       service.deactivate(true);
 
       expect(trigger.focus).toHaveBeenCalled();

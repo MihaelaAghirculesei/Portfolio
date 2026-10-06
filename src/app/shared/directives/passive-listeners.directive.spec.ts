@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PassiveTouchStartDirective, PassiveTouchEndDirective } from './passive-listeners.directive';
@@ -20,8 +21,8 @@ function createTouch(target: HTMLElement, x = 100, y = 100, id = 1): Touch {
 }
 
 @Component({
-    template: '<div appPassiveTouchStart (passiveTouchStart)="onTouchStart($event)"></div>',
-    imports: [PassiveTouchStartDirective]
+  template: '<div appPassiveTouchStart (passiveTouchStart)="onTouchStart($event)"></div>',
+  imports: [PassiveTouchStartDirective]
 })
 class TestTouchStartComponent {
   touchStartEvent: TouchEvent | null = null;
@@ -31,8 +32,8 @@ class TestTouchStartComponent {
 }
 
 @Component({
-    template: '<div appPassiveTouchEnd (passiveTouchEnd)="onTouchEnd($event)"></div>',
-    imports: [PassiveTouchEndDirective]
+  template: '<div appPassiveTouchEnd (passiveTouchEnd)="onTouchEnd($event)"></div>',
+  imports: [PassiveTouchEndDirective]
 })
 class TestTouchEndComponent {
   touchEndEvent: TouchEvent | null = null;
@@ -45,8 +46,8 @@ describe('PassiveTouchStartDirective', () => {
   let component: TestTouchStartComponent;
   let fixture: ComponentFixture<TestTouchStartComponent>;
   let divElement: HTMLElement;
-  let addEventListenerSpy: jasmine.Spy;
-  let removeEventListenerSpy: jasmine.Spy;
+  let addEventListenerSpy: Mock;
+  let removeEventListenerSpy: Mock;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -57,8 +58,8 @@ describe('PassiveTouchStartDirective', () => {
     component = fixture.componentInstance;
     divElement = fixture.nativeElement.querySelector('div');
 
-    addEventListenerSpy = spyOn(divElement, 'addEventListener').and.callThrough();
-    removeEventListenerSpy = spyOn(divElement, 'removeEventListener').and.callThrough();
+    addEventListenerSpy = vi.spyOn(divElement, 'addEventListener');
+    removeEventListenerSpy = vi.spyOn(divElement, 'removeEventListener');
   });
 
   describe('Initialization', () => {
@@ -69,28 +70,23 @@ describe('PassiveTouchStartDirective', () => {
     it('should add touchstart event listener on ngOnInit', () => {
       fixture.detectChanges();
 
-      expect(addEventListenerSpy).toHaveBeenCalledWith(
-        'touchstart',
-        jasmine.any(Function),
-        { passive: true }
-      );
+      expect(addEventListenerSpy).toHaveBeenCalledWith('touchstart', expect.any(Function), { passive: true });
     });
 
     it('should add event listener with passive option set to true', () => {
       fixture.detectChanges();
 
-      const calls = addEventListenerSpy.calls.all();
-      const touchstartCall = calls.find(call => call.args[0] === 'touchstart');
+      const calls = vi.mocked(addEventListenerSpy).mock.calls;
+      const touchstartCall = calls.find(call => call[0] === 'touchstart');
 
       expect(touchstartCall).toBeDefined();
-      expect(touchstartCall?.args[2]).toEqual({ passive: true });
+      expect(touchstartCall?.[2]).toEqual({ passive: true });
     });
 
     it('should add event listener only once', () => {
       fixture.detectChanges();
 
-      const touchstartCalls = addEventListenerSpy.calls.all()
-        .filter(call => call.args[0] === 'touchstart');
+      const touchstartCalls = vi.mocked(addEventListenerSpy).mock.calls.filter(call => call[0] === 'touchstart');
 
       expect(touchstartCalls.length).toBe(1);
     });
@@ -192,10 +188,7 @@ describe('PassiveTouchStartDirective', () => {
       fixture.detectChanges();
       fixture.destroy();
 
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'touchstart',
-        jasmine.any(Function)
-      );
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('touchstart', expect.any(Function));
     });
 
     it('should not emit events after destroy', () => {
@@ -218,11 +211,11 @@ describe('PassiveTouchStartDirective', () => {
     it('should remove the same listener that was added', () => {
       fixture.detectChanges();
 
-      const addedListener = addEventListenerSpy.calls.first().args[1];
+      const addedListener = vi.mocked(addEventListenerSpy).mock.calls[0][1];
 
       fixture.destroy();
 
-      const removedListener = removeEventListenerSpy.calls.first().args[1];
+      const removedListener = vi.mocked(removeEventListenerSpy).mock.calls[0][1];
       expect(removedListener).toBe(addedListener);
     });
 
@@ -257,7 +250,7 @@ describe('PassiveTouchStartDirective', () => {
     it('should maintain listener reference across multiple events', () => {
       fixture.detectChanges();
 
-      const listener1 = addEventListenerSpy.calls.first().args[1];
+      const listener1 = vi.mocked(addEventListenerSpy).mock.calls[0][1];
 
       const touch = createTouch(divElement);
       divElement.dispatchEvent(new TouchEvent('touchstart', {
@@ -266,8 +259,8 @@ describe('PassiveTouchStartDirective', () => {
         changedTouches: [touch]
       }));
 
-      const currentCalls = addEventListenerSpy.calls.count();
-      expect(currentCalls).toBe(1); 
+      const currentCalls = vi.mocked(addEventListenerSpy).mock.calls.length;
+      expect(currentCalls).toBe(1);
     });
 
     it('should work with programmatically created TouchEvent', () => {
@@ -293,8 +286,8 @@ describe('PassiveTouchEndDirective', () => {
   let component: TestTouchEndComponent;
   let fixture: ComponentFixture<TestTouchEndComponent>;
   let divElement: HTMLElement;
-  let addEventListenerSpy: jasmine.Spy;
-  let removeEventListenerSpy: jasmine.Spy;
+  let addEventListenerSpy: Mock;
+  let removeEventListenerSpy: Mock;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -305,8 +298,8 @@ describe('PassiveTouchEndDirective', () => {
     component = fixture.componentInstance;
     divElement = fixture.nativeElement.querySelector('div');
 
-    addEventListenerSpy = spyOn(divElement, 'addEventListener').and.callThrough();
-    removeEventListenerSpy = spyOn(divElement, 'removeEventListener').and.callThrough();
+    addEventListenerSpy = vi.spyOn(divElement, 'addEventListener');
+    removeEventListenerSpy = vi.spyOn(divElement, 'removeEventListener');
   });
 
   describe('Initialization', () => {
@@ -317,28 +310,23 @@ describe('PassiveTouchEndDirective', () => {
     it('should add touchend event listener on ngOnInit', () => {
       fixture.detectChanges();
 
-      expect(addEventListenerSpy).toHaveBeenCalledWith(
-        'touchend',
-        jasmine.any(Function),
-        { passive: true }
-      );
+      expect(addEventListenerSpy).toHaveBeenCalledWith('touchend', expect.any(Function), { passive: true });
     });
 
     it('should add event listener with passive option set to true', () => {
       fixture.detectChanges();
 
-      const calls = addEventListenerSpy.calls.all();
-      const touchendCall = calls.find(call => call.args[0] === 'touchend');
+      const calls = vi.mocked(addEventListenerSpy).mock.calls;
+      const touchendCall = calls.find(call => call[0] === 'touchend');
 
       expect(touchendCall).toBeDefined();
-      expect(touchendCall?.args[2]).toEqual({ passive: true });
+      expect(touchendCall?.[2]).toEqual({ passive: true });
     });
 
     it('should add event listener only once', () => {
       fixture.detectChanges();
 
-      const touchendCalls = addEventListenerSpy.calls.all()
-        .filter(call => call.args[0] === 'touchend');
+      const touchendCalls = vi.mocked(addEventListenerSpy).mock.calls.filter(call => call[0] === 'touchend');
 
       expect(touchendCalls.length).toBe(1);
     });
@@ -440,10 +428,7 @@ describe('PassiveTouchEndDirective', () => {
       fixture.detectChanges();
       fixture.destroy();
 
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        'touchend',
-        jasmine.any(Function)
-      );
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('touchend', expect.any(Function));
     });
 
     it('should not emit events after destroy', () => {
@@ -466,11 +451,11 @@ describe('PassiveTouchEndDirective', () => {
     it('should remove the same listener that was added', () => {
       fixture.detectChanges();
 
-      const addedListener = addEventListenerSpy.calls.first().args[1];
+      const addedListener = vi.mocked(addEventListenerSpy).mock.calls[0][1];
 
       fixture.destroy();
 
-      const removedListener = removeEventListenerSpy.calls.first().args[1];
+      const removedListener = vi.mocked(removeEventListenerSpy).mock.calls[0][1];
       expect(removedListener).toBe(addedListener);
     });
 
@@ -505,7 +490,7 @@ describe('PassiveTouchEndDirective', () => {
     it('should maintain listener reference across multiple events', () => {
       fixture.detectChanges();
 
-      const listener1 = addEventListenerSpy.calls.first().args[1];
+      const listener1 = vi.mocked(addEventListenerSpy).mock.calls[0][1];
 
       const touch = createTouch(divElement);
       divElement.dispatchEvent(new TouchEvent('touchend', {
@@ -514,8 +499,8 @@ describe('PassiveTouchEndDirective', () => {
         changedTouches: [touch]
       }));
 
-      const currentCalls = addEventListenerSpy.calls.count();
-      expect(currentCalls).toBe(1); 
+      const currentCalls = vi.mocked(addEventListenerSpy).mock.calls.length;
+      expect(currentCalls).toBe(1);
     });
 
     it('should work with programmatically created TouchEvent', () => {

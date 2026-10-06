@@ -10,7 +10,8 @@
     "build": "ng build && node scripts/absolutize-preload-links.mjs && node scripts/generate-csp-headers.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false",
-    "test:watch": "ng test",
+    "test:watch": "ng test --watch",
+    "test:coverage": "ng test --watch=false --coverage",
     "serve:ssr:angular-portofolio": "node dist/angular-portofolio/server/server.mjs",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.html\" \"cloudflare-worker/**/*.js\" \"scripts/**/*.mjs\"",
     "lint:fix": "eslint \"src/**/*.ts\" \"src/**/*.html\" \"cloudflare-worker/**/*.js\" \"scripts/**/*.mjs\" --fix",
@@ -18,7 +19,7 @@
     "e2e:ui": "playwright test --ui",
     "e2e:report": "playwright show-report",
     "ci:security": "node scripts/security-audit.mjs",
-    "ci:quality": "npm run lint && ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage",
+    "ci:quality": "npm run lint && npm run test:coverage",
     "ci:build": "ng build --configuration=production && node scripts/absolutize-preload-links.mjs && node scripts/generate-csp-headers.mjs",
     "ci:smoke": "node scripts/smoke-test-production.mjs",
     "outdated:check": "npm outdated || node -e \"console.log('Outdated check complete (informational only, not blocking).')\"",
@@ -43,8 +44,7 @@
     "compression": "^1.8.2",
     "express": "^5.2.1",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.16.3"
+    "tslib": "^2.3.0"
   },
   "overrides": {
     "serialize-javascript": ">=7.0.5",
@@ -70,21 +70,17 @@
     "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.63.0",
     "@types/express": "^5.0.6",
-    "@types/jasmine": "~5.1.0",
     "@types/node": "^22.20.4",
+    "@vitest/browser-playwright": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.11",
     "angular-eslint": "^21.4.0",
     "eslint": "^9.37.0",
-    "jasmine-core": "~5.13.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.3.0",
     "parse5": "^8.0.1",
     "purgecss": "^6.0.0",
     "sharp": "^0.35.5",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.71.0",
+    "vitest": "^4.1.11",
     "wrangler": "^4.146.0"
   }
 }

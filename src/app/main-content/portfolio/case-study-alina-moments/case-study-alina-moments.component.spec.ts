@@ -25,7 +25,7 @@ describe('CaseStudyAlinaMomentsComponent', () => {
 
   it('should scroll to top on init', () => {
     const scrollService = TestBed.inject(ScrollService);
-    const scrollSpy = spyOn(scrollService, 'scrollToTop');
+    const scrollSpy = vi.spyOn(scrollService, 'scrollToTop').mockImplementation(() => undefined);
 
     component.ngOnInit();
 
@@ -41,9 +41,7 @@ describe('CaseStudyAlinaMomentsComponent', () => {
   });
 
   it('should build screenshot paths under the case-studies assets folder', () => {
-    expect(component.screenshotSrc('01-hero-desktop.png')).toBe(
-      'assets/img/case-studies/alina-moments/01-hero-desktop.png'
-    );
+    expect(component.screenshotSrc('01-hero-desktop.png')).toBe('assets/img/case-studies/alina-moments/01-hero-desktop.png');
   });
 
   it('should render 9 result stat tiles', () => {

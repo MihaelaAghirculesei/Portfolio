@@ -25,7 +25,7 @@ describe('CaseStudyChargeHubComponent', () => {
 
   it('should scroll to top on init', () => {
     const scrollService = TestBed.inject(ScrollService);
-    const scrollSpy = spyOn(scrollService, 'scrollToTop');
+    const scrollSpy = vi.spyOn(scrollService, 'scrollToTop').mockImplementation(() => undefined);
 
     component.ngOnInit();
 
@@ -41,9 +41,7 @@ describe('CaseStudyChargeHubComponent', () => {
   });
 
   it('should build screenshot paths under the case-studies assets folder', () => {
-    expect(component.screenshotSrc('01-dashboard.webp')).toBe(
-      'assets/img/case-studies/charge-hub/01-dashboard.webp'
-    );
+    expect(component.screenshotSrc('01-dashboard.webp')).toBe('assets/img/case-studies/charge-hub/01-dashboard.webp');
   });
 
   it('should render 8 result stat tiles', () => {

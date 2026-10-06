@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/core';
@@ -6,29 +7,33 @@ import { SeoService } from './seo.service';
 
 describe('SeoService', () => {
   let service: SeoService;
-  let metaSpy: jasmine.SpyObj<Meta>;
-  let titleSpy: jasmine.SpyObj<Title>;
+  let metaSpy: Pick<MockedObject<Meta>, 'updateTag'>;
+  let titleSpy: Pick<MockedObject<Title>, 'setTitle'>;
   let mockDoc: any;
 
   const SITE_URL = 'http://localhost:4200';
 
   function makeMockElement(): any {
     return {
-      setAttribute: jasmine.createSpy('setAttribute'),
+      setAttribute: vi.fn(),
       textContent: '',
-      parentNode: { removeChild: jasmine.createSpy('removeChild') },
+      parentNode: { removeChild: vi.fn() },
     };
   }
 
   beforeEach(() => {
-    metaSpy = jasmine.createSpyObj('Meta', ['updateTag']);
-    titleSpy = jasmine.createSpyObj('Title', ['setTitle']);
+    metaSpy = {
+      updateTag: vi.fn().mockName('Meta.updateTag')
+    };
+    titleSpy = {
+      setTitle: vi.fn().mockName('Title.setTitle')
+    };
 
     mockDoc = {
-      querySelectorAll: jasmine.createSpy('querySelectorAll').and.returnValue([]),
-      querySelector: jasmine.createSpy('querySelector').and.returnValue(null),
-      createElement: jasmine.createSpy('createElement').and.callFake(() => makeMockElement()),
-      head: { appendChild: jasmine.createSpy('appendChild') },
+      querySelectorAll: vi.fn().mockReturnValue([]),
+      querySelector: vi.fn().mockReturnValue(null),
+      createElement: vi.fn().mockImplementation(() => makeMockElement()),
+      head: { appendChild: vi.fn() },
     };
 
     TestBed.configureTestingModule({
@@ -73,7 +78,7 @@ describe('SeoService', () => {
 
       expect(metaSpy.updateTag).toHaveBeenCalledWith({ property: 'og:url', content: SITE_URL });
       expect(metaSpy.updateTag).toHaveBeenCalledWith(
-        jasmine.objectContaining({ property: 'og:image', content: jasmine.stringContaining(SITE_URL) })
+        expect.objectContaining({ property: 'og:image', content: expect.stringContaining(SITE_URL) }),
       );
     });
 
@@ -90,13 +95,12 @@ describe('SeoService', () => {
     });
 
     it('should create and append a canonical link element when none exists', () => {
-      mockDoc.querySelector.and.returnValue(null);
+      mockDoc.querySelector.mockReturnValue(null);
 
       service.update(baseConfig);
 
-      const linkCall = mockDoc.createElement.calls.all().find((c: any) => c.args[0] === 'link');
-      expect(linkCall).toBeTruthy();
-      const linkEl = linkCall.returnValue;
+      const [linkEl] = createdElements('link');
+      expect(linkEl).toBeTruthy();
       expect(linkEl.setAttribute).toHaveBeenCalledWith('rel', 'canonical');
       expect(linkEl.setAttribute).toHaveBeenCalledWith('href', SITE_URL);
       expect(mockDoc.head.appendChild).toHaveBeenCalledWith(linkEl);
@@ -104,12 +108,12 @@ describe('SeoService', () => {
 
     it('should update href on an existing canonical link without creating a new one', () => {
       const existingLink = makeMockElement();
-      mockDoc.querySelector.and.returnValue(existingLink);
+      mockDoc.querySelector.mockReturnValue(existingLink);
 
       service.update({ ...baseConfig, ogUrl: `${SITE_URL}/about` });
 
       expect(existingLink.setAttribute).toHaveBeenCalledWith('href', `${SITE_URL}/about`);
-      expect(mockDoc.createElement.calls.all().some((c: any) => c.args[0] === 'link')).toBeFalse();
+      expect(createdElements('link')).toHaveLength(0);
     });
 
     it('should inject WebSite and Person JSON-LD schemas on the home page', () => {
@@ -135,11 +139,13 @@ describe('SeoService', () => {
       expect(breadcrumb?.itemListElement[1].name).toBe('Privacy Policy');
     });
 
+    function createdElements(tag: string): any[] {
+      const { calls, results } = vi.mocked(mockDoc.createElement).mock;
+      return calls.flatMap((args: unknown[], i: number) => (args[0] === tag ? [results[i].value] : []));
+    }
+
     function parsedScripts(): any[] {
-      return mockDoc.createElement.calls
-        .all()
-        .filter((c: any) => c.args[0] === 'script')
-        .map((c: any) => c.returnValue)
+      return createdElements('script')
         .filter((el: any) => el.textContent !== '')
         .map((el: any) => JSON.parse(el.textContent));
     }

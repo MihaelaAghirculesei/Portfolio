@@ -90,7 +90,7 @@ describe('ProjectDataService', () => {
 
   describe('getProjectShortDescription', () => {
     it('should translate using the project id when present', () => {
-      spyOn(translateService, 'instant').and.returnValue('Kurzbeschreibung');
+      vi.spyOn(translateService, 'instant').mockReturnValue('Kurzbeschreibung');
       const project: Projects = { id: 'join', name: 'Join', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' };
 
       const result = service.getProjectShortDescription(project);
@@ -100,7 +100,7 @@ describe('ProjectDataService', () => {
     });
 
     it('should fall back to the default translation key when id is missing', () => {
-      spyOn(translateService, 'instant').and.returnValue('Default short');
+      vi.spyOn(translateService, 'instant').mockReturnValue('Default short');
       const project = { name: 'Unknown', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' } as unknown as Projects;
 
       const result = service.getProjectShortDescription(project);
@@ -112,7 +112,7 @@ describe('ProjectDataService', () => {
 
   describe('getProjectDescription', () => {
     it('should translate using the project id when present', () => {
-      spyOn(translateService, 'instant').and.returnValue('Full description');
+      vi.spyOn(translateService, 'instant').mockReturnValue('Full description');
       const project: Projects = { id: 'join', name: 'Join', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' };
 
       const result = service.getProjectDescription(project);
@@ -122,7 +122,7 @@ describe('ProjectDataService', () => {
     });
 
     it('should return the raw description when id is missing', () => {
-      spyOn(translateService, 'instant');
+      vi.spyOn(translateService, 'instant').mockReturnValue('');
       const project = {
         name: 'Unknown',
         technologies: [],

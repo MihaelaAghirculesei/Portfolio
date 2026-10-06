@@ -6,7 +6,7 @@
 #   because they routinely need code changes and lockstep peer bumps. Track each
 #   one in its own issue and run it as a dedicated PR — typically alongside the
 #   matching Angular major (`ng update`), which is what unblocks tooling majors
-#   (angular-eslint, eslint, typescript, jasmine, @types/node, ...).
+#   (angular-eslint, eslint, typescript, vitest, @types/node, ...).
 # - Security majors are the exception: if Dependabot opens a security PR for a
 #   major, treat it as a normal manual major upgrade and prioritise it.
 version: 2

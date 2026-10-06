@@ -72,9 +72,7 @@ describe('AboutMeComponent', () => {
     });
 
     it('should return unique keys for different sections', () => {
-      const keys = component.aboutSections.map((section, index) =>
-        component.trackByIcon(index, section)
-      );
+      const keys = component.aboutSections.map((section, index) => component.trackByIcon(index, section));
       const uniqueKeys = new Set(keys);
       expect(uniqueKeys.size).toBe(component.aboutSections.length);
     });
@@ -96,13 +94,13 @@ describe('AboutMeComponent', () => {
 
   describe('Lifecycle Hooks', () => {
     it('should initialize scroll animations on init', () => {
-      spyOn<any>(component, 'initScrollAnimations');
+      vi.spyOn(component as any, 'initScrollAnimations').mockImplementation(() => undefined);
       component.ngOnInit();
       expect(component['initScrollAnimations']).toHaveBeenCalled();
     });
 
     it('should cleanup event listeners on destroy', () => {
-      const mockCleanup = jasmine.createSpy('cleanup');
+      const mockCleanup = vi.fn();
       component['eventListeners'] = [mockCleanup];
 
       component.ngOnDestroy();
@@ -113,10 +111,10 @@ describe('AboutMeComponent', () => {
 
     it('should disconnect observer on destroy', () => {
       component['observer'] = {
-        disconnect: jasmine.createSpy('disconnect'),
-        observe: jasmine.createSpy('observe'),
-        unobserve: jasmine.createSpy('unobserve'),
-        takeRecords: jasmine.createSpy('takeRecords')
+        disconnect: vi.fn(),
+        observe: vi.fn(),
+        unobserve: vi.fn(),
+        takeRecords: vi.fn()
       } as any;
 
       component.ngOnDestroy();
@@ -125,7 +123,7 @@ describe('AboutMeComponent', () => {
     });
 
     it('should cancel animation frame on destroy', () => {
-      spyOn(window, 'cancelAnimationFrame');
+      vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => undefined);
       component['animationFrameId'] = 123;
 
       component.ngOnDestroy();
@@ -213,12 +211,12 @@ describe('AboutMeComponent', () => {
 
   describe('AOS Initialization', () => {
     it('should call AOS.init when window.AOS is defined', () => {
-      const mockAOS = { init: jasmine.createSpy('init') };
+      const mockAOS = { init: vi.fn() };
       (window as any).AOS = mockAOS;
 
       component['initScrollAnimations']();
 
-      expect(mockAOS.init).toHaveBeenCalledWith(jasmine.objectContaining({
+      expect(mockAOS.init).toHaveBeenCalledWith(expect.objectContaining({
         duration: AOS_CONFIG.DURATION,
         easing: 'ease-in-out',
         once: true,
@@ -249,10 +247,10 @@ describe('AboutMeComponent', () => {
       let capturedCallback: ((entries: IntersectionObserverEntry[]) => void) | null = null;
 
       class MockIntersectionObserver {
-        observe = jasmine.createSpy('observe');
-        disconnect = jasmine.createSpy('disconnect');
-        unobserve = jasmine.createSpy('unobserve');
-        takeRecords = jasmine.createSpy('takeRecords');
+        observe = vi.fn();
+        disconnect = vi.fn();
+        unobserve = vi.fn();
+        takeRecords = vi.fn();
         constructor(cb: any) { capturedCallback = cb; }
       }
       (window as any).IntersectionObserver = MockIntersectionObserver;
@@ -270,10 +268,10 @@ describe('AboutMeComponent', () => {
       let capturedCallback: ((entries: IntersectionObserverEntry[]) => void) | null = null;
 
       class MockIntersectionObserver {
-        observe = jasmine.createSpy('observe');
-        disconnect = jasmine.createSpy('disconnect');
-        unobserve = jasmine.createSpy('unobserve');
-        takeRecords = jasmine.createSpy('takeRecords');
+        observe = vi.fn();
+        disconnect = vi.fn();
+        unobserve = vi.fn();
+        takeRecords = vi.fn();
         constructor(cb: any) { capturedCallback = cb; }
       }
       (window as any).IntersectionObserver = MockIntersectionObserver;
@@ -309,7 +307,7 @@ describe('AboutMeComponent — Server-Side Rendering', () => {
   });
 
   it('should not initialize animations on server', () => {
-    spyOn<any>(component, 'initScrollAnimations');
+    vi.spyOn(component as any, 'initScrollAnimations').mockImplementation(() => undefined);
 
     component.ngOnInit();
 

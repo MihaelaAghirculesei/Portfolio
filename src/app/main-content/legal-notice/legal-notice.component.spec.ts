@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Location } from '@angular/common';
 import { LegalNoticeComponent } from './legal-notice.component';
@@ -5,10 +6,12 @@ import { LegalNoticeComponent } from './legal-notice.component';
 describe('LegalNoticeComponent', () => {
   let component: LegalNoticeComponent;
   let fixture: ComponentFixture<LegalNoticeComponent>;
-  let mockLocation: jasmine.SpyObj<Location>;
+  let mockLocation: Pick<MockedObject<Location>, 'back'>;
 
   beforeEach(async () => {
-    mockLocation = jasmine.createSpyObj('Location', ['back']);
+    mockLocation = {
+      back: vi.fn().mockName('Location.back')
+    };
 
     await TestBed.configureTestingModule({
       imports: [LegalNoticeComponent],
@@ -16,7 +19,7 @@ describe('LegalNoticeComponent', () => {
         { provide: Location, useValue: mockLocation }
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LegalNoticeComponent);
     component = fixture.componentInstance;

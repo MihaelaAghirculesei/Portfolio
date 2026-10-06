@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { TranslationService } from '../../shared/services/translation.service';
 import { PortfolioComponent } from './portfolio.component';
@@ -9,7 +9,8 @@ import { ProjectDataService } from './services/project-data.service';
 import { NavigationService } from '../../shared/services/navigation.service';
 
 @Component({ selector: 'app-stub-projects-target', template: '', standalone: true })
-class StubProjectsRouteComponent {}
+class StubProjectsRouteComponent {
+}
 
 describe('PortfolioComponent', () => {
   let component: PortfolioComponent;
@@ -88,7 +89,7 @@ describe('PortfolioComponent', () => {
   describe('toggleShowAll', () => {
     it('should expand to all projects in place, without navigating', () => {
       const event = new MouseEvent('click');
-      spyOn(event, 'preventDefault');
+      vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined);
 
       component.toggleShowAll(event);
 
@@ -109,7 +110,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should swap the "view all" link to "back to featured" in place, without a route change', () => {
-      spyOn(router, 'navigateByUrl');
+      vi.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
       const link: HTMLAnchorElement = fixture.nativeElement.querySelector('.view-all-wrapper a');
       expect(link.textContent?.trim()).toBe('View all projects');
 
@@ -126,7 +127,7 @@ describe('PortfolioComponent', () => {
   describe('Project Overlay Management', () => {
     it('should open project overlay', () => {
       const project = component.projects[0];
-      spyOn(platformService, 'disableScroll');
+      vi.spyOn(platformService, 'disableScroll').mockImplementation(() => undefined);
 
       component.openProjectOverlay(project, 0);
 
@@ -136,7 +137,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should close overlay', () => {
-      spyOn(platformService, 'enableScroll');
+      vi.spyOn(platformService, 'enableScroll').mockImplementation(() => undefined);
       component.selectedProject = component.projects[0];
 
       component.closeOverlay();
@@ -171,7 +172,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should check orientation when opening overlay', () => {
-      spyOn<any>(component, 'checkOrientation');
+      vi.spyOn(component as any, 'checkOrientation').mockImplementation(() => undefined);
 
       component.openProjectOverlay(component.projects[0], 0);
 
@@ -215,9 +216,9 @@ describe('PortfolioComponent', () => {
   describe('goToFeaturedProjects', () => {
     it('should prevent default navigation and scroll to the projects section', () => {
       const navigationService = TestBed.inject(NavigationService);
-      spyOn(navigationService, 'scrollToSection');
+      vi.spyOn(navigationService, 'scrollToSection').mockImplementation(() => undefined);
       const event = new MouseEvent('click');
-      spyOn(event, 'preventDefault');
+      vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined);
 
       component.goToFeaturedProjects(event);
 
@@ -227,7 +228,8 @@ describe('PortfolioComponent', () => {
   });
 
   describe('Active Project Management', () => {
-    it('should set active project on hover', fakeAsync(() => {
+    it('should set active project on hover', async () => {
+      vi.useFakeTimers();
       const mockDiv = document.createElement('div');
       mockDiv.getBoundingClientRect = () => ({
         top: 150,
@@ -254,11 +256,11 @@ describe('PortfolioComponent', () => {
       });
 
       component.setActiveProject(0, mockEvent);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
 
       expect(component.activeProjectId).toBe(0);
       expect(component.activePreview).toBe(component.projects[0].previewImg);
-    }));
+    });
 
     it('should not set active project on mobile', () => {
       Object.defineProperty(window, 'innerWidth', {
@@ -287,7 +289,8 @@ describe('PortfolioComponent', () => {
   });
 
   describe('Touch Event Handling', () => {
-    it('should handle touch start', fakeAsync(() => {
+    it('should handle touch start', async () => {
+      vi.useFakeTimers();
       const mockDiv = document.createElement('div');
       mockDiv.getBoundingClientRect = () => ({
         top: 150,
@@ -308,14 +311,14 @@ describe('PortfolioComponent', () => {
       } as any;
 
       component.handleTouchStart(touchEvent, 0);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
 
       expect(component.activeProjectId).toBe(0);
-    }));
+    });
 
     it('should handle touch end and open overlay if not moved', () => {
       component['touchMoved'] = false;
-      spyOn(component, 'openProjectOverlay');
+      vi.spyOn(component, 'openProjectOverlay').mockImplementation(() => undefined);
 
       const touchEvent = {} as any;
 
@@ -326,10 +329,10 @@ describe('PortfolioComponent', () => {
 
     it('should not open overlay if touch moved', () => {
       component['touchMoved'] = true;
-      spyOn(component, 'openProjectOverlay');
+      vi.spyOn(component, 'openProjectOverlay').mockImplementation(() => undefined);
 
       const touchEvent = {
-        preventDefault: jasmine.createSpy('preventDefault')
+        preventDefault: vi.fn()
       } as any;
 
       component.handleTouchEnd(touchEvent, 0);
@@ -341,7 +344,7 @@ describe('PortfolioComponent', () => {
   describe('Keyboard Navigation', () => {
     it('should close overlay on escape key', () => {
       component.selectedProject = component.projects[0];
-      spyOn(component, 'closeOverlay');
+      vi.spyOn(component, 'closeOverlay').mockImplementation(() => undefined);
 
       component.onEscapeKey();
 
@@ -350,7 +353,7 @@ describe('PortfolioComponent', () => {
 
     it('should not close overlay if no overlay is open', () => {
       component.selectedProject = null;
-      spyOn(component, 'closeOverlay');
+      vi.spyOn(component, 'closeOverlay').mockImplementation(() => undefined);
 
       component.onEscapeKey();
 
@@ -423,7 +426,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should get project short description with translation', () => {
-      spyOn(translateService, 'instant').and.returnValue('Test description');
+      vi.spyOn(translateService, 'instant').mockReturnValue('Test description');
       const joinProject = projectDataService.projects.find(p => p.name === 'Join')!;
 
       const desc = component.getProjectShortDescription(joinProject);
@@ -433,7 +436,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should get project description with translation', () => {
-      spyOn(translateService, 'instant').and.returnValue('Test description');
+      vi.spyOn(translateService, 'instant').mockReturnValue('Test description');
       const joinProject = projectDataService.projects.find(p => p.name === 'Join')!;
 
       const desc = component.getProjectDescription(joinProject);
@@ -480,7 +483,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should get translation for Todo Platform API description', () => {
-      spyOn(translateService, 'instant').and.returnValue('Todo API description');
+      vi.spyOn(translateService, 'instant').mockReturnValue('Todo API description');
       const todoProject = component.projects.find(p => p.name === 'Todo Platform API')!;
 
       const desc = component.getProjectDescription(todoProject);
@@ -490,7 +493,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should get translation for Todo Platform API short description', () => {
-      spyOn(translateService, 'instant').and.returnValue('Todo API short desc');
+      vi.spyOn(translateService, 'instant').mockReturnValue('Todo API short desc');
       const todoProject = component.projects.find(p => p.name === 'Todo Platform API')!;
 
       const desc = component.getProjectShortDescription(todoProject);
@@ -525,7 +528,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should get translations for its descriptions', () => {
-      spyOn(translateService, 'instant').and.returnValue('SecureNotes Lab text');
+      vi.spyOn(translateService, 'instant').mockReturnValue('SecureNotes Lab text');
       const project = findProject();
 
       component.getProjectDescription(project);
@@ -554,32 +557,25 @@ describe('PortfolioComponent', () => {
 
   describe('Lifecycle Hooks', () => {
     it('should add touch event listener on init', () => {
-      spyOn(document, 'addEventListener');
+      vi.spyOn(document, 'addEventListener').mockImplementation(() => undefined);
 
       component.ngOnInit();
 
-      expect(document.addEventListener).toHaveBeenCalledWith(
-        'touchmove',
-        jasmine.any(Function),
-        { passive: true }
-      );
+      expect(document.addEventListener).toHaveBeenCalledWith('touchmove', expect.any(Function), { passive: true });
     });
 
     it('should remove touch event listener on destroy', () => {
-      spyOn(document, 'removeEventListener');
-      spyOn(platformService, 'enableScroll');
+      vi.spyOn(document, 'removeEventListener').mockImplementation(() => undefined);
+      vi.spyOn(platformService, 'enableScroll').mockImplementation(() => undefined);
 
       component.ngOnDestroy();
 
-      expect(document.removeEventListener).toHaveBeenCalledWith(
-        'touchmove',
-        jasmine.any(Function)
-      );
+      expect(document.removeEventListener).toHaveBeenCalledWith('touchmove', expect.any(Function));
       expect(platformService.enableScroll).toHaveBeenCalled();
     });
 
     it('should cancel pending animation frame on destroy when one is pending', () => {
-      spyOn(window, 'cancelAnimationFrame');
+      vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => undefined);
       component['pendingRafId'] = 42;
 
       component.ngOnDestroy();
@@ -590,13 +586,13 @@ describe('PortfolioComponent', () => {
 
   describe('HostListener resize and orientationchange', () => {
     it('should call checkOrientation on window resize', () => {
-      spyOn(component as any, 'checkOrientation');
+      vi.spyOn(component as any, 'checkOrientation').mockImplementation(() => undefined);
       component.onResize();
       expect(component['checkOrientation']).toHaveBeenCalled();
     });
 
     it('should call checkOrientation on orientationchange', () => {
-      spyOn(component as any, 'checkOrientation');
+      vi.spyOn(component as any, 'checkOrientation').mockImplementation(() => undefined);
       component.onOrientationChange();
       expect(component['checkOrientation']).toHaveBeenCalled();
     });
@@ -616,17 +612,19 @@ describe('PortfolioComponent', () => {
       Object.defineProperty(mockEvent, 'currentTarget', { value: mockDiv, writable: false });
     });
 
-    it('should use SMALL_PREVIEW offset when innerWidth is small', fakeAsync(() => {
+    it('should use SMALL_PREVIEW offset when innerWidth is small', async () => {
+      vi.useFakeTimers();
       Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 700 });
 
       component.setActiveProject(0, mockEvent);
-      tick(16);
+      await vi.advanceTimersByTimeAsync(16);
 
       expect(component.hoverPosition).not.toBeNull();
       Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1920 });
-    }));
+    });
 
-    it('should use base position when offsetConfig is missing', fakeAsync(() => {
+    it('should use base position when offsetConfig is missing', async () => {
+      vi.useFakeTimers();
       Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1920 });
 
       const original = projectDataService.projects;
@@ -640,11 +638,11 @@ describe('PortfolioComponent', () => {
       // projects, at the end of the list.
       const appendedIndex = component.projects.length - 1;
       component.setActiveProject(appendedIndex, mockEvent);
-      tick(16);
+      await vi.advanceTimersByTimeAsync(16);
 
       expect(component.hoverPosition).not.toBeNull();
       projectDataService.projects = original;
-    }));
+    });
   });
 
   describe('handleTouchStart early return', () => {
@@ -674,7 +672,7 @@ describe('PortfolioComponent', () => {
       const moveEvent = {
         touches: [{ clientX: 100, clientY: 0 }],
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        preventDefault: () => {}
+        preventDefault: () => { }
       } as any;
 
       component['onTouchMove'](moveEvent);
@@ -688,7 +686,7 @@ describe('PortfolioComponent', () => {
       const moveEvent = {
         touches: [{ clientX: 0, clientY: 100 }],
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        preventDefault: () => {}
+        preventDefault: () => { }
       } as any;
 
       component['onTouchMove'](moveEvent);
@@ -698,39 +696,47 @@ describe('PortfolioComponent', () => {
   });
 
   describe('openProjectOverlay edge cases', () => {
-    it('should use "block" fallback when headerElement has no display style', fakeAsync(() => {
+    it('should use "block" fallback when headerElement has no display style', async () => {
+      vi.useFakeTimers();
       const header = document.createElement('header');
       header.style.display = '';
       document.body.appendChild(header);
-      spyOn(document, 'querySelector').and.callFake((selector: string) => {
-        if (selector === 'header') { return header; }
+      vi.spyOn(document, 'querySelector').mockImplementation((selector: string) => {
+        if (selector === 'header') {
+          return header;
+        }
         return null;
       });
 
       component.openProjectOverlay(component.projects[0], 0);
-      tick(200);
+      await vi.advanceTimersByTimeAsync(200);
 
       expect(overlayService['originalHeaderDisplay']).toBe('block');
       document.body.removeChild(header);
-    }));
+    });
 
-    it('should focus modal when .project-modal is found', fakeAsync(() => {
+    it('should focus modal when .project-modal is found', async () => {
+      vi.useFakeTimers();
       const modal = document.createElement('div');
       modal.classList.add('project-modal');
       document.body.appendChild(modal);
-      spyOn(modal, 'focus');
-      spyOn(document, 'querySelector').and.callFake((selector: string) => {
-        if (selector === 'header') { return null; }
-        if (selector === '.project-modal') { return modal; }
+      vi.spyOn(modal, 'focus').mockImplementation(() => undefined);
+      vi.spyOn(document, 'querySelector').mockImplementation((selector: string) => {
+        if (selector === 'header') {
+          return null;
+        }
+        if (selector === '.project-modal') {
+          return modal;
+        }
         return null;
       });
 
       component.openProjectOverlay(component.projects[0], 0);
-      tick(200);
+      await vi.advanceTimersByTimeAsync(200);
 
       expect(modal.focus).toHaveBeenCalled();
       document.body.removeChild(modal);
-    }));
+    });
   });
 
   describe('getProjectScreenshotAlt fallback', () => {
@@ -747,7 +753,7 @@ describe('PortfolioComponent', () => {
 
   describe('getProjectTranslation shortDescription fallback', () => {
     it('should call translate.instant for unknown project shortDescription', () => {
-      spyOn(translateService, 'instant').and.returnValue('default short');
+      vi.spyOn(translateService, 'instant').mockReturnValue('default short');
       const unknownProject = { name: 'Unknown', technologies: [], previewImg: '', description: 'desc', githubUrl: '', liveUrl: '' };
 
       const result = component.getProjectShortDescription(unknownProject as any);
@@ -758,7 +764,8 @@ describe('PortfolioComponent', () => {
   });
 
   describe('RequestAnimationFrame Throttling', () => {
-    it('should prevent multiple simultaneous setActiveProject calls', fakeAsync(() => {
+    it('should prevent multiple simultaneous setActiveProject calls', async () => {
+      vi.useFakeTimers();
       const mockDiv = document.createElement('div');
       mockDiv.getBoundingClientRect = () => ({
         top: 150,
@@ -794,14 +801,14 @@ describe('PortfolioComponent', () => {
 
       // Should return early due to rafPending flag
       expect(component.activeProjectId).toBe(initialProjectId);
-    }));
+    });
   });
 
   describe('on the /projects page', () => {
     let projFixture: ComponentFixture<PortfolioComponent>;
     let projComponent: PortfolioComponent;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach(async () => {
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
         imports: [PortfolioComponent],
@@ -812,9 +819,7 @@ describe('PortfolioComponent', () => {
         ],
       }).compileComponents();
 
-      const router = TestBed.inject(Router);
-      router.navigateByUrl('/projects');
-      tick();
+      await TestBed.inject(Router).navigateByUrl('/projects');
 
       projFixture = TestBed.createComponent(PortfolioComponent);
       projComponent = projFixture.componentInstance;
@@ -825,7 +830,7 @@ describe('PortfolioComponent', () => {
       } as ElementRef;
 
       projFixture.detectChanges();
-    }));
+    });
 
     it('should show all 9 projects including El Pollo Loco', () => {
       expect(projComponent['isProjectsPage']).toBe(true);

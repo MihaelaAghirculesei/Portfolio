@@ -33,6 +33,9 @@ yarn-error.log
 .sass-cache/
 /connect.lock
 /coverage
+# Vitest browser-mode failure screenshots
+__screenshots__/
+.vitest-attachments/
 /libpeerconnection.log
 testem.log
 /typings

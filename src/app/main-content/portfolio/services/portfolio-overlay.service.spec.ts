@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { PortfolioOverlayService } from './portfolio-overlay.service';
 import { PlatformService } from '../../../shared/services/platform.service';
@@ -48,69 +48,72 @@ describe('PortfolioOverlayService', () => {
     });
 
     it('should disable scroll', () => {
-      spyOn(platformService, 'disableScroll');
+      vi.spyOn(platformService, 'disableScroll').mockImplementation(() => undefined);
 
       service.open(mockProjects[0], 0);
 
       expect(platformService.disableScroll).toHaveBeenCalled();
     });
 
-    it('should save focus and hide the header in the browser', fakeAsync(() => {
+    it('should save focus and hide the header in the browser', async () => {
+      vi.useFakeTimers();
       const header = document.createElement('header');
       header.style.display = 'block';
       document.body.appendChild(header);
-      spyOn(focusTrap, 'saveFocus');
+      vi.spyOn(focusTrap, 'saveFocus').mockImplementation(() => undefined);
 
       service.open(mockProjects[0], 0);
 
       expect(focusTrap.saveFocus).toHaveBeenCalled();
       expect(header.style.display).toBe('none');
 
-      tick(TIMING_CONFIG.MODAL_FOCUS_DELAY);
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.MODAL_FOCUS_DELAY);
       document.body.removeChild(header);
-    }));
+    });
 
-    it('should default originalHeaderDisplay to "block" when the header has no inline display', fakeAsync(() => {
+    it('should default originalHeaderDisplay to "block" when the header has no inline display', async () => {
+      vi.useFakeTimers();
       const header = document.createElement('header');
       document.body.appendChild(header);
 
       service.open(mockProjects[0], 0);
-      tick(TIMING_CONFIG.MODAL_FOCUS_DELAY);
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.MODAL_FOCUS_DELAY);
       service.close();
 
       expect(header.style.display).toBe('block');
 
       document.body.removeChild(header);
-    }));
+    });
 
-    it('should activate the focus trap on the modal after the timing delay', fakeAsync(() => {
-      spyOn(focusTrap, 'activate');
+    it('should activate the focus trap on the modal after the timing delay', async () => {
+      vi.useFakeTimers();
+      vi.spyOn(focusTrap, 'activate').mockReturnValue(true);
 
       service.open(mockProjects[0], 0);
-      tick(TIMING_CONFIG.MODAL_FOCUS_DELAY);
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.MODAL_FOCUS_DELAY);
 
       expect(focusTrap.activate).toHaveBeenCalledWith('.project-modal', false);
-    }));
+    });
 
-    it('should focus the modal element when found after the timing delay', fakeAsync(() => {
+    it('should focus the modal element when found after the timing delay', async () => {
+      vi.useFakeTimers();
       const modal = document.createElement('div');
       modal.classList.add('project-modal');
       document.body.appendChild(modal);
-      spyOn(modal, 'focus');
+      vi.spyOn(modal, 'focus').mockImplementation(() => undefined);
 
       service.open(mockProjects[0], 0);
-      tick(TIMING_CONFIG.MODAL_FOCUS_DELAY);
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.MODAL_FOCUS_DELAY);
 
       expect(modal.focus).toHaveBeenCalled();
       document.body.removeChild(modal);
-    }));
+    });
 
-    it('should not throw when no header or modal element exists', fakeAsync(() => {
-      expect(() => {
-        service.open(mockProjects[0], 0);
-        tick(TIMING_CONFIG.MODAL_FOCUS_DELAY);
-      }).not.toThrow();
-    }));
+    it('should not throw when no header or modal element exists', async () => {
+      vi.useFakeTimers();
+      expect(() => service.open(mockProjects[0], 0)).not.toThrow();
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.MODAL_FOCUS_DELAY);
+    });
   });
 
   describe('close', () => {
@@ -123,28 +126,29 @@ describe('PortfolioOverlayService', () => {
     });
 
     it('should enable scroll', () => {
-      spyOn(platformService, 'enableScroll');
+      vi.spyOn(platformService, 'enableScroll').mockImplementation(() => undefined);
 
       service.close();
 
       expect(platformService.enableScroll).toHaveBeenCalled();
     });
 
-    it('should restore the header display and deactivate the focus trap in the browser', fakeAsync(() => {
+    it('should restore the header display and deactivate the focus trap in the browser', async () => {
+      vi.useFakeTimers();
       const header = document.createElement('header');
       header.style.display = 'block';
       document.body.appendChild(header);
-      spyOn(focusTrap, 'deactivate');
+      vi.spyOn(focusTrap, 'deactivate').mockImplementation(() => undefined);
 
       service.open(mockProjects[0], 0);
-      tick(TIMING_CONFIG.MODAL_FOCUS_DELAY);
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.MODAL_FOCUS_DELAY);
       service.close();
 
       expect(header.style.display).toBe('block');
       expect(focusTrap.deactivate).toHaveBeenCalledWith(true);
 
       document.body.removeChild(header);
-    }));
+    });
 
     it('should not throw when closing without a previously opened header', () => {
       expect(() => service.close()).not.toThrow();
@@ -212,8 +216,8 @@ describe('PortfolioOverlayService - SSR (server platform)', () => {
   });
 
   it('open should not touch the focus trap or the DOM on the server', () => {
-    spyOn(focusTrap, 'saveFocus');
-    spyOn(focusTrap, 'activate');
+    vi.spyOn(focusTrap, 'saveFocus').mockImplementation(() => undefined);
+    vi.spyOn(focusTrap, 'activate').mockReturnValue(true);
 
     service.open(mockProjects[0], 0);
 
@@ -224,7 +228,7 @@ describe('PortfolioOverlayService - SSR (server platform)', () => {
   });
 
   it('open should still disable scroll through the platform service on the server', () => {
-    spyOn(platformService, 'disableScroll');
+    vi.spyOn(platformService, 'disableScroll').mockImplementation(() => undefined);
 
     service.open(mockProjects[0], 0);
 
@@ -232,7 +236,7 @@ describe('PortfolioOverlayService - SSR (server platform)', () => {
   });
 
   it('close should not touch the focus trap or the DOM on the server', () => {
-    spyOn(focusTrap, 'deactivate');
+    vi.spyOn(focusTrap, 'deactivate').mockImplementation(() => undefined);
     service.selectedProject = mockProjects[0];
 
     service.close();
@@ -242,7 +246,7 @@ describe('PortfolioOverlayService - SSR (server platform)', () => {
   });
 
   it('close should still enable scroll through the platform service on the server', () => {
-    spyOn(platformService, 'enableScroll');
+    vi.spyOn(platformService, 'enableScroll').mockImplementation(() => undefined);
 
     service.close();
 

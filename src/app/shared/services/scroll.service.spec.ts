@@ -1,11 +1,12 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import type { Mock, MockedObject } from 'vitest';
+import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID, DOCUMENT } from '@angular/core';
 
 import { ScrollService } from './scroll.service';
 import { LoggerService } from './logger.service';
 
 interface MockWindow {
-  scrollTo: jasmine.Spy;
+  scrollTo: Mock;
   scrollY: number | undefined;
   pageYOffset: number | undefined;
   innerWidth: number;
@@ -13,21 +14,21 @@ interface MockWindow {
 }
 
 interface MockDocument {
-  getElementById: jasmine.Spy;
+  getElementById: Mock;
   defaultView: MockWindow | null;
   body: HTMLElement;
-  querySelectorAll: jasmine.Spy;
+  querySelectorAll: Mock;
 }
 
 describe('ScrollService', () => {
   let service: ScrollService;
   let mockDocument: MockDocument;
   let mockWindow: MockWindow;
-  let mockLogger: jasmine.SpyObj<LoggerService>;
+  let mockLogger: Pick<MockedObject<LoggerService>, 'error' | 'warn' | 'info' | 'debug'>;
 
   beforeEach(() => {
     mockWindow = {
-      scrollTo: jasmine.createSpy('scrollTo'),
+      scrollTo: vi.fn(),
       scrollY: 0,
       pageYOffset: 0,
       innerWidth: 1920,
@@ -35,13 +36,18 @@ describe('ScrollService', () => {
     };
 
     mockDocument = {
-      getElementById: jasmine.createSpy('getElementById'),
+      getElementById: vi.fn(),
       defaultView: mockWindow,
       body: document.body,
-      querySelectorAll: jasmine.createSpy('querySelectorAll').and.returnValue([])
+      querySelectorAll: vi.fn().mockReturnValue([])
     };
 
-    mockLogger = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+    mockLogger = {
+      error: vi.fn().mockName('LoggerService.error'),
+      warn: vi.fn().mockName('LoggerService.warn'),
+      info: vi.fn().mockName('LoggerService.info'),
+      debug: vi.fn().mockName('LoggerService.debug')
+    };
 
     TestBed.configureTestingModule({
       providers: [
@@ -68,7 +74,7 @@ describe('ScrollService', () => {
         offsetTop: 500
       } as HTMLElement;
 
-      mockDocument.getElementById.and.returnValue(mockElement);
+      mockDocument.getElementById.mockReturnValue(mockElement);
       mockWindow.innerWidth = 1920;
 
       service.scrollToElement('test-element');
@@ -85,7 +91,7 @@ describe('ScrollService', () => {
         offsetTop: 500
       } as HTMLElement;
 
-      mockDocument.getElementById.and.returnValue(mockElement);
+      mockDocument.getElementById.mockReturnValue(mockElement);
       mockWindow.innerWidth = 768;
 
       service.scrollToElement('skills');
@@ -101,7 +107,7 @@ describe('ScrollService', () => {
         offsetTop: 500
       } as HTMLElement;
 
-      mockDocument.getElementById.and.returnValue(mockElement);
+      mockDocument.getElementById.mockReturnValue(mockElement);
       mockWindow.innerWidth = 768;
 
       service.scrollToElement('unknown-element');
@@ -113,7 +119,7 @@ describe('ScrollService', () => {
     });
 
     it('should not scroll if element not found', () => {
-      mockDocument.getElementById.and.returnValue(null);
+      mockDocument.getElementById.mockReturnValue(null);
 
       service.scrollToElement('non-existent');
 
@@ -125,7 +131,7 @@ describe('ScrollService', () => {
         offsetTop: 500
       } as HTMLElement;
 
-      mockDocument.getElementById.and.returnValue(mockElement);
+      mockDocument.getElementById.mockReturnValue(mockElement);
       mockDocument.defaultView = null;
 
       service.scrollToElement('test-element');
@@ -138,7 +144,7 @@ describe('ScrollService', () => {
         offsetTop: 500
       } as HTMLElement;
 
-      mockDocument.getElementById.and.returnValue(mockElement);
+      mockDocument.getElementById.mockReturnValue(mockElement);
 
       service.scrollToElement('test', 'start');
       service.scrollToElement('test', 'center');
@@ -149,71 +155,78 @@ describe('ScrollService', () => {
   });
 
   describe('waitForLayoutStable', () => {
-    it('should resolve once offsetTop stops changing across consecutive polls', fakeAsync(() => {
+    it('should resolve once offsetTop stops changing across consecutive polls', async () => {
+      vi.useFakeTimers();
       const mockElement = { offsetTop: 500 } as HTMLElement;
-      mockDocument.getElementById.and.returnValue(mockElement);
+      mockDocument.getElementById.mockReturnValue(mockElement);
 
       let resolved = false;
       service.waitForLayoutStable('test').then(() => { resolved = true; });
 
-      tick(47);
+      await vi.advanceTimersByTimeAsync(47);
       expect(resolved).toBe(false);
 
-      tick(1);
+      await vi.advanceTimersByTimeAsync(1);
       expect(resolved).toBe(true);
-    }));
+    });
 
-    it('should keep waiting while the position keeps shifting, then resolve once it settles', fakeAsync(() => {
-      const mockElement: { offsetTop: number } = { offsetTop: 100 };
-      mockDocument.getElementById.and.returnValue(mockElement as unknown as HTMLElement);
+    it('should keep waiting while the position keeps shifting, then resolve once it settles', async () => {
+      vi.useFakeTimers();
+      const mockElement: {
+        offsetTop: number;
+      } = { offsetTop: 100 };
+      mockDocument.getElementById.mockReturnValue(mockElement as unknown as HTMLElement);
 
       let resolved = false;
       service.waitForLayoutStable('test').then(() => { resolved = true; });
 
-      tick(16);
+      await vi.advanceTimersByTimeAsync(16);
       mockElement.offsetTop = 300;
-      tick(30);
+      await vi.advanceTimersByTimeAsync(30);
       expect(resolved).toBe(false);
 
-      tick(50);
+      await vi.advanceTimersByTimeAsync(50);
       expect(resolved).toBe(true);
-    }));
+    });
 
-    it('should give up and resolve after maxWaitMs if the position never settles', fakeAsync(() => {
+    it('should give up and resolve after maxWaitMs if the position never settles', async () => {
+      vi.useFakeTimers();
       const mockElement = { offsetTop: 0 } as HTMLElement;
-      mockDocument.getElementById.and.returnValue(mockElement);
+      mockDocument.getElementById.mockReturnValue(mockElement);
       let counter = 0;
       Object.defineProperty(mockElement, 'offsetTop', { get: () => counter++ });
 
       let resolved = false;
       service.waitForLayoutStable('test', 100).then(() => { resolved = true; });
 
-      tick(80);
+      await vi.advanceTimersByTimeAsync(80);
       expect(resolved).toBe(false);
 
-      tick(200);
+      await vi.advanceTimersByTimeAsync(200);
       expect(resolved).toBe(true);
-    }));
+    });
 
-    it('should resolve immediately if the element is never found', fakeAsync(() => {
-      mockDocument.getElementById.and.returnValue(null);
+    it('should resolve immediately if the element is never found', async () => {
+      vi.useFakeTimers();
+      mockDocument.getElementById.mockReturnValue(null);
 
       let resolved = false;
       service.waitForLayoutStable('missing').then(() => { resolved = true; });
 
-      tick(60);
+      await vi.advanceTimersByTimeAsync(60);
       expect(resolved).toBe(true);
-    }));
+    });
 
-    it('should resolve immediately if window is null', fakeAsync(() => {
+    it('should resolve immediately if window is null', async () => {
+      vi.useFakeTimers();
       mockDocument.defaultView = null;
 
       let resolved = false;
       service.waitForLayoutStable('test').then(() => { resolved = true; });
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
 
       expect(resolved).toBe(true);
-    }));
+    });
   });
 
   describe('scrollToPosition', () => {
@@ -246,7 +259,7 @@ describe('ScrollService', () => {
 
   describe('scrollToTop', () => {
     it('should scroll to position 0', () => {
-      spyOn(service, 'scrollToPosition');
+      vi.spyOn(service, 'scrollToPosition').mockImplementation(() => undefined);
 
       service.scrollToTop();
 
@@ -340,14 +353,13 @@ describe('ScrollService', () => {
     });
 
     it('should log error when sessionStorage is unavailable', () => {
-      spyOn(sessionStorage, 'setItem').and.throwError('QuotaExceededError');
+      vi.spyOn(sessionStorage, 'setItem').mockImplementation(() => {
+        throw new Error('QuotaExceededError');
+      });
 
       service.saveScrollPosition();
 
-      expect(mockLogger.error).toHaveBeenCalledWith(
-        'Failed to save scroll position',
-        jasmine.any(Error)
-      );
+      expect(mockLogger.error).toHaveBeenCalledWith('Failed to save scroll position', expect.any(Error));
     });
   });
 
@@ -375,43 +387,52 @@ describe('ScrollService', () => {
     });
 
     it('should log error when sessionStorage is unavailable', () => {
-      spyOn(sessionStorage, 'getItem').and.throwError('SecurityError');
+      vi.spyOn(sessionStorage, 'getItem').mockImplementation(() => {
+        throw new Error('SecurityError');
+      });
 
       service.restoreScrollPosition();
 
-      expect(mockLogger.error).toHaveBeenCalledWith(
-        'Failed to restore scroll position',
-        jasmine.any(Error)
-      );
+      expect(mockLogger.error).toHaveBeenCalledWith('Failed to restore scroll position', expect.any(Error));
     });
   });
 });
 
 describe('ScrollService - SSR (server platform)', () => {
   let ssrService: ScrollService;
-  let ssrMockWindow: { scrollTo: jasmine.Spy; scrollY: number; pageYOffset: number; innerWidth: number };
+  let ssrMockWindow: {
+    scrollTo: Mock;
+    scrollY: number;
+    pageYOffset: number;
+    innerWidth: number;
+  };
   let ssrMockDocument: {
-    getElementById: jasmine.Spy;
+    getElementById: Mock;
     defaultView: typeof ssrMockWindow | null;
     body: HTMLElement;
-    querySelectorAll: jasmine.Spy;
+    querySelectorAll: Mock;
   };
-  let ssrMockLogger: jasmine.SpyObj<LoggerService>;
+  let ssrMockLogger: Pick<MockedObject<LoggerService>, 'error' | 'warn' | 'info' | 'debug'>;
 
   beforeEach(() => {
     ssrMockWindow = {
-      scrollTo: jasmine.createSpy('scrollTo'),
+      scrollTo: vi.fn(),
       scrollY: 0,
       pageYOffset: 0,
       innerWidth: 1920
     };
     ssrMockDocument = {
-      getElementById: jasmine.createSpy('getElementById'),
+      getElementById: vi.fn(),
       defaultView: ssrMockWindow,
       body: document.body,
-      querySelectorAll: jasmine.createSpy('querySelectorAll').and.returnValue([])
+      querySelectorAll: vi.fn().mockReturnValue([])
     };
-    ssrMockLogger = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+    ssrMockLogger = {
+      error: vi.fn().mockName('LoggerService.error'),
+      warn: vi.fn().mockName('LoggerService.warn'),
+      info: vi.fn().mockName('LoggerService.info'),
+      debug: vi.fn().mockName('LoggerService.debug')
+    };
 
     TestBed.configureTestingModule({
       providers: [
@@ -431,7 +452,7 @@ describe('ScrollService - SSR (server platform)', () => {
 
   it('scrollToElement should not scroll on server', () => {
     const mockEl = { offsetTop: 500 } as HTMLElement;
-    ssrMockDocument.getElementById.and.returnValue(mockEl);
+    ssrMockDocument.getElementById.mockReturnValue(mockEl);
 
     ssrService.scrollToElement('test');
 
@@ -446,9 +467,9 @@ describe('ScrollService - SSR (server platform)', () => {
 
   it('waitForLayoutStable should resolve immediately on server', async () => {
     const mockEl = { offsetTop: 500 } as HTMLElement;
-    ssrMockDocument.getElementById.and.returnValue(mockEl);
+    ssrMockDocument.getElementById.mockReturnValue(mockEl);
 
-    await expectAsync(ssrService.waitForLayoutStable('test')).toBeResolved();
+    await expect(ssrService.waitForLayoutStable('test')).resolves.not.toThrow();
   });
 
   it('getCurrentScrollPosition should return 0 on server', () => {

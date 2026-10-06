@@ -1,4 +1,5 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import type { MockedObject } from 'vitest';
+import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideRouter, Router, RouterStateSnapshot, TitleStrategy } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -7,7 +8,8 @@ import { TranslatedTitleStrategy } from './translated-title.strategy';
 import { TranslationService } from './translation.service';
 
 @Component({ selector: 'app-stub-title-route', template: '', standalone: true })
-class StubComponent {}
+class StubComponent {
+}
 
 function snapshotWithTitleData(data: Record<string, unknown> = {}): RouterStateSnapshot {
   const leaf = { data, children: [] as unknown[] };
@@ -17,13 +19,17 @@ function snapshotWithTitleData(data: Record<string, unknown> = {}): RouterStateS
 
 describe('TranslatedTitleStrategy - unit', () => {
   let strategy: TranslatedTitleStrategy;
-  let mockTranslate: jasmine.SpyObj<TranslationService>;
-  let mockTitleService: jasmine.SpyObj<Title>;
+  let mockTranslate: Pick<MockedObject<TranslationService>, 'get'>;
+  let mockTitleService: Pick<MockedObject<Title>, 'setTitle'>;
 
   beforeEach(() => {
-    mockTranslate = jasmine.createSpyObj('TranslationService', ['get']);
-    mockTitleService = jasmine.createSpyObj('Title', ['setTitle']);
-    strategy = new TranslatedTitleStrategy(mockTranslate, mockTitleService);
+    mockTranslate = {
+      get: vi.fn().mockName('TranslationService.get')
+    };
+    mockTitleService = {
+      setTitle: vi.fn().mockName('Title.setTitle')
+    };
+    strategy = new TranslatedTitleStrategy(mockTranslate as unknown as TranslationService, mockTitleService as unknown as Title);
   });
 
   it('should be created', () => {
@@ -31,8 +37,8 @@ describe('TranslatedTitleStrategy - unit', () => {
   });
 
   it('should translate the resolved title key and set it on the Title service', () => {
-    spyOn(strategy, 'buildTitle').and.returnValue('skills.pageTitle');
-    mockTranslate.get.and.returnValue(of('Skills — Mihaela Aghirculesei'));
+    vi.spyOn(strategy, 'buildTitle').mockReturnValue('skills.pageTitle');
+    mockTranslate.get.mockReturnValue(of('Skills — Mihaela Aghirculesei'));
 
     strategy.updateTitle(snapshotWithTitleData());
 
@@ -41,7 +47,7 @@ describe('TranslatedTitleStrategy - unit', () => {
   });
 
   it('should not call the translation service or set a title when no route resolves a title', () => {
-    spyOn(strategy, 'buildTitle').and.returnValue(undefined);
+    vi.spyOn(strategy, 'buildTitle').mockReturnValue(undefined);
 
     strategy.updateTitle(snapshotWithTitleData());
 
@@ -50,7 +56,7 @@ describe('TranslatedTitleStrategy - unit', () => {
   });
 
   it('should not call the translation service or set a title when the resolved key is an empty string', () => {
-    spyOn(strategy, 'buildTitle').and.returnValue('');
+    vi.spyOn(strategy, 'buildTitle').mockReturnValue('');
 
     strategy.updateTitle(snapshotWithTitleData());
 
@@ -80,31 +86,34 @@ describe('TranslatedTitleStrategy - integration with real Router navigation', ()
     translationService = TestBed.inject(TranslationService);
   });
 
-  it('should set the translated page title after navigating to a route with a title key', fakeAsync(() => {
-    spyOn(titleService, 'setTitle');
+  it('should set the translated page title after navigating to a route with a title key', async () => {
+    vi.useFakeTimers();
+    vi.spyOn(titleService, 'setTitle').mockImplementation(() => undefined);
 
     router.navigateByUrl('/');
-    tick();
+    await vi.advanceTimersByTimeAsync(0);
 
     expect(titleService.setTitle).toHaveBeenCalledWith('About me');
-  }));
+  });
 
-  it('should reflect the currently active language when resolving the title', fakeAsync(() => {
+  it('should reflect the currently active language when resolving the title', async () => {
+    vi.useFakeTimers();
     translationService.use('de');
-    spyOn(titleService, 'setTitle');
+    vi.spyOn(titleService, 'setTitle').mockImplementation(() => undefined);
 
     router.navigateByUrl('/');
-    tick();
+    await vi.advanceTimersByTimeAsync(0);
 
     expect(titleService.setTitle).toHaveBeenCalledWith('Über mich');
-  }));
+  });
 
-  it('should not set a title when the matched route has no title key', fakeAsync(() => {
-    spyOn(titleService, 'setTitle');
+  it('should not set a title when the matched route has no title key', async () => {
+    vi.useFakeTimers();
+    vi.spyOn(titleService, 'setTitle').mockImplementation(() => undefined);
 
     router.navigateByUrl('/no-title');
-    tick();
+    await vi.advanceTimersByTimeAsync(0);
 
     expect(titleService.setTitle).not.toHaveBeenCalled();
-  }));
+  });
 });

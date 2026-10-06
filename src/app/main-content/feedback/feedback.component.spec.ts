@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FeedbacksComponent } from './feedback.component';
 import { QueryList, ElementRef } from '@angular/core';
 
@@ -90,7 +90,7 @@ describe('FeedbacksComponent', () => {
     });
 
     it('should call updateCards when sliding', () => {
-      spyOn(component, 'updateCards');
+      vi.spyOn(component, 'updateCards').mockImplementation(() => undefined);
 
       component.slideLeft();
       expect(component.updateCards).toHaveBeenCalled();
@@ -98,15 +98,16 @@ describe('FeedbacksComponent', () => {
   });
 
   describe('Card Updates', () => {
-    it('should update cards with correct transforms', fakeAsync(() => {
+    it('should update cards with correct transforms', async () => {
+      vi.useFakeTimers();
       component.updateCards();
 
       expect(component.isTransitioning).toBe(true);
 
-      tick(500);
+      await vi.advanceTimersByTimeAsync(500);
 
       expect(component.isTransitioning).toBe(false);
-    }));
+    });
 
     it('should apply correct CSS class for left cards', () => {
       const className = component.getCardClass(0);
@@ -132,7 +133,7 @@ describe('FeedbacksComponent', () => {
 
     it('should not navigate if already on target slide', () => {
       component.middleIndex = 2;
-      spyOn(component, 'updateCards');
+      vi.spyOn(component, 'updateCards').mockImplementation(() => undefined);
 
       component.goToSlide(2);
 
@@ -152,9 +153,9 @@ describe('FeedbacksComponent', () => {
 
   describe('Keyboard Navigation', () => {
     it('should slide right on left arrow key', () => {
-      spyOn(component, 'slideRight');
+      vi.spyOn(component, 'slideRight').mockImplementation(() => undefined);
       const event = new KeyboardEvent('keydown', { key: 'ArrowLeft' });
-      spyOn(event, 'preventDefault');
+      vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined);
 
       component.onKeyDown(event);
 
@@ -163,9 +164,9 @@ describe('FeedbacksComponent', () => {
     });
 
     it('should slide left on right arrow key', () => {
-      spyOn(component, 'slideLeft');
+      vi.spyOn(component, 'slideLeft').mockImplementation(() => undefined);
       const event = new KeyboardEvent('keydown', { key: 'ArrowRight' });
-      spyOn(event, 'preventDefault');
+      vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined);
 
       component.onKeyDown(event);
 
@@ -174,9 +175,9 @@ describe('FeedbacksComponent', () => {
     });
 
     it('should go to first slide on Home key', () => {
-      spyOn(component, 'goToSlide');
+      vi.spyOn(component, 'goToSlide').mockImplementation(() => undefined);
       const event = new KeyboardEvent('keydown', { key: 'Home' });
-      spyOn(event, 'preventDefault');
+      vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined);
 
       component.onKeyDown(event);
 
@@ -185,9 +186,9 @@ describe('FeedbacksComponent', () => {
     });
 
     it('should go to last slide on End key', () => {
-      spyOn(component, 'goToSlide');
+      vi.spyOn(component, 'goToSlide').mockImplementation(() => undefined);
       const event = new KeyboardEvent('keydown', { key: 'End' });
-      spyOn(event, 'preventDefault');
+      vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined);
 
       component.onKeyDown(event);
 
@@ -220,7 +221,7 @@ describe('FeedbacksComponent', () => {
     });
 
     it('should slide left on swipe left', () => {
-      spyOn(component, 'slideLeft');
+      vi.spyOn(component, 'slideLeft').mockImplementation(() => undefined);
       component['touchStartX'] = 100;
       component['touchEndX'] = 0;
 
@@ -230,7 +231,7 @@ describe('FeedbacksComponent', () => {
     });
 
     it('should slide right on swipe right', () => {
-      spyOn(component, 'slideRight');
+      vi.spyOn(component, 'slideRight').mockImplementation(() => undefined);
       component['touchStartX'] = 0;
       component['touchEndX'] = 100;
 
@@ -240,8 +241,8 @@ describe('FeedbacksComponent', () => {
     });
 
     it('should not slide if swipe distance is too small', () => {
-      spyOn(component, 'slideLeft');
-      spyOn(component, 'slideRight');
+      vi.spyOn(component, 'slideLeft').mockImplementation(() => undefined);
+      vi.spyOn(component, 'slideRight').mockImplementation(() => undefined);
       component['touchStartX'] = 100;
       component['touchEndX'] = 90;
 
@@ -259,8 +260,8 @@ describe('FeedbacksComponent', () => {
     });
 
     it('should return early from onTouchEnd when changedTouches is empty', () => {
-      spyOn(component, 'slideLeft');
-      spyOn(component, 'slideRight');
+      vi.spyOn(component, 'slideLeft').mockImplementation(() => undefined);
+      vi.spyOn(component, 'slideRight').mockImplementation(() => undefined);
       const event = { changedTouches: [] } as any;
       component.onTouchEnd(event);
       expect(component.slideLeft).not.toHaveBeenCalled();
@@ -282,15 +283,16 @@ describe('FeedbacksComponent', () => {
   });
 
   describe('Change Detection', () => {
-    it('should mark for check on user interactions', fakeAsync(() => {
-      spyOn(component['cdr'], 'markForCheck');
+    it('should mark for check on user interactions', async () => {
+      vi.useFakeTimers();
+      vi.spyOn(component['cdr'], 'markForCheck').mockImplementation(() => undefined);
 
       component.slideLeft();
-      tick(500);
+      await vi.advanceTimersByTimeAsync(500);
       component.goToSlide(3);
-      tick(500);
+      await vi.advanceTimersByTimeAsync(500);
 
       expect(component['cdr'].markForCheck).toHaveBeenCalled();
-    }));
+    });
   });
 });

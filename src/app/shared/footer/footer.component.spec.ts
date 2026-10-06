@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterLink } from '@angular/router';
 import { Directive, HostListener, Input } from '@angular/core';
@@ -10,7 +11,8 @@ import { NavigationService } from '../services/navigation.service';
   standalone: true
 })
 class MockRouterLinkDirective {
-  @Input() routerLink: string | string[] = '';
+  @Input()
+  routerLink: string | string[] = '';
 
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {
@@ -21,12 +23,18 @@ class MockRouterLinkDirective {
 describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
-  let mockNavService: jasmine.SpyObj<NavigationService>;
-  let mockScrollService: jasmine.SpyObj<ScrollService>;
+  let mockNavService: Pick<MockedObject<NavigationService>, 'scrollToSection' | 'navigateToHome'>;
+  let mockScrollService: Pick<MockedObject<ScrollService>, 'scrollToElement' | 'saveScrollPosition'>;
 
   beforeEach(async () => {
-    mockNavService = jasmine.createSpyObj('NavigationService', ['scrollToSection', 'navigateToHome']);
-    mockScrollService = jasmine.createSpyObj('ScrollService', ['scrollToElement', 'saveScrollPosition']);
+    mockNavService = {
+      scrollToSection: vi.fn().mockName('NavigationService.scrollToSection'),
+      navigateToHome: vi.fn().mockName('NavigationService.navigateToHome')
+    };
+    mockScrollService = {
+      scrollToElement: vi.fn().mockName('ScrollService.scrollToElement'),
+      saveScrollPosition: vi.fn().mockName('ScrollService.saveScrollPosition')
+    };
 
     await TestBed.configureTestingModule({
       imports: [FooterComponent, MockRouterLinkDirective],

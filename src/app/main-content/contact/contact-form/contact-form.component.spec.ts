@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
+import type { MockedObject } from 'vitest';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslationService } from '../../../shared/services/translation.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -32,7 +33,7 @@ describe('ContactFormComponent', () => {
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
     translateService = TestBed.inject(TranslationService);
-    spyOn(TestBed.inject(LoggerService), 'error');
+    vi.spyOn(TestBed.inject(LoggerService), 'error').mockImplementation(() => undefined);
     fixture.detectChanges();
     await fixture.whenStable();
   });
@@ -67,39 +68,39 @@ describe('ContactFormComponent', () => {
     describe('Name', () => {
       it('should be invalid when empty', () => {
         component.form.get('name')!.markAsTouched();
-        expect(component.isInvalid('name')).toBeTrue();
+        expect(component.isInvalid('name')).toBe(true);
       });
 
       it('should be invalid with less than 3 characters', () => {
         component.form.get('name')!.setValue('Jo');
         component.form.get('name')!.markAsTouched();
-        expect(component.isInvalid('name')).toBeTrue();
+        expect(component.isInvalid('name')).toBe(true);
       });
 
       it('should be invalid with only whitespace', () => {
         component.form.get('name')!.setValue('  ');
         component.form.get('name')!.markAsTouched();
-        expect(component.isInvalid('name')).toBeTrue();
+        expect(component.isInvalid('name')).toBe(true);
       });
 
       it('should be valid with 3 or more non-whitespace characters', () => {
         component.form.get('name')!.setValue('John');
         component.form.get('name')!.markAsTouched();
-        expect(component.isInvalid('name')).toBeFalse();
+        expect(component.isInvalid('name')).toBe(false);
       });
     });
 
     describe('Email', () => {
       it('should be invalid when empty', () => {
         component.form.get('email')!.markAsTouched();
-        expect(component.isInvalid('email')).toBeTrue();
+        expect(component.isInvalid('email')).toBe(true);
       });
 
       it('should be invalid with incorrect format', () => {
         ['test', 'test@', '@test.com', 'test@test', 'test.com'].forEach(email => {
           component.form.get('email')!.setValue(email);
           component.form.get('email')!.markAsTouched();
-          expect(component.isInvalid('email')).withContext(`email: ${email}`).toBeTrue();
+          expect(component.isInvalid('email'), `email: ${email}`).toBe(true);
         });
       });
 
@@ -107,7 +108,7 @@ describe('ContactFormComponent', () => {
         ['test@example.com', 'user.name@example.co.uk', 'test+tag@domain.com'].forEach(email => {
           component.form.get('email')!.setValue(email);
           component.form.get('email')!.markAsTouched();
-          expect(component.isInvalid('email')).withContext(`email: ${email}`).toBeFalse();
+          expect(component.isInvalid('email'), `email: ${email}`).toBe(false);
         });
       });
     });
@@ -115,37 +116,37 @@ describe('ContactFormComponent', () => {
     describe('Message', () => {
       it('should be invalid when empty', () => {
         component.form.get('message')!.markAsTouched();
-        expect(component.isInvalid('message')).toBeTrue();
+        expect(component.isInvalid('message')).toBe(true);
       });
 
       it('should be invalid with less than 10 characters', () => {
         component.form.get('message')!.setValue('Short');
         component.form.get('message')!.markAsTouched();
-        expect(component.isInvalid('message')).toBeTrue();
+        expect(component.isInvalid('message')).toBe(true);
       });
 
       it('should be valid with 10 or more characters', () => {
         component.form.get('message')!.setValue('This is a valid message');
         component.form.get('message')!.markAsTouched();
-        expect(component.isInvalid('message')).toBeFalse();
+        expect(component.isInvalid('message')).toBe(false);
       });
     });
 
     describe('Privacy Policy', () => {
       it('should be invalid when unchecked', () => {
         component.form.get('privacyPolicy')!.markAsTouched();
-        expect(component.isInvalid('privacyPolicy')).toBeTrue();
+        expect(component.isInvalid('privacyPolicy')).toBe(true);
       });
 
       it('should be valid when checked', () => {
         component.form.get('privacyPolicy')!.setValue(true);
         component.form.get('privacyPolicy')!.markAsTouched();
-        expect(component.isInvalid('privacyPolicy')).toBeFalse();
+        expect(component.isInvalid('privacyPolicy')).toBe(false);
       });
     });
 
     it('should mark all fields as touched when submitting invalid form', () => {
-      spyOn(component.form, 'markAllAsTouched');
+      vi.spyOn(component.form, 'markAllAsTouched').mockImplementation(() => undefined);
       component.onSubmit();
       expect(component.form.markAllAsTouched).toHaveBeenCalled();
     });
@@ -175,7 +176,8 @@ describe('ContactFormComponent', () => {
       httpMock.expectNone(environment.emailWorkerUrl);
     });
 
-    it('should submit form with sanitized data', fakeAsync(() => {
+    it('should submit form with sanitized data', async () => {
+      vi.useFakeTimers();
       // email without surrounding spaces (pattern validator does not trim),
       // but uppercase to verify lowercase normalization in sanitizeContactData
       component.form.setValue({
@@ -187,7 +189,7 @@ describe('ContactFormComponent', () => {
       });
 
       component.onSubmit();
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
 
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       expect(req.request.method).toBe('POST');
@@ -199,10 +201,11 @@ describe('ContactFormComponent', () => {
       expect(body.privacyPolicy).toBe(true);
 
       req.flush({ success: true });
-      flush();
-    }));
+      await vi.runAllTimersAsync();
+    });
 
-    it('should set isSubmitting to true during submission', fakeAsync(() => {
+    it('should set isSubmitting to true during submission', async () => {
+      vi.useFakeTimers();
       fillValidForm();
       component.onSubmit();
 
@@ -210,23 +213,24 @@ describe('ContactFormComponent', () => {
 
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
-      flush();
+      await vi.runAllTimersAsync();
 
       expect(component.isSubmitting()).toBe(false);
-    }));
+    });
 
-    it('should handle successful submission', fakeAsync(() => {
+    it('should handle successful submission', async () => {
+      vi.useFakeTimers();
       fillValidForm();
       component.onSubmit();
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
 
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
-      flush();
+      await vi.runAllTimersAsync();
 
       expect(component.submissionStatus()).toBe('success');
-      expect(component.form.pristine).toBeTrue();
-    }));
+      expect(component.form.pristine).toBe(true);
+    });
 
   });
 
@@ -241,80 +245,88 @@ describe('ContactFormComponent', () => {
       });
     }
 
-    it('should handle HTTP error during submission', fakeAsync(() => {
+    it('should handle HTTP error during submission', async () => {
+      vi.useFakeTimers();
       fillValidForm();
       component.onSubmit();
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
 
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.error(new ErrorEvent('HttpError', { message: 'Server Error' }), {
         status: 500,
         statusText: 'Server Error',
       });
-      tick(1000);
-      flush();
+      await vi.advanceTimersByTimeAsync(1000);
+      await vi.runAllTimersAsync();
 
       expect(component.submissionStatus()).toBe('error');
       expect(component.isSubmitting()).toBe(false);
-    }));
+    });
 
-    it('should handle server error (status >= 500)', fakeAsync(() => {
+    it('should handle server error (status >= 500)', async () => {
+      vi.useFakeTimers();
       component['handleError']({ status: 500 });
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.submissionStatus()).toBe('error');
       expect(component.errorMessage()).toBe('contact.form.errors.server');
-    }));
+    });
 
-    it('should handle client error (status >= 400)', fakeAsync(() => {
+    it('should handle client error (status >= 400)', async () => {
+      vi.useFakeTimers();
       component['handleError']({ status: 400 });
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.submissionStatus()).toBe('error');
       expect(component.errorMessage()).toBe('contact.form.errors.client');
-    }));
+    });
 
-    it('should handle rate-limit error (status 429)', fakeAsync(() => {
+    it('should handle rate-limit error (status 429)', async () => {
+      vi.useFakeTimers();
       component['handleError']({ status: 429 });
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.submissionStatus()).toBe('error');
       expect(component.errorMessage()).toBe('contact.form.errors.rateLimit');
-    }));
+    });
 
-    it('should handle timeout error', fakeAsync(() => {
+    it('should handle timeout error', async () => {
+      vi.useFakeTimers();
       component['handleError']({ name: 'TimeoutError' });
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.submissionStatus()).toBe('error');
       expect(component.errorMessage()).toBe('contact.form.errors.timeout');
-    }));
+    });
 
-    it('should handle generic error with message', fakeAsync(() => {
+    it('should handle generic error with message', async () => {
+      vi.useFakeTimers();
       component['handleError']({ message: 'Custom error message' });
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.submissionStatus()).toBe('error');
       expect(component.errorMessage()).toBe('contact.form.errors.generic');
-    }));
+    });
 
-    it('should handle generic error without message', fakeAsync(() => {
+    it('should handle generic error without message', async () => {
+      vi.useFakeTimers();
       component['handleError']({});
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.submissionStatus()).toBe('error');
       expect(component.errorMessage()).toBe('contact.form.errors.generic');
-    }));
+    });
 
-    it('should reset form on error', fakeAsync(() => {
+    it('should reset form on error', async () => {
+      vi.useFakeTimers();
       fillValidForm();
       component.onSubmit();
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
 
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.error(new ErrorEvent('HttpError', { message: 'Server Error' }), {
         status: 500,
         statusText: 'Server Error',
       });
-      tick(1000);
-      flush();
+      await vi.advanceTimersByTimeAsync(1000);
+      await vi.runAllTimersAsync();
 
-      expect(component.form.pristine).toBeTrue();
-    }));
+      expect(component.form.pristine).toBe(true);
+    });
   });
 
   describe('Popup Management', () => {
@@ -328,25 +340,20 @@ describe('ContactFormComponent', () => {
       expect(component.errorMessage()).toBe('');
     });
 
-    it('should focus the close button when it exists in the DOM', fakeAsync(() => {
-      const footer = document.createElement('div');
-      footer.classList.add('popup-footer');
-      const button = document.createElement('button');
-      footer.appendChild(button);
-      document.body.appendChild(footer);
-      spyOn(button, 'focus');
-
+    it('should focus the close button when it exists in the DOM', async () => {
+      vi.useFakeTimers();
       component.form.setValue({
         name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true, website: '',
       });
       component.onSubmit();
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
-      flush();
+      await vi.runAllTimersAsync();
 
-      expect(button.focus).toHaveBeenCalled();
-      document.body.removeChild(footer);
-    }));
+      const closeButton = fixture.nativeElement.querySelector('.popup-footer button');
+      expect(closeButton).toBeTruthy();
+      expect(document.activeElement).toBe(closeButton);
+    });
   });
 
   describe('Data Sanitization', () => {
@@ -391,8 +398,9 @@ describe('ContactFormComponent', () => {
       expect(saved.name).toBe('SaveTest');
     });
 
-    it('should call sessionStorage.removeItem when clearing form data', fakeAsync(() => {
-      spyOn(sessionStorage, 'removeItem');
+    it('should call sessionStorage.removeItem when clearing form data', async () => {
+      vi.useFakeTimers();
+      vi.spyOn(sessionStorage, 'removeItem').mockImplementation(() => undefined);
       component.form.setValue({
         name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true, website: '',
       });
@@ -400,10 +408,10 @@ describe('ContactFormComponent', () => {
       component.onSubmit();
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
-      flush();
+      await vi.runAllTimersAsync();
 
       expect(sessionStorage.removeItem).toHaveBeenCalledWith(STORAGE_KEY);
-    }));
+    });
   });
 
   describe('HTTP Configuration', () => {
@@ -423,7 +431,7 @@ describe('ContactFormComponent', () => {
   describe('saveScrollPosition', () => {
     it('should delegate to scrollService.saveScrollPosition', () => {
       const scrollService = component['scrollService'];
-      spyOn(scrollService, 'saveScrollPosition');
+      vi.spyOn(scrollService, 'saveScrollPosition').mockImplementation(() => undefined);
 
       component.saveScrollPosition();
 
@@ -433,36 +441,35 @@ describe('ContactFormComponent', () => {
 
   describe('SessionStorage error handling', () => {
     it('should log error when sessionStorage.setItem throws', () => {
-      spyOn(sessionStorage, 'setItem').and.throwError('quota exceeded');
-      const loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
+      vi.spyOn(sessionStorage, 'setItem').mockImplementation(() => {
+        throw new Error('quota exceeded');
+      });
+      const loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
 
       component.form.get('name')!.setValue('trigger save');
 
-      expect(loggerSpy.error).toHaveBeenCalledWith(
-        'Failed to save form data to sessionStorage',
-        jasmine.any(Error)
-      );
+      expect(loggerSpy.error).toHaveBeenCalledWith('Failed to save form data to sessionStorage', expect.any(Error));
     });
 
     it('should log error when sessionStorage.getItem throws', async () => {
-      spyOn(sessionStorage, 'getItem').and.throwError('access denied');
-      const loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
+      vi.spyOn(sessionStorage, 'getItem').mockImplementation(() => {
+        throw new Error('access denied');
+      });
+      const loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
 
-      const newFixture = TestBed.createComponent(
-        (await import('./contact-form.component')).ContactFormComponent
-      );
+      const newFixture = TestBed.createComponent((await import('./contact-form.component')).ContactFormComponent);
       newFixture.detectChanges();
       await newFixture.whenStable();
 
-      expect(loggerSpy.error).toHaveBeenCalledWith(
-        'Failed to load form data from sessionStorage',
-        jasmine.any(Error)
-      );
+      expect(loggerSpy.error).toHaveBeenCalledWith('Failed to load form data from sessionStorage', expect.any(Error));
     });
 
-    it('should log error when sessionStorage.removeItem throws', fakeAsync(() => {
-      spyOn(sessionStorage, 'removeItem').and.throwError('access denied');
-      const loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
+    it('should log error when sessionStorage.removeItem throws', async () => {
+      vi.useFakeTimers();
+      vi.spyOn(sessionStorage, 'removeItem').mockImplementation(() => {
+        throw new Error('access denied');
+      });
+      const loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
       component.form.setValue({
         name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true, website: '',
       });
@@ -470,40 +477,41 @@ describe('ContactFormComponent', () => {
       component.onSubmit();
       const req = httpMock.expectOne(environment.emailWorkerUrl);
       req.flush({ success: true });
-      flush();
+      await vi.runAllTimersAsync();
 
-      expect(loggerSpy.error).toHaveBeenCalledWith(
-        'Failed to clear form data from sessionStorage',
-        jasmine.any(Error)
-      );
-    }));
+      expect(loggerSpy.error).toHaveBeenCalledWith('Failed to clear form data from sessionStorage', expect.any(Error));
+    });
   });
 
   describe('Error Handling - additional branches', () => {
-    it('should handle network error (status 0) via HttpErrorResponse', fakeAsync(() => {
+    it('should handle network error (status 0) via HttpErrorResponse', async () => {
+      vi.useFakeTimers();
       component['handleError'](new HttpErrorResponse({ status: 0, statusText: 'Unknown Error' }));
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.errorMessage()).toBe('contact.form.errors.network');
-    }));
+    });
 
-    it('should handle server error via HttpErrorResponse instanceof check', fakeAsync(() => {
+    it('should handle server error via HttpErrorResponse instanceof check', async () => {
+      vi.useFakeTimers();
       component['handleError'](new HttpErrorResponse({ status: 500, statusText: 'Server Error' }));
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.errorMessage()).toBe('contact.form.errors.server');
-    }));
+    });
 
-    it('should handle client error via HttpErrorResponse instanceof check', fakeAsync(() => {
+    it('should handle client error via HttpErrorResponse instanceof check', async () => {
+      vi.useFakeTimers();
       component['handleError'](new HttpErrorResponse({ status: 400, statusText: 'Bad Request' }));
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.errorMessage()).toBe('contact.form.errors.client');
-    }));
+    });
 
-    it('should fall back to UnknownError for error with no name and no constructor name', fakeAsync(() => {
+    it('should fall back to UnknownError for error with no name and no constructor name', async () => {
+      vi.useFakeTimers();
       const noNameError = Object.create(null) as Record<string, unknown>;
       noNameError['status'] = undefined;
       component['handleError'](noNameError);
-      flush();
+      await vi.runAllTimersAsync();
       expect(component.submissionStatus()).toBe('error');
-    }));
+    });
   });
 });

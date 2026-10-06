@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { AriaAnnouncerService } from './aria-announcer.service';
 import { TIMING_CONFIG } from '../constants/app.constants';
@@ -65,7 +65,8 @@ describe('AriaAnnouncerService', () => {
     });
 
     describe('announce() method', () => {
-      it('should announce message with default polite priority', fakeAsync(() => {
+      it('should announce message with default polite priority', async () => {
+        vi.useFakeTimers();
         const message = 'Test announcement';
 
         service.announce(message);
@@ -74,44 +75,47 @@ describe('AriaAnnouncerService', () => {
         expect(liveRegionElement?.textContent).toBe('');
 
         // After delay, message appears
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe(message);
 
         // After clear delay, message is removed
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe('');
-      }));
+      });
 
-      it('should announce message with assertive priority', fakeAsync(() => {
+      it('should announce message with assertive priority', async () => {
+        vi.useFakeTimers();
         const message = 'Important announcement';
 
         service.announce(message, 'assertive');
 
         expect(liveRegionElement?.getAttribute('aria-live')).toBe('assertive');
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe(message);
 
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe('');
-      }));
+      });
 
-      it('should update aria-live priority for each announcement', fakeAsync(() => {
+      it('should update aria-live priority for each announcement', async () => {
+        vi.useFakeTimers();
         service.announce('Polite message', 'polite');
         expect(liveRegionElement?.getAttribute('aria-live')).toBe('polite');
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
 
         service.announce('Assertive message', 'assertive');
         expect(liveRegionElement?.getAttribute('aria-live')).toBe('assertive');
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
-      }));
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
+      });
 
-      it('should clear previous message before new announcement', fakeAsync(() => {
+      it('should clear previous message before new announcement', async () => {
+        vi.useFakeTimers();
         service.announce('First message');
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe('First message');
 
         service.announce('Second message');
@@ -119,87 +123,93 @@ describe('AriaAnnouncerService', () => {
         // Should be immediately cleared
         expect(liveRegionElement?.textContent).toBe('');
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe('Second message');
 
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
-      }));
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+      });
 
-      it('should handle empty message', fakeAsync(() => {
+      it('should handle empty message', async () => {
+        vi.useFakeTimers();
         service.announce('');
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe('');
 
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
-      }));
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+      });
 
-      it('should handle long messages', fakeAsync(() => {
+      it('should handle long messages', async () => {
+        vi.useFakeTimers();
         const longMessage = 'A'.repeat(500);
 
         service.announce(longMessage);
 
         expect(liveRegionElement?.textContent).toBe('');
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe(longMessage);
 
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe('');
-      }));
+      });
 
-      it('should handle special characters', fakeAsync(() => {
+      it('should handle special characters', async () => {
+        vi.useFakeTimers();
         const specialMessage = 'Test <script>alert("xss")</script> & special chars';
 
         service.announce(specialMessage);
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe(specialMessage);
 
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
-      }));
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+      });
 
-      it('should handle rapid consecutive announcements', fakeAsync(() => {
+      it('should handle rapid consecutive announcements', async () => {
+        vi.useFakeTimers();
         service.announce('Message 1');
         service.announce('Message 2');
         service.announce('Message 3');
 
         // Last message should win
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe('Message 3');
 
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
-      }));
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+      });
     });
 
     describe('Timing Configuration', () => {
-      it('should use configured announcement delay', fakeAsync(() => {
+      it('should use configured announcement delay', async () => {
+        vi.useFakeTimers();
         const message = 'Delayed message';
         service.announce(message);
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY - 1);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY - 1);
         expect(liveRegionElement?.textContent).toBe('');
 
-        tick(1);
+        await vi.advanceTimersByTimeAsync(1);
         expect(liveRegionElement?.textContent).toBe(message);
 
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
-        flush();
-      }));
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.runAllTimersAsync();
+      });
 
-      it('should use configured clear delay', fakeAsync(() => {
+      it('should use configured clear delay', async () => {
+        vi.useFakeTimers();
         const message = 'Message to clear';
         service.announce(message);
 
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY);
         expect(liveRegionElement?.textContent).toBe(message);
 
-        tick(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY - 1);
+        await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_CLEAR_DELAY - TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY - 1);
         expect(liveRegionElement?.textContent).toBe(message);
 
-        tick(1);
+        await vi.advanceTimersByTimeAsync(1);
         expect(liveRegionElement?.textContent).toBe('');
-      }));
+      });
     });
   });
 
@@ -228,13 +238,12 @@ describe('AriaAnnouncerService', () => {
       expect(serverLiveRegion).toBeNull();
     });
 
-    it('should handle announce() gracefully on server platform', fakeAsync(() => {
+    it('should handle announce() gracefully on server platform', async () => {
+      vi.useFakeTimers();
       // Should not throw error even without live region
-      expect(() => {
-        service.announce('Server message');
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
-      }).not.toThrow();
-    }));
+      expect(() => service.announce('Server message')).not.toThrow();
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
+    });
   });
 
   describe('Edge Cases', () => {
@@ -254,18 +263,16 @@ describe('AriaAnnouncerService', () => {
       elements.forEach(el => el.remove());
     });
 
-    it('should handle null message gracefully', fakeAsync(() => {
-      expect(() => {
-        service.announce(null as any);
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
-      }).not.toThrow();
-    }));
+    it('should handle null message gracefully', async () => {
+      vi.useFakeTimers();
+      expect(() => service.announce(null as any)).not.toThrow();
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
+    });
 
-    it('should handle undefined priority gracefully', fakeAsync(() => {
-      expect(() => {
-        service.announce('Test', undefined as any);
-        tick(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
-      }).not.toThrow();
-    }));
+    it('should handle undefined priority gracefully', async () => {
+      vi.useFakeTimers();
+      expect(() => service.announce('Test', undefined as any)).not.toThrow();
+      await vi.advanceTimersByTimeAsync(TIMING_CONFIG.ARIA_ANNOUNCEMENT_DELAY + TIMING_CONFIG.ARIA_CLEAR_DELAY);
+    });
   });
 });
