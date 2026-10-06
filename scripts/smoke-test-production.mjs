@@ -37,6 +37,18 @@ try {
   }
   console.log(`[smoke-test] ${Object.keys(prerendered.routes).length - 1} prerendered routes checked for HTTP 200`);
 
+  // ...and every one of them must be listed in the sitemap, or search engines
+  // (and the accessibility scan, which discovers pages from it) never see it.
+  const sitemap = await (await fetch(`${BASE_URL}/sitemap.xml`)).text();
+  const listed = new Set([...sitemap.matchAll(/<loc>https?:\/\/[^/<]+([^<]*)<\/loc>/g)].map(([, path]) => path || '/'));
+  const unlisted = Object.keys(prerendered.routes).filter((r) => r !== '/404' && !listed.has(r));
+  if (unlisted.length > 0) {
+    exitCode = 1;
+    console.error(`[smoke-test] routes missing from sitemap.xml: ${unlisted.join(', ')}`);
+  } else {
+    console.log('[smoke-test] sitemap.xml lists every prerendered route');
+  }
+
   const browser = await chromium.launch();
   try {
     for (const route of ROUTES_TO_CHECK) {
