@@ -400,7 +400,7 @@ describe('ContactFormComponent', () => {
 
     it('should call sessionStorage.removeItem when clearing form data', async () => {
       vi.useFakeTimers();
-      vi.spyOn(sessionStorage, 'removeItem').mockImplementation(() => undefined);
+      vi.spyOn(Storage.prototype, 'removeItem').mockImplementation(() => undefined);
       component.form.setValue({
         name: 'Jane Doe', email: 'jane@example.com', message: 'Hello World Message', privacyPolicy: true, website: '',
       });
@@ -441,7 +441,7 @@ describe('ContactFormComponent', () => {
 
   describe('SessionStorage error handling', () => {
     it('should log error when sessionStorage.setItem throws', () => {
-      vi.spyOn(sessionStorage, 'setItem').mockImplementation(() => {
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
         throw new Error('quota exceeded');
       });
       const loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
@@ -452,7 +452,7 @@ describe('ContactFormComponent', () => {
     });
 
     it('should log error when sessionStorage.getItem throws', async () => {
-      vi.spyOn(sessionStorage, 'getItem').mockImplementation(() => {
+      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
         throw new Error('access denied');
       });
       const loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
@@ -466,7 +466,7 @@ describe('ContactFormComponent', () => {
 
     it('should log error when sessionStorage.removeItem throws', async () => {
       vi.useFakeTimers();
-      vi.spyOn(sessionStorage, 'removeItem').mockImplementation(() => {
+      vi.spyOn(Storage.prototype, 'removeItem').mockImplementation(() => {
         throw new Error('access denied');
       });
       const loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
