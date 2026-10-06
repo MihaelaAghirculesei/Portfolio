@@ -23,12 +23,10 @@
     "ci:build": "ng build --configuration=production && node scripts/absolutize-preload-links.mjs && node scripts/publish-404-page.mjs && node scripts/generate-csp-headers.mjs",
     "ci:smoke": "node scripts/smoke-test-production.mjs",
     "ci:a11y": "node scripts/a11y-scan.mjs",
+    "ci:lighthouse": "node scripts/lighthouse.mjs",
     "outdated:check": "npm outdated || node -e \"console.log('Outdated check complete (informational only, not blocking).')\"",
     "ci:local": "npm run outdated:check && npm run ci:security && npm run ci:quality && npm run ci:build && npm run ci:smoke && npm run ci:a11y",
-    "build:purge": "ng build --configuration=production && node scripts/generate-csp-headers.mjs && npx purgecss --css \"dist/angular-portofolio/browser/**/*.css\" --content \"dist/angular-portofolio/browser/**/*.html\" \"dist/angular-portofolio/browser/**/*.js\" --output dist/angular-portofolio/browser/",
-    "lighthouse:local": "npm run ci:build && npx lhci autorun",
-    "lighthouse": "lighthouse http://localhost:4200 --output html --output-path ./lighthouse-report.html --chrome-flags=\"--headless --no-sandbox --no-first-run --disable-extensions --disable-gpu --user-data-dir=./tmp/chrome-profile\"",
-    "lighthouse:prod": "lighthouse https://aghirculesei.pages.dev --output html --output-path ./lighthouse-report.html --chrome-flags=\"--headless --no-sandbox --no-first-run --disable-extensions --disable-gpu --user-data-dir=./tmp/chrome-profile\""
+    "build:purge": "ng build --configuration=production && node scripts/generate-csp-headers.mjs && npx purgecss --css \"dist/angular-portofolio/browser/**/*.css\" --content \"dist/angular-portofolio/browser/**/*.html\" \"dist/angular-portofolio/browser/**/*.js\" --output dist/angular-portofolio/browser/"
   },
   "private": true,
   "dependencies": {

@@ -66,8 +66,6 @@ tmp_*.png
 /blob-report
 /playwright/.cache
 .lighthouseci/
-lighthouse-report.*
-lighthouse-ssr-report.*
 
 # Scratch notes
 plan.md
