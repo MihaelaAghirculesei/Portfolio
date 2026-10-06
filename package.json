@@ -24,6 +24,7 @@
     "ci:smoke": "node scripts/smoke-test-production.mjs",
     "ci:a11y": "node scripts/a11y-scan.mjs",
     "ci:lighthouse": "node scripts/lighthouse.mjs",
+    "check:live": "node scripts/check-live-site.mjs",
     "outdated:check": "npm outdated || node -e \"console.log('Outdated check complete (informational only, not blocking).')\"",
     "ci:local": "npm run outdated:check && npm run ci:security && npm run ci:quality && npm run ci:build && npm run ci:smoke && npm run ci:a11y"
   },
