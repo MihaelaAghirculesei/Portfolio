@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SkillsComponent } from './skills.component';
 import { ScrollService } from '../../shared/services/scroll.service';
@@ -18,10 +19,12 @@ const EXPECTED_SKILL_NAMES = [
 describe('SkillsComponent', () => {
   let component: SkillsComponent;
   let fixture: ComponentFixture<SkillsComponent>;
-  let mockScrollService: jasmine.SpyObj<ScrollService>;
+  let mockScrollService: Pick<MockedObject<ScrollService>, 'scrollToElement'>;
 
   beforeEach(async () => {
-    mockScrollService = jasmine.createSpyObj('ScrollService', ['scrollToElement']);
+    mockScrollService = {
+      scrollToElement: vi.fn().mockName('ScrollService.scrollToElement')
+    };
 
     await TestBed.configureTestingModule({
       imports: [SkillsComponent],
@@ -29,7 +32,7 @@ describe('SkillsComponent', () => {
         { provide: ScrollService, useValue: mockScrollService }
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SkillsComponent);
     component = fixture.componentInstance;
@@ -129,7 +132,7 @@ describe('SkillsComponent', () => {
 
     it('should prevent default event behavior', () => {
       const event = new Event('click');
-      spyOn(event, 'preventDefault');
+      vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined);
 
       component.handleContactClick(event);
 
@@ -146,7 +149,7 @@ describe('SkillsComponent', () => {
 
     it('should work with different event types', () => {
       const clickEvent = new MouseEvent('click');
-      spyOn(clickEvent, 'preventDefault');
+      vi.spyOn(clickEvent, 'preventDefault').mockImplementation(() => undefined);
 
       component.handleContactClick(clickEvent);
 
@@ -185,9 +188,10 @@ describe('SkillsComponent', () => {
       skillDivs.forEach((div, index) => {
         const tooltip = div.querySelector('.tooltip');
         if (index === skillDivs.length - 1) {
-          expect(tooltip).withContext(`item ${index} should have a tooltip`).not.toBeNull();
-        } else {
-          expect(tooltip).withContext(`item ${index} should not have a tooltip`).toBeNull();
+          expect(tooltip, `item ${index} should have a tooltip`).not.toBeNull();
+        }
+        else {
+          expect(tooltip, `item ${index} should not have a tooltip`).toBeNull();
         }
       });
     });

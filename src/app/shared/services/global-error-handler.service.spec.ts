@@ -1,16 +1,32 @@
+import type { MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GlobalErrorHandler } from './global-error-handler.service';
 import { LoggerService } from './logger.service';
 
+/** Returns whatever `fn` throws — including `null`/`undefined`, which `toThrow()` can't pin down. */
+function thrownBy(fn: () => void): unknown {
+  try {
+    fn();
+  } catch (thrown) {
+    return thrown;
+  }
+  throw new Error('expected function to throw');
+}
+
 describe('GlobalErrorHandler', () => {
   let handler: GlobalErrorHandler;
-  let loggerSpy: jasmine.SpyObj<LoggerService>;
+  let loggerSpy: MockedObject<LoggerService>;
 
   describe('Browser Platform', () => {
     beforeEach(() => {
-      const loggerSpyObj = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+      const loggerSpyObj = {
+        error: vi.fn().mockName('LoggerService.error'),
+        warn: vi.fn().mockName('LoggerService.warn'),
+        info: vi.fn().mockName('LoggerService.info'),
+        debug: vi.fn().mockName('LoggerService.debug')
+      };
 
       TestBed.configureTestingModule({
         providers: [
@@ -21,7 +37,7 @@ describe('GlobalErrorHandler', () => {
       });
 
       handler = TestBed.inject(GlobalErrorHandler);
-      loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
+      loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
     });
 
     describe('Service Creation', () => {
@@ -42,14 +58,11 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(error)).toThrowError('Test error');
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: 'Test error',
-            stack: jasmine.any(String),
-            timestamp: jasmine.any(String)
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: 'Test error',
+          stack: expect.any(String),
+          timestamp: expect.any(String)
+        }));
       });
 
       it('should throw critical errors', () => {
@@ -64,11 +77,12 @@ describe('GlobalErrorHandler', () => {
 
         try {
           handler.handleError(error);
-        } catch (e) {
+        }
+        catch (e) {
           // Expected to throw
         }
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.timestamp).toBeTruthy();
         expect(new Date(loggedData.timestamp).toISOString()).toBe(loggedData.timestamp);
       });
@@ -79,13 +93,10 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(error)).toThrowError();
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: 'Error without stack',
-            stack: ''
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: 'Error without stack',
+          stack: ''
+        }));
       });
     });
 
@@ -100,12 +111,9 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(httpError)).toThrow(httpError);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: jasmine.stringContaining('404')
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: expect.stringContaining('404')
+        }));
       });
 
       it('should handle HTTP 500 error', () => {
@@ -118,12 +126,9 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(httpError)).toThrow(httpError);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: jasmine.stringContaining('500')
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: expect.stringContaining('500')
+        }));
       });
 
       it('should handle HTTP error without message', () => {
@@ -134,12 +139,9 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(httpError)).toThrow(httpError);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: jasmine.stringContaining('400')
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: expect.stringContaining('400')
+        }));
       });
 
       it('should handle HTTP 0 error (network error)', () => {
@@ -159,11 +161,14 @@ describe('GlobalErrorHandler', () => {
         Object.defineProperty(httpError, 'message', { value: '', configurable: true });
         Object.defineProperty(httpError, 'status', { value: 503, configurable: true });
 
-        try { handler.handleError(httpError); } catch (_) { /* expected */ }
+        try {
+          handler.handleError(httpError);
+        }
+        catch (_) { /* expected */ }
 
         expect(loggerSpy.error).toHaveBeenCalledWith(
           'Global Error Handler:',
-          jasmine.objectContaining({ message: 'HTTP Error 503' })
+          expect.objectContaining({ message: 'HTTP Error 503' }),
         );
       });
     });
@@ -206,12 +211,9 @@ describe('GlobalErrorHandler', () => {
 
         handler.handleError(error);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: jasmine.stringContaining('ExpressionChangedAfterItHasBeenCheckedError')
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: expect.stringContaining('ExpressionChangedAfterItHasBeenCheckedError')
+        }));
       });
     });
 
@@ -224,12 +226,9 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(customError)).toThrow(customError);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: 'Custom error message'
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: 'Custom error message'
+        }));
       });
 
       it('should handle error with toString() only', () => {
@@ -239,12 +238,9 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(customError)).toThrow(customError);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: 'ToString error'
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: 'ToString error'
+        }));
       });
 
       it('should handle error with stack trace', () => {
@@ -256,12 +252,9 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(customError)).toThrow(customError);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            stack: 'Error: Custom error\n    at file.ts:10:5'
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          stack: 'Error: Custom error\n    at file.ts:10:5'
+        }));
       });
 
       it('should handle error with empty message but toString', () => {
@@ -272,37 +265,28 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(customError)).toThrow(customError);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: 'Fallback toString'
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: 'Fallback toString'
+        }));
       });
     });
 
     describe('handleError() with Unknown Error Types', () => {
       it('should handle null error', () => {
-        expect(() => handler.handleError(null)).toThrow(null);
+        expect(thrownBy(() => handler.handleError(null))).toBeNull();
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: 'Unknown error',
-            stack: ''
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: 'Unknown error',
+          stack: ''
+        }));
       });
 
       it('should handle undefined error', () => {
-        expect(() => handler.handleError(undefined)).toThrow(undefined);
+        expect(thrownBy(() => handler.handleError(undefined))).toBeUndefined();
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: 'Unknown error'
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: 'Unknown error'
+        }));
       });
 
       it('should handle string error', () => {
@@ -310,12 +294,9 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(error)).toThrow(error);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: 'Unknown error'
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: 'Unknown error'
+        }));
       });
 
       it('should handle number error', () => {
@@ -331,12 +312,9 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(error)).toThrow(error);
 
-        expect(loggerSpy.error).toHaveBeenCalledWith(
-          'Global Error Handler:',
-          jasmine.objectContaining({
-            message: '[object Object]'
-          })
-        );
+        expect(loggerSpy.error).toHaveBeenCalledWith('Global Error Handler:', expect.objectContaining({
+          message: '[object Object]'
+        }));
       });
     });
 
@@ -346,11 +324,12 @@ describe('GlobalErrorHandler', () => {
 
         try {
           handler.handleError(error);
-        } catch (e) {
+        }
+        catch (e) {
           // Expected
         }
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.message).toBe('Error message');
       });
 
@@ -363,11 +342,12 @@ describe('GlobalErrorHandler', () => {
 
         try {
           handler.handleError(error);
-        } catch (e) {
+        }
+        catch (e) {
           // Expected
         }
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.message).toContain('400');
       });
 
@@ -379,11 +359,12 @@ describe('GlobalErrorHandler', () => {
 
         try {
           handler.handleError(error);
-        } catch (e) {
+        }
+        catch (e) {
           // Expected
         }
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.message).toBe('Custom toString result');
       });
     });
@@ -394,11 +375,12 @@ describe('GlobalErrorHandler', () => {
 
         try {
           handler.handleError(error);
-        } catch (e) {
+        }
+        catch (e) {
           // Expected
         }
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.stack).toBeTruthy();
         expect(typeof loggedData.stack).toBe('string');
       });
@@ -408,11 +390,12 @@ describe('GlobalErrorHandler', () => {
 
         try {
           handler.handleError(error);
-        } catch (e) {
+        }
+        catch (e) {
           // Expected
         }
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.stack).toBe('');
       });
 
@@ -425,11 +408,12 @@ describe('GlobalErrorHandler', () => {
 
         try {
           handler.handleError(error);
-        } catch (e) {
+        }
+        catch (e) {
           // Expected
         }
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.stack).toBe('Error stack trace here');
       });
     });
@@ -463,7 +447,7 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(error)).toThrow(error);
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.message).toBe(longMessage);
       });
 
@@ -480,7 +464,7 @@ describe('GlobalErrorHandler', () => {
 
         expect(() => handler.handleError(error)).toThrow(error);
 
-        const loggedData = loggerSpy.error.calls.mostRecent().args[1] as any;
+        const loggedData = vi.mocked(loggerSpy.error).mock.lastCall?.[1] as any;
         expect(loggedData.message).toContain('é, ñ, ü, 中文');
       });
 
@@ -498,7 +482,12 @@ describe('GlobalErrorHandler', () => {
 
   describe('Server Platform', () => {
     beforeEach(() => {
-      const loggerSpyObj = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+      const loggerSpyObj = {
+        error: vi.fn().mockName('LoggerService.error'),
+        warn: vi.fn().mockName('LoggerService.warn'),
+        info: vi.fn().mockName('LoggerService.info'),
+        debug: vi.fn().mockName('LoggerService.debug')
+      };
 
       TestBed.configureTestingModule({
         providers: [
@@ -509,7 +498,7 @@ describe('GlobalErrorHandler', () => {
       });
 
       handler = TestBed.inject(GlobalErrorHandler);
-      loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
+      loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
     });
 
     it('should be created', () => {
@@ -550,7 +539,12 @@ describe('GlobalErrorHandler', () => {
 
   describe('Non-Critical Error Detection', () => {
     beforeEach(() => {
-      const loggerSpyObj = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
+      const loggerSpyObj = {
+        error: vi.fn().mockName('LoggerService.error'),
+        warn: vi.fn().mockName('LoggerService.warn'),
+        info: vi.fn().mockName('LoggerService.info'),
+        debug: vi.fn().mockName('LoggerService.debug')
+      };
 
       TestBed.configureTestingModule({
         providers: [
@@ -561,7 +555,7 @@ describe('GlobalErrorHandler', () => {
       });
 
       handler = TestBed.inject(GlobalErrorHandler);
-      loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
+      loggerSpy = TestBed.inject(LoggerService) as MockedObject<LoggerService>;
     });
 
     it('should detect partial match of non-critical error message', () => {
@@ -571,9 +565,7 @@ describe('GlobalErrorHandler', () => {
     });
 
     it('should detect ExpressionChangedAfterItHasBeenCheckedError with context', () => {
-      const error = new Error(
-        'ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked'
-      );
+      const error = new Error('ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked');
 
       expect(() => handler.handleError(error)).not.toThrow();
     });

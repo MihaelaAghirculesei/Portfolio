@@ -1,10 +1,11 @@
+import type { Mock } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID, DOCUMENT } from '@angular/core';
 
 import { PlatformService } from './platform.service';
 
 interface MockWindow {
-  scrollTo: jasmine.Spy;
+  scrollTo: Mock;
   innerWidth: number;
 }
 
@@ -26,7 +27,7 @@ describe('PlatformService', () => {
 
   beforeEach(() => {
     mockWindow = {
-      scrollTo: jasmine.createSpy('scrollTo'),
+      scrollTo: vi.fn(),
       innerWidth: 1920
     };
 

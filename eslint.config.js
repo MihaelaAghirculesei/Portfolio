@@ -12,7 +12,6 @@ module.exports = tseslint.config(
       ".angular/**",
       "**/*.d.ts",
       "eslint.config.js",
-      "karma.conf.js"
     ]
   },
   {

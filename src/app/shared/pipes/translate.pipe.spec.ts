@@ -1,13 +1,16 @@
+import type { MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { TranslatePipe } from './translate.pipe';
 import { TranslationService } from '../services/translation.service';
 
 describe('TranslatePipe', () => {
   let pipe: TranslatePipe;
-  let translationService: jasmine.SpyObj<TranslationService>;
+  let translationService: Pick<MockedObject<TranslationService>, 'instant'>;
 
   beforeEach(() => {
-    translationService = jasmine.createSpyObj('TranslationService', ['instant']);
+    translationService = {
+      instant: vi.fn().mockName('TranslationService.instant')
+    };
 
     TestBed.configureTestingModule({
       providers: [
@@ -24,7 +27,7 @@ describe('TranslatePipe', () => {
   });
 
   it('should delegate to TranslationService.instant with the given key', () => {
-    translationService.instant.and.returnValue('Hello');
+    translationService.instant.mockReturnValue('Hello');
 
     const result = pipe.transform('greeting.hello');
 
@@ -33,7 +36,7 @@ describe('TranslatePipe', () => {
   });
 
   it('should pass params through to TranslationService.instant', () => {
-    translationService.instant.and.returnValue('Hello, Mihaela');
+    translationService.instant.mockReturnValue('Hello, Mihaela');
 
     const result = pipe.transform('greeting.named', { name: 'Mihaela' });
 
@@ -42,7 +45,7 @@ describe('TranslatePipe', () => {
   });
 
   it('should return whatever the translation service resolves, including a missing-key fallback', () => {
-    translationService.instant.and.returnValue('missing.key');
+    translationService.instant.mockReturnValue('missing.key');
 
     const result = pipe.transform('missing.key');
 

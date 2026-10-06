@@ -1,8 +1,9 @@
+import type { MockedObject } from 'vitest';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Router, NavigationEnd, RouterOutlet, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet, ActivatedRoute, Event as RouterEvent } from '@angular/router';
 import { TranslationService } from './shared/services/translation.service';
 import { Component, NO_ERRORS_SCHEMA, PLATFORM_ID } from '@angular/core';
-import { Subject } from 'rxjs';
+import { EMPTY, Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { LoggerService } from './shared/services/logger.service';
 import { SeoService } from './shared/services/seo.service';
@@ -13,28 +14,33 @@ import { environment } from '../environments/environment';
   template: '',
   standalone: true
 })
-class MockRouterOutlet {}
+class MockRouterOutlet {
+}
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let mockRouter: jasmine.SpyObj<Router>;
+  let mockRouter: Pick<MockedObject<Router>, 'createUrlTree' | 'serializeUrl' | 'url' | 'events'>;
   let mockActivatedRoute: Partial<ActivatedRoute>;
-  let mockSeoService: jasmine.SpyObj<SeoService>;
-  let routerEventsSubject: Subject<unknown>;
+  let mockSeoService: Pick<MockedObject<SeoService>, 'update'>;
+  let routerEventsSubject: Subject<RouterEvent>;
 
   beforeEach(async () => {
     routerEventsSubject = new Subject();
-    mockRouter = jasmine.createSpyObj('Router', ['createUrlTree', 'serializeUrl'], {
+    mockRouter = {
+      createUrlTree: vi.fn().mockName('Router.createUrlTree'),
+      serializeUrl: vi.fn().mockName('Router.serializeUrl'),
       url: '/',
-      events: routerEventsSubject.asObservable(),
-    });
-    mockRouter.createUrlTree.and.returnValue({} as any);
-    mockRouter.serializeUrl.and.returnValue('/');
+      events: routerEventsSubject.asObservable()
+    };
+    mockRouter.createUrlTree.mockReturnValue({} as any);
+    mockRouter.serializeUrl.mockReturnValue('/');
     mockActivatedRoute = {
       snapshot: { params: {}, queryParams: {}, data: {} } as any
     };
-    mockSeoService = jasmine.createSpyObj('SeoService', ['update']);
+    mockSeoService = {
+      update: vi.fn().mockName('SeoService.update')
+    };
 
     await TestBed.configureTestingModule({
       imports: [AppComponent, MockRouterOutlet],
@@ -50,7 +56,7 @@ describe('AppComponent', () => {
     }).compileComponents();
 
     const translateService = TestBed.inject(TranslationService);
-    spyOn(translateService, 'use');
+    vi.spyOn(translateService, 'use').mockReturnValue(EMPTY);
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
@@ -69,95 +75,75 @@ describe('AppComponent', () => {
   it('should call seoService.update with home config on init', () => {
     component.ngOnInit();
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' })
+      expect.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' }),
     );
   });
 
   it('should update SEO when navigating to legal-notice', () => {
     component.ngOnInit();
-    mockSeoService.update.calls.reset();
+    mockSeoService.update.mockClear();
     routerEventsSubject.next(new NavigationEnd(1, '/legal-notice', '/legal-notice'));
-    expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Legal Notice — Mihaela Aghirculesei' })
-    );
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({ title: 'Legal Notice — Mihaela Aghirculesei' }));
   });
 
   it('should update SEO when navigating to skills', () => {
     component.ngOnInit();
-    mockSeoService.update.calls.reset();
+    mockSeoService.update.mockClear();
     routerEventsSubject.next(new NavigationEnd(1, '/skills', '/skills'));
-    expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Skills — Mihaela Aghirculesei' })
-    );
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({ title: 'Skills — Mihaela Aghirculesei' }));
   });
 
   it('should update SEO when navigating to feedback', () => {
     component.ngOnInit();
-    mockSeoService.update.calls.reset();
+    mockSeoService.update.mockClear();
     routerEventsSubject.next(new NavigationEnd(1, '/feedback', '/feedback'));
-    expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Feedback — Mihaela Aghirculesei' })
-    );
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({ title: 'Feedback — Mihaela Aghirculesei' }));
   });
 
   it('should update SEO when navigating to contact', () => {
     component.ngOnInit();
-    mockSeoService.update.calls.reset();
+    mockSeoService.update.mockClear();
     routerEventsSubject.next(new NavigationEnd(1, '/contact', '/contact'));
-    expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Contact — Mihaela Aghirculesei' })
-    );
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({ title: 'Contact — Mihaela Aghirculesei' }));
   });
 
   it('should update SEO when navigating to the Alina Moments case study', () => {
     component.ngOnInit();
-    mockSeoService.update.calls.reset();
-    routerEventsSubject.next(
-      new NavigationEnd(1, '/case-study/alina-moments', '/case-study/alina-moments')
-    );
-    expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        title: 'Case Study: Alina Moments Photography — Mihaela Aghirculesei',
-        ogUrl: `${environment.siteUrl}/case-study/alina-moments`,
-      })
-    );
+    mockSeoService.update.mockClear();
+    routerEventsSubject.next(new NavigationEnd(1, '/case-study/alina-moments', '/case-study/alina-moments'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Case Study: Alina Moments Photography — Mihaela Aghirculesei',
+      ogUrl: `${environment.siteUrl}/case-study/alina-moments`,
+    }));
   });
 
   it('should update SEO when navigating to the bfsg-scanner case study', () => {
     component.ngOnInit();
-    mockSeoService.update.calls.reset();
-    routerEventsSubject.next(
-      new NavigationEnd(1, '/case-study/bfsg-scanner', '/case-study/bfsg-scanner')
-    );
-    expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        title: 'Case Study: bfsg-scanner — Mihaela Aghirculesei',
-        ogUrl: `${environment.siteUrl}/case-study/bfsg-scanner`,
-      })
-    );
+    mockSeoService.update.mockClear();
+    routerEventsSubject.next(new NavigationEnd(1, '/case-study/bfsg-scanner', '/case-study/bfsg-scanner'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Case Study: bfsg-scanner — Mihaela Aghirculesei',
+      ogUrl: `${environment.siteUrl}/case-study/bfsg-scanner`,
+    }));
   });
 
   it('should update SEO when navigating to the ChargeHub case study', () => {
     component.ngOnInit();
-    mockSeoService.update.calls.reset();
-    routerEventsSubject.next(
-      new NavigationEnd(1, '/case-study/charge-hub', '/case-study/charge-hub')
-    );
-    expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        title: 'Case Study: ChargeHub — Mihaela Aghirculesei',
-        ogUrl: `${environment.siteUrl}/case-study/charge-hub`,
-      })
-    );
+    mockSeoService.update.mockClear();
+    routerEventsSubject.next(new NavigationEnd(1, '/case-study/charge-hub', '/case-study/charge-hub'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Case Study: ChargeHub — Mihaela Aghirculesei',
+      ogUrl: `${environment.siteUrl}/case-study/charge-hub`,
+    }));
   });
 
   it('should update SEO when navigating back to home', () => {
     component.ngOnInit();
     routerEventsSubject.next(new NavigationEnd(1, '/legal-notice', '/legal-notice'));
-    mockSeoService.update.calls.reset();
+    mockSeoService.update.mockClear();
     routerEventsSubject.next(new NavigationEnd(2, '/', '/'));
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' })
+      expect.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' }),
     );
   });
 
@@ -173,10 +159,10 @@ describe('AppComponent', () => {
 
   it('should fall back to home SEO config for unknown routes', () => {
     component.ngOnInit();
-    mockSeoService.update.calls.reset();
+    mockSeoService.update.mockClear();
     routerEventsSubject.next(new NavigationEnd(1, '/unknown-route', '/unknown-route'));
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' })
+      expect.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' }),
     );
   });
 });
@@ -187,12 +173,14 @@ describe('AppComponent on server platform', () => {
 
   beforeEach(async () => {
     serverEventsSubject = new Subject();
-    const serverRouter = jasmine.createSpyObj('Router', ['createUrlTree', 'serializeUrl'], {
+    const serverRouter = {
+      createUrlTree: vi.fn().mockName('Router.createUrlTree'),
+      serializeUrl: vi.fn().mockName('Router.serializeUrl'),
       url: '/',
-      events: serverEventsSubject.asObservable(),
-    });
-    serverRouter.createUrlTree.and.returnValue({} as any);
-    serverRouter.serializeUrl.and.returnValue('/');
+      events: serverEventsSubject.asObservable()
+    };
+    serverRouter.createUrlTree.mockReturnValue({} as any);
+    serverRouter.serializeUrl.mockReturnValue('/');
 
     await TestBed.configureTestingModule({
       imports: [AppComponent, MockRouterOutlet],
@@ -208,7 +196,7 @@ describe('AppComponent on server platform', () => {
     }).compileComponents();
 
     const translateService = TestBed.inject(TranslationService);
-    spyOn(translateService, 'use');
+    vi.spyOn(translateService, 'use').mockReturnValue(EMPTY);
 
     const fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
@@ -222,18 +210,25 @@ describe('AppComponent on server platform', () => {
 });
 
 describe('AppComponent router error handling', () => {
-  let mockLogger: jasmine.SpyObj<LoggerService>;
+  let mockLogger: Pick<MockedObject<LoggerService>, 'error' | 'warn' | 'info' | 'debug'>;
   let errorEventsSubject: Subject<unknown>;
 
   beforeEach(async () => {
     errorEventsSubject = new Subject();
-    mockLogger = jasmine.createSpyObj('LoggerService', ['error', 'warn', 'info', 'debug']);
-    const errorRouter = jasmine.createSpyObj('Router', ['createUrlTree', 'serializeUrl'], {
+    mockLogger = {
+      error: vi.fn().mockName('LoggerService.error'),
+      warn: vi.fn().mockName('LoggerService.warn'),
+      info: vi.fn().mockName('LoggerService.info'),
+      debug: vi.fn().mockName('LoggerService.debug')
+    };
+    const errorRouter = {
+      createUrlTree: vi.fn().mockName('Router.createUrlTree'),
+      serializeUrl: vi.fn().mockName('Router.serializeUrl'),
       url: '/',
-      events: errorEventsSubject.asObservable(),
-    });
-    errorRouter.createUrlTree.and.returnValue({} as any);
-    errorRouter.serializeUrl.and.returnValue('/');
+      events: errorEventsSubject.asObservable()
+    };
+    errorRouter.createUrlTree.mockReturnValue({} as any);
+    errorRouter.serializeUrl.mockReturnValue('/');
 
     await TestBed.configureTestingModule({
       imports: [AppComponent, MockRouterOutlet],
@@ -249,7 +244,7 @@ describe('AppComponent router error handling', () => {
     }).compileComponents();
 
     const translateService = TestBed.inject(TranslationService);
-    spyOn(translateService, 'use');
+    vi.spyOn(translateService, 'use').mockReturnValue(EMPTY);
   });
 
   it('should log error when router events emit an error', () => {

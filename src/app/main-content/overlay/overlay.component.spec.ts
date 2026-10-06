@@ -250,7 +250,7 @@ describe('OverlayComponent', () => {
     it('should stop click propagation inside .contentWrapper', () => {
       const wrapper = fixture.debugElement.query(By.css('.contentWrapper'));
       const event = new MouseEvent('click', { bubbles: true });
-      spyOn(event, 'stopPropagation');
+      vi.spyOn(event, 'stopPropagation').mockImplementation(() => undefined);
 
       wrapper.nativeElement.dispatchEvent(event);
 
