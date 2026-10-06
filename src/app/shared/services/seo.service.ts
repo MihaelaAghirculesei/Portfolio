@@ -13,7 +13,7 @@ export interface SeoConfig {
 }
 
 const SITE_URL = environment.siteUrl;
-const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/img/about-me/mihaela-aghirculesei(2).jpg`;
+const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/img/about-me/mihaela-aghirculesei.jpg`;
 
 const HERO_IMAGE_HREF = 'assets/img/about-me/mihaela-aghirculesei-800w.webp';
 const HERO_IMAGE_SRCSET =
