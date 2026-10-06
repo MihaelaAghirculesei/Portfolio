@@ -12,6 +12,7 @@
 // only live in that stylesheet) never animates.
 import { chromium } from '@playwright/test';
 import { spawn, spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const PORT = 45678;
@@ -63,6 +64,18 @@ let exitCode = 0;
 try {
   await waitForServer(BASE_URL, 30_000);
 
+  // There is no SPA catch-all any more: a route that isn't prerendered would
+  // be a hard 404 in production. Every route the build prerendered must be 200.
+  const prerendered = JSON.parse(readFileSync(join('dist', 'angular-portofolio', 'prerendered-routes.json'), 'utf8'));
+  for (const route of Object.keys(prerendered.routes).filter((r) => r !== '/404')) {
+    const { status } = await fetch(`${BASE_URL}${route}`);
+    if (status !== 200) {
+      exitCode = 1;
+      console.error(`[smoke-test] ${route}: HTTP ${status}, expected 200`);
+    }
+  }
+  console.log(`[smoke-test] ${Object.keys(prerendered.routes).length - 1} prerendered routes checked for HTTP 200`);
+
   const browser = await chromium.launch();
   try {
     for (const route of ROUTES_TO_CHECK) {
@@ -109,6 +122,37 @@ try {
         }
       }
 
+      await page.close();
+    }
+
+    // Unknown URLs must get a real 404 (not the home page with a 200), and the
+    // 404 page must still boot when served from a nested path — its assets are
+    // only reachable there because every URL in it is root-absolute.
+    {
+      const route = '/this/page/does-not-exist';
+      const page = await browser.newPage();
+      const consoleErrors = [];
+      page.on('console', (msg) => {
+        // the browser itself logs the 404 status of the document request
+        if (msg.type() === 'error' && !/status of 404/.test(msg.text())) consoleErrors.push(msg.text());
+      });
+      page.on('pageerror', (err) => consoleErrors.push(`[pageerror] ${err.message}`));
+
+      const response = await page.goto(`${BASE_URL}${route}`, { waitUntil: 'networkidle' });
+      const heading = await page.locator('h1').textContent();
+      if (response?.status() !== 404) {
+        exitCode = 1;
+        console.error(`[smoke-test] ${route}: HTTP ${response?.status()}, expected 404 — is 404.html published and the SPA catch-all gone from _redirects?`);
+      } else if (heading?.trim() !== 'Page not found') {
+        exitCode = 1;
+        console.error(`[smoke-test] ${route}: h1 is "${heading}", expected the not-found page`);
+      } else if (consoleErrors.length > 0) {
+        exitCode = 1;
+        console.error(`[smoke-test] ${route}: ${consoleErrors.length} console error(s):`);
+        for (const err of consoleErrors) console.error(`  - ${err}`);
+      } else {
+        console.log(`[smoke-test] ${route}: HTTP 404 with the not-found page, no console errors`);
+      }
       await page.close();
     }
   } finally {
