@@ -101,6 +101,36 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
+  # Budgets live in .lighthouserc.js. Deliberately not a dependency of `deploy`:
+  # performance scores on shared runners are noisy enough that a red run should
+  # prompt a look, not block a content release.
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    needs: quality-checks
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: build-artifacts
+          path: dist/
+
+      - name: Run Lighthouse CI
+        run: npm run ci:lighthouse
+
   deploy:
     name: Deploy to Cloudflare Pages
     runs-on: ubuntu-latest
