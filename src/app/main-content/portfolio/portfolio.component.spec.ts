@@ -61,9 +61,10 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have 6 featured projects on the home page (Join, Pokédex and El Pollo Loco excluded)', () => {
+    it('should have 6 featured projects on the home page (Todo Platform API, Join, Pokédex and El Pollo Loco excluded)', () => {
       expect(component.projects).toBeDefined();
       expect(component.projects.length).toBe(6);
+      expect(component.projects.some((p) => p.name === 'Todo Platform API')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Join')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Pokédex')).toBe(false);
       expect(component.projects.some((p) => p.name === 'El Pollo Loco')).toBe(false);
@@ -466,25 +467,50 @@ describe('PortfolioComponent', () => {
     });
   });
 
+  describe('Intelligent Family Calendar Project', () => {
+    const findProject = () => component.projects.find((p) => p.name === 'Intelligent Family Calendar')!;
+
+    it('should be the fourth featured project', () => {
+      expect(component.projects[3].name).toBe('Intelligent Family Calendar');
+    });
+
+    it('should be a personal project with a public repo and the GitHub Pages demo', () => {
+      const project = findProject();
+      expect(project.isPersonal).toBe(true);
+      expect(project.githubUrl).toBe('https://github.com/MihaelaAghirculesei/intelligent-family-calendar');
+      expect(project.liveUrl).toBe('https://mihaelaaghirculesei.github.io/intelligent-family-calendar/');
+    });
+
+    it('should get translations for its descriptions', () => {
+      vi.spyOn(translateService, 'instant').mockReturnValue('Family calendar');
+
+      component.getProjectDescription(findProject());
+      component.getProjectShortDescription(findProject());
+
+      expect(translateService.instant).toHaveBeenCalledWith('projects.familyCalendar.description');
+      expect(translateService.instant).toHaveBeenCalledWith('projects.familyCalendar.shortDescription');
+    });
+  });
+
   describe('Todo Platform API Project', () => {
-    it('should have Todo Platform API as the fourth project', () => {
-      const todoProject = component.projects[3];
-      expect(todoProject.name).toBe('Todo Platform API');
+    const findTodo = () => projectDataService.projects.find((p) => p.name === 'Todo Platform API')!;
+
+    it('should be listed under all projects instead of the home page', () => {
+      expect(findTodo().featured).toBe(false);
+      expect(component.projects.some((p) => p.name === 'Todo Platform API')).toBe(false);
     });
 
     it('should not have inProgress flag set', () => {
-      const todoProject = component.projects[3];
-      expect(todoProject.inProgress).toBeFalsy();
+      expect(findTodo().inProgress).toBeFalsy();
     });
 
     it('should have isTeam flag set to true', () => {
-      const todoProject = component.projects[3];
-      expect(todoProject.isTeam).toBe(true);
+      expect(findTodo().isTeam).toBe(true);
     });
 
     it('should get translation for Todo Platform API description', () => {
       vi.spyOn(translateService, 'instant').mockReturnValue('Todo API description');
-      const todoProject = component.projects.find(p => p.name === 'Todo Platform API')!;
+      const todoProject = findTodo();
 
       const desc = component.getProjectDescription(todoProject);
 
@@ -494,7 +520,7 @@ describe('PortfolioComponent', () => {
 
     it('should get translation for Todo Platform API short description', () => {
       vi.spyOn(translateService, 'instant').mockReturnValue('Todo API short desc');
-      const todoProject = component.projects.find(p => p.name === 'Todo Platform API')!;
+      const todoProject = findTodo();
 
       const desc = component.getProjectShortDescription(todoProject);
 
@@ -503,8 +529,10 @@ describe('PortfolioComponent', () => {
     });
 
     it('should return correct screenshot alt for Todo Platform API', () => {
-      const alt = component.getProjectScreenshotAlt(3);
-      expect(alt).toBe('Todo Platform API screenshot');
+      component.toggleShowAll(new MouseEvent('click'));
+      const index = component.projects.findIndex((p) => p.name === 'Todo Platform API');
+
+      expect(component.getProjectScreenshotAlt(index)).toBe('Todo Platform API screenshot');
     });
 
     it('should have icons for Python 3.11 and FastAPI', () => {
@@ -516,7 +544,7 @@ describe('PortfolioComponent', () => {
   describe('SecureNotes Lab Project', () => {
     const findProject = () => component.projects.find((p) => p.name === 'SecureNotes Lab')!;
 
-    it('should come right after Todo Platform API', () => {
+    it('should come right after the Intelligent Family Calendar', () => {
       expect(component.projects[4].name).toBe('SecureNotes Lab');
     });
 
@@ -633,7 +661,7 @@ describe('PortfolioComponent', () => {
         { id: 'noOffset', name: 'NoOffset', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' }
       ];
 
-      // Join, Pokédex and El Pollo Loco are filtered out of the featured
+      // Todo API, Join, Pokédex and El Pollo Loco are filtered out of the featured
       // (home) list, so the appended item lands right after the featured
       // projects, at the end of the list.
       const appendedIndex = component.projects.length - 1;
@@ -832,9 +860,9 @@ describe('PortfolioComponent', () => {
       projFixture.detectChanges();
     });
 
-    it('should show all 9 projects including El Pollo Loco', () => {
+    it('should show all 10 projects including El Pollo Loco', () => {
       expect(projComponent['isProjectsPage']).toBe(true);
-      expect(projComponent.projects.length).toBe(9);
+      expect(projComponent.projects.length).toBe(10);
       expect(projComponent.projects.some((p) => p.name === 'El Pollo Loco')).toBe(true);
     });
 
