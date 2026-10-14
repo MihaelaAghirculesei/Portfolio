@@ -52,7 +52,7 @@ Everything here runs on every push and pull request ([`ci.yml`](.github/workflow
 | Check | What it enforces |
 |---|---|
 | ESLint | Strict TypeScript rules (no `any`, explicit return types, no `console`), OnPush everywhere, Angular template accessibility rules |
-| Unit tests | 735 tests with Vitest in headless Chromium; build fails below 96% statements/lines/functions and 92% branches |
+| Unit tests | 738 tests with Vitest in headless Chromium; build fails below 96% statements/lines/functions and 92% branches |
 | Worker tests | 21 tests for CORS, input validation, rate limiting and the Resend call (`node:test`) |
 | Security audit | `npm audit` on production dependencies, plus CodeQL and dependency review on PRs |
 | Smoke test | Serves the real build through Cloudflare's local Pages runtime: every route returns 200 and is in the sitemap, unknown URLs return 404, no console errors under the production CSP |
