@@ -76,7 +76,7 @@ Everything here runs on every push and pull request ([`ci.yml`](.github/workflow
 
 ## 🚀 Getting started
 
-Requires Node.js 22 (see `.nvmrc`).
+Requires Node.js 22.22.3 or a later 22.x release (see `.nvmrc`).
 
 ```bash
 git clone https://github.com/MihaelaAghirculesei/Portfolio.git
