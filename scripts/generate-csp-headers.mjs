@@ -12,17 +12,20 @@
 // set into dist/.../browser/_headers in place of the __CSP_SCRIPT_HASHES__
 // placeholder that src/_headers ships with.
 //
-// It also hashes inline event-handler attributes (e.g. the `onload` Angular
-// CLI's `optimization.styles.inlineCritical` build option stamps onto the
-// deferred stylesheet <link>, `<link ... media="print" onload="this.media=
+// It also hashes inline event-handler attributes. Up to Angular 21, the
+// `optimization.styles.inlineCritical` build option stamped an `onload` onto
+// the deferred stylesheet <link>, `<link ... media="print" onload="this.media=
 // 'all'">`, to swap it to screen media once loaded without blocking first
-// paint). CSP hashes only cover those when 'unsafe-hashes' is present in
-// script-src — omitting it silently blocks the handler, leaving the
-// stylesheet stuck at media="print" forever (never applying to screen), with
-// no console error pointing at the stylesheet itself. Same reasoning as the
-// script hashes above: scan for it and add 'unsafe-hashes' automatically
-// rather than hardcoding it as always-on, so a future removal of this
-// pattern removes the keyword too instead of leaving unused CSP surface.
+// paint. Since Angular 22 it marks the <link> with `data-beasties-media` and
+// swaps it from an inline <script> instead, which the script hashes above
+// already cover, so current builds emit no handlers and no 'unsafe-hashes'.
+// The handler scan stays as a guard: CSP hashes only cover handlers when
+// 'unsafe-hashes' is present in script-src, and omitting it silently blocks
+// the handler, leaving the stylesheet stuck at media="print" forever (never
+// applying to screen), with no console error pointing at the stylesheet
+// itself. Same reasoning as the script hashes above: scan for it and add
+// 'unsafe-hashes' automatically rather than hardcoding it as always-on, so
+// the keyword appears only while a build actually needs it.
 import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
