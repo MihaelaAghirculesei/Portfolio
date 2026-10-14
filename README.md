@@ -3,11 +3,11 @@
 [![CI](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml/badge.svg)](https://github.com/MihaelaAghirculesei/Portfolio/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?logo=angular)](https://angular.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Angular](https://img.shields.io/badge/Angular-22.2-DD0031?logo=angular)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Deployed on Cloudflare Pages](https://img.shields.io/badge/Deployed-Cloudflare%20Pages-F38020?logo=cloudflare)](https://aghirculesei.pages.dev)
 
-> My developer portfolio: an Angular 21 site prerendered to static HTML, served from Cloudflare Pages, with a Cloudflare Worker behind the contact form. Every quality claim below is enforced by a check in CI.
+> My developer portfolio: an Angular 22 site prerendered to static HTML, served from Cloudflare Pages, with a Cloudflare Worker behind the contact form. Every quality claim below is enforced by a check in CI.
 
 [🌐 Live site](https://aghirculesei.pages.dev) • [📧 Contact](mailto:aghirculesei@gmail.com)
 
@@ -65,8 +65,8 @@ Everything here runs on every push and pull request ([`ci.yml`](.github/workflow
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Angular 21.2 (standalone components, signals, zoneless)
-- **Language:** TypeScript 5.9 (strict)
+- **Framework:** Angular 22.2 (standalone components, signals, zoneless)
+- **Language:** TypeScript 6.0 (strict)
 - **Styling:** SCSS
 - **Testing:** Vitest (browser mode) · Playwright · node:test
 - **Hosting:** Cloudflare Pages + Cloudflare Workers (KV, Resend)
