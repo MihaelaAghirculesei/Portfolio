@@ -56,6 +56,9 @@
     "piscina": "^5.3.2",
     "minimatch@3": {
       "brace-expansion": "^1.1.21"
+    },
+    "bfsg-scanner": {
+      "playwright": "$@playwright/test"
     }
   },
   "devDependencies": {
@@ -63,7 +66,7 @@
     "@angular/cli": "^22.2.2",
     "@angular/compiler-cli": "^22.2.2",
     "@eslint/js": "^9.39.5",
-    "@playwright/test": "^1.64.0",
+    "@playwright/test": "^1.64.1",
     "@types/node": "^22.20.5",
     "@vitest/browser-playwright": "^4.1.11",
     "@vitest/coverage-v8": "^4.1.11",
