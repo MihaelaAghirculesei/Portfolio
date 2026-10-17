@@ -47,7 +47,7 @@
     "name": "Intelligent Family Calendar",
     "technologies": [
       "Angular", "TypeScript", "Signals", "Angular CDK", "i18n",
-      "jsPDF", "Vitest", "Playwright", "GitHub Actions"
+      "jsPDF", "Vitest", "Playwright", "axe-core", "GitHub Actions"
     ],
     "previewImg": "assets/img/projects/family-calendar.webp",
     "previewImgSrcset": "assets/img/projects/family-calendar-400w.webp 400w, assets/img/projects/family-calendar-800w.webp 800w, assets/img/projects/family-calendar-1200w.webp 1200w",
