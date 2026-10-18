@@ -74,10 +74,6 @@ jobs:
   e2e-tests:
     name: E2E Tests
     runs-on: ubuntu-latest
-    # Must match the installed @playwright/test version exactly: each
-    # release looks for its own browser build. Dependabot does not bump it.
-    container:
-      image: mcr.microsoft.com/playwright:v1.64.1-noble
 
     steps:
       - name: Checkout code
@@ -91,6 +87,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      # Installed by the project's own Playwright, so the browser always
+      # matches @playwright/test, also after a Dependabot bump.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
 
       - name: Run E2E tests
         run: npm run e2e
