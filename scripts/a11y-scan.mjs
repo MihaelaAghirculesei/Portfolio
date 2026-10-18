@@ -4,12 +4,11 @@
 // EN 301 549 / BFSG clauses) and fails on any `serious` or `critical` finding.
 //
 // The scanner discovers pages from sitemap.xml, whose URLs point at the
-// production host. Scanning the local build therefore needs a sitemap that
-// points at the local server — so this serves a throwaway copy of the build
-// with the host rewritten, leaving dist/ (the deploy artifact) untouched.
+// production host. `sitemapOrigin` rewrites those URLs onto the local server,
+// so the build in dist/ (the deploy artifact) is served and scanned as is.
 // Reports (JSON + HTML) land in reports/a11y/.
 import { spawnSync } from 'node:child_process';
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { startPagesDevServer } from './lib/pages-dev-server.mjs';
@@ -19,20 +18,16 @@ const PRODUCTION_ORIGIN = 'https://aghirculesei.pages.dev';
 const BROWSER_DIST = join('dist', 'angular-portfolio', 'browser');
 const OUTPUT_DIR = resolve('reports', 'a11y');
 
-const workDir = mkdtempSync(join(tmpdir(), 'a11y-scan-'));
-const siteDir = join(workDir, 'site');
-cpSync(BROWSER_DIST, siteDir, { recursive: true });
-
-const sitemapPath = join(siteDir, 'sitemap.xml');
-const sitemap = readFileSync(sitemapPath, 'utf8');
-writeFileSync(sitemapPath, sitemap.replaceAll(PRODUCTION_ORIGIN, `http://localhost:${PORT}`));
+const sitemap = readFileSync(join(BROWSER_DIST, 'sitemap.xml'), 'utf8');
 const expectedPages = (sitemap.match(/<loc>/g) ?? []).length;
 
+const workDir = mkdtempSync(join(tmpdir(), 'a11y-scan-'));
 const configPath = join(workDir, 'bfsg.config.yaml');
 writeFileSync(
   configPath,
   [
     `baseUrl: "http://localhost:${PORT}/"`,
+    `sitemapOrigin: "${PRODUCTION_ORIGIN}"`,
     `maxPages: ${expectedPages + 1}`,
     // Prerendered HTML is complete on load, but translations and deferred
     // blocks settle after hydration — scan the page the visitor actually sees.
@@ -47,7 +42,7 @@ writeFileSync(
 let exitCode = 1;
 let server;
 try {
-  server = await startPagesDevServer(siteDir, PORT);
+  server = await startPagesDevServer(BROWSER_DIST, PORT);
   const scanner = join('node_modules', '.bin', process.platform === 'win32' ? 'bfsg-scanner.cmd' : 'bfsg-scanner');
   const result = spawnSync(scanner, ['--config', configPath], {
     stdio: 'inherit',
