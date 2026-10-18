@@ -47,8 +47,8 @@ export class CaseStudyBfsgScannerComponent implements OnInit {
   protected readonly screenshotsBasePath = 'assets/img/case-studies/bfsg-scanner/';
 
   protected readonly stats: CaseStudyStat[] = [
-    { value: '153', labelKey: 'caseStudyBfsgScanner.results.testsLabel' },
-    { value: '48', labelKey: 'caseStudyBfsgScanner.results.pullRequestsLabel' },
+    { value: '167', labelKey: 'caseStudyBfsgScanner.results.testsLabel' },
+    { value: '53', labelKey: 'caseStudyBfsgScanner.results.pullRequestsLabel' },
     { value: '3', labelKey: 'caseStudyBfsgScanner.results.osLabel' },
     { value: '0·1·2·3·4', labelKey: 'caseStudyBfsgScanner.results.exitCodesLabel' },
     { value: 'JSON · HTML · PDF', labelKey: 'caseStudyBfsgScanner.results.reportFormatsLabel' },
