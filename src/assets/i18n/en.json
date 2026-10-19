@@ -314,7 +314,7 @@
     "results": {
       "heading": "In numbers",
       "testsLabel": "automated tests (Vitest)",
-      "pullRequestsLabel": "merged pull requests, each with its own task checklist",
+      "pullRequestsLabel": "merged pull requests, each reviewed on its own",
       "osLabel": "operating systems in CI — Linux, Windows, macOS",
       "exitCodesLabel": "documented semantic exit codes, with a reasoned hierarchy so CI knows why it stopped",
       "reportFormatsLabel": "report formats, from the same run",
@@ -328,7 +328,7 @@
       "item1Title": "Published to npm with SLSA provenance.",
       "item1Body": "The release workflow publishes via OIDC trusted publishing — no long-lived token anywhere in it — with npm 2FA on the account.",
       "item2Title": "Small pull requests, each reviewed on its own.",
-      "item2Body": "Every one carries a task checklist; the thirteen decisions that shaped the architecture also have an Architecture Decision Record.",
+      "item2Body": "Each one does a single thing; the thirteen decisions that shaped the architecture also have an Architecture Decision Record.",
       "item3Title": "167 tests, CI on three operating systems.",
       "item3Body": "The Vitest suite runs on Linux, Windows, and macOS on every push.",
       "item4Title": "The output is a stable contract, not an ad-hoc format.",
@@ -363,7 +363,7 @@
       "reportOverview": "The self-contained HTML report: target, tool, the \"Failed\" verdict above the severity threshold, and the scan summary",
       "clauseMapping": "Breakdown by impact, and the breached clauses — every WCAG 2.1 criterion beside its EN 301 549 clause, with the § 4 BFSG note",
       "findings": "A single finding in detail: rule, impact, WCAG SC, EN 301 549 clause, a how-to-fix link, and the affected elements",
-      "pullRequests": "The repository's pull requests on GitHub — each merged with its own task checklist"
+      "pullRequests": "The repository's merged pull requests on GitHub — one concern each, every one with passing CI checks"
     }
   },
   "caseStudyChargeHub": {
