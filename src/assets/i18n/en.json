@@ -48,7 +48,7 @@
     "additionalSkillsHighlight": "another skill?",
     "additionalSkillsText": "Do not see the technology your project needs? No problem! My curiosity and determination allow me to embrace new technological challenges. Every project is an opportunity to grow and deliver tailored solutions for your needs.",
     "ctaText": "Let us talk",
-    "ctaAriaLabel": "Contact me to discuss your project",
+    "ctaAriaLabel": "Let us talk – contact me to discuss your project",
     "tooltipText": "I have special interests in learning:"
   },
   "landingPage": {
@@ -91,7 +91,7 @@
     "viewAllProjects": "View all projects",
     "viewAllProjectsAriaLabel": "View all projects",
     "viewFeaturedProjects": "Back to featured projects",
-    "viewFeaturedProjectsAriaLabel": "Back to the featured projects on the home page"
+    "viewFeaturedProjectsAriaLabel": "Back to featured projects on the home page"
   },
   "contact": {
     "title": "Contact me",
@@ -204,7 +204,7 @@
       "shortDescription": "OWASP Top 10 Lab: Vulnerable vs. Fixed"
     },
     "bfsgScanner": {
-      "description": "An open-source CLI, published to npm with SLSA provenance, that scans an entire site for WCAG 2.1 AA violations and maps every finding to the EN 301 549 / BFSG clause it breaks, producing a citable compliance report in JSON, HTML, or PDF. It exits with a non-zero code once violations pass a configurable severity threshold, so a CI pipeline can block a merge on accessibility. Page discovery runs from sitemap.xml, then a breadth-first crawl that respects robots.txt; each page is analyzed in a real Chromium via Playwright and axe-core, with a concurrency pool, per-host rate limiting, an identifiable User-Agent, and an optional settle delay so client-rendered pages are scanned once hydrated. The report.json output is described by a versioned JSON Schema and guarded by anti-drift tests with ajv. Built in TypeScript on Node.js, with 167 Vitest tests, CI across Linux, Windows and macOS, and developed as a sequence of small, individually reviewed pull requests; the twelve decisions that shaped the architecture each carry an Architecture Decision Record. The release workflow publishes to npm via OIDC trusted publishing, with no long-lived token.",
+      "description": "An open-source CLI, published to npm with SLSA provenance, that scans an entire site for WCAG 2.1 AA violations and maps every finding to the EN 301 549 / BFSG clause it breaks, producing a citable compliance report in JSON, HTML, or PDF. It exits with a non-zero code once violations pass a configurable severity threshold, so a CI pipeline can block a merge on accessibility. Page discovery runs from sitemap.xml, then a breadth-first crawl that respects robots.txt; each page is analyzed in a real Chromium via Playwright and axe-core, with a concurrency pool, per-host rate limiting, an identifiable User-Agent, and an optional settle delay so client-rendered pages are scanned once hydrated. The report.json output is described by a versioned JSON Schema and guarded by anti-drift tests with ajv. Built in TypeScript on Node.js, with 167 Vitest tests, CI across Linux, Windows and macOS, and developed as a sequence of small, individually reviewed pull requests; the thirteen decisions that shaped the architecture each carry an Architecture Decision Record. The release workflow publishes to npm via OIDC trusted publishing, with no long-lived token.",
       "shortDescription": "WCAG / EN 301 549 / BFSG Accessibility Scanner"
     },
     "default": {
@@ -295,7 +295,7 @@
     "roleLabel": "Role",
     "role": "Solo developer & maintainer",
     "periodLabel": "Timeframe",
-    "period": "2026 — v0.1.0 published to npm on September 1, 2026; v0.2.0 on September 10, 2026; v0.2.2 on September 29, 2026; v0.3.0 on October 17, 2026",
+    "period": "2026 — v0.1.0 published to npm on September 1, 2026; v0.2.0 on September 10, 2026; v0.2.2 on September 29, 2026; v0.3.0 on October 17, 2026; v0.4.0 on October 19, 2026",
     "periodNote": "published and working: npx bfsg-scanner <url>",
     "npmLabel": "npm",
     "intro": {
@@ -307,7 +307,7 @@
       "heading": "What it does",
       "item1": "Discovers the site's pages — sitemap.xml first, then a breadth-first crawl that respects robots.txt, with a configurable page limit. Sitemap entries on another host are flagged instead of silently dropped, and a staging build can be scanned against the production sitemap.",
       "item2": "Analyzes every page in a real Chromium via Playwright + axe-core, with a concurrency pool, per-host rate limiting, an identifiable User-Agent, and an optional settle delay so client-rendered pages are scanned once hydrated.",
-      "item3": "Maps each violation to its WCAG 2.1 success criterion and the corresponding EN 301 549 clause — and, via § 4 BFSG, to the statutory presumption of conformity.",
+      "item3": "Maps each violation to its WCAG 2.1 success criterion and the corresponding EN 301 549 clause — and, via § 4 BFSG, to the statutory presumption of conformity. Since v0.4.0 the default rule set also covers the Level A criteria WCAG 2.1 added, such as SC 2.5.3 Label in Name; on this portfolio it caught 13 elements whose accessible name did not contain their visible label.",
       "item4": "Produces the report as report.json (versioned JSON Schema), report.html (DE/EN, self-contained file), and report.pdf (A4, to be archived as a record).",
       "item5": "Exits with a non-zero code once violations reach a configurable severity threshold, so a CI pipeline can block a merge on accessibility."
     },
@@ -328,7 +328,7 @@
       "item1Title": "Published to npm with SLSA provenance.",
       "item1Body": "The release workflow publishes via OIDC trusted publishing — no long-lived token anywhere in it — with npm 2FA on the account.",
       "item2Title": "Small pull requests, each reviewed on its own.",
-      "item2Body": "Every one carries a task checklist; the twelve decisions that shaped the architecture also have an Architecture Decision Record.",
+      "item2Body": "Every one carries a task checklist; the thirteen decisions that shaped the architecture also have an Architecture Decision Record.",
       "item3Title": "167 tests, CI on three operating systems.",
       "item3Body": "The Vitest suite runs on Linux, Windows, and macOS on every push.",
       "item4Title": "The output is a stable contract, not an ad-hoc format.",
