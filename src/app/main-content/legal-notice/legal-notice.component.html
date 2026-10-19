@@ -44,10 +44,10 @@
           [href]="sourceLink.url"
           [target]="sourceLink.isExternal ? '_blank' : '_self'"
           [rel]="sourceLink.isExternal ? 'noopener noreferrer' : ''"
-          [attr.aria-label]="'Source: ' + sourceLink.label + (sourceLink.isExternal ? ' (opens in new tab)' : '')"
           class="source-link"
         >
           {{ sourceLink.url }}
+          @if (sourceLink.isExternal) {<span class="sr-only"> (opens in new tab)</span>}
         </a>
       </p>
     </footer>
