@@ -307,7 +307,7 @@
       "heading": "Was es macht",
       "item1": "Ermittelt die Seiten der Website — zuerst sitemap.xml, dann ein Breadth-First-Crawl, der robots.txt respektiert, mit konfigurierbarem Seitenlimit. Sitemap-Einträge auf einem anderen Host werden gemeldet statt still verworfen, und ein Staging-Build lässt sich gegen die Produktions-Sitemap prüfen.",
       "item2": "Analysiert jede Seite in einem echten Chromium über Playwright + axe-core, mit Concurrency-Pool, Rate-Limit pro Host, identifizierbarem User-Agent und optionaler Settle-Verzögerung, damit clientseitig gerenderte Seiten erst im hydratisierten Zustand geprüft werden.",
-      "item3": "Bildet jede Verletzung auf das WCAG-2.1-Erfolgskriterium und die zugehörige EN-301-549-Klausel ab — und über § 4 BFSG auf die gesetzliche Konformitätsvermutung.",
+      "item3": "Bildet jede Verletzung auf das WCAG-2.1-Erfolgskriterium und die zugehörige EN-301-549-Klausel ab — und über § 4 BFSG auf die gesetzliche Konformitätsvermutung. Seit v0.4.0 deckt der Standard-Regelsatz auch die mit WCAG 2.1 hinzugekommenen Level-A-Kriterien ab, etwa SC 2.5.3 Label in Name; auf diesem Portfolio fand er 13 Elemente, deren zugänglicher Name ihre sichtbare Beschriftung nicht enthielt.",
       "item4": "Erzeugt den Bericht als report.json (versioniertes JSON Schema), report.html (DE/EN, eigenständige Datei) und report.pdf (A4, zur Archivierung als Nachweis).",
       "item5": "Beendet sich mit einem Exit-Code ≠ 0, sobald die Verstöße eine konfigurierbare Schwere-Schwelle erreichen — so kann eine CI-Pipeline den Merge an der Barrierefreiheit blockieren."
     },
