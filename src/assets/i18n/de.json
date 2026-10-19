@@ -314,7 +314,7 @@
     "results": {
       "heading": "In Zahlen",
       "testsLabel": "automatisierte Tests (Vitest)",
-      "pullRequestsLabel": "gemergte Pull Requests, jeder mit eigener Aufgaben-Checkliste",
+      "pullRequestsLabel": "gemergte Pull Requests, jeder einzeln reviewt",
       "osLabel": "Betriebssysteme in der CI — Linux, Windows, macOS",
       "exitCodesLabel": "dokumentierte semantische Exit-Codes, mit begründeter Hierarchie, damit die CI weiß, warum sie gestoppt hat",
       "reportFormatsLabel": "Berichtsformate, aus demselben Lauf",
@@ -328,7 +328,7 @@
       "item1Title": "Auf npm veröffentlicht mit SLSA-Provenance.",
       "item1Body": "Der Release-Workflow veröffentlicht über OIDC Trusted Publishing — nirgends darin ein langlebiges Token, dazu npm-2FA auf dem Account.",
       "item2Title": "Kleine Pull Requests, einzeln reviewt.",
-      "item2Body": "Jeder trägt eine Aufgaben-Checkliste; die dreizehn Entscheidungen, die die Architektur geprägt haben, haben zusätzlich ein Architecture Decision Record.",
+      "item2Body": "Jeder erledigt genau eine Sache; die dreizehn Entscheidungen, die die Architektur geprägt haben, haben zusätzlich ein Architecture Decision Record.",
       "item3Title": "167 Tests, CI auf drei Betriebssystemen.",
       "item3Body": "Die Vitest-Suite läuft bei jedem Push auf Linux, Windows und macOS.",
       "item4Title": "Die Ausgabe ist ein stabiler Vertrag, kein Ad-hoc-Format.",
@@ -363,7 +363,7 @@
       "reportOverview": "Der eigenständige HTML-Bericht: Ziel, Tool, das Urteil „Failed“ über der Schwere-Schwelle und die Scan-Zusammenfassung",
       "clauseMapping": "Aufschlüsselung nach Impact und die verletzten Klauseln — jedes WCAG-2.1-Kriterium neben seiner EN-301-549-Klausel, mit dem § 4 BFSG-Hinweis",
       "findings": "Ein einzelner Befund im Detail: Regel, Impact, WCAG-SC, EN-301-549-Klausel, ein How-to-fix-Link und die betroffenen Elemente",
-      "pullRequests": "Die Pull Requests des Repositories auf GitHub — jeder mit eigener Aufgaben-Checkliste gemergt"
+      "pullRequests": "Die gemergten Pull Requests des Repositories auf GitHub — jeder mit genau einem Anliegen und grünen CI-Checks"
     }
   },
   "caseStudyChargeHub": {
