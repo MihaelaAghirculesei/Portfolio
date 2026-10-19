@@ -6,7 +6,6 @@ import { CONTACT_INFO } from '../../shared/constants/app.constants';
 
 interface ExternalLink {
   url: string;
-  label: string;
   isExternal: boolean;
 }
 
@@ -25,7 +24,6 @@ export class LegalNoticeComponent implements OnInit {
 
   readonly sourceLink: ExternalLink = {
     url: 'https://www.e-recht24.de/impressum-generator.html',
-    label: 'e-recht24.de',
     isExternal: true
   };
 
