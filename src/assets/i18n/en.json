@@ -307,7 +307,7 @@
       "heading": "What it does",
       "item1": "Discovers the site's pages — sitemap.xml first, then a breadth-first crawl that respects robots.txt, with a configurable page limit. Sitemap entries on another host are flagged instead of silently dropped, and a staging build can be scanned against the production sitemap.",
       "item2": "Analyzes every page in a real Chromium via Playwright + axe-core, with a concurrency pool, per-host rate limiting, an identifiable User-Agent, and an optional settle delay so client-rendered pages are scanned once hydrated.",
-      "item3": "Maps each violation to its WCAG 2.1 success criterion and the corresponding EN 301 549 clause — and, via § 4 BFSG, to the statutory presumption of conformity.",
+      "item3": "Maps each violation to its WCAG 2.1 success criterion and the corresponding EN 301 549 clause — and, via § 4 BFSG, to the statutory presumption of conformity. Since v0.4.0 the default rule set also covers the Level A criteria WCAG 2.1 added, such as SC 2.5.3 Label in Name; on this portfolio it caught 13 elements whose accessible name did not contain their visible label.",
       "item4": "Produces the report as report.json (versioned JSON Schema), report.html (DE/EN, self-contained file), and report.pdf (A4, to be archived as a record).",
       "item5": "Exits with a non-zero code once violations reach a configurable severity threshold, so a CI pipeline can block a merge on accessibility."
     },
