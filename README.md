@@ -76,7 +76,7 @@ Everything here runs on every push and pull request ([`ci.yml`](.github/workflow
 
 ## 🚀 Getting started
 
-Requires Node.js 22.22.3 or a later 22.x release (see `.nvmrc`).
+Requires Node.js 22.22.3 or a later 22.x release (see `.nvmrc`) and npm 10 (pinned as `packageManager`, CI checks that it matches the npm bundled with `.nvmrc`).
 
 ```bash
 git clone https://github.com/MihaelaAghirculesei/Portfolio.git
