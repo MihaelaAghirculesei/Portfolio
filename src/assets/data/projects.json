@@ -4,7 +4,7 @@
     "name": "Alina Moments Photography",
     "technologies": [
       "Next.js", "TypeScript", "Tailwind CSS", "next-intl", "Cal.com",
-      "Resend", "Neon", "Drizzle ORM", "Vercel KV", "GSAP", "Framer Motion", "Lenis"
+      "Resend", "Neon", "Drizzle ORM", "Upstash Redis", "Framer Motion", "Lenis"
     ],
     "previewImg": "assets/img/projects/alina-moments.webp",
     "previewImgSrcset": "assets/img/projects/alina-moments-400w.webp 400w, assets/img/projects/alina-moments-800w.webp 800w, assets/img/projects/alina-moments-1200w.webp 1200w",
