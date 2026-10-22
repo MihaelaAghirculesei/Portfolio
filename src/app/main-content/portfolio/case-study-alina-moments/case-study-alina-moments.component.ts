@@ -65,7 +65,7 @@ export class CaseStudyAlinaMomentsComponent implements OnInit {
 
   protected readonly techStack: string[] = [
     'Next.js 16 (App Router)', 'React 19', 'TypeScript 5', 'Tailwind CSS 4', 'Framer Motion',
-    'GSAP + ScrollTrigger', 'Lenis', 'Drizzle ORM', 'Neon Postgres', 'Vercel KV', 'Cal.com',
+    'Lenis', 'Drizzle ORM', 'Neon Postgres', 'Upstash Redis', 'Cal.com',
     'Resend', 'Sentry', 'Vitest + Testing Library', 'Playwright', 'Codecov', 'GitHub Actions', 'Vercel Hosting',
   ];
 
