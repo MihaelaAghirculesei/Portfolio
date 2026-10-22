@@ -21,6 +21,16 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
 
+      # Dependabot writes lockfiles with the npm from packageManager; keep it equal to the npm bundled with .nvmrc
+      - name: Check npm version
+        run: |
+          expected="$(node -p "require('./package.json').packageManager")"
+          actual="npm@$(npm -v)"
+          if [ "$expected" != "$actual" ]; then
+            echo "::error file=package.json::packageManager is $expected but .nvmrc ships $actual"
+            exit 1
+          fi
+
       - name: Install dependencies
         run: npm ci
 
