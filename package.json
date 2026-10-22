@@ -69,8 +69,8 @@
     "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.64.1",
     "@types/node": "^22.20.5",
-    "@vitest/browser-playwright": "^4.1.11",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.12",
+    "@vitest/coverage-v8": "^4.1.12",
     "angular-eslint": "^22.6.0",
     "bfsg-scanner": "^0.4.0",
     "eslint": "^9.37.0",
@@ -78,7 +78,7 @@
     "sharp": "^0.35.5",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.2",
-    "vitest": "^4.1.11",
+    "vitest": "^4.1.12",
     "wrangler": "^4.150.0"
   }
 }
