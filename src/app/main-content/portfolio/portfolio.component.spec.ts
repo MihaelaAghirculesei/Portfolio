@@ -417,6 +417,7 @@ describe('PortfolioComponent', () => {
     it('should check if technology has icon', () => {
       expect(component.hasTechIcon('Angular')).toBe(true);
       expect(component.hasTechIcon('TypeScript')).toBe(true);
+      expect(component.hasTechIcon('Upstash Redis')).toBe(true);
       expect(component.hasTechIcon('UnknownTech')).toBe(false);
     });
 

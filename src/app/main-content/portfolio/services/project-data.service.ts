@@ -54,6 +54,7 @@ export class ProjectDataService {
     gsap: 'gsap.svg',
     framermotion: 'framer-motion.svg',
     vercelkv: 'vercel-kv.svg',
+    upstashredis: 'upstash-redis.svg',
     lenis: 'lenis.svg',
     nextintl: 'next-intl.svg',
     nuxt: 'nuxt.svg',
