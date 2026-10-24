@@ -1,0 +1,35 @@
+name: Dependabot Auto-merge
+
+# Enables auto-merge for low-risk Dependabot PRs only: dev tooling (dev-minor-patch
+# group) and GitHub Actions, minor/patch. GitHub merges once the required checks
+# pass. Angular and production dependencies stay manual because they ship to the
+# live site. A merge done with GITHUB_TOKEN does not trigger the push workflows,
+# so these changes deploy with the next manual merge (they are dev/CI-only).
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  auto-merge:
+    name: Enable auto-merge
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+
+      - name: Enable auto-merge
+        if: >-
+          steps.metadata.outputs.update-type != 'version-update:semver-major' &&
+          (steps.metadata.outputs.dependency-group == 'dev-minor-patch' ||
+           steps.metadata.outputs.package-ecosystem == 'github_actions')
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
