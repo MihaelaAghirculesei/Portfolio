@@ -2,6 +2,8 @@
 # -------------------------
 # - Minor / patch updates: handled automatically by Dependabot, grouped (see
 #   `groups` below) to keep PR noise low. Merge once CI is green.
+#   dev-minor-patch and github-actions PRs auto-merge on green CI
+#   (`dependabot-auto-merge.yml`); the angular group stays manual.
 # - Major updates: intentionally ignored here (`ignore` block) and done by hand,
 #   because they routinely need code changes and lockstep peer bumps. Track each
 #   one in its own issue and run it as a dedicated PR — typically alongside the
