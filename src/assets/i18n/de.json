@@ -295,7 +295,7 @@
     "roleLabel": "Rolle",
     "role": "Alleinige Entwicklerin & Maintainerin",
     "periodLabel": "Zeitraum",
-    "period": "2026 — v0.1.0 am 1. September 2026 auf npm veröffentlicht; v0.2.0 am 10. September 2026; v0.2.2 am 29. September 2026; v0.3.0 am 17. Oktober 2026; v0.4.0 am 19. Oktober 2026",
+    "period": "2026 — v0.1.0 am 1. September 2026 auf npm veröffentlicht; v0.2.0 am 10. September 2026; v0.2.2 am 29. September 2026; v0.3.0 am 17. Oktober 2026; v0.4.0 am 19. Oktober 2026; v0.4.1 am 24. Oktober 2026",
     "periodNote": "veröffentlicht und lauffähig: npx bfsg-scanner <url>",
     "npmLabel": "npm",
     "intro": {
