@@ -14,7 +14,7 @@ import { join, resolve } from 'node:path';
 import { startPagesDevServer } from './lib/pages-dev-server.mjs';
 
 const PORT = 45679;
-const PRODUCTION_ORIGIN = 'https://aghirculesei.pages.dev';
+const PRODUCTION_ORIGIN = 'https://aghirculesei.de';
 const BROWSER_DIST = join('dist', 'angular-portfolio', 'browser');
 const OUTPUT_DIR = resolve('reports', 'a11y');
 
