@@ -3,7 +3,7 @@
 // base URL as the first argument). Built-ins only, so the deploy job can run it
 // without `npm ci`. Retries for a while because a fresh Pages deployment and
 // Worker version take a few seconds to propagate.
-const SITE = (process.argv[2] ?? 'https://aghirculesei.pages.dev').replace(/\/$/, '');
+const SITE = (process.argv[2] ?? 'https://aghirculesei.de').replace(/\/$/, '');
 const WORKER = 'https://api.aghirculesei.workers.dev';
 const ATTEMPTS = Number(process.env.ATTEMPTS ?? 6);
 const RETRY_DELAY_MS = 10_000;
