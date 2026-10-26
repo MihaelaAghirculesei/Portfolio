@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, it, mock } from 'node:test';
 import assert from 'node:assert/strict';
 import worker from './email-worker.js';
 
-const PROD_ORIGIN = 'https://aghirculesei.pages.dev';
+const PROD_ORIGIN = 'https://aghirculesei.de';
 const WORKER_URL = 'https://api.aghirculesei.workers.dev';
 
 const VALID_BODY = { name: 'Jane Doe', email: 'jane@example.com', message: 'Hello there, this is a message.' };
@@ -68,6 +68,13 @@ describe('CORS', () => {
     const preview = 'https://feat-x.aghirculesei.pages.dev';
     const { res } = await send(request(VALID_BODY, { origin: preview }));
     assert.equal(res.headers.get('Access-Control-Allow-Origin'), preview);
+  });
+
+  it('echoes the www origin and the old pages.dev address', async () => {
+    for (const origin of ['https://www.aghirculesei.de', 'https://aghirculesei.pages.dev']) {
+      const { res } = await send(request(VALID_BODY, { origin }));
+      assert.equal(res.headers.get('Access-Control-Allow-Origin'), origin);
+    }
   });
 
   it('rejects browser requests from a foreign origin', async () => {

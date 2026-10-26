@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  siteUrl: 'https://aghirculesei.pages.dev',
+  siteUrl: 'https://aghirculesei.de',
   emailWorkerUrl: 'https://api.aghirculesei.workers.dev',
   social: {
     github: 'https://github.com/MihaelaAghirculesei',

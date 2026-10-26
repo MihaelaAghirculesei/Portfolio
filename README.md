@@ -5,11 +5,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Angular](https://img.shields.io/badge/Angular-22.2-DD0031?logo=angular)](https://angular.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![Deployed on Cloudflare Pages](https://img.shields.io/badge/Deployed-Cloudflare%20Pages-F38020?logo=cloudflare)](https://aghirculesei.pages.dev)
+[![Deployed on Cloudflare Pages](https://img.shields.io/badge/Deployed-Cloudflare%20Pages-F38020?logo=cloudflare)](https://aghirculesei.de)
 
 > My developer portfolio: an Angular 22 site prerendered to static HTML, served from Cloudflare Pages, with a Cloudflare Worker behind the contact form. Every quality claim below is enforced by a check in CI.
 
-[🌐 Live site](https://aghirculesei.pages.dev) • [📧 Contact](mailto:aghirculesei@gmail.com)
+[🌐 Live site](https://aghirculesei.de) • [📧 Contact](mailto:aghirculesei@gmail.com)
 
 ---
 
@@ -142,7 +142,7 @@ MIT — see [LICENSE](LICENSE).
 
 **Mihaela Melania Aghirculesei**
 
-- 🌐 Website: [aghirculesei.pages.dev](https://aghirculesei.pages.dev)
+- 🌐 Website: [aghirculesei.de](https://aghirculesei.de)
 - 💼 LinkedIn: [mihaela-aghirculesei](https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/)
 - 📧 Email: aghirculesei@gmail.com
 - 💻 GitHub: [@MihaelaAghirculesei](https://github.com/MihaelaAghirculesei)
