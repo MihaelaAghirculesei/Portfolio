@@ -60,7 +60,7 @@ describe('ContactFormComponent', () => {
     });
 
     it('should have correct endpoint configuration', () => {
-      expect(environment.emailWorkerUrl).toContain('workers.dev');
+      expect(environment.emailWorkerUrl).toContain('api.aghirculesei.de');
     });
   });
 

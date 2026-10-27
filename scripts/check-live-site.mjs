@@ -4,7 +4,7 @@
 // without `npm ci`. Retries for a while because a fresh Pages deployment and
 // Worker version take a few seconds to propagate.
 const SITE = (process.argv[2] ?? 'https://aghirculesei.de').replace(/\/$/, '');
-const WORKER = 'https://api.aghirculesei.workers.dev';
+const WORKER = 'https://api.aghirculesei.de';
 const ATTEMPTS = Number(process.env.ATTEMPTS ?? 6);
 const RETRY_DELAY_MS = 10_000;
 
