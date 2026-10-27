@@ -24,7 +24,6 @@ const DEFAULT_FROM_EMAIL = 'Portfolio Contact <onboarding@resend.dev>';
 const ALLOWED_ORIGINS = [
   'https://aghirculesei.de',                           // production
   'https://www.aghirculesei.de',                       // production, www
-  'https://aghirculesei.pages.dev',                    // old address, until it redirects
   /^https:\/\/[a-z0-9-]+\.aghirculesei\.pages\.dev$/,  // preview deployments
   /^http:\/\/localhost(:\d+)?$/,                       // local dev, any port
   /^http:\/\/127\.0\.0\.1(:\d+)?$/,                    // local dev, any port
