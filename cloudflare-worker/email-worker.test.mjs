@@ -70,11 +70,15 @@ describe('CORS', () => {
     assert.equal(res.headers.get('Access-Control-Allow-Origin'), preview);
   });
 
-  it('echoes the www origin and the old pages.dev address', async () => {
-    for (const origin of ['https://www.aghirculesei.de', 'https://aghirculesei.pages.dev']) {
-      const { res } = await send(request(VALID_BODY, { origin }));
-      assert.equal(res.headers.get('Access-Control-Allow-Origin'), origin);
-    }
+  it('echoes the www origin', async () => {
+    const origin = 'https://www.aghirculesei.de';
+    const { res } = await send(request(VALID_BODY, { origin }));
+    assert.equal(res.headers.get('Access-Control-Allow-Origin'), origin);
+  });
+
+  it('rejects the old pages.dev address, which now redirects', async () => {
+    const { res } = await send(request(VALID_BODY, { origin: 'https://aghirculesei.pages.dev' }));
+    assert.equal(res.status, 403);
   });
 
   it('rejects browser requests from a foreign origin', async () => {
