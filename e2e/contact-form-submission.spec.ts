@@ -7,7 +7,7 @@
 import { test, expect } from '@playwright/test';
 import { scrollToContactForm, fillContactForm } from './helpers';
 
-const WORKER_URL = '**/api.aghirculesei.workers.dev/**';
+const WORKER_URL = '**/api.aghirculesei.de/**';
 
 test.describe('Contact Form — Submission', () => {
   test.beforeEach(async ({ page }) => {
