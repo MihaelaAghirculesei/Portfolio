@@ -2,6 +2,11 @@ name = "api"
 main = "email-worker.js"
 compatibility_date = "2026-04-08"
 
+# Custom domain; Cloudflare creates the DNS record and certificate.
+routes = [
+  { pattern = "api.aghirculesei.de", custom_domain = true }
+]
+
 # SECRET environment variables (RESEND_API_KEY, TO_EMAIL, FROM_EMAIL):
 # do NOT put them here — set them in the Cloudflare dashboard:
 # Workers & Pages → api → Settings → Variables and Secrets

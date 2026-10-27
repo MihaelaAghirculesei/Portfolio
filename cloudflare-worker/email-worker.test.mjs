@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import worker from './email-worker.js';
 
 const PROD_ORIGIN = 'https://aghirculesei.de';
-const WORKER_URL = 'https://api.aghirculesei.workers.dev';
+const WORKER_URL = 'https://api.aghirculesei.de';
 
 const VALID_BODY = { name: 'Jane Doe', email: 'jane@example.com', message: 'Hello there, this is a message.' };
 
