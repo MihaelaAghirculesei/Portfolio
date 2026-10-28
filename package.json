@@ -23,6 +23,7 @@
     "ci:quality": "npm run lint && npm run test:coverage && npm run test:worker",
     "ci:build": "ng build --configuration=production && node scripts/absolutize-preload-links.mjs && node scripts/publish-404-page.mjs && node scripts/generate-csp-headers.mjs",
     "ci:smoke": "node scripts/smoke-test-production.mjs",
+    "ci:artifact": "node scripts/check-deploy-artifact.mjs",
     "ci:a11y": "node scripts/a11y-scan.mjs",
     "ci:lighthouse": "node scripts/lighthouse.mjs",
     "check:live": "node scripts/check-live-site.mjs",
