@@ -75,7 +75,7 @@ describe('AppComponent', () => {
   it('should call seoService.update with home config on init', () => {
     component.ngOnInit();
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      expect.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' }),
+      expect.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer in Wolfsburg' }),
     );
   });
 
@@ -143,7 +143,7 @@ describe('AppComponent', () => {
     mockSeoService.update.mockClear();
     routerEventsSubject.next(new NavigationEnd(2, '/', '/'));
     expect(mockSeoService.update).toHaveBeenCalledWith(
-      expect.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer' }),
+      expect.objectContaining({ title: 'Mihaela Melania Aghirculesei — Fullstack Developer in Wolfsburg' }),
     );
   });
 
