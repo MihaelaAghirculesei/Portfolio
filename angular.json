@@ -41,6 +41,11 @@
                 "glob": "sitemap.xml",
                 "input": "src",
                 "output": "/"
+              },
+              {
+                "glob": "security.txt",
+                "input": "src/.well-known",
+                "output": "/.well-known"
               }
             ],
             "styles": [
