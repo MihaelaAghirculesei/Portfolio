@@ -124,6 +124,21 @@ describe('SeoService', () => {
       expect(schemas.map((s: any) => s['@type'])).toContain('Person');
     });
 
+    it('should give the Person schema a city-level Wolfsburg address without the street', () => {
+      service.update({ ...baseConfig, ogUrl: SITE_URL });
+
+      const person = parsedScripts().find((s: any) => s['@type'] === 'Person');
+      /* eslint-disable @typescript-eslint/naming-convention */
+      expect(person?.address).toEqual({
+        '@type': 'PostalAddress',
+        addressLocality: 'Wolfsburg',
+        postalCode: '38446',
+        addressRegion: 'Niedersachsen',
+        addressCountry: 'DE',
+      });
+      /* eslint-enable @typescript-eslint/naming-convention */
+    });
+
     it('should inject WebSite and BreadcrumbList JSON-LD schemas on sub-pages', () => {
       service.update({ ...baseConfig, ogUrl: `${SITE_URL}/privacy-policy` });
 
