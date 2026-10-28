@@ -27,6 +27,12 @@ async function check() {
   const unknown = await fetch(`${SITE}/this-page-does-not-exist-${Date.now()}`);
   if (unknown.status !== 404) failures.push(`unknown URL: HTTP ${unknown.status}, expected 404`);
 
+  const securityTxt = await fetch(`${SITE}/.well-known/security.txt`);
+  const expires = Date.parse((await securityTxt.text()).match(/^Expires: (.+)$/m)?.[1]);
+  if (securityTxt.status !== 200 || !(expires > Date.now())) {
+    failures.push(`security.txt: HTTP ${securityTxt.status}, missing or expired Expires field`);
+  }
+
   const preflight = await fetch(WORKER, {
     method: 'OPTIONS',
     headers: { Origin: SITE, 'Access-Control-Request-Method': 'POST' },
@@ -42,7 +48,7 @@ for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
   try {
     const { failures, pages } = await check();
     if (failures.length === 0) {
-      console.log(`[check-live-site] ${SITE}: ${pages} pages 200, unknown URL 404, CSP present, Worker preflight OK`);
+      console.log(`[check-live-site] ${SITE}: ${pages} pages 200, unknown URL 404, CSP present, security.txt valid, Worker preflight OK`);
       process.exit(0);
     }
     console.error(`[check-live-site] attempt ${attempt}/${ATTEMPTS}:\n  - ${failures.join('\n  - ')}`);
