@@ -2,6 +2,7 @@ import { Injectable, inject, DOCUMENT } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 import { environment } from '../../../environments/environment';
+import { CONTACT_INFO } from '../constants/app.constants';
 
 export interface SeoConfig {
   title: string;
@@ -110,10 +111,22 @@ export class SeoService {
       image: DEFAULT_OG_IMAGE,
       description,
       jobTitle: 'Fullstack Developer',
-      knowsAbout: ['Angular', 'TypeScript', 'JavaScript', 'Python', 'FastAPI', 'HTML', 'CSS', 'SASS'],
+      // City-level only: enough for local search, the street stays on the legal pages
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: CONTACT_INFO.address.city,
+        postalCode: CONTACT_INFO.address.postalCode,
+        addressRegion: 'Niedersachsen',
+        addressCountry: 'DE',
+      },
+      knowsAbout: [
+        'Angular', 'TypeScript', 'JavaScript', 'Python', 'FastAPI', 'HTML', 'CSS', 'SASS',
+        'Web Accessibility', 'WCAG 2.1', 'BFSG',
+      ],
       sameAs: [
         environment.social.github,
         environment.social.linkedin,
+        environment.social.npm,
       ],
     };
     /* eslint-enable @typescript-eslint/naming-convention */
