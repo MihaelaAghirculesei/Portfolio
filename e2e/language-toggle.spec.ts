@@ -2,7 +2,8 @@
  * E2E Scenario 4: Language Toggle (i18n)
  *
  * Verifies that clicking the language toggle in the header switches
- * UI text between English and German and persists the choice to localStorage.
+ * UI text between English and German, moves between the two URLs and persists
+ * the choice to localStorage.
  */
 import { test, expect } from '@playwright/test';
 
@@ -25,6 +26,7 @@ test.describe('Language Toggle', () => {
 
     const aboutLink = page.locator('nav.desktop-nav a[aria-label*="Über mich"]');
     await expect(aboutLink).toHaveText('Über mich');
+    await expect(page).toHaveURL(/\/de\/?$/);
   });
 
   test('clicking the language toggle twice restores English labels', async ({ page }) => {
@@ -33,6 +35,7 @@ test.describe('Language Toggle', () => {
 
     const aboutLink = page.locator('nav.desktop-nav a[aria-label="Navigate to About me section"]');
     await expect(aboutLink).toHaveText('About me');
+    await expect(page).not.toHaveURL(/\/de/);
   });
 
   test('language preference is persisted in localStorage', async ({ page }) => {

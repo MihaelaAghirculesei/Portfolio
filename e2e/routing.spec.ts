@@ -47,10 +47,10 @@ test.describe('Routing', () => {
     await expect(page).toHaveURL('/');
   });
 
-  test('Privacy Policy page is reachable via /datenschutz alias', async ({ page }) => {
+  test('/datenschutz is the German Privacy Policy', async ({ page }) => {
     await page.goto('/datenschutz');
 
-    // Both /datenschutz and /privacy-policy load the same component
     await expect(page.locator('h1, h2').first()).toBeVisible();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'de');
   });
 });
