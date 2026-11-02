@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [
+// Rendered in both languages: English at the root, German under /de.
+const LOCALIZED_PAGES: Routes = [
   {
     path: '',
     pathMatch: 'full',
@@ -14,20 +15,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./main-content/legal-notice/legal-notice.component').then(
         (m) => m.LegalNoticeComponent
-      ),
-  },
-  {
-    path: 'datenschutz',
-    loadComponent: () =>
-      import('./main-content/privacy-policy/privacy-policy.component').then(
-        (m) => m.PrivacyPolicyComponent
-      ),
-  },
-  {
-    path: 'privacy-policy',
-    loadComponent: () =>
-      import('./main-content/privacy-policy/privacy-policy.component').then(
-        (m) => m.PrivacyPolicyComponent
       ),
   },
   {
@@ -79,20 +66,51 @@ export const routes: Routes = [
         (m) => m.ContactFormComponent
       ),
   },
+];
+
+const NOT_FOUND: Routes[number] = {
+  path: '**',
+  loadComponent: () =>
+    import('./main-content/not-found/not-found.component').then(
+      (m) => m.NotFoundComponent
+    ),
+};
+
+export const routes: Routes = [
   {
-    // Prerendered to /404/index.html and published as /404.html, which
-    // Cloudflare Pages serves with a real 404 status for unknown URLs.
-    path: '404',
-    loadComponent: () =>
-      import('./main-content/not-found/not-found.component').then(
-        (m) => m.NotFoundComponent
-      ),
+    path: 'de',
+    data: { localeRoot: true },
+    children: [...LOCALIZED_PAGES, NOT_FOUND],
   },
   {
-    path: '**',
-    loadComponent: () =>
-      import('./main-content/not-found/not-found.component').then(
-        (m) => m.NotFoundComponent
-      ),
+    path: '',
+    data: { localeRoot: true },
+    children: [
+      ...LOCALIZED_PAGES,
+      {
+        path: 'privacy-policy',
+        loadComponent: () =>
+          import('./main-content/privacy-policy/privacy-policy.component').then(
+            (m) => m.PrivacyPolicyComponent
+          ),
+      },
+      {
+        path: 'datenschutz',
+        loadComponent: () =>
+          import('./main-content/privacy-policy/privacy-policy.component').then(
+            (m) => m.PrivacyPolicyComponent
+          ),
+      },
+      {
+        // Prerendered to /404/index.html and published as /404.html, which
+        // Cloudflare Pages serves with a real 404 status for unknown URLs.
+        path: '404',
+        loadComponent: () =>
+          import('./main-content/not-found/not-found.component').then(
+            (m) => m.NotFoundComponent
+          ),
+      },
+      NOT_FOUND,
+    ],
   },
 ];
