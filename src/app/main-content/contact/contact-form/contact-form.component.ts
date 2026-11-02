@@ -9,6 +9,7 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
+import { LocalePathPipe } from '../../../shared/pipes/locale-path.pipe';
 import { TranslationService } from '../../../shared/services/translation.service';
 import { timeout, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -50,7 +51,7 @@ function trimmedMinLength(min: number): ValidatorFn {
 
 @Component({
   selector: 'app-contact-form',
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, LocalePathPipe],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

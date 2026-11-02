@@ -1,6 +1,7 @@
 import type { Mock, MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { TranslationService } from './translation.service';
 import { NavigationService } from './navigation.service';
 import { ScrollService } from './scroll.service';
 import { LoggerService } from './logger.service';
@@ -119,6 +120,30 @@ describe('NavigationService', () => {
       mockRouter.navigate.mockReturnValue(Promise.reject(new Error('Test error')));
 
       await expect(service.navigateToHome()).resolves.not.toThrow();
+    });
+  });
+
+  describe('in German', () => {
+    beforeEach(() => {
+      TestBed.inject(TranslationService).use('de');
+      mockRouter.navigate.mockResolvedValue(true);
+    });
+
+    it('navigates home to the German home page', async () => {
+      await service.navigateToHome();
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/de']);
+    });
+
+    it('scrolls in place on the German home page', () => {
+      mockRouter.url = '/de';
+      service.scrollToSection('skills');
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+    });
+
+    it('goes through the German home page from another route', () => {
+      mockRouter.url = '/de/skills';
+      service.scrollToSection('skills');
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/de']);
     });
   });
 
