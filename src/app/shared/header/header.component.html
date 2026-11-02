@@ -19,7 +19,7 @@
         </li>
         <li>
           <a
-            href="#aboutMe"
+            [attr.href]="('/' | localePath) + '#aboutMe'"
             (click)="scrollToSection('aboutMe'); $event.preventDefault()"
             (keydown.enter)="scrollToSection('aboutMe'); $event.preventDefault()"
             [attr.aria-label]="'nav.aboutAriaLabel' | translate"
@@ -29,7 +29,7 @@
         </li>
         <li>
           <a
-            href="#skills"
+            [attr.href]="('/' | localePath) + '#skills'"
             (click)="scrollToSection('skills'); $event.preventDefault()"
             (keydown.enter)="scrollToSection('skills'); $event.preventDefault()"
             [attr.aria-label]="'nav.skillsAriaLabel' | translate"
@@ -39,7 +39,7 @@
         </li>
         <li>
           <a
-            href="#projects"
+            [attr.href]="('/' | localePath) + '#projects'"
             (click)="scrollToSection('projects'); $event.preventDefault()"
             (keydown.enter)="scrollToSection('projects'); $event.preventDefault()"
             [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
@@ -49,7 +49,7 @@
         </li>
         <li class="contact-nav-item">
           <a
-            href="#contact"
+            [attr.href]="('/' | localePath) + '#contact'"
             (click)="scrollToSection('contact'); $event.preventDefault()"
             (keydown.enter)="scrollToSection('contact'); $event.preventDefault()"
             [attr.aria-label]="'nav.contactAriaLabel' | translate"
@@ -113,7 +113,7 @@
       <ul>
         <li>
           <a
-            href="#aboutMe"
+            [attr.href]="('/' | localePath) + '#aboutMe'"
             (click)="scrollToSection('aboutMe'); closeMenuIfMobile(); $event.preventDefault()"
             (keydown.enter)="scrollToSection('aboutMe'); closeMenuIfMobile(); $event.preventDefault()"
             [attr.aria-label]="'nav.aboutAriaLabel' | translate"
@@ -124,7 +124,7 @@
         </li>
         <li>
           <a
-            href="#skills"
+            [attr.href]="('/' | localePath) + '#skills'"
             (click)="scrollToSection('skills'); closeMenuIfMobile(); $event.preventDefault()"
             (keydown.enter)="scrollToSection('skills'); closeMenuIfMobile(); $event.preventDefault()"
             [attr.aria-label]="'nav.skillsAriaLabel' | translate"
@@ -135,7 +135,7 @@
         </li>
         <li>
           <a
-            href="#projects"
+            [attr.href]="('/' | localePath) + '#projects'"
             (click)="scrollToSection('projects'); closeMenuIfMobile(); $event.preventDefault()"
             (keydown.enter)="scrollToSection('projects'); closeMenuIfMobile(); $event.preventDefault()"
             [attr.aria-label]="'nav.portfolioAriaLabel' | translate"
@@ -146,7 +146,7 @@
         </li>
         <li class="contact-nav-item">
           <a
-            href="#contact"
+            [attr.href]="('/' | localePath) + '#contact'"
             (click)="scrollToSection('contact'); closeMenuIfMobile(); $event.preventDefault()"
             (keydown.enter)="scrollToSection('contact'); closeMenuIfMobile(); $event.preventDefault()"
             [attr.aria-label]="'nav.contactAriaLabel' | translate"

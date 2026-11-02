@@ -6,6 +6,7 @@ import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
 import { NavigationService } from '../services/navigation.service';
 import { EMPTY } from 'rxjs';
+import { provideRouter, Router } from '@angular/router';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -35,11 +36,14 @@ describe('HeaderComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HeaderComponent],
       providers: [
+        provideRouter([]),
         { provide: ScrollService, useValue: mockScrollService },
         { provide: PlatformService, useValue: mockPlatformService },
         { provide: NavigationService, useValue: mockNavService }
       ]
     }).compileComponents();
+
+    vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
@@ -383,6 +387,19 @@ describe('HeaderComponent', () => {
 
       expect(localStorage.setItem).toHaveBeenCalledWith('lang', 'de');
       delete (mockPlatformService as any).isBrowser;
+    });
+
+    it('should navigate to the same page in the other language', () => {
+      vi.spyOn(translateService, 'use').mockReturnValue(EMPTY);
+      const router = TestBed.inject(Router);
+      component.isGerman = false;
+
+      component.toggleLanguage();
+      expect(router.navigateByUrl).toHaveBeenLastCalledWith('/de');
+
+      vi.spyOn(router, 'url', 'get').mockReturnValue('/de/skills');
+      component.toggleLanguage();
+      expect(router.navigateByUrl).toHaveBeenLastCalledWith('/skills');
     });
   });
 });
