@@ -1,4 +1,4 @@
-import type { MockedObject } from 'vitest';
+import type { Mock, MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/core';
@@ -21,6 +21,13 @@ describe('SeoService', () => {
     };
   }
 
+  function jsonLdSchemas(): Record<string, unknown>[] {
+    return mockDoc.createElement.mock.results
+      .map((result: { value: { textContent: string } }) => result.value.textContent)
+      .filter(Boolean)
+      .map((text: string) => JSON.parse(text));
+  }
+
   beforeEach(() => {
     metaSpy = {
       updateTag: vi.fn().mockName('Meta.updateTag')
@@ -34,6 +41,7 @@ describe('SeoService', () => {
       querySelector: vi.fn().mockReturnValue(null),
       createElement: vi.fn().mockImplementation(() => makeMockElement()),
       head: { appendChild: vi.fn() },
+      documentElement: { setAttribute: vi.fn() },
     };
 
     TestBed.configureTestingModule({
@@ -114,6 +122,67 @@ describe('SeoService', () => {
 
       expect(existingLink.setAttribute).toHaveBeenCalledWith('href', `${SITE_URL}/about`);
       expect(createdElements('link')).toHaveLength(0);
+    });
+
+    it('should set the html lang and og:locale, defaulting to English', () => {
+      service.update(baseConfig);
+      expect(mockDoc.documentElement.setAttribute).toHaveBeenCalledWith('lang', 'en');
+      expect(metaSpy.updateTag).toHaveBeenCalledWith({ property: 'og:locale', content: 'en_US' });
+
+      service.update({ ...baseConfig, lang: 'de' });
+      expect(mockDoc.documentElement.setAttribute).toHaveBeenCalledWith('lang', 'de');
+      expect(metaSpy.updateTag).toHaveBeenCalledWith({ property: 'og:locale', content: 'de_DE' });
+    });
+
+    describe('language alternates', () => {
+      const alternates = { en: `${SITE_URL}/skills`, de: `${SITE_URL}/de/skills` };
+      const hreflangs = (): string[][] =>
+        mockDoc.createElement.mock.results
+          .map((result: { value: { setAttribute: Mock } }) => result.value.setAttribute.mock.calls)
+          .filter((calls: string[][]) => calls.some(([name, value]) => name === 'rel' && value === 'alternate'))
+          .map((calls: string[][]) => [
+            calls.find(([name]) => name === 'hreflang')![1],
+            calls.find(([name]) => name === 'href')![1],
+          ]);
+
+      it('should link en, de and x-default', () => {
+        service.update({ ...baseConfig, alternates });
+        expect(hreflangs()).toEqual([
+          ['en', alternates.en],
+          ['de', alternates.de],
+          ['x-default', alternates.en],
+        ]);
+      });
+
+      it('should replace the links of the previous page', () => {
+        const stale = makeMockElement();
+        mockDoc.querySelectorAll.mockImplementation((selector: string) =>
+          selector.includes('hreflang') ? [stale] : []);
+        service.update({ ...baseConfig, alternates });
+        expect(stale.parentNode.removeChild).toHaveBeenCalledWith(stale);
+      });
+
+      it('should not link a noindex page', () => {
+        service.update({ ...baseConfig, alternates, noIndex: true });
+        expect(hreflangs()).toEqual([]);
+      });
+    });
+
+    it('should treat the German home page as the home page, in German', () => {
+      service.update({ ...baseConfig, ogUrl: `${SITE_URL}/de`, lang: 'de', description: 'Beschreibung' });
+      const person = jsonLdSchemas().find((schema) => schema['@type'] === 'Person');
+      expect(person?.['jobTitle']).toBe('Fullstack-Entwicklerin');
+    });
+
+    it('should build the German breadcrumb without the language prefix', () => {
+      service.update({ ...baseConfig, ogUrl: `${SITE_URL}/de/skills`, lang: 'de' });
+      const crumbs = jsonLdSchemas().find((schema) => schema['@type'] === 'BreadcrumbList');
+      /* eslint-disable @typescript-eslint/naming-convention */
+      expect(crumbs?.['itemListElement']).toEqual([
+        { '@type': 'ListItem', position: 1, name: 'Startseite', item: `${SITE_URL}/de` },
+        { '@type': 'ListItem', position: 2, name: 'Skills', item: `${SITE_URL}/de/skills` },
+      ]);
+      /* eslint-enable @typescript-eslint/naming-convention */
     });
 
     it('should inject WebSite and Person JSON-LD schemas on the home page', () => {

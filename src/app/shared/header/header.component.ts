@@ -4,17 +4,20 @@ import {
   OnDestroy, OnInit, inject, ElementRef, DestroyRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import { ScrollService } from '../services/scroll.service';
 import { PlatformService } from '../services/platform.service';
 import { FocusTrapService } from '../services/focus-trap.service';
 import { BREAKPOINTS, SCROLL_CONFIG, TIMING_CONFIG } from '../constants/app.constants';
 import { TranslationService } from '../services/translation.service';
 import { TranslatePipe } from '../pipes/translate.pipe';
+import { LocalePathPipe } from '../pipes/locale-path.pipe';
+import { localizePath } from '../i18n/locale-path';
 import { NavigationService } from '../services/navigation.service';
 
 @Component({
     selector: 'app-header',
-    imports: [NgClass, TranslatePipe],
+    imports: [NgClass, TranslatePipe, LocalePathPipe],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -33,6 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
   private readonly focusTrap = inject(FocusTrapService);
   private readonly navigationService = inject(NavigationService);
+  private readonly router = inject(Router);
 
   private readonly boundCheckScroll = this.checkScroll.bind(this);
 
@@ -71,6 +75,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.platformService.isBrowser) {
       localStorage.setItem('lang', lang);
     }
+    void this.router.navigateByUrl(localizePath(this.router.url, lang));
   }
 
   toggleMenu(): void {

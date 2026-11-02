@@ -10,6 +10,8 @@ import {
   inject,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { basePath } from '../../shared/i18n/locale-path';
+import { LocalePathPipe } from '../../shared/pipes/locale-path.pipe';
 import { Projects } from '../../interfaces/projects';
 import { PlatformService } from '../../shared/services/platform.service';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
@@ -21,7 +23,7 @@ import { NavigationService } from '../../shared/services/navigation.service';
 
 @Component({
   selector: 'app-portfolio',
-  imports: [TranslatePipe, RouterLink, PassiveTouchStartDirective, PassiveTouchEndDirective],
+  imports: [TranslatePipe, RouterLink, LocalePathPipe, PassiveTouchStartDirective, PassiveTouchEndDirective],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +41,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly navigationService = inject(NavigationService);
 
-  protected readonly isProjectsPage = this.router.url.startsWith('/projects');
+  protected readonly isProjectsPage = basePath(this.router.url).startsWith('/projects');
 
   // ── Local UI state ──────────────────────────────────────────────────────────
   activeProjectId: number | null = null;

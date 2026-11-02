@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ScrollService } from './scroll.service';
 import { LoggerService } from './logger.service';
 import { DeferGateService } from './defer-gate.service';
+import { TranslationService } from './translation.service';
+import { basePath, localizePath } from '../i18n/locale-path';
 import { SCROLL_CONFIG } from '../constants/app.constants';
 
 @Injectable({
@@ -13,16 +15,17 @@ export class NavigationService {
   private readonly router = inject(Router);
   private readonly scrollService = inject(ScrollService);
   private readonly deferGate = inject(DeferGateService);
+  private readonly translate = inject(TranslationService);
 
   navigateToHome(): Promise<boolean> {
-    return this.router.navigate(['/']).catch((error) => {
+    return this.router.navigate([this.homePath()]).catch((error) => {
       this.logger.error('Navigation to home failed:', error);
       return false;
     });
   }
 
   scrollToSection(sectionId: string, delay: number = SCROLL_CONFIG.NAVIGATION_DELAY): void {
-    if (this.router.url === '/' || this.router.url === '') {
+    if (basePath(this.router.url) === '/') {
       this.scrollWithCorrection(sectionId, 'smooth');
     } else {
       // Coming from another route: force the deferred home sections to render
@@ -36,7 +39,7 @@ export class NavigationService {
         delay + SCROLL_CONFIG.LAYOUT_STABLE_MAX_WAIT + 200
       );
 
-      this.router.navigate(['/']).then(
+      this.router.navigate([this.homePath()]).then(
         () => {
           setTimeout(() => this.landOnSection(sectionId), delay);
         },
@@ -45,6 +48,10 @@ export class NavigationService {
         }
       );
     }
+  }
+
+  private homePath(): string {
+    return localizePath('/', this.translate.currentLang);
   }
 
   /**
