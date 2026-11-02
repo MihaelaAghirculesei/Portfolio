@@ -94,7 +94,7 @@
         <span id="data-privacy-label">
           {{ "contact.form.privacyText" | translate }}
           <a
-            routerLink="/privacy-policy"
+            [routerLink]="'/privacy-policy' | localePath"
             (click)="saveScrollPosition()"
             class="privacy-policy-link"
             [attr.aria-label]="'contact.form.privacyLink' | translate"

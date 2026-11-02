@@ -7,7 +7,8 @@ import { ScrollService } from '../services/scroll.service';
 import { NavigationService } from '../services/navigation.service';
 
 @Directive({
-  selector: '[appRouterLink]',
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: '[routerLink]',
   standalone: true
 })
 class MockRouterLinkDirective {

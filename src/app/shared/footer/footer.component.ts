@@ -1,13 +1,14 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../pipes/translate.pipe';
+import { LocalePathPipe } from '../pipes/locale-path.pipe';
 import { ScrollService } from '../services/scroll.service';
 import { NavigationService } from '../services/navigation.service';
 import { CONTACT_INFO } from '../constants/app.constants';
 
 @Component({
     selector: 'app-footer',
-    imports: [RouterLink, TranslatePipe],
+    imports: [RouterLink, TranslatePipe, LocalePathPipe],
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

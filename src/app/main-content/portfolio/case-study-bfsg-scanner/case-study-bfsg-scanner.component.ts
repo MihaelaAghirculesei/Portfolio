@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslationService } from '../../../shared/services/translation.service';
 import { ScrollService } from '../../../shared/services/scroll.service';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
+import { LocalePathPipe } from '../../../shared/pipes/locale-path.pipe';
 
 interface CaseStudyStat {
   value: string;
@@ -29,7 +30,7 @@ interface CaseStudyLink {
 
 @Component({
   selector: 'app-case-study-bfsg-scanner',
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe, LocalePathPipe],
   templateUrl: './case-study-bfsg-scanner.component.html',
   styleUrl: './case-study-bfsg-scanner.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
