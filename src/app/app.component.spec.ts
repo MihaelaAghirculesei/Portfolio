@@ -20,7 +20,7 @@ class MockRouterOutlet {
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let mockRouter: Pick<MockedObject<Router>, 'createUrlTree' | 'serializeUrl' | 'url' | 'events'>;
+  let mockRouter: Pick<MockedObject<Router>, 'createUrlTree' | 'serializeUrl' | 'url' | 'events' | 'navigateByUrl'>;
   let mockActivatedRoute: Partial<ActivatedRoute>;
   let mockSeoService: Pick<MockedObject<SeoService>, 'update'>;
   let routerEventsSubject: Subject<RouterEvent>;
@@ -31,7 +31,8 @@ describe('AppComponent', () => {
       createUrlTree: vi.fn().mockName('Router.createUrlTree'),
       serializeUrl: vi.fn().mockName('Router.serializeUrl'),
       url: '/',
-      events: routerEventsSubject.asObservable()
+      events: routerEventsSubject.asObservable(),
+      navigateByUrl: vi.fn().mockName('Router.navigateByUrl').mockResolvedValue(true)
     };
     mockRouter.createUrlTree.mockReturnValue({} as any);
     mockRouter.serializeUrl.mockReturnValue('/');
@@ -147,14 +148,52 @@ describe('AppComponent', () => {
     );
   });
 
-  it('should use German when localStorage lang is de', () => {
+  it('should send a visitor who chose German from an English URL to its German twin', () => {
     localStorage.setItem('lang', 'de');
-    const translateService = TestBed.inject(TranslationService);
 
     component.ngOnInit();
 
-    expect(translateService.use).toHaveBeenCalledWith('de');
+    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/de', { replaceUrl: true });
     localStorage.removeItem('lang');
+  });
+
+  it('should stay on the URL when no language was chosen', () => {
+    component.ngOnInit();
+    expect(mockRouter.navigateByUrl).not.toHaveBeenCalled();
+  });
+
+  it('should switch to German SEO and language on a German URL', () => {
+    const translateService = TestBed.inject(TranslationService);
+    component.ngOnInit();
+    mockSeoService.update.mockClear();
+
+    routerEventsSubject.next(new NavigationEnd(1, '/de/skills', '/de/skills'));
+
+    expect(translateService.use).toHaveBeenCalledWith('de');
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'Kenntnisse — Mihaela Aghirculesei',
+        ogUrl: `${environment.siteUrl}/de/skills`,
+        lang: 'de',
+        alternates: { en: `${environment.siteUrl}/skills`, de: `${environment.siteUrl}/de/skills` },
+      }),
+    );
+  });
+
+  it('should pair the privacy policy with /datenschutz', () => {
+    component.ngOnInit();
+    mockSeoService.update.mockClear();
+
+    routerEventsSubject.next(new NavigationEnd(1, '/datenschutz', '/datenschutz'));
+
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'Datenschutzerklärung — Mihaela Aghirculesei',
+        ogUrl: `${environment.siteUrl}/datenschutz`,
+        lang: 'de',
+        alternates: { en: `${environment.siteUrl}/privacy-policy`, de: `${environment.siteUrl}/datenschutz` },
+      }),
+    );
   });
 
   it('should use the noindex "not found" SEO config for unknown routes', () => {

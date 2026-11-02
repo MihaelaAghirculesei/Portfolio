@@ -81,7 +81,7 @@
     @if (!isProjectsPage) {
     <div class="view-all-wrapper">
       <a
-        href="/projects"
+        [attr.href]="'/projects' | localePath"
         class="link-button animated"
         [attr.data-text]="(showAll ? 'portfolio.viewFeaturedProjects' : 'portfolio.viewAllProjects') | translate"
         [attr.aria-label]="(showAll ? 'portfolio.viewFeaturedProjectsAriaLabel' : 'portfolio.viewAllProjectsAriaLabel') | translate"
@@ -93,7 +93,7 @@
     } @else {
     <div class="view-all-wrapper">
       <a
-        href="/#projects"
+        [attr.href]="('/' | localePath) + '#projects'"
         class="link-button animated"
         [attr.data-text]="'portfolio.viewFeaturedProjects' | translate"
         [attr.aria-label]="'portfolio.viewFeaturedProjectsAriaLabel' | translate"
@@ -199,7 +199,7 @@
               {{ "portfolio.liveTest" | translate }}
             </a>
             @if (selectedProject.caseStudyRoute) {
-            <a [routerLink]="'/' + selectedProject.caseStudyRoute" class="link-button2 link-button2--case">
+            <a [routerLink]="('/' + selectedProject.caseStudyRoute) | localePath" class="link-button2 link-button2--case">
               {{ "portfolio.caseStudy" | translate }}
             </a>
             }

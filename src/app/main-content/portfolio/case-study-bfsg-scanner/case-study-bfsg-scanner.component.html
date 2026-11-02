@@ -1,6 +1,6 @@
 <article class="case-study-page" aria-labelledby="case-study-title">
   <div class="content-width">
-    <a routerLink="/projects" class="back-link">
+    <a [routerLink]="'/projects' | localePath" class="back-link">
       <span aria-hidden="true">←</span> {{ "caseStudyBfsgScanner.backLink" | translate }}
     </a>
 
@@ -122,7 +122,7 @@
     </section>
 
     <div class="cs-footer-actions">
-      <a routerLink="/projects" class="link-button2">{{ "caseStudyBfsgScanner.backLink" | translate }}</a>
+      <a [routerLink]="'/projects' | localePath" class="link-button2">{{ "caseStudyBfsgScanner.backLink" | translate }}</a>
       <a [href]="codeUrl" target="_blank" rel="noopener noreferrer" class="link-button2">{{ "portfolio.github" | translate }}</a>
       <a [href]="reportUrl" target="_blank" rel="noopener noreferrer" class="link-button2">{{ "portfolio.liveTest" | translate }}</a>
     </div>

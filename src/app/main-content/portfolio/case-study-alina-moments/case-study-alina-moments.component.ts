@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslationService } from '../../../shared/services/translation.service';
 import { ScrollService } from '../../../shared/services/scroll.service';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
+import { LocalePathPipe } from '../../../shared/pipes/locale-path.pipe';
 
 interface CaseStudyStat {
   value: string;
@@ -23,7 +24,7 @@ interface CaseStudyScreenshot {
 
 @Component({
   selector: 'app-case-study-alina-moments',
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe, LocalePathPipe],
   templateUrl: './case-study-alina-moments.component.html',
   styleUrl: './case-study-alina-moments.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

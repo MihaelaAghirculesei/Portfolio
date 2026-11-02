@@ -18,6 +18,8 @@
     "mobileNavAriaLabel": "Mobiles Navigationsmenü"
   },
   "common": {
+    "skipToContent": "Zum Hauptinhalt springen",
+    "mainContentLabel": "Portfolio-Inhalt",
     "references": "Referenzen",
     "previous": "Zurück",
     "next": "Weiter"
@@ -464,9 +466,49 @@
     "passion": "Leidenschaftlich für sauberen Code"
   },
   "seo": {
-    "datenschutz": {
+    "notFound": {
+      "title": "Seite nicht gefunden — Mihaela Aghirculesei",
+      "description": "Diese Seite existiert nicht. Zurück zum Portfolio von Mihaela Aghirculesei, Fullstack-Entwicklerin."
+    },
+    "home": {
+      "title": "Mihaela Melania Aghirculesei — Fullstack-Entwicklerin in Wolfsburg",
+      "description": "Mihaela Aghirculesei — Fullstack- und Webentwicklerin in Wolfsburg: Angular, TypeScript, Python/FastAPI und Barrierefreiheit nach WCAG und BFSG. Offen für neue Projekte."
+    },
+    "legalNotice": {
+      "title": "Impressum — Mihaela Aghirculesei",
+      "description": "Impressum und rechtliche Angaben zum Portfolio von Mihaela Melania Aghirculesei, Fullstack-Entwicklerin aus Wolfsburg."
+    },
+    "privacyPolicy": {
       "title": "Datenschutzerklärung — Mihaela Aghirculesei",
       "description": "Datenschutzerklärung für das Portfolio von Mihaela Melania Aghirculesei. Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO."
+    },
+    "skills": {
+      "title": "Kenntnisse — Mihaela Aghirculesei",
+      "description": "Technische Kenntnisse von Mihaela Aghirculesei, Fullstack-Entwicklerin: Angular, TypeScript, SASS und Material Design im Frontend, Python, FastAPI und SQLAlchemy im Backend."
+    },
+    "projects": {
+      "title": "Alle Projekte — Mihaela Aghirculesei",
+      "description": "Alle Projekte von Mihaela Aghirculesei, Fullstack-Entwicklerin: Anwendungen mit Angular, TypeScript, Python und FastAPI."
+    },
+    "feedback": {
+      "title": "Feedback — Mihaela Aghirculesei",
+      "description": "Feedback und Empfehlungen von Kolleginnen und Kollegen, die mit Mihaela Aghirculesei gearbeitet haben, Fullstack-Entwicklerin mit Schwerpunkt Angular, TypeScript und Python."
+    },
+    "contact": {
+      "title": "Kontakt — Mihaela Aghirculesei",
+      "description": "Kontakt zu Mihaela Aghirculesei, Fullstack-Entwicklerin aus Wolfsburg, offen für neue Projekte mit Angular, TypeScript und Python."
+    },
+    "caseStudyAlinaMoments": {
+      "title": "Fallstudie: Alina Moments Photography — Mihaela Aghirculesei",
+      "description": "Wie eine mehrsprachige Next.js-Buchungsseite für eine freiberufliche Fotografin in Einzelarbeit entstand: 100 % Testabdeckung, Lighthouse-Wert 100 für Barrierefreiheit und SEO sowie ein dokumentiertes CI- und Sicherheitsprotokoll."
+    },
+    "caseStudyBfsgScanner": {
+      "title": "Fallstudie: bfsg-scanner — Mihaela Aghirculesei",
+      "description": "Wie bfsg-scanner entstand: ein Open-Source-CLI auf npm, das ganze Websites auf WCAG-2.1-AA-Probleme prüft und jeden Fund der verletzten Klausel aus EN 301 549 / BFSG zuordnet, mit SLSA-Provenance, 167 Tests und CI auf mehreren Betriebssystemen."
+    },
+    "caseStudyChargeHub": {
+      "title": "Fallstudie: ChargeHub — Mihaela Aghirculesei",
+      "description": "Wie ChargeHub entstand, ein Dashboard für Ladepunktbetreiber auf Nuxt 4: echte Open-Charge-Map-Daten über ein serverseitiges BFF, deterministisch simulierte Telemetrie hinter einer austauschbaren Schnittstelle, eine mit Zod validierte Suche in natürlicher Sprache auf Claude Haiku, sieben ADRs und Lighthouse-Budgets pro Seite in der CI."
     }
   }
 }
