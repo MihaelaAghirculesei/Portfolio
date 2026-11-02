@@ -169,18 +169,18 @@ describe('SeoService', () => {
     });
 
     it('should treat the German home page as the home page, in German', () => {
-      service.update({ ...baseConfig, ogUrl: `${SITE_URL}/de`, lang: 'de', description: 'Beschreibung' });
+      service.update({ ...baseConfig, ogUrl: `${SITE_URL}/de/`, lang: 'de', description: 'Beschreibung' });
       const person = jsonLdSchemas().find((schema) => schema['@type'] === 'Person');
       expect(person?.['jobTitle']).toBe('Fullstack-Entwicklerin');
     });
 
     it('should build the German breadcrumb without the language prefix', () => {
-      service.update({ ...baseConfig, ogUrl: `${SITE_URL}/de/skills`, lang: 'de' });
+      service.update({ ...baseConfig, ogUrl: `${SITE_URL}/de/skills/`, lang: 'de' });
       const crumbs = jsonLdSchemas().find((schema) => schema['@type'] === 'BreadcrumbList');
       /* eslint-disable @typescript-eslint/naming-convention */
       expect(crumbs?.['itemListElement']).toEqual([
-        { '@type': 'ListItem', position: 1, name: 'Startseite', item: `${SITE_URL}/de` },
-        { '@type': 'ListItem', position: 2, name: 'Skills', item: `${SITE_URL}/de/skills` },
+        { '@type': 'ListItem', position: 1, name: 'Startseite', item: `${SITE_URL}/de/` },
+        { '@type': 'ListItem', position: 2, name: 'Skills', item: `${SITE_URL}/de/skills/` },
       ]);
       /* eslint-enable @typescript-eslint/naming-convention */
     });

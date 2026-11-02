@@ -114,7 +114,7 @@ describe('AppComponent', () => {
     routerEventsSubject.next(new NavigationEnd(1, '/case-study/alina-moments', '/case-study/alina-moments'));
     expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Case Study: Alina Moments Photography — Mihaela Aghirculesei',
-      ogUrl: `${environment.siteUrl}/case-study/alina-moments`,
+      ogUrl: `${environment.siteUrl}/case-study/alina-moments/`,
     }));
   });
 
@@ -124,7 +124,7 @@ describe('AppComponent', () => {
     routerEventsSubject.next(new NavigationEnd(1, '/case-study/bfsg-scanner', '/case-study/bfsg-scanner'));
     expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Case Study: bfsg-scanner — Mihaela Aghirculesei',
-      ogUrl: `${environment.siteUrl}/case-study/bfsg-scanner`,
+      ogUrl: `${environment.siteUrl}/case-study/bfsg-scanner/`,
     }));
   });
 
@@ -134,7 +134,7 @@ describe('AppComponent', () => {
     routerEventsSubject.next(new NavigationEnd(1, '/case-study/charge-hub', '/case-study/charge-hub'));
     expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
       title: 'Case Study: ChargeHub — Mihaela Aghirculesei',
-      ogUrl: `${environment.siteUrl}/case-study/charge-hub`,
+      ogUrl: `${environment.siteUrl}/case-study/charge-hub/`,
     }));
   });
 
@@ -173,9 +173,9 @@ describe('AppComponent', () => {
     expect(mockSeoService.update).toHaveBeenCalledWith(
       expect.objectContaining({
         title: 'Kenntnisse — Mihaela Aghirculesei',
-        ogUrl: `${environment.siteUrl}/de/skills`,
+        ogUrl: `${environment.siteUrl}/de/skills/`,
         lang: 'de',
-        alternates: { en: `${environment.siteUrl}/skills`, de: `${environment.siteUrl}/de/skills` },
+        alternates: { en: `${environment.siteUrl}/skills/`, de: `${environment.siteUrl}/de/skills/` },
       }),
     );
   });
@@ -189,9 +189,9 @@ describe('AppComponent', () => {
     expect(mockSeoService.update).toHaveBeenCalledWith(
       expect.objectContaining({
         title: 'Datenschutzerklärung — Mihaela Aghirculesei',
-        ogUrl: `${environment.siteUrl}/datenschutz`,
+        ogUrl: `${environment.siteUrl}/datenschutz/`,
         lang: 'de',
-        alternates: { en: `${environment.siteUrl}/privacy-policy`, de: `${environment.siteUrl}/datenschutz` },
+        alternates: { en: `${environment.siteUrl}/privacy-policy/`, de: `${environment.siteUrl}/datenschutz/` },
       }),
     );
   });

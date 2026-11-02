@@ -137,7 +137,7 @@ export class AppComponent implements OnInit {
     const config: SeoConfig = {
       title: this.translate.instant(`seo.${meta.i18nKey}.title`, undefined, lang),
       description: this.translate.instant(`seo.${meta.i18nKey}.description`, undefined, lang),
-      ogUrl: this.absoluteUrl(meta === NOT_FOUND_SEO_META ? '/404' : base, lang),
+      ogUrl: meta === NOT_FOUND_SEO_META ? `${SITE_URL}/404` : this.absoluteUrl(base, lang),
       lang,
       alternates: { en: this.absoluteUrl(base, 'en'), de: this.absoluteUrl(base, 'de') },
       ...(meta.ogType ? { ogType: meta.ogType } : {}),
@@ -147,7 +147,8 @@ export class AppComponent implements OnInit {
   }
 
   private absoluteUrl(base: string, lang: Lang): string {
+    // Cloudflare Pages redirects /skills to /skills/, so that is the page's real URL.
     const path = localizePath(base, lang);
-    return path === '/' ? SITE_URL : `${SITE_URL}${path}`;
+    return path === '/' ? SITE_URL : `${SITE_URL}${path}/`;
   }
 }
