@@ -18,6 +18,8 @@
     "mobileNavAriaLabel": "Mobile navigation menu"
   },
   "common": {
+    "skipToContent": "Skip to main content",
+    "mainContentLabel": "Portfolio content",
     "references": "References",
     "previous": "Previous",
     "next": "Next"
