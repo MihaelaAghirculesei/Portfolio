@@ -1,10 +1,13 @@
 import { Component, OnInit, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd, NavigationError } from '@angular/router';
+import { PlatformLocation } from '@angular/common';
 import { TranslationService, Lang } from './shared/services/translation.service';
+import { basePath, langFromPath, localizePath } from './shared/i18n/locale-path';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { TranslatePipe } from './shared/pipes/translate.pipe';
 import { LoggerService } from './shared/services/logger.service';
 import { SeoService, SeoConfig } from './shared/services/seo.service';
 import { PlatformService } from './shared/services/platform.service';
@@ -15,31 +18,29 @@ const STALE_CHUNK_RELOAD_KEY = 'stale-chunk-reload';
 
 interface RouteSeoMeta {
   i18nKey: string;
-  lang: Lang;
-  ogPath: string;
   ogType?: string;
   noIndex?: boolean;
 }
 
-const NOT_FOUND_SEO_META: RouteSeoMeta = { i18nKey: 'notFound', lang: 'en', ogPath: '/404', noIndex: true };
+const NOT_FOUND_SEO_META: RouteSeoMeta = { i18nKey: 'notFound', noIndex: true };
 
+// Keyed by language-neutral path; the language itself comes from the URL.
 const ROUTE_SEO_META = new Map<string, RouteSeoMeta>([
-  ['/', { i18nKey: 'home', lang: 'en', ogPath: '', ogType: 'profile' }],
-  ['/legal-notice', { i18nKey: 'legalNotice', lang: 'en', ogPath: '/legal-notice' }],
-  ['/datenschutz', { i18nKey: 'datenschutz', lang: 'de', ogPath: '/datenschutz' }],
-  ['/skills', { i18nKey: 'skills', lang: 'en', ogPath: '/skills' }],
-  ['/projects', { i18nKey: 'projects', lang: 'en', ogPath: '/projects' }],
-  ['/case-study/alina-moments', { i18nKey: 'caseStudyAlinaMoments', lang: 'en', ogPath: '/case-study/alina-moments' }],
-  ['/case-study/bfsg-scanner', { i18nKey: 'caseStudyBfsgScanner', lang: 'en', ogPath: '/case-study/bfsg-scanner' }],
-  ['/case-study/charge-hub', { i18nKey: 'caseStudyChargeHub', lang: 'en', ogPath: '/case-study/charge-hub' }],
-  ['/feedback', { i18nKey: 'feedback', lang: 'en', ogPath: '/feedback' }],
-  ['/contact', { i18nKey: 'contact', lang: 'en', ogPath: '/contact' }],
-  ['/privacy-policy', { i18nKey: 'privacyPolicy', lang: 'en', ogPath: '/privacy-policy' }],
+  ['/', { i18nKey: 'home', ogType: 'profile' }],
+  ['/legal-notice', { i18nKey: 'legalNotice' }],
+  ['/skills', { i18nKey: 'skills' }],
+  ['/projects', { i18nKey: 'projects' }],
+  ['/case-study/alina-moments', { i18nKey: 'caseStudyAlinaMoments' }],
+  ['/case-study/bfsg-scanner', { i18nKey: 'caseStudyBfsgScanner' }],
+  ['/case-study/charge-hub', { i18nKey: 'caseStudyChargeHub' }],
+  ['/feedback', { i18nKey: 'feedback' }],
+  ['/contact', { i18nKey: 'contact' }],
+  ['/privacy-policy', { i18nKey: 'privacyPolicy' }],
 ]);
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, TranslatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit {
   private readonly logger = inject(LoggerService);
   private readonly seoService = inject(SeoService);
   private readonly platformService = inject(PlatformService);
+  private readonly platformLocation = inject(PlatformLocation);
 
   ngOnInit(): void {
     this.initializeTranslation();
@@ -58,11 +60,15 @@ export class AppComponent implements OnInit {
   }
 
   private initializeTranslation(): void {
-    const saved = this.platformService.isBrowser
-      ? localStorage.getItem('lang')
-      : null;
-    const lang = saved === 'de' ? 'de' : 'en';
+    const path = this.platformLocation.pathname;
+    const lang = langFromPath(path);
     this.translate.use(lang);
+
+    // The URL decides the language, so links keep working for everyone. Only a
+    // visitor who chose German, arriving on an English URL, is sent to its twin.
+    if (this.platformService.isBrowser && lang === 'en' && localStorage.getItem('lang') === 'de') {
+      void this.router.navigateByUrl(localizePath(path, 'de'), { replaceUrl: true });
+    }
   }
 
   private setupRouterSubscription(): void {
@@ -80,6 +86,10 @@ export class AppComponent implements OnInit {
         next: (event) => {
           if (event instanceof NavigationEnd) {
             const path = event.urlAfterRedirects.split('?')[0].split('#')[0];
+            const lang = langFromPath(path);
+            if (this.translate.currentLang !== lang) {
+              this.translate.use(lang);
+            }
             this.updateSeo(path);
             // A successful navigation means chunks are loading fine again —
             // re-arm the stale-chunk recovery for any future deploy.
@@ -121,14 +131,23 @@ export class AppComponent implements OnInit {
   }
 
   private updateSeo(path: string): void {
-    const meta = ROUTE_SEO_META.get(path) ?? NOT_FOUND_SEO_META;
+    const lang = langFromPath(path);
+    const base = basePath(path);
+    const meta = ROUTE_SEO_META.get(base) ?? NOT_FOUND_SEO_META;
     const config: SeoConfig = {
-      title: this.translate.instant(`seo.${meta.i18nKey}.title`, undefined, meta.lang),
-      description: this.translate.instant(`seo.${meta.i18nKey}.description`, undefined, meta.lang),
-      ogUrl: `${SITE_URL}${meta.ogPath}`,
+      title: this.translate.instant(`seo.${meta.i18nKey}.title`, undefined, lang),
+      description: this.translate.instant(`seo.${meta.i18nKey}.description`, undefined, lang),
+      ogUrl: this.absoluteUrl(meta === NOT_FOUND_SEO_META ? '/404' : base, lang),
+      lang,
+      alternates: { en: this.absoluteUrl(base, 'en'), de: this.absoluteUrl(base, 'de') },
       ...(meta.ogType ? { ogType: meta.ogType } : {}),
       ...(meta.noIndex ? { noIndex: true } : {}),
     };
     this.seoService.update(config);
+  }
+
+  private absoluteUrl(base: string, lang: Lang): string {
+    const path = localizePath(base, lang);
+    return path === '/' ? SITE_URL : `${SITE_URL}${path}`;
   }
 }
