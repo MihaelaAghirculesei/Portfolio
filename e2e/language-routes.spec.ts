@@ -15,17 +15,17 @@ test.describe('German routes', () => {
 
     expect(html).toContain('<html lang="de"');
     expect(html).toContain('Kenntnisse — Mihaela Aghirculesei');
-    expect(html).toMatch(/rel="canonical" href="[^"]+\/de\/skills"/);
-    expect(html).toMatch(/rel="alternate" hreflang="en" href="[^"]+\/skills"/);
-    expect(html).toMatch(/rel="alternate" hreflang="de" href="[^"]+\/de\/skills"/);
-    expect(html).toMatch(/rel="alternate" hreflang="x-default" href="[^"]+\/skills"/);
+    expect(html).toMatch(/rel="canonical" href="[^"]+\/de\/skills\/"/);
+    expect(html).toMatch(/rel="alternate" hreflang="en" href="[^"]+\/skills\/"/);
+    expect(html).toMatch(/rel="alternate" hreflang="de" href="[^"]+\/de\/skills\/"/);
+    expect(html).toMatch(/rel="alternate" hreflang="x-default" href="[^"]+\/skills\/"/);
   });
 
   test('English routes stay English and link to their German twin', async ({ request }) => {
     const html = await (await request.get('/skills')).text();
 
     expect(html).toContain('<html lang="en"');
-    expect(html).toMatch(/rel="alternate" hreflang="de" href="[^"]+\/de\/skills"/);
+    expect(html).toMatch(/rel="alternate" hreflang="de" href="[^"]+\/de\/skills\/"/);
   });
 
   test('a German URL wins over a stored English preference', async ({ page }) => {
