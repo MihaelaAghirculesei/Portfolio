@@ -40,7 +40,7 @@ try {
   // ...and every one of them must be listed in the sitemap, or search engines
   // (and the accessibility scan, which discovers pages from it) never see it.
   const sitemap = await (await fetch(`${BASE_URL}/sitemap.xml`)).text();
-  const listed = new Set([...sitemap.matchAll(/<loc>https?:\/\/[^/<]+([^<]*)<\/loc>/g)].map(([, path]) => path || '/'));
+  const listed = new Set([...sitemap.matchAll(/<loc>https?:\/\/[^/<]+([^<]*)<\/loc>/g)].map(([, path]) => path.replace(/(.)\/$/, '$1') || '/'));
   const unlisted = Object.keys(prerendered.routes).filter((r) => r !== '/404' && !listed.has(r));
   if (unlisted.length > 0) {
     exitCode = 1;
