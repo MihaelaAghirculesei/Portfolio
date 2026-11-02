@@ -17,7 +17,7 @@ export interface SeoConfig {
 }
 
 const SITE_URL = environment.siteUrl;
-const DE_HOME_URL = `${SITE_URL}/de`;
+const DE_HOME_URL = `${SITE_URL}/de/`;
 const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/img/about-me/mihaela-aghirculesei.jpg`;
 
 const HERO_IMAGE_HREF = 'assets/img/about-me/mihaela-aghirculesei-800w.webp';
@@ -144,7 +144,7 @@ export class SeoService {
 
   private buildBreadcrumbSchema(ogUrl: string, lang: Lang): object {
     const homeUrl = lang === 'de' ? DE_HOME_URL : SITE_URL;
-    const segment = ogUrl.replace(homeUrl, '').replace(/^\//, '');
+    const segment = ogUrl.replace(homeUrl, '').replace(/^\/|\/$/g, '');
     const label = segment
       .split('-')
       .map(w => w.charAt(0).toUpperCase() + w.slice(1))
