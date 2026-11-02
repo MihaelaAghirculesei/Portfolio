@@ -3,6 +3,7 @@ import { Meta, Title } from '@angular/platform-browser';
 
 import { environment } from '../../../environments/environment';
 import { CONTACT_INFO } from '../constants/app.constants';
+import type { Lang } from './translation.service';
 
 export interface SeoConfig {
   title: string;
@@ -11,9 +12,12 @@ export interface SeoConfig {
   ogUrl?: string;
   ogType?: string;
   noIndex?: boolean;
+  lang?: Lang;
+  alternates?: Record<Lang, string>;
 }
 
 const SITE_URL = environment.siteUrl;
+const DE_HOME_URL = `${SITE_URL}/de`;
 const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/img/about-me/mihaela-aghirculesei.jpg`;
 
 const HERO_IMAGE_HREF = 'assets/img/about-me/mihaela-aghirculesei-800w.webp';
@@ -34,7 +38,9 @@ export class SeoService {
     const ogUrl = config.ogUrl ?? SITE_URL;
     const ogImage = config.ogImage ?? DEFAULT_OG_IMAGE;
     const ogType = config.ogType ?? 'website';
+    const lang = config.lang ?? 'en';
 
+    this.doc.documentElement.setAttribute('lang', lang);
     this.titleService.setTitle(config.title);
 
     this.meta.updateTag({ name: 'description', content: config.description });
@@ -46,6 +52,7 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:url', content: ogUrl });
     this.meta.updateTag({ property: 'og:type', content: ogType });
     this.meta.updateTag({ property: 'og:site_name', content: 'Mihaela Melania Aghirculesei' });
+    this.meta.updateTag({ property: 'og:locale', content: lang === 'de' ? 'de_DE' : 'en_US' });
 
     // Twitter Card
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
@@ -55,53 +62,56 @@ export class SeoService {
 
     // Canonical link
     this.setCanonical(ogUrl);
+    this.setAlternates(config.noIndex ? undefined : config.alternates);
 
     // Robots
     const robotsContent = config.noIndex ? 'noindex, nofollow' : 'index, follow';
     this.meta.updateTag({ name: 'robots', content: robotsContent });
 
     // JSON-LD structured data
-    this.updateJsonLd(ogUrl, config.description);
+    this.updateJsonLd(ogUrl, config.description, lang);
 
     // Hero image preload — only relevant on the home page, where it's rendered eagerly
     this.updateHeroPreload(this.isHome(ogUrl));
   }
 
   private isHome(ogUrl: string): boolean {
-    return ogUrl === SITE_URL || ogUrl === `${SITE_URL}/`;
+    return ogUrl === SITE_URL || ogUrl === `${SITE_URL}/` || ogUrl === DE_HOME_URL;
   }
 
   // ── JSON-LD ──────────────────────────────────────────────────────────────
 
-  private updateJsonLd(ogUrl: string, description: string): void {
+  private updateJsonLd(ogUrl: string, description: string, lang: Lang): void {
     const isHome = this.isHome(ogUrl);
-    const schemas: object[] = [this.buildWebSiteSchema()];
+    const schemas: object[] = [this.buildWebSiteSchema(lang)];
 
     if (isHome) {
-      schemas.push(this.buildPersonSchema(description));
+      schemas.push(this.buildPersonSchema(description, lang));
     } else {
-      schemas.push(this.buildBreadcrumbSchema(ogUrl));
+      schemas.push(this.buildBreadcrumbSchema(ogUrl, lang));
     }
 
     this.setJsonLd(schemas);
   }
 
-  private buildWebSiteSchema(): object {
+  private buildWebSiteSchema(lang: Lang): object {
     /* eslint-disable @typescript-eslint/naming-convention */
     return {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Mihaela Melania Aghirculesei',
       url: SITE_URL,
-      description:
-        'Portfolio of Mihaela Melania Aghirculesei, ' +
-        'Fullstack Developer specializing in Angular, TypeScript, and Python.',
+      description: lang === 'de'
+        ? 'Portfolio von Mihaela Melania Aghirculesei, ' +
+          'Fullstack-Entwicklerin mit Schwerpunkt Angular, TypeScript und Python.'
+        : 'Portfolio of Mihaela Melania Aghirculesei, ' +
+          'Fullstack Developer specializing in Angular, TypeScript, and Python.',
       author: { '@type': 'Person', name: 'Mihaela Melania Aghirculesei' },
     };
     /* eslint-enable @typescript-eslint/naming-convention */
   }
 
-  private buildPersonSchema(description: string): object {
+  private buildPersonSchema(description: string, lang: Lang): object {
     /* eslint-disable @typescript-eslint/naming-convention */
     return {
       '@context': 'https://schema.org',
@@ -110,7 +120,7 @@ export class SeoService {
       url: SITE_URL,
       image: DEFAULT_OG_IMAGE,
       description,
-      jobTitle: 'Fullstack Developer',
+      jobTitle: lang === 'de' ? 'Fullstack-Entwicklerin' : 'Fullstack Developer',
       // City-level only: enough for local search, the street stays on the legal pages
       address: {
         '@type': 'PostalAddress',
@@ -132,8 +142,9 @@ export class SeoService {
     /* eslint-enable @typescript-eslint/naming-convention */
   }
 
-  private buildBreadcrumbSchema(ogUrl: string): object {
-    const segment = ogUrl.replace(SITE_URL, '').replace(/^\//, '');
+  private buildBreadcrumbSchema(ogUrl: string, lang: Lang): object {
+    const homeUrl = lang === 'de' ? DE_HOME_URL : SITE_URL;
+    const segment = ogUrl.replace(homeUrl, '').replace(/^\//, '');
     const label = segment
       .split('-')
       .map(w => w.charAt(0).toUpperCase() + w.slice(1))
@@ -144,7 +155,7 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+        { '@type': 'ListItem', position: 1, name: lang === 'de' ? 'Startseite' : 'Home', item: homeUrl },
         { '@type': 'ListItem', position: 2, name: label, item: ogUrl },
       ],
     };
@@ -176,6 +187,25 @@ export class SeoService {
       this.doc.head.appendChild(link);
     }
     link.setAttribute('href', url);
+  }
+
+  // ── Language alternates ──────────────────────────────────────────────────
+
+  private setAlternates(alternates?: Record<Lang, string>): void {
+    this.doc
+      .querySelectorAll('link[rel="alternate"][hreflang]')
+      .forEach(el => el.parentNode?.removeChild(el));
+
+    if (!alternates) { return; }
+
+    const hrefs: [string, string][] = [['en', alternates.en], ['de', alternates.de], ['x-default', alternates.en]];
+    for (const [hreflang, href] of hrefs) {
+      const link = this.doc.createElement('link');
+      link.setAttribute('rel', 'alternate');
+      link.setAttribute('hreflang', hreflang);
+      link.setAttribute('href', href);
+      this.doc.head.appendChild(link);
+    }
   }
 
   // ── Hero image preload ──────────────────────────────────────────────────
