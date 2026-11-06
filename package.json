@@ -73,11 +73,11 @@
     "angular-eslint": "^22.6.0",
     "bfsg-scanner": "^0.4.1",
     "eslint": "^9.37.0",
-    "parse5": "^8.0.1",
+    "parse5": "^8.1.0",
     "sharp": "^0.35.5",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.72.1",
     "vitest": "^4.1.12",
-    "wrangler": "^4.154.0"
+    "wrangler": "^4.156.2"
   }
 }
