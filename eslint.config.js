@@ -2,6 +2,7 @@
 const eslint = require("@eslint/js");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
+const stylistic = require("@stylistic/eslint-plugin");
 
 module.exports = tseslint.config(
   {
@@ -59,6 +60,9 @@ module.exports = tseslint.config(
       ...angular.configs.tsRecommended,
     ],
     processor: angular.processInlineTemplates,
+    plugins: {
+      "@stylistic": stylistic,
+    },
     rules: {
       "@angular-eslint/directive-selector": [
         "error",
@@ -128,9 +132,9 @@ module.exports = tseslint.config(
       "no-var": "error",
       "eqeqeq": ["error", "always"],
       "curly": "error",
-      "max-len": ["error", { "code": 140 }],
-      "quotes": ["error", "single", { "avoidEscape": true }],
-      "semi": ["error", "always"],
+      "@stylistic/max-len": ["error", { "code": 140 }],
+      "@stylistic/quotes": ["error", "single", { "avoidEscape": true }],
+      "@stylistic/semi": ["error", "always"],
       "no-debugger": "error",
       "no-duplicate-imports": "error",
       "prefer-template": "error"
