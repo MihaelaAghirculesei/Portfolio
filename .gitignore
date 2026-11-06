@@ -36,6 +36,7 @@ yarn-error.log
 # Vitest browser-mode failure screenshots
 __screenshots__/
 .vitest-attachments/
+.vitest/
 /libpeerconnection.log
 testem.log
 /typings
