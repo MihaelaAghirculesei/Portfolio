@@ -76,11 +76,16 @@ const NOT_FOUND: Routes[number] = {
     ),
 };
 
+// Prerendered to 404/index.html and de/404/index.html, then published as
+// 404.html and de/404.html. Cloudflare Pages serves the closest 404.html with
+// a real 404 status, so unknown URLs under /de get the German page.
+const NOT_FOUND_PAGE: Routes[number] = { ...NOT_FOUND, path: '404' };
+
 export const routes: Routes = [
   {
     path: 'de',
     data: { localeRoot: true },
-    children: [...LOCALIZED_PAGES, NOT_FOUND],
+    children: [...LOCALIZED_PAGES, NOT_FOUND_PAGE, NOT_FOUND],
   },
   {
     path: '',
@@ -101,15 +106,7 @@ export const routes: Routes = [
             (m) => m.PrivacyPolicyComponent
           ),
       },
-      {
-        // Prerendered to /404/index.html and published as /404.html, which
-        // Cloudflare Pages serves with a real 404 status for unknown URLs.
-        path: '404',
-        loadComponent: () =>
-          import('./main-content/not-found/not-found.component').then(
-            (m) => m.NotFoundComponent
-          ),
-      },
+      NOT_FOUND_PAGE,
       NOT_FOUND,
     ],
   },
