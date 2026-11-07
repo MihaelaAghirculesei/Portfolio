@@ -103,9 +103,13 @@ try {
 
     // Unknown URLs must get a real 404 (not the home page with a 200), and the
     // 404 page must still boot when served from a nested path — its assets are
-    // only reachable there because every URL in it is root-absolute.
-    {
-      const route = '/this/page/does-not-exist';
+    // only reachable there because every URL in it is root-absolute. Under /de
+    // the served HTML itself must be German (de/404.html), not just the text
+    // the app renders after boot.
+    for (const { route, lang, title } of [
+      { route: '/this/page/does-not-exist', lang: 'en', title: 'Page not found' },
+      { route: '/de/this/page/does-not-exist', lang: 'de', title: 'Seite nicht gefunden' },
+    ]) {
       const page = await browser.newPage();
       const consoleErrors = [];
       page.on('console', (msg) => {
@@ -115,13 +119,17 @@ try {
       page.on('pageerror', (err) => consoleErrors.push(`[pageerror] ${err.message}`));
 
       const response = await page.goto(`${BASE_URL}${route}`, { waitUntil: 'networkidle' });
+      const servedLang = (await response?.text())?.match(/<html[^>]*\blang="([^"]*)"/)?.[1];
       const heading = await page.locator('h1').textContent();
       if (response?.status() !== 404) {
         exitCode = 1;
         console.error(`[smoke-test] ${route}: HTTP ${response?.status()}, expected 404 — is 404.html published and the SPA catch-all gone from _redirects?`);
-      } else if (heading?.trim() !== 'Page not found') {
+      } else if (servedLang !== lang) {
         exitCode = 1;
-        console.error(`[smoke-test] ${route}: h1 is "${heading}", expected the not-found page`);
+        console.error(`[smoke-test] ${route}: served HTML has lang="${servedLang}", expected "${lang}" — is ${lang === 'de' ? 'de/' : ''}404.html published?`);
+      } else if (heading?.trim() !== title) {
+        exitCode = 1;
+        console.error(`[smoke-test] ${route}: h1 is "${heading}", expected "${title}"`);
       } else if (consoleErrors.length > 0) {
         exitCode = 1;
         console.error(`[smoke-test] ${route}: ${consoleErrors.length} console error(s):`);
