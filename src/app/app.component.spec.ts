@@ -209,6 +209,20 @@ describe('AppComponent', () => {
     );
   });
 
+  it('should point the German "not found" page at /de/404', () => {
+    component.ngOnInit();
+    mockSeoService.update.mockClear();
+    routerEventsSubject.next(new NavigationEnd(1, '/de/unknown-route', '/de/unknown-route'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'Seite nicht gefunden — Mihaela Aghirculesei',
+        ogUrl: `${environment.siteUrl}/de/404`,
+        lang: 'de',
+        noIndex: true,
+      }),
+    );
+  });
+
   it('should keep known routes indexable', () => {
     component.ngOnInit();
     mockSeoService.update.mockClear();
