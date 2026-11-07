@@ -137,7 +137,7 @@ export class AppComponent implements OnInit {
     const config: SeoConfig = {
       title: this.translate.instant(`seo.${meta.i18nKey}.title`, undefined, lang),
       description: this.translate.instant(`seo.${meta.i18nKey}.description`, undefined, lang),
-      ogUrl: meta === NOT_FOUND_SEO_META ? `${SITE_URL}/404` : this.absoluteUrl(base, lang),
+      ogUrl: meta === NOT_FOUND_SEO_META ? `${SITE_URL}${localizePath('/404', lang)}` : this.absoluteUrl(base, lang),
       lang,
       alternates: { en: this.absoluteUrl(base, 'en'), de: this.absoluteUrl(base, 'de') },
       ...(meta.ogType ? { ogType: meta.ogType } : {}),
