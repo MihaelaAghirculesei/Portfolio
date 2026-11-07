@@ -27,21 +27,24 @@ try {
 
   // There is no SPA catch-all any more: a route that isn't prerendered would
   // be a hard 404 in production. Every route the build prerendered must be 200.
+  // The not-found pages (/404, /de/404) are published as 404.html files and
+  // stay out of both checks.
   const prerendered = JSON.parse(readFileSync(join('dist', 'angular-portfolio', 'prerendered-routes.json'), 'utf8'));
-  for (const route of Object.keys(prerendered.routes).filter((r) => r !== '/404')) {
+  const pageRoutes = Object.keys(prerendered.routes).filter((r) => !/^(\/de)?\/404$/.test(r));
+  for (const route of pageRoutes) {
     const { status } = await fetch(`${BASE_URL}${route}`);
     if (status !== 200) {
       exitCode = 1;
       console.error(`[smoke-test] ${route}: HTTP ${status}, expected 200`);
     }
   }
-  console.log(`[smoke-test] ${Object.keys(prerendered.routes).length - 1} prerendered routes checked for HTTP 200`);
+  console.log(`[smoke-test] ${pageRoutes.length} prerendered routes checked for HTTP 200`);
 
   // ...and every one of them must be listed in the sitemap, or search engines
   // (and the accessibility scan, which discovers pages from it) never see it.
   const sitemap = await (await fetch(`${BASE_URL}/sitemap.xml`)).text();
   const listed = new Set([...sitemap.matchAll(/<loc>https?:\/\/[^/<]+([^<]*)<\/loc>/g)].map(([, path]) => path.replace(/(.)\/$/, '$1') || '/'));
-  const unlisted = Object.keys(prerendered.routes).filter((r) => r !== '/404' && !listed.has(r));
+  const unlisted = pageRoutes.filter((r) => !listed.has(r));
   if (unlisted.length > 0) {
     exitCode = 1;
     console.error(`[smoke-test] routes missing from sitemap.xml: ${unlisted.join(', ')}`);
