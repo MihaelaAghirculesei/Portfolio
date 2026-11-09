@@ -41,7 +41,7 @@ Browser ──► Cloudflare Pages ── prerendered HTML per route, _headers (
 - **Real 404s:** unknown URLs get the prerendered not-found page with an HTTP 404 status (no SPA catch-all), marked `noindex`.
 - **Content Security Policy without `unsafe-inline` scripts:** a postbuild step hashes every inline script the prerender emits and writes the hashes into `_headers`.
 - **Contact form:** the Worker accepts only the site's origins, rejects malformed or oversized input, uses a honeypot against bots and a KV-backed per-IP rate limit, and never leaks upstream errors to the browser.
-- **i18n:** English/German through a small translation service and pipe; no runtime i18n dependency.
+- **i18n:** English/German through a small translation service and pipe; no runtime i18n dependency. German pages are prerendered under `/de` with their own canonical and `hreflang` links, and unknown `/de` URLs get a German 404 page.
 
 ---
 
@@ -52,12 +52,12 @@ Everything here runs on every push and pull request ([`ci.yml`](.github/workflow
 | Check | What it enforces |
 |---|---|
 | ESLint | Strict TypeScript rules (no `any`, explicit return types, no `console`), OnPush everywhere, Angular template accessibility rules |
-| Unit tests | 738 tests with Vitest in headless Chromium; build fails below 96% statements/lines/functions and 92% branches |
-| Worker tests | 21 tests for CORS, input validation, rate limiting and the Resend call (`node:test`) |
+| Unit tests | 784 tests with Vitest in headless Chromium; build fails below 96% statements/lines/functions and 92% branches |
+| Worker tests | 23 tests for CORS, input validation, rate limiting and the Resend call (`node:test`) |
 | Security audit | `npm audit` on production dependencies, plus CodeQL and dependency review on PRs |
 | Smoke test | Serves the real build through Cloudflare's local Pages runtime: every route returns 200 and is in the sitemap, unknown URLs return 404, no console errors under the production CSP |
 | Accessibility | [bfsg-scanner](https://github.com/MihaelaAghirculesei/bfsg-scanner) (axe-core) scans every page for WCAG 2.1 AA; any serious or critical finding fails the build, and the report is kept as an artifact |
-| E2E tests | 23 Playwright tests for navigation, routing, language switching and the contact form |
+| E2E tests | 30 Playwright tests for navigation, routing, language switching and the contact form |
 | Lighthouse CI | Performance ≥ 65, accessibility/SEO/best practices ≥ 90 on five key pages (median of three runs) |
 | Post-deploy check | After each deploy: live pages return 200, unknown URLs 404, CSP present, Worker CORS preflight OK |
 
