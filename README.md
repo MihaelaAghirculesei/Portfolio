@@ -41,7 +41,7 @@ Browser ──► Cloudflare Pages ── prerendered HTML per route, _headers (
 - **Real 404s:** unknown URLs get the prerendered not-found page with an HTTP 404 status (no SPA catch-all), marked `noindex`.
 - **Content Security Policy without `unsafe-inline` scripts:** a postbuild step hashes every inline script the prerender emits and writes the hashes into `_headers`.
 - **Contact form:** the Worker accepts only the site's origins, rejects malformed or oversized input, uses a honeypot against bots and a KV-backed per-IP rate limit, and never leaks upstream errors to the browser.
-- **i18n:** English/German through a small translation service and pipe; no runtime i18n dependency.
+- **i18n:** English/German through a small translation service and pipe; no runtime i18n dependency. German pages are prerendered under `/de` with their own canonical and `hreflang` links, and unknown `/de` URLs get a German 404 page.
 
 ---
 
