@@ -52,12 +52,12 @@ Everything here runs on every push and pull request ([`ci.yml`](.github/workflow
 | Check | What it enforces |
 |---|---|
 | ESLint | Strict TypeScript rules (no `any`, explicit return types, no `console`), OnPush everywhere, Angular template accessibility rules |
-| Unit tests | 738 tests with Vitest in headless Chromium; build fails below 96% statements/lines/functions and 92% branches |
-| Worker tests | 21 tests for CORS, input validation, rate limiting and the Resend call (`node:test`) |
+| Unit tests | 784 tests with Vitest in headless Chromium; build fails below 96% statements/lines/functions and 92% branches |
+| Worker tests | 23 tests for CORS, input validation, rate limiting and the Resend call (`node:test`) |
 | Security audit | `npm audit` on production dependencies, plus CodeQL and dependency review on PRs |
 | Smoke test | Serves the real build through Cloudflare's local Pages runtime: every route returns 200 and is in the sitemap, unknown URLs return 404, no console errors under the production CSP |
 | Accessibility | [bfsg-scanner](https://github.com/MihaelaAghirculesei/bfsg-scanner) (axe-core) scans every page for WCAG 2.1 AA; any serious or critical finding fails the build, and the report is kept as an artifact |
-| E2E tests | 23 Playwright tests for navigation, routing, language switching and the contact form |
+| E2E tests | 30 Playwright tests for navigation, routing, language switching and the contact form |
 | Lighthouse CI | Performance ≥ 65, accessibility/SEO/best practices ≥ 90 on five key pages (median of three runs) |
 | Post-deploy check | After each deploy: live pages return 200, unknown URLs 404, CSP present, Worker CORS preflight OK |
 
