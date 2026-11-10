@@ -39,8 +39,7 @@
     "previewImgSrcset": "assets/img/projects/birthday-reminder-400w.webp 400w, assets/img/projects/birthday-reminder-800w.webp 800w, assets/img/projects/birthday-reminder-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/birthday-reminder-pro",
     "liveUrl": "https://birthday-reminder-aghirculesei.pages.dev",
-    "isPersonal": true,
-    "inProgress": true
+    "isPersonal": true
   },
   {
     "id": "familyCalendar",
