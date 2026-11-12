@@ -66,7 +66,7 @@
     "@angular/compiler-cli": "^22.2.4",
     "@angular/ssr": "^22.2.5",
     "@eslint/js": "^10.0.1",
-    "@playwright/test": "^1.64.1",
+    "@playwright/test": "^1.65.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^22.20.5",
     "@vitest/browser-playwright": "^5.1.0",
@@ -74,11 +74,11 @@
     "angular-eslint": "^22.6.0",
     "bfsg-scanner": "^0.4.1",
     "eslint": "^10.14.0",
-    "parse5": "^8.1.0",
+    "parse5": "^8.1.1",
     "sharp": "^0.35.5",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.72.1",
+    "typescript-eslint": "^8.72.2",
     "vitest": "^5.1.0",
-    "wrangler": "^4.156.2"
+    "wrangler": "^4.159.0"
   }
 }
