@@ -72,7 +72,7 @@
     "@vitest/browser-playwright": "^5.1.0",
     "@vitest/coverage-v8": "^5.1.0",
     "angular-eslint": "^22.6.0",
-    "bfsg-scanner": "^0.4.1",
+    "bfsg-scanner": "^0.4.2",
     "eslint": "^10.14.0",
     "parse5": "^8.1.1",
     "sharp": "^0.35.5",
