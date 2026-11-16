@@ -148,6 +148,18 @@ describe('AppComponent', () => {
     }));
   });
 
+  it('should update SEO when navigating to the Birthday Reminder Pro case study', () => {
+    component.ngOnInit();
+    mockSeoService.update.mockClear();
+    routerEventsSubject.next(
+      new NavigationEnd(1, '/case-study/birthday-reminder', '/case-study/birthday-reminder')
+    );
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Case Study: Birthday Reminder Pro — Mihaela Aghirculesei',
+      ogUrl: `${environment.siteUrl}/case-study/birthday-reminder/`,
+    }));
+  });
+
   it('should update SEO when navigating to the ChargeHub case study', () => {
     component.ngOnInit();
     mockSeoService.update.mockClear();

@@ -60,6 +60,13 @@ const LOCALIZED_PAGES: Routes = [
       ).then((m) => m.CaseStudyNormeonComponent),
   },
   {
+    path: 'case-study/birthday-reminder',
+    loadComponent: () =>
+      import(
+        './main-content/portfolio/case-study-birthday-reminder/case-study-birthday-reminder.component'
+      ).then((m) => m.CaseStudyBirthdayReminderComponent),
+  },
+  {
     path: 'case-study/charge-hub',
     loadComponent: () =>
       import(

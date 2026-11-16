@@ -190,7 +190,7 @@
       "shortDescription": "Offline-First Pokédex PWA"
     },
     "birthdayReminder": {
-      "description": "Conceived, designed, and built entirely solo — from initial idea to production deployment. This full-stack cross-platform app is structured across every layer: Angular 22 with NgRx spanning five independent state slices, an offline-first approach where IndexedDB is the single source of truth, and real-time cloud sync with Firebase Firestore and Storage via a pending-changes queue. The app ships as both a PWA with SSR on Cloudflare Pages and a native Android app via Capacitor, with push notifications delivered through both service workers and the native API. Google Calendar integration with OAuth 2.0 supports one-way and two-way sync with recurring events, alongside a full data pipeline for JSON, CSV, and vCard import/export. Quality is validated through Vitest unit tests, Cypress E2E and visual regression tests, and axe-core accessibility audits — with zero critical violations and full NVDA screen reader support.",
+      "description": "Conceived, designed, and built entirely solo — from initial idea to production deployment. This full-stack cross-platform app is structured across every layer: Angular 22 with NgRx spanning five independent state slices, an offline-first approach where IndexedDB is the single source of truth, and real-time cloud sync with Firebase Firestore via a pending-changes queue. The app ships as both a PWA with SSR on Cloudflare Pages and a native Android app via Capacitor, with push notifications delivered through both service workers and the native API. Google Calendar integration with OAuth 2.0 supports one-way and two-way sync with recurring events, alongside a full data pipeline for JSON, CSV, and vCard import/export. Quality is validated through Vitest unit tests, Cypress E2E and visual regression tests, and axe-core accessibility audits — with zero critical violations and full NVDA screen reader support.",
       "shortDescription": "Birthday Management App"
     },
     "familyCalendar": {
@@ -540,6 +540,88 @@
       "recallByCategory": "Recall by question category for ten configurations; the deployed configuration finds a correct source for 39 of 40 answerable questions"
     }
   },
+  "caseStudyBirthdayReminder": {
+    "backLink": "Back to projects",
+    "eyebrow": "Case Study",
+    "title": "Birthday Reminder Pro",
+    "subtitle": "An offline-first birthday manager for web and Android, with optional cloud sync and Google Calendar integration",
+    "soloNote": "Personal project, built alone: concept, architecture, frontend, cloud integration, testing, CI/CD, deployment and documentation.",
+    "roleLabel": "Role",
+    "role": "Solo developer",
+    "periodLabel": "Timeframe",
+    "period": "August 2025 to November 2026. Version 1.0 released on July 12, 2026, version 1.4.3 on November 16, 2026",
+    "periodNote": "live demo without an account, demo data with one click",
+    "demoLabel": "Live demo",
+    "intro": {
+      "heading": "Context / problem",
+      "body": "Birthdays end up scattered across phone contacts, social networks and calendars. A reminder app is only useful if it keeps working when the network does not, and if nobody has to create an account just to try it.",
+      "body2": "Birthday Reminder Pro stores every entry on the device first, in IndexedDB, and works fully offline. Signing in with Google is optional: it adds sync across devices through Firestore and two-way sync with Google Calendar. The same Angular code runs as a prerendered PWA on Cloudflare Pages and as an Android app built with Capacitor."
+    },
+    "whatItDoes": {
+      "heading": "What it does",
+      "item1": "Manages birthdays with photos, notes, categories, search, age and zodiac sign. Everything is written to IndexedDB first, so the app works without a connection and without an account.",
+      "item2": "Syncs across devices after an optional Google sign-in. Changes made offline wait in a pending-changes queue and are sent to Firestore when the connection returns.",
+      "item3": "Syncs with Google Calendar one way or both ways, as yearly recurring events, including later edits and deletions.",
+      "item4": "Sends reminders as browser notifications through the service worker and as native notifications on Android, with scheduled messages that fill in the person's name and age.",
+      "item5": "Imports JSON, CSV and vCard, exports JSON and CSV, and shows statistics, category counts and the monthly distribution of birthdays. The interface is available in English and Italian, with a dark mode."
+    },
+    "results": {
+      "heading": "In numbers",
+      "commitsLabel": "commits since August 2025",
+      "unitTestsLabel": "unit tests",
+      "unitTestsDetail": "Vitest in browser mode, real Chromium",
+      "e2eTestsLabel": "Cypress end-to-end tests, including accessibility checks with axe-core",
+      "rulesTestsLabel": "tests for the Firestore and Storage security rules, run against the emulator",
+      "coverageLabel": "statement coverage",
+      "coverageDetail": "CI fails below 91 % statements or 89 % branches",
+      "bundleLabel": "main bundle; CI fails above 500 KB",
+      "pullRequestsLabel": "merged pull requests, each checked by CI",
+      "releasesLabel": "releases since version 1.0, versioned automatically"
+    },
+    "highlights": {
+      "heading": "Technical highlights",
+      "item1Title": "Offline-first, with the device as the source of truth.",
+      "item1Body": "Every write goes to IndexedDB first and updates the NgRx store optimistically, with a backup to roll back on failure. Firestore is a replica, not the primary store. The trade-off is written down: conflicts are resolved by the most recent update, not merged field by field.",
+      "item2Title": "Firebase only for people who sign in.",
+      "item2Body": "The Firebase SDK is never imported statically. A small cookie set at sign-in (Secure, SameSite=Strict, no secret in it) tells the app at startup whether to load it, so visitors without an account never download it. A Cypress test checks this.",
+      "item3Title": "Security rules tested like code.",
+      "item3Body": "50 tests for the Firestore rules and 22 for the Storage rules run against the Firebase emulator in CI. App Check with reCAPTCHA Enterprise protects the backend. A CI script checks the Content Security Policy and fails when an image host is allowed in img-src but missing from connect-src: that gap once made the service worker answer 504 for blocked photos.",
+      "item4Title": "A pipeline that stops regressions.",
+      "item4Body": "Every pull request runs lint, type checks, unit tests with coverage gates, Cypress end-to-end tests, a visual regression report on 18 screens, Lighthouse CI (accessibility and SEO at least 0.9) and a bundle budget. npm run ci:local runs the same chain locally.",
+      "item5Title": "Releases and maintenance on autopilot.",
+      "item5Body": "semantic-release derives the version and the changelog from conventional commits, and every release on main is deployed to Cloudflare Pages. Dependabot patch and minor updates are merged once CI is green. A weekly health check reviews workflows, vulnerabilities and the live site, and opens a single issue when something needs attention.",
+      "item6Title": "Measured before fixed.",
+      "item6Body": "The birthday list jumped while scrolling. Tracking each row's offset on the live site counted 60 jumps of up to 196 px at a width of 768 px. Rows had different heights, while the virtual scroll assumed a fixed one. After the fix, the same measurement showed 0 jumps at all three tested widths, and every row had the expected height at 20 widths from 320 to 1920 px."
+    },
+    "techStack": {
+      "heading": "Tech stack"
+    },
+    "finding": {
+      "heading": "The most useful result",
+      "body": "A real account had 1004 documents in Firestore for 61 people. Deduplication only cleaned the list shown on screen: local copies with a new ID were uploaded again, the losing cloud copies were never deleted, and the real-time listener brought them back. On top of that, every sign-in ran the merge twice. The fix deletes the losing copies only after the survivors are saved, never deletes while offline, and runs one merge per user. Affected accounts clean themselves up on their next sign-in, and each of these cases is covered by tests."
+    },
+    "learned": {
+      "heading": "What I learned",
+      "item1": "Offline-first moves the hard part into synchronisation. The most serious bug in the project was not in the interface but in merging local and cloud data.",
+      "item2": "A number makes a bug discussable. Measuring the scroll jumps and counting the duplicate documents turned vague reports into fixes that can be verified.",
+      "item3": "Free tiers shape the scope, and limits belong in the documentation. Cloud photo storage needs a paid Firebase plan, so it sits behind a feature flag and photos stay on the device in the demo. Google Calendar access is capped at 100 users until Google verifies the app. Both are documented as known limitations.",
+      "item4": "A long-running project needs maintenance as a process. The app started on Angular 17 and now runs on Angular 22 with zoneless change detection, kept current by Dependabot, automated releases and a weekly health check."
+    },
+    "links": {
+      "heading": "Links",
+      "demo": "Live demo",
+      "architecture": "Architecture guide",
+      "changelog": "Changelog",
+      "code": "Source code"
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "dashboard": "Dashboard with demo data: 45 birthdays, 5 in the next 30 days, an average age of 35 and the next birthday",
+      "birthdayList": "The birthday list: each entry shows photo, age, date, a note and the days left, with actions to edit or delete",
+      "backupAndChart": "Backup and restore with JSON, CSV and vCard, and the monthly distribution of birthdays",
+      "categoriesDark": "The categories overview in dark mode, used to filter the list"
+    }
+  },
   "caseStudyChargeHub": {
     "backLink": "Back to projects",
     "eyebrow": "Case Study",
@@ -685,6 +767,10 @@
     "caseStudyNormeon": {
       "title": "Case Study: Normeon — Mihaela Aghirculesei",
       "description": "How Normeon was built: a RAG assistant for German technical documentation that answers only with checked citations, measured on 50 hand-written questions, with tenant isolation through PostgreSQL row-level security and a public demo on free tiers."
+    },
+    "caseStudyBirthdayReminder": {
+      "title": "Case Study: Birthday Reminder Pro — Mihaela Aghirculesei",
+      "description": "How Birthday Reminder Pro was built: an offline-first Angular 22 app for web and Android with IndexedDB as the source of truth, optional Firestore and Google Calendar sync, 2200+ unit tests, security rules tested on the emulator and automated releases."
     },
     "caseStudyChargeHub": {
       "title": "Case Study: ChargeHub — Mihaela Aghirculesei",
