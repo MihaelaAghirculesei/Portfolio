@@ -10,7 +10,8 @@
     "previewImgSrcset": "assets/img/projects/normeon-400w.webp 400w, assets/img/projects/normeon-800w.webp 800w, assets/img/projects/normeon-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/normeon-german-technical-rag",
     "liveUrl": "https://normeon.onrender.com",
-    "isPersonal": true
+    "isPersonal": true,
+    "caseStudyRoute": "case-study/normeon"
   },
   {
     "id": "alinaMoments",

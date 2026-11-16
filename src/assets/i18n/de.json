@@ -372,6 +372,87 @@
       "pullRequests": "Die gemergten Pull Requests des Repositories auf GitHub — jeder mit genau einem Anliegen und grünen CI-Checks"
     }
   },
+  "caseStudyNormeon": {
+    "backLink": "Zurück zu den Projekten",
+    "eyebrow": "Case Study",
+    "title": "Normeon",
+    "subtitle": "Ein RAG-Assistent für deutsche technische Dokumentation, der seine Quellen belegt",
+    "soloNote": "Eigenes Projekt, allein umgesetzt: Konzept, Architektur, Backend, Frontend, Evaluation, Deployment und Dokumentation.",
+    "roleLabel": "Rolle",
+    "role": "Alleinige Entwicklerin",
+    "periodLabel": "Zeitraum",
+    "period": "August bis November 2026. Version 1.0 am 9. November 2026 veröffentlicht, Version 1.2 am 16. November 2026",
+    "periodNote": "Live-Demo mit Gastzugang, ohne Registrierung",
+    "demoLabel": "Live-Demo",
+    "intro": {
+      "heading": "Kontext / Problem",
+      "body": "Ingenieure in der Automobilindustrie arbeiten mit langen deutschen Dokumenten: Vorschriften wie der StVZO und Lastenheften, die sich von Version zu Version ändern. Ein allgemeiner Chatbot antwortet flüssig, kann aber nicht zeigen, woher ein Wert stammt, und rät, wenn die Dokumente nichts dazu sagen.",
+      "body2": "Normeon antwortet nur aus den Dokumenten, die ein Team hochgeladen hat. Jede Aussage trägt ein Quellenzitat, das das Backend gegen die gefundenen Textstellen geprüft hat. Steht die Antwort nicht in den Dokumenten, sagt Normeon das, statt zu raten. Der Demo-Korpus enthält zwei öffentliche Vorschriften (StVZO und FZV) und zwei Versionen eines synthetischen Lastenhefts, die sich absichtlich widersprechen."
+    },
+    "whatItDoes": {
+      "heading": "Was es macht",
+      "item1": "Liest PDF- und DOCX-Dateien ein, mit OCR für gescannte Seiten, und zerlegt jedes Dokument entlang seiner eigenen Abschnitte. Version und Gültigkeitszeitraum werden mit jedem Dokument gespeichert.",
+      "item2": "Sucht auf drei Wegen gleichzeitig: nach Bedeutung (Vektorsuche mit pgvector), nach Wörtern (deutsche Volltextsuche) und nach Codes wie LH-3.2.1 (Trigramm-Abgleich). Die drei Rankings werden per Reciprocal Rank Fusion zusammengeführt.",
+      "item3": "Gibt die besten Textstellen als nummerierte Quellen an das Sprachmodell weiter. Sie sind als nicht vertrauenswürdige Daten markiert, damit Text in einem Dokument dem Modell keine Anweisungen geben kann.",
+      "item4": "Prüft jedes Zitat in der Antwort. Eine vom Modell erfundene Quellennummer wird entfernt, und eine Antwort ohne echtes Zitat wird zu NICHT_GEFUNDEN. Widersprechen sich zwei Versionen einer Anforderung, nennt die Antwort beide.",
+      "item5": "Streamt die Antwort in eine Angular-App. Jedes Zitat öffnet die zitierte Textstelle; ist die Originaldatei gespeichert, öffnet sich die PDF-Seite mit der markierten Stelle."
+    },
+    "results": {
+      "heading": "In Zahlen",
+      "recallLabel": "beantwortbare Fragen mit einer richtigen Quelle unter den ersten fünf Treffern",
+      "recallDetail": "ausgelieferte Konfiguration, gemessen am Evaluationsset",
+      "declinedLabel": "unbeantwortbare Fragen korrekt abgelehnt",
+      "inventedLabel": "Antworten mit einer erfundenen Quelle in der Evaluation",
+      "questionsLabel": "handgeschriebene deutsche Evaluationsfragen in fünf Kategorien",
+      "testsLabel": "automatisierte Tests in der CI, Backend und Frontend",
+      "pullRequestsLabel": "gemergte Pull Requests, jeder von der CI geprüft",
+      "adrLabel": "Architecture Decision Records",
+      "costLabel": "Betriebskosten der öffentlichen Demo, auf Free Tiers"
+    },
+    "highlights": {
+      "heading": "Technische Highlights",
+      "item1Title": "Gemessen, nicht angenommen.",
+      "item1Body": "Fünfzig deutsche Fragen, von Hand geschrieben, zehn pro Kategorie, darunter Fragen, die die Dokumente nicht beantworten, und Fragen zu widersprüchlichen Versionen. Jede Konfiguration ändert genau eine Einstellung, und jedes Ergebnis hat ein Bootstrap-Konfidenzintervall. Den automatischen Bewerter habe ich gegen meine eigenen Bewertungen geprüft: Er stimmte bei 15 von 15 Fragen überein.",
+      "item2Title": "Die Abschnitte folgen dem Dokument, nicht einer festen Größe.",
+      "item2Body": "Die Zerlegung nach Abschnitten statt in feste Fenster von 500 Tokens erhöhte den Recall um 35 Punkte. Entscheidung und Zahlen sind in einem ADR festgehalten.",
+      "item3Title": "Die hybride Suche lohnt sich.",
+      "item3Body": "Nur Vektorsuche kostete 8 Punkte Antwortgenauigkeit. Nur Volltextsuche fand bei 6 von 40 Fragen eine richtige Quelle. Zusammen, mit Rank Fusion, finden sie eine bei 39 von 40.",
+      "item4Title": "Zwei Schutzschichten zwischen Mandanten.",
+      "item4Body": "Jedes Unternehmen sieht nur seine eigenen Dokumente. Das sichern die Abfragen der Anwendung und zusätzlich die Row-Level-Security von PostgreSQL unter einer Rolle ohne Superuser-Rechte. Eine eigene Security-Test-Suite prüft jede Schicht einzeln.",
+      "item5Title": "Dokumente sind Daten, keine Anweisungen.",
+      "item5Body": "Ein Dokument kann seinen Quellenblock nicht schließen, kein Zitat einer anderen Quelle fälschen und den Prompt nicht umschreiben. Die Tests nutzen sogar ein absichtlich gehorsames Fake-Modell: Folgt es einer in einem Dokument versteckten Anweisung, gelangt trotzdem kein Dokumentname in die Antwort. Uploads werden vor dem Speichern geprüft: zu große Dateien, verschlüsselte PDFs und Zip-Bomben werden abgelehnt.",
+      "item6Title": "Eine öffentliche Demo ohne Kosten.",
+      "item6Body": "Render, Neon und das kostenlose Kontingent von Gemini, mit Rate-Limit pro IP-Adresse und einer täglichen Obergrenze für Fragen. Ein nächtliches Datenbank-Backup wird verschlüsselt, bevor es gespeichert wird, und die Wiederherstellung wurde auf einer separaten Datenbank getestet."
+    },
+    "techStack": {
+      "heading": "Tech-Stack"
+    },
+    "finding": {
+      "heading": "Das wichtigste Ergebnis",
+      "body": "Die Suche ist nicht der Engpass. Neun der zehn falschen Antworten der Demo sind Ablehnungen, und bei acht davon stand die richtige Quelle bereits im Kontext. Bevor ich zu einem größeren Modell greife, habe ich die günstigeren Lösungen gemessen: Ein Prompt, der Teilantworten erlaubt, brachte keinen messbaren Gewinn, und benachbarte Textstellen hinzuzufügen, könnte höchstens 2 von 50 Fragen helfen. Der verbleibende Hebel ist ein größeres Modell, das nicht ins kostenlose Kontingent passt. Deshalb ist es als bekannte Grenze dokumentiert."
+    },
+    "learned": {
+      "heading": "Was ich gelernt habe",
+      "item1": "Ein Evaluationsset ist mehr wert als jedes einzelne Feature. Einige meiner Annahmen waren falsch: Der Reranker senkte den Recall mit den gehosteten Embeddings, und zehn Textstellen im Kontext ergaben schlechtere Antworten als fünf.",
+      "item2": "Sicherheit in einem RAG-System ist vor allem eine Frage der Daten: wer welches Dokument sehen darf und was ein Dokument mit dem Modell machen darf.",
+      "item3": "Rahmenbedingungen prägen die Architektur. Das kostenlose Kontingent bedeutete kein PyTorch im Image und gehostete Embeddings, und jede Änderung wurde vor dem Go-live erneut gemessen.",
+      "item4": "Ein negatives Ergebnis ist auch ein Ergebnis. Das Problem der zu häufigen Ablehnungen wurde mit einer gemessenen Obergrenze abgeschlossen, nicht mit einer Vermutung."
+    },
+    "links": {
+      "heading": "Links",
+      "demo": "Live-Demo",
+      "video": "Video-Rundgang, 2 Minuten",
+      "evaluation": "Vollständiger Evaluationsbericht",
+      "code": "Quellcode"
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "citedAnswer": "Eine Antwort zur Mindestprofiltiefe von Reifen mit Zitat aus StVZO § 36, daneben die zitierte Textstelle",
+      "versionConflict": "Eine Frage zur Lenkkraft: Die Antwort nennt den Wert aus Lastenheft-Version 1.2 und den strengeren Wert aus Version 2.0, jeweils mit Quellen",
+      "declinedQuestion": "Eine Frage zur Kfz-Steuer, die die Dokumente nicht abdecken: Die Antwort sagt das, statt zu raten",
+      "recallByCategory": "Recall nach Fragekategorie für zehn Konfigurationen; die ausgelieferte Konfiguration findet bei 39 von 40 beantwortbaren Fragen eine richtige Quelle"
+    }
+  },
   "caseStudyChargeHub": {
     "backLink": "Zurück zu den Projekten",
     "eyebrow": "Case Study",
@@ -509,6 +590,10 @@
     "caseStudyBfsgScanner": {
       "title": "Fallstudie: bfsg-scanner — Mihaela Aghirculesei",
       "description": "Wie bfsg-scanner entstand: ein Open-Source-CLI auf npm, das ganze Websites auf WCAG-2.1-AA-Probleme prüft und jeden Fund der verletzten Klausel aus EN 301 549 / BFSG zuordnet, mit SLSA-Provenance, 167 Tests und CI auf mehreren Betriebssystemen."
+    },
+    "caseStudyNormeon": {
+      "title": "Fallstudie: Normeon — Mihaela Aghirculesei",
+      "description": "Wie Normeon entstand: ein RAG-Assistent für deutsche technische Dokumentation, der nur mit geprüften Quellenzitaten antwortet, gemessen an 50 handgeschriebenen Fragen, mit Mandantentrennung per Row-Level-Security in PostgreSQL und einer öffentlichen Demo auf Free Tiers."
     },
     "caseStudyChargeHub": {
       "title": "Fallstudie: ChargeHub — Mihaela Aghirculesei",
