@@ -85,10 +85,12 @@ describe('CaseStudyDineosComponent', () => {
   });
 
   it('should not link to a public repository', () => {
-    const hrefs = Array.from(fixture.nativeElement.querySelectorAll('a') as NodeListOf<HTMLAnchorElement>).map(
-      (a) => a.getAttribute('href') ?? ''
-    );
-    expect(hrefs.some((href) => href.includes('github.com'))).toBe(false);
+    const hosts = Array.from(fixture.nativeElement.querySelectorAll('a') as NodeListOf<HTMLAnchorElement>)
+      .map((a) => a.getAttribute('href') ?? '')
+      .filter((href) => /^https?:\/\//.test(href))
+      .map((href) => new URL(href).hostname);
+    expect(hosts.length).toBeGreaterThan(0);
+    expect(hosts).not.toContain('github.com');
   });
 
   it('should render a back link to /projects', () => {
