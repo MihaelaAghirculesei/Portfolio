@@ -34,6 +34,7 @@ const ROUTE_SEO_META = new Map<string, RouteSeoMeta>([
   ['/case-study/bfsg-scanner', { i18nKey: 'caseStudyBfsgScanner' }],
   ['/case-study/charge-hub', { i18nKey: 'caseStudyChargeHub' }],
   ['/case-study/normeon', { i18nKey: 'caseStudyNormeon' }],
+  ['/case-study/birthday-reminder', { i18nKey: 'caseStudyBirthdayReminder' }],
   ['/feedback', { i18nKey: 'feedback' }],
   ['/contact', { i18nKey: 'contact' }],
   ['/privacy-policy', { i18nKey: 'privacyPolicy' }],
