@@ -46,6 +46,13 @@ const LOCALIZED_PAGES: Routes = [
       ).then((m) => m.CaseStudyBfsgScannerComponent),
   },
   {
+    path: 'case-study/normeon',
+    loadComponent: () =>
+      import(
+        './main-content/portfolio/case-study-normeon/case-study-normeon.component'
+      ).then((m) => m.CaseStudyNormeonComponent),
+  },
+  {
     path: 'case-study/charge-hub',
     loadComponent: () =>
       import(

@@ -1,0 +1,130 @@
+<article class="case-study-page" aria-labelledby="case-study-title">
+  <div class="content-width">
+    <a [routerLink]="'/projects' | localePath" class="back-link">
+      <span aria-hidden="true">←</span> {{ "caseStudyNormeon.backLink" | translate }}
+    </a>
+
+    <header class="cs-hero">
+      <p class="eyebrow">{{ "caseStudyNormeon.eyebrow" | translate }}</p>
+      <h1 id="case-study-title">{{ "caseStudyNormeon.title" | translate }}</h1>
+      <h2 class="cs-subtitle">{{ "caseStudyNormeon.subtitle" | translate }}</h2>
+      <p class="solo-note">{{ "caseStudyNormeon.soloNote" | translate }}</p>
+
+      <dl class="cs-meta">
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyNormeon.roleLabel" | translate }}</dt>
+          <dd>{{ "caseStudyNormeon.role" | translate }}</dd>
+        </div>
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyNormeon.periodLabel" | translate }}</dt>
+          <dd>
+            {{ "caseStudyNormeon.period" | translate }}
+            <span class="cs-meta-note">{{ "caseStudyNormeon.periodNote" | translate }}</span>
+          </dd>
+        </div>
+        <div class="cs-meta-item">
+          <dt>{{ "caseStudyNormeon.demoLabel" | translate }}</dt>
+          <dd>
+            <a [href]="liveUrl" target="_blank" rel="noopener noreferrer">{{ liveUrlDisplay }}</a>
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="cs-section" aria-labelledby="cs-intro-heading">
+      <h2 id="cs-intro-heading">{{ "caseStudyNormeon.intro.heading" | translate }}</h2>
+      <p>{{ "caseStudyNormeon.intro.body" | translate }}</p>
+      <p>{{ "caseStudyNormeon.intro.body2" | translate }}</p>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-what-heading">
+      <h2 id="cs-what-heading">{{ "caseStudyNormeon.whatItDoes.heading" | translate }}</h2>
+      <ol class="cs-steps-list">
+        @for (key of whatItDoesKeys; track key) {
+        <li>{{ key | translate }}</li>
+        }
+      </ol>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-results-heading">
+      <h2 id="cs-results-heading">{{ "caseStudyNormeon.results.heading" | translate }}</h2>
+
+      <ul class="cs-stats-grid">
+        @for (stat of stats; track stat.labelKey) {
+        <li class="cs-stat-tile">
+          <span class="cs-stat-value">{{ stat.value }}</span>
+          <span class="cs-stat-label">{{ stat.labelKey | translate }}</span>
+          @if (stat.detailKey) {
+          <span class="cs-stat-detail">{{ stat.detailKey | translate }}</span>
+          }
+        </li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-highlights-heading">
+      <h2 id="cs-highlights-heading">{{ "caseStudyNormeon.highlights.heading" | translate }}</h2>
+
+      <ol class="cs-engineering-list">
+        @for (item of highlightItems; track item.titleKey) {
+        <li>
+          <h3>{{ item.titleKey | translate }}</h3>
+          <p>{{ item.bodyKey | translate }}</p>
+        </li>
+        }
+      </ol>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-tech-heading">
+      <h2 id="cs-tech-heading">{{ "caseStudyNormeon.techStack.heading" | translate }}</h2>
+      <ul class="cs-tech-chips">
+        @for (tech of techStack; track tech) {
+        <li class="cs-tech-chip">{{ tech }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-finding-heading">
+      <h2 id="cs-finding-heading">{{ "caseStudyNormeon.finding.heading" | translate }}</h2>
+      <p class="cs-callout">{{ "caseStudyNormeon.finding.body" | translate }}</p>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-learned-heading">
+      <h2 id="cs-learned-heading">{{ "caseStudyNormeon.learned.heading" | translate }}</h2>
+      <ul class="cs-honest-list">
+        @for (key of learnedKeys; track key) {
+        <li>{{ key | translate }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-links-heading">
+      <h2 id="cs-links-heading">{{ "caseStudyNormeon.links.heading" | translate }}</h2>
+      <ul class="cs-link-list">
+        @for (link of links; track link.href) {
+        <li>
+          <span class="cs-link-label">{{ link.labelKey | translate }}</span>
+          <a [href]="link.href" target="_blank" rel="noopener noreferrer">{{ link.display }}</a>
+        </li>
+        }
+      </ul>
+    </section>
+
+    <section class="cs-section" aria-labelledby="cs-screenshots-heading">
+      <h2 id="cs-screenshots-heading">{{ "caseStudyNormeon.screenshots.heading" | translate }}</h2>
+      <ul class="cs-screenshot-grid">
+        @for (shot of screenshots; track shot.file) {
+        <li class="cs-screenshot-item">
+          <img [src]="screenshotSrc(shot.file)" [alt]="shot.altKey | translate" loading="lazy" />
+        </li>
+        }
+      </ul>
+    </section>
+
+    <div class="cs-footer-actions">
+      <a [routerLink]="'/projects' | localePath" class="link-button2">{{ "caseStudyNormeon.backLink" | translate }}</a>
+      <a [href]="codeUrl" target="_blank" rel="noopener noreferrer" class="link-button2">{{ "portfolio.github" | translate }}</a>
+      <a [href]="liveUrl" target="_blank" rel="noopener noreferrer" class="link-button2">{{ "portfolio.liveTest" | translate }}</a>
+    </div>
+  </div>
+</article>

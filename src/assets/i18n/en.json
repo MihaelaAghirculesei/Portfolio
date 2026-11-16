@@ -372,6 +372,87 @@
       "pullRequests": "The repository's merged pull requests on GitHub — one concern each, every one with passing CI checks"
     }
   },
+  "caseStudyNormeon": {
+    "backLink": "Back to projects",
+    "eyebrow": "Case Study",
+    "title": "Normeon",
+    "subtitle": "A RAG assistant for German technical documentation that cites its sources",
+    "soloNote": "Personal project, built alone: concept, architecture, backend, frontend, evaluation, deployment and documentation.",
+    "roleLabel": "Role",
+    "role": "Solo developer",
+    "periodLabel": "Timeframe",
+    "period": "August to November 2026. Version 1.0 released on November 9, 2026, version 1.2 on November 16, 2026",
+    "periodNote": "live demo with guest access, no sign-up needed",
+    "demoLabel": "Live demo",
+    "intro": {
+      "heading": "Context / problem",
+      "body": "Engineers in the automotive industry work with long German documents: regulations such as the StVZO, and Lastenhefte that change from one version to the next. A general chatbot answers fluently, but it cannot show where a value comes from, and it guesses when the documents say nothing.",
+      "body2": "Normeon answers only from the documents a team has uploaded. Every statement carries a citation that the backend has checked against the retrieved passages. When the documents do not contain the answer, it says so instead of guessing. The demo corpus holds two public regulations (StVZO and FZV) and two versions of a synthetic Lastenheft that contradict each other on purpose."
+    },
+    "whatItDoes": {
+      "heading": "What it does",
+      "item1": "Reads PDF and DOCX files, with OCR for scanned pages, and splits each document along its own sections. Version and validity dates are stored with every document.",
+      "item2": "Searches in three ways at once: by meaning (vector search with pgvector), by words (German full-text search) and by codes such as LH-3.2.1 (trigram matching). The three rankings are merged with Reciprocal Rank Fusion.",
+      "item3": "Passes the best passages to the language model as numbered sources. They are marked as untrusted data, so text inside a document cannot give the model instructions.",
+      "item4": "Checks every citation in the answer. A source number the model made up is removed, and an answer left without a real citation becomes NICHT_GEFUNDEN. When two versions of a requirement disagree, the answer names both.",
+      "item5": "Streams the answer to an Angular app. Each citation opens the cited passage; where the original file is stored, the PDF page opens with the passage highlighted."
+    },
+    "results": {
+      "heading": "In numbers",
+      "recallLabel": "answerable questions with a correct source in the top five results",
+      "recallDetail": "deployed configuration, measured on the evaluation set",
+      "declinedLabel": "unanswerable questions correctly declined",
+      "inventedLabel": "answers citing an invented source in the evaluation",
+      "questionsLabel": "hand-written German evaluation questions in five categories",
+      "testsLabel": "automated tests in CI, backend and frontend",
+      "pullRequestsLabel": "merged pull requests, each checked by CI",
+      "adrLabel": "Architecture Decision Records",
+      "costLabel": "running cost of the public demo, on free tiers"
+    },
+    "highlights": {
+      "heading": "Technical highlights",
+      "item1Title": "Measured, not assumed.",
+      "item1Body": "Fifty German questions written by hand, ten per category, including questions the documents cannot answer and questions about contradicting versions. Each configuration changes one setting, and every result comes with a bootstrap confidence interval. I checked the automatic judge against my own scores: it agreed on 15 of 15 questions.",
+      "item2Title": "Chunks follow the document, not a fixed size.",
+      "item2Body": "Splitting by section instead of fixed 500-token windows raised recall by 35 points. The decision and the numbers are written down in an ADR.",
+      "item3Title": "Hybrid search earns its place.",
+      "item3Body": "Vector search alone cost 8 points of answer accuracy. Full-text search alone found a correct source for only 6 of 40 questions. Together, with rank fusion, they find one for 39 of 40.",
+      "item4Title": "Two walls between tenants.",
+      "item4Body": "Each company only sees its own documents. This is enforced in the application's queries and again by PostgreSQL row-level security under a role without superuser rights. A separate security test suite checks each layer on its own.",
+      "item5Title": "Documents are data, not instructions.",
+      "item5Body": "A document cannot close its source block, forge another source's citation or rewrite the prompt. The tests even use a deliberately obedient fake model: when it follows an instruction hidden in a document, no document name leaks into the answer. Uploads are checked before they are stored: oversized files, encrypted PDFs and zip bombs are refused.",
+      "item6Title": "A public demo at zero cost.",
+      "item6Body": "Render, Neon and the Gemini free tier, with a rate limit per IP address and a daily question cap. A nightly database backup is encrypted before it is stored, and restoring it was tested on a separate database."
+    },
+    "techStack": {
+      "heading": "Tech stack"
+    },
+    "finding": {
+      "heading": "The most useful result",
+      "body": "Retrieval is not the bottleneck. Nine of the demo's ten wrong answers are refusals, and in eight of them the right source was already in the context. Before reaching for a bigger model, I measured the cheaper fixes: a prompt that allows partial answers brought no measurable gain, and adding neighbouring passages could help at most 2 of 50 questions. The remaining lever is a larger model, which does not fit the free tier, so it is documented as a known limit."
+    },
+    "learned": {
+      "heading": "What I learned",
+      "item1": "An evaluation set is worth more than any single feature. Some of my assumptions were wrong: the reranker lowered recall with the hosted embeddings, and ten passages of context gave worse answers than five.",
+      "item2": "Security in a RAG system is mostly about data: who may see which document, and what a document is allowed to do to the model.",
+      "item3": "Constraints shape the architecture. The free tier meant no PyTorch in the image and hosted embeddings, and each change was measured again before it went live.",
+      "item4": "A negative result is a result. The over-refusal issue was closed with a measured upper bound, not with a guess."
+    },
+    "links": {
+      "heading": "Links",
+      "demo": "Live demo",
+      "video": "Walkthrough video, 2 minutes",
+      "evaluation": "Full evaluation report",
+      "code": "Source code"
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "citedAnswer": "An answer about the minimum tyre tread depth, citing StVZO § 36, with the cited passage open beside it",
+      "versionConflict": "A question about steering force: the answer names the value from Lastenheft version 1.2 and the stricter value from version 2.0, each with its sources",
+      "declinedQuestion": "A question about vehicle tax, which the documents do not cover: the answer says so instead of guessing",
+      "recallByCategory": "Recall by question category for ten configurations; the deployed configuration finds a correct source for 39 of 40 answerable questions"
+    }
+  },
   "caseStudyChargeHub": {
     "backLink": "Back to projects",
     "eyebrow": "Case Study",
@@ -509,6 +590,10 @@
     "caseStudyBfsgScanner": {
       "title": "Case Study: bfsg-scanner — Mihaela Aghirculesei",
       "description": "How a solo developer built and shipped bfsg-scanner: an open-source npm CLI that scans a whole site for WCAG 2.1 AA issues and maps every finding to the EN 301 549 / BFSG clause it breaks, with SLSA provenance, 167 tests, and cross-OS CI."
+    },
+    "caseStudyNormeon": {
+      "title": "Case Study: Normeon — Mihaela Aghirculesei",
+      "description": "How Normeon was built: a RAG assistant for German technical documentation that answers only with checked citations, measured on 50 hand-written questions, with tenant isolation through PostgreSQL row-level security and a public demo on free tiers."
     },
     "caseStudyChargeHub": {
       "title": "Case Study: ChargeHub — Mihaela Aghirculesei",
