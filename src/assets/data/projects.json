@@ -1,5 +1,18 @@
 [
   {
+    "id": "dineos",
+    "name": "DineOS",
+    "technologies": [
+      "Python", "FastAPI", "PostgreSQL", "Redis", "WebSocket", "Angular",
+      "TypeScript", "NgRx", "Stripe", "Docker", "Pytest", "GitHub Actions"
+    ],
+    "previewImg": "assets/img/projects/dineos.webp",
+    "previewImgSrcset": "assets/img/projects/dineos-400w.webp 400w, assets/img/projects/dineos-800w.webp 800w, assets/img/projects/dineos-1200w.webp 1200w",
+    "liveUrl": "https://dineos-frontend-staging-aghirculesei.onrender.com/menu/SOJArCas5AbVgDWPhGYL2udnAax8FsGXeRBH3cybjazR7LbixIekaUONXi0cDdrD",
+    "isPersonal": true,
+    "caseStudyRoute": "case-study/dineos"
+  },
+  {
     "id": "normeon",
     "name": "Normeon",
     "technologies": [
@@ -80,7 +93,8 @@
     "previewImgSrcset": "assets/img/projects/family-calendar-400w.webp 400w, assets/img/projects/family-calendar-800w.webp 800w, assets/img/projects/family-calendar-1200w.webp 1200w",
     "githubUrl": "https://github.com/MihaelaAghirculesei/intelligent-family-calendar",
     "liveUrl": "https://mihaelaaghirculesei.github.io/intelligent-family-calendar/",
-    "isPersonal": true
+    "isPersonal": true,
+    "featured": false
   },
   {
     "id": "secureNotesLab",
