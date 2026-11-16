@@ -128,6 +128,16 @@ describe('AppComponent', () => {
     }));
   });
 
+  it('should update SEO when navigating to the Normeon case study', () => {
+    component.ngOnInit();
+    mockSeoService.update.mockClear();
+    routerEventsSubject.next(new NavigationEnd(1, '/case-study/normeon', '/case-study/normeon'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Case Study: Normeon — Mihaela Aghirculesei',
+      ogUrl: `${environment.siteUrl}/case-study/normeon/`,
+    }));
+  });
+
   it('should update SEO when navigating to the ChargeHub case study', () => {
     component.ngOnInit();
     mockSeoService.update.mockClear();
