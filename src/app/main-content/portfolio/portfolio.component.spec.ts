@@ -61,9 +61,10 @@ describe('PortfolioComponent', () => {
       expect(component.hoverPosition).toBeNull();
     });
 
-    it('should have 6 featured projects on the home page (Todo Platform API, Join, Pokédex and El Pollo Loco excluded)', () => {
+    it('should have 6 featured projects on the home page (the five secondary projects excluded)', () => {
       expect(component.projects).toBeDefined();
       expect(component.projects.length).toBe(6);
+      expect(component.projects.some((p) => p.name === 'SecureNotes Lab')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Todo Platform API')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Join')).toBe(false);
       expect(component.projects.some((p) => p.name === 'Pokédex')).toBe(false);
@@ -71,7 +72,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should have correct project data structure', () => {
-      const project = component.projects[1];
+      const project = component.projects[0];
       expect(project.name).toBeDefined();
       expect(project.technologies).toBeDefined();
       expect(project.previewImg).toBeDefined();
@@ -80,7 +81,7 @@ describe('PortfolioComponent', () => {
     });
 
     it('should allow a project without a public GitHub repo (private/available on request)', () => {
-      const project = component.projects[0];
+      const project = component.projects[1];
       expect(project.name).toBe('Alina Moments Photography');
       expect(project.githubUrl).toBeUndefined();
       expect(project.liveUrl).toBeDefined();
@@ -401,7 +402,7 @@ describe('PortfolioComponent', () => {
   describe('Helper Methods', () => {
     it('should get project screenshot alt text', () => {
       const alt = component.getProjectScreenshotAlt(0);
-      expect(alt).toBe('Alina Moments Photography screenshot');
+      expect(alt).toBe('Normeon screenshot');
     });
 
     it('should return default alt text for null index', () => {
@@ -468,11 +469,36 @@ describe('PortfolioComponent', () => {
     });
   });
 
+  describe('Normeon Project', () => {
+    const findProject = () => component.projects.find((p) => p.name === 'Normeon')!;
+
+    it('should be the first featured project', () => {
+      expect(component.projects[0].name).toBe('Normeon');
+    });
+
+    it('should be a personal project with a public repo and the live demo', () => {
+      const project = findProject();
+      expect(project.isPersonal).toBe(true);
+      expect(project.githubUrl).toBe('https://github.com/MihaelaAghirculesei/normeon-german-technical-rag');
+      expect(project.liveUrl).toBe('https://normeon.onrender.com');
+    });
+
+    it('should get translations for its descriptions', () => {
+      vi.spyOn(translateService, 'instant').mockReturnValue('Normeon text');
+
+      component.getProjectDescription(findProject());
+      component.getProjectShortDescription(findProject());
+
+      expect(translateService.instant).toHaveBeenCalledWith('projects.normeon.description');
+      expect(translateService.instant).toHaveBeenCalledWith('projects.normeon.shortDescription');
+    });
+  });
+
   describe('Intelligent Family Calendar Project', () => {
     const findProject = () => component.projects.find((p) => p.name === 'Intelligent Family Calendar')!;
 
-    it('should be the fourth featured project', () => {
-      expect(component.projects[3].name).toBe('Intelligent Family Calendar');
+    it('should be the last featured project', () => {
+      expect(component.projects[5].name).toBe('Intelligent Family Calendar');
     });
 
     it('should be a personal project with a public repo and the GitHub Pages demo', () => {
@@ -543,10 +569,12 @@ describe('PortfolioComponent', () => {
   });
 
   describe('SecureNotes Lab Project', () => {
-    const findProject = () => component.projects.find((p) => p.name === 'SecureNotes Lab')!;
+    const findProject = () => projectDataService.projects.find((p) => p.name === 'SecureNotes Lab')!;
 
-    it('should come right after the Intelligent Family Calendar', () => {
-      expect(component.projects[4].name).toBe('SecureNotes Lab');
+    it('should be listed under all projects, first after the featured ones', () => {
+      expect(findProject().featured).toBe(false);
+      component.toggleShowAll(new MouseEvent('click'));
+      expect(component.projects[6].name).toBe('SecureNotes Lab');
     });
 
     it('should be local-only, with a public repo and no live URL', () => {
@@ -573,7 +601,8 @@ describe('PortfolioComponent', () => {
     });
 
     it('should explain why there is no live demo instead of the "in development" notice', () => {
-      component.openProjectOverlay(findProject(), 4);
+      component.toggleShowAll(new MouseEvent('click'));
+      component.openProjectOverlay(findProject(), 6);
       fixture.detectChanges();
 
       const notices: string[] = Array.from(
@@ -662,7 +691,7 @@ describe('PortfolioComponent', () => {
         { id: 'noOffset', name: 'NoOffset', technologies: [], previewImg: '', githubUrl: '', liveUrl: '' }
       ];
 
-      // Todo API, Join, Pokédex and El Pollo Loco are filtered out of the featured
+      // SecureNotes Lab, Todo API, Join, Pokédex and El Pollo Loco are filtered out of the featured
       // (home) list, so the appended item lands right after the featured
       // projects, at the end of the list.
       const appendedIndex = component.projects.length - 1;
@@ -861,9 +890,9 @@ describe('PortfolioComponent', () => {
       projFixture.detectChanges();
     });
 
-    it('should show all 10 projects including El Pollo Loco', () => {
+    it('should show all 11 projects including El Pollo Loco', () => {
       expect(projComponent['isProjectsPage']).toBe(true);
-      expect(projComponent.projects.length).toBe(10);
+      expect(projComponent.projects.length).toBe(11);
       expect(projComponent.projects.some((p) => p.name === 'El Pollo Loco')).toBe(true);
     });
 
