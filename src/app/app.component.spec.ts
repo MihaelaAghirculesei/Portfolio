@@ -128,6 +128,16 @@ describe('AppComponent', () => {
     }));
   });
 
+  it('should update SEO when navigating to the DineOS case study', () => {
+    component.ngOnInit();
+    mockSeoService.update.mockClear();
+    routerEventsSubject.next(new NavigationEnd(1, '/case-study/dineos', '/case-study/dineos'));
+    expect(mockSeoService.update).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'Case Study: DineOS — Mihaela Aghirculesei',
+      ogUrl: `${environment.siteUrl}/case-study/dineos/`,
+    }));
+  });
+
   it('should update SEO when navigating to the Normeon case study', () => {
     component.ngOnInit();
     mockSeoService.update.mockClear();

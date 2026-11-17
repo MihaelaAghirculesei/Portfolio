@@ -46,6 +46,13 @@ const LOCALIZED_PAGES: Routes = [
       ).then((m) => m.CaseStudyBfsgScannerComponent),
   },
   {
+    path: 'case-study/dineos',
+    loadComponent: () =>
+      import(
+        './main-content/portfolio/case-study-dineos/case-study-dineos.component'
+      ).then((m) => m.CaseStudyDineosComponent),
+  },
+  {
     path: 'case-study/normeon',
     loadComponent: () =>
       import(
