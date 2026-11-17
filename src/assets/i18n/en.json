@@ -209,6 +209,10 @@
       "description": "An open-source CLI, published to npm with SLSA provenance, that scans an entire site for WCAG 2.1 AA violations and maps every finding to the EN 301 549 / BFSG clause it breaks, producing a citable compliance report in JSON, HTML, or PDF. It exits with a non-zero code once violations pass a configurable severity threshold, so a CI pipeline can block a merge on accessibility. Page discovery runs from sitemap.xml, then a breadth-first crawl that respects robots.txt; each page is analyzed in a real Chromium via Playwright and axe-core, with a concurrency pool, per-host rate limiting, an identifiable User-Agent, and an optional settle delay so client-rendered pages are scanned once hydrated. The report.json output is described by a versioned JSON Schema and guarded by anti-drift tests with ajv. Built in TypeScript on Node.js, with 167 Vitest tests, CI across Linux, Windows and macOS, and developed as a sequence of small, individually reviewed pull requests; the thirteen decisions that shaped the architecture each carry an Architecture Decision Record. The release workflow publishes to npm via OIDC trusted publishing, with no long-lived token.",
       "shortDescription": "WCAG / EN 301 549 / BFSG Accessibility Scanner"
     },
+    "dineos": {
+      "description": "A restaurant operating system built solo end to end, as a product rather than a tutorial. Guests scan the QR code on their table, browse the menu in Italian, English or German with allergen filters, order from their own phone and follow each order live; the kitchen sees new orders on a real-time board the moment they are placed, and managers run tables, staff, menu and analytics from a dashboard. The FastAPI backend (async SQLAlchemy, PostgreSQL, Alembic) is multi-tenant: every query is scoped to its restaurant, backed by cross-tenant regression tests after a security review found and closed a leak. Real-time updates travel over authenticated WebSocket channels fanned out through Redis Pub/Sub, with per-IP and global connection caps. Payments use Stripe PaymentIntents with bill splitting, idempotency keys and a Redis dead-letter queue that retries failed webhooks with back-off. The Angular 21 frontend uses NgRx and serves four staff roles and anonymous guests from a single SPA. Load tests with k6 led to a rewrite of the menu endpoint that cut the median response under load from 0.7–1.4 s to 6–83 ms at 0.1 CPU and removed a 3 % error rate. Over 750 automated tests (pytest against real Postgres and Redis, Vitest, Playwright), 93 % backend coverage with a 90 % CI gate, mypy --strict, seven Architecture Decision Records, OpenTelemetry, Prometheus, Grafana and Sentry, and a CD pipeline that deploys every merge to a staging environment on Render and Neon.",
+      "shortDescription": "Multi-Tenant Restaurant Ordering Platform"
+    },
     "normeon": {
       "description": "A retrieval-augmented assistant for German technical documentation — regulations and Lastenhefte — that answers only with citations the backend has checked, and replies NICHT_GEFUNDEN instead of guessing. Built solo end to end. The FastAPI backend ingests PDF and DOCX files (with an OCR fallback for scanned pages) into PostgreSQL 18 with pgvector, chunks each document along its own sections, and retrieves with a hybrid of vector search, German full-text search and trigram matching, fused by Reciprocal Rank Fusion. Every source reaches the model as delimited, untrusted text; a citation the model invents is dropped, an answer left without a real one is withheld, and contradicting versions of the same requirement are flagged. Tenants are isolated twice — in the application's queries and by Postgres row-level security under a non-superuser role — behind JWT sign-in, with a dedicated security test suite. The Angular 22 frontend streams answers over SSE, turns every [S1] marker into a link to the cited passage, and uses API types generated from the OpenAPI document. Quality is measured, not claimed: a hand-written set of 50 German questions in five categories, an LLM judge checked against human scoring, and one setting changed per configuration with bootstrap confidence intervals. The deployed configuration finds a correct source in the top five for 39 of 40 answerable questions, declines all 10 unanswerable ones and cited no invented source in the evaluation. Over 700 tests in CI (Testcontainers against a real Postgres), mypy strict, five Architecture Decision Records, and a public demo on free tiers (Render, Neon, Gemini) with an encrypted nightly backup.",
       "shortDescription": "Cited RAG Assistant for German Technical Documents"
@@ -370,6 +374,89 @@
       "clauseMapping": "Breakdown by impact, and the breached clauses — every WCAG 2.1 criterion beside its EN 301 549 clause, with the § 4 BFSG note",
       "findings": "A single finding in detail: rule, impact, WCAG SC, EN 301 549 clause, a how-to-fix link, and the affected elements",
       "pullRequests": "The repository's merged pull requests on GitHub — one concern each, every one with passing CI checks"
+    }
+  },
+  "caseStudyDineos": {
+    "backLink": "Back to projects",
+    "eyebrow": "Case Study",
+    "title": "DineOS",
+    "subtitle": "A restaurant operating system: QR ordering, a live kitchen display and Stripe payments",
+    "soloNote": "Personal project, built alone: product concept, architecture, backend, frontend, infrastructure, deployment and documentation.",
+    "roleLabel": "Role",
+    "role": "Solo developer",
+    "periodLabel": "Timeframe",
+    "period": "June to November 2026. Version 1.0 released on October 19, 2026, version 1.0.1 on November 9, 2026",
+    "demoLabel": "Live demo",
+    "demoNote": "guest view of a demo table, no sign-up needed. The free server can take up to two minutes to wake up.",
+    "intro": {
+      "heading": "Context / problem",
+      "body": "In many restaurants an order still travels on paper: the waiter writes it down, carries it to the kitchen, and the guest waits for the bill. Every step depends on someone being free, and the kitchen only learns about an order when the slip arrives.",
+      "body2": "DineOS moves that flow onto the guest's own phone. A QR code on the table opens the menu without an account or an app; the order reaches the kitchen display the moment it is placed, the guest watches it move from received to ready, and pays at the table. One deployment serves many restaurants, and each one sees only its own data."
+    },
+    "whatItDoes": {
+      "heading": "What it does",
+      "item1": "The guest scans the table's QR code and gets an anonymous session for that table: no account, no app to install. The menu comes in Italian, English or German, with allergen filters.",
+      "item2": "An order reaches the kitchen in real time. The kitchen display is a board with four columns (new, confirmed, preparing, ready) fed over WebSocket, and every status change appears on the guest's phone straight away.",
+      "item3": "Guests can call a waiter and ask for the bill from their phone. The bill can be paid by card through Stripe or split between several people.",
+      "item4": "Managers see every table at a glance (free or occupied, open orders, running total), print QR codes, manage staff with four roles (kitchen, waiter, manager, admin) and follow revenue, top dishes and peak hours.",
+      "item5": "Admins maintain the menu with translations per language and allergen tags. Changes reach guests through a cache that is invalidated per restaurant."
+    },
+    "results": {
+      "heading": "In numbers",
+      "testsLabel": "automated tests in CI",
+      "testsDetail": "pytest against real PostgreSQL and Redis, Vitest, Playwright end to end",
+      "coverageLabel": "backend test coverage",
+      "coverageDetail": "CI fails the build below 90 %",
+      "medianLabel": "median menu response under load",
+      "medianDetail": "50 concurrent users at 0.1 CPU, down from 0.7–1.4 s",
+      "errorsLabel": "failed menu requests under the same load",
+      "errorsDetail": "down from about 3 %",
+      "pullRequestsLabel": "merged pull requests, each checked by CI",
+      "adrLabel": "Architecture Decision Records",
+      "scenariosLabel": "Gherkin scenarios describing how the product behaves",
+      "languagesLabel": "menu languages: Italian, English, German"
+    },
+    "highlights": {
+      "heading": "Technical highlights",
+      "item1Title": "Tenant isolation, learned the hard way.",
+      "item1Body": "Multi-tenancy came after the core features were built, and a security review I ran found the gap this left: two billing endpoints did not check the restaurant, so a manager who knew another restaurant's session ID could read or create its bills. Every repository query is now scoped to the restaurant, and cross-tenant tests check that another restaurant's data answers with 404.",
+      "item2Title": "Real time across several workers.",
+      "item2Body": "WebSocket messages go through Redis Pub/Sub, so a guest connected to one worker still hears about an order handled by another. Every channel checks its token: the table channel accepts only the token of its own session, the kitchen channel only active staff. Connections are capped per IP and globally, and a heartbeat closes dead sockets.",
+      "item3Title": "Payments that do not get lost.",
+      "item3Body": "Stripe PaymentIntents with idempotency keys, so a retried request never charges twice. When processing a webhook fails, the event goes to a dead-letter queue in Redis and a scheduled worker retries it with exponential back-off; an admin API shows what is left and retries or discards it. Every billing action is written to an audit log.",
+      "item4Title": "Load tests that changed the code.",
+      "item4Body": "A k6 script runs the real guest flow with 50 concurrent users. It showed that the cached menu was still turned into objects, validated and serialized again on every request. Serving the cached bytes as they are, and letting requests wait for a free Redis connection instead of failing, brought the median from 0.7–1.4 s down to 6–83 ms at 0.1 CPU, with no failed requests.",
+      "item5Title": "Bugs that only show up in a real setup.",
+      "item5Body": "The daily report was emailed twice, because each of the two uvicorn workers started its own scheduler; a claim in Redis with SET NX now lets exactly one of them send it. The kitchen sometimes missed new orders, because the event was published before the order was committed; the commit now comes first, and a test checks the order of the two.",
+      "item6Title": "Built to be operated.",
+      "item6Body": "OpenTelemetry traces, Prometheus metrics with Grafana dashboards, structured logs and Sentry, from local development to staging. Every merge to main deploys to staging and runs a smoke test, and a deploy hook that answers without a real deploy ID now fails the pipeline. Production is a manual promotion of a tested staging build: prepared, and deliberately kept for the first paying restaurant."
+    },
+    "techStack": {
+      "heading": "Tech stack"
+    },
+    "finding": {
+      "heading": "The most useful lesson",
+      "body": "A green test suite and a green pipeline did not mean the system worked. The most serious bugs only appeared on a real server: a Stripe webhook that answered 200 but never committed its write, two refresh tokens issued in the same second that came out identical, and a deploy hook that answered \"Accepted\" for three months while the staging site kept serving a build from July. Since then I check every change on staging by running the real flow, not only by reading CI."
+    },
+    "learned": {
+      "heading": "What I learned",
+      "item1": "The tenant boundary belongs in the first migration. Adding it later meant touching almost every repository, and that is how the gap slipped in.",
+      "item2": "Measure first, then set targets. The first targets for coverage and image size came from a plan written before any code existed; the ones that held came from measurements.",
+      "item3": "Every free-tier limit is a date in the calendar. Render's free database expired after 30 days and took staging down; staging now runs on Neon, with a weekly keep-alive check.",
+      "item4": "Write decisions down while they are fresh. Seven ADRs explain why WebSocket instead of polling, why anonymous table sessions instead of guest accounts and why one Angular app for every role."
+    },
+    "links": {
+      "heading": "Links",
+      "demo": "Live demo (guest view)",
+      "code": "Source code",
+      "codeOnRequest": "Private repository – available on request"
+    },
+    "screenshots": {
+      "heading": "Screenshots",
+      "guestPhone": "The guest's phone: the live status of two orders, one ready and one in preparation, and the menu switched to English with allergen tags",
+      "kitchenBoard": "The kitchen display: orders from five tables across the four columns, with a note for the kitchen on two dishes",
+      "tablesOverview": "The manager's table overview: occupied and free tables, open orders and the running total per table",
+      "adminMenu": "The admin menu editor: dishes with price, preparation time, allergens, availability and translations"
     }
   },
   "caseStudyNormeon": {
@@ -672,6 +759,10 @@
     "caseStudyBfsgScanner": {
       "title": "Case Study: bfsg-scanner — Mihaela Aghirculesei",
       "description": "How a solo developer built and shipped bfsg-scanner: an open-source npm CLI that scans a whole site for WCAG 2.1 AA issues and maps every finding to the EN 301 549 / BFSG clause it breaks, with SLSA provenance, 167 tests, and cross-OS CI."
+    },
+    "caseStudyDineos": {
+      "title": "Case Study: DineOS — Mihaela Aghirculesei",
+      "description": "How DineOS was built: a multi-tenant restaurant platform with QR ordering, a real-time kitchen display over WebSocket and Redis, Stripe payments with a dead-letter queue for webhooks, 750+ tests and a load-tested menu endpoint."
     },
     "caseStudyNormeon": {
       "title": "Case Study: Normeon — Mihaela Aghirculesei",
