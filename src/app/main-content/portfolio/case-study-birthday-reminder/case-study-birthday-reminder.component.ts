@@ -32,7 +32,7 @@ interface CaseStudyLink {
   selector: 'app-case-study-birthday-reminder',
   imports: [RouterLink, TranslatePipe, LocalePathPipe],
   templateUrl: './case-study-birthday-reminder.component.html',
-  styleUrl: './case-study-birthday-reminder.component.scss',
+  styleUrl: '../case-study.shared.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CaseStudyBirthdayReminderComponent implements OnInit {

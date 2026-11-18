@@ -32,7 +32,7 @@ interface CaseStudyLink {
   selector: 'app-case-study-bfsg-scanner',
   imports: [RouterLink, TranslatePipe, LocalePathPipe],
   templateUrl: './case-study-bfsg-scanner.component.html',
-  styleUrl: './case-study-bfsg-scanner.component.scss',
+  styleUrl: '../case-study.shared.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CaseStudyBfsgScannerComponent implements OnInit {

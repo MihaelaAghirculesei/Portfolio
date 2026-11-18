@@ -32,7 +32,7 @@ interface CaseStudyLink {
   selector: 'app-case-study-normeon',
   imports: [RouterLink, TranslatePipe, LocalePathPipe],
   templateUrl: './case-study-normeon.component.html',
-  styleUrl: './case-study-normeon.component.scss',
+  styleUrl: '../case-study.shared.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CaseStudyNormeonComponent implements OnInit {
