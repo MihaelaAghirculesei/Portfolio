@@ -32,7 +32,7 @@ interface CaseStudyLink {
   selector: 'app-case-study-charge-hub',
   imports: [RouterLink, TranslatePipe, LocalePathPipe],
   templateUrl: './case-study-charge-hub.component.html',
-  styleUrl: './case-study-charge-hub.component.scss',
+  styleUrl: '../case-study.shared.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CaseStudyChargeHubComponent implements OnInit {

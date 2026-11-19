@@ -35,7 +35,7 @@ interface CaseStudyLink {
   selector: 'app-case-study-dineos',
   imports: [RouterLink, TranslatePipe, LocalePathPipe],
   templateUrl: './case-study-dineos.component.html',
-  styleUrl: './case-study-dineos.component.scss',
+  styleUrl: '../case-study.shared.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CaseStudyDineosComponent implements OnInit {
