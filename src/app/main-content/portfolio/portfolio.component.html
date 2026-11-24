@@ -238,6 +238,14 @@
 
       <div class="project-modal-footer">
         <button
+          class="prev-project-button"
+          (click)="previousProject()"
+          [attr.aria-label]="'portfolio.previousProject' | translate"
+          [title]="'portfolio.previousProject' | translate"
+        >
+          {{ "portfolio.previousProject" | translate }}
+        </button>
+        <button
           class="next-project-button"
           (click)="nextProject()"
           [attr.aria-label]="'portfolio.nextProject' | translate"
