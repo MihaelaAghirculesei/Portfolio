@@ -39,10 +39,6 @@ describe('LegalNoticeComponent', () => {
     expect(component.fullAddress).toBe('Springwiesen, 29, 38446 Wolfsburg');
   });
 
-  it('should return correctly formatted phone link', () => {
-    expect(component.phoneLink).toMatch(/^tel:/);
-  });
-
   it('should return correctly formatted email link', () => {
     expect(component.emailLink).toMatch(/^mailto:/);
   });

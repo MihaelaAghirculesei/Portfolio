@@ -35,7 +35,7 @@ describe('LandingPageComponent', () => {
     it('should have correct profile information', () => {
       expect(component.profileInfo.firstName).toBe('Mihaela Melania');
       expect(component.profileInfo.lastName).toBe('Aghirculesei');
-      expect(component.profileInfo.email).toBe('aghirculesei@gmail.com');
+      expect(component.profileInfo.email).toBe('kontakt@aghirculesei.de');
     });
 
     it('should return full name', () => {

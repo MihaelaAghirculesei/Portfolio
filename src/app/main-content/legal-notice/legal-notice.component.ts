@@ -35,10 +35,6 @@ export class LegalNoticeComponent implements OnInit {
     this.location.back();
   }
 
-  get phoneLink(): string {
-    return `tel:${this.contactInfo.phone}`;
-  }
-
   get emailLink(): string {
     return `mailto:${this.contactInfo.email}`;
   }

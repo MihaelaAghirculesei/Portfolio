@@ -9,7 +9,7 @@
 
 > My developer portfolio: an Angular 22 site prerendered to static HTML, served from Cloudflare Pages, with a Cloudflare Worker behind the contact form. Every quality claim below is enforced by a check in CI.
 
-[🌐 Live site](https://aghirculesei.de) • [📧 Contact](mailto:aghirculesei@gmail.com)
+[🌐 Live site](https://aghirculesei.de) • [📧 Contact](mailto:kontakt@aghirculesei.de)
 
 ---
 
@@ -144,7 +144,7 @@ MIT — see [LICENSE](LICENSE).
 
 - 🌐 Website: [aghirculesei.de](https://aghirculesei.de)
 - 💼 LinkedIn: [mihaela-aghirculesei](https://www.linkedin.com/in/mihaela-aghirculesei-84147a23b/)
-- 📧 Email: aghirculesei@gmail.com
+- 📧 Email: kontakt@aghirculesei.de
 - 💻 GitHub: [@MihaelaAghirculesei](https://github.com/MihaelaAghirculesei)
 
 ---
