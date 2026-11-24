@@ -163,6 +163,11 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
+  previousProject(): void {
+    this.overlay.previous(this.projects, this.descriptionEl);
+    this.cdr.markForCheck();
+  }
+
   goToFeaturedProjects(event: Event): void {
     event.preventDefault();
     this.navigationService.scrollToSection('projects');
