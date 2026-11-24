@@ -654,8 +654,9 @@ $preview-lift: 20px;
 
 .project-modal-footer {
   padding: 16px;
-  @include mixins.dFlex(flex-end, center);
+  @include mixins.dFlex(space-between, center);
 
+  .prev-project-button,
   .next-project-button {
     @include mixins.dFlex(center, center);
     background: none;
@@ -664,18 +665,15 @@ $preview-lift: 20px;
     font-size: 18px;
     font-weight: 500;
     cursor: pointer;
-    margin-right: 80px;
     position: relative;
     @include mixins.primary-font;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
 
+    &::before,
     &::after {
-      content: url("/assets/img/projects/next-arrow-icon.svg");
       position: absolute;
-      right: -24px;
       top: 50%;
-      transform: translateY(-50%);
       width: 16px;
       height: 24px;
       transition: all variables.$transition-base;
@@ -684,11 +682,36 @@ $preview-lift: 20px;
     &:hover,
     &:active {
       color: variables.$white;
+    }
+  }
 
-      &::after {
-        right: -32px;
-        transform: translateY(-50%);
-      }
+  .prev-project-button {
+    margin-left: 80px;
+
+    &::before {
+      content: url("/assets/img/projects/next-arrow-icon.svg");
+      left: -24px;
+      transform: translateY(-50%) scaleX(-1);
+    }
+
+    &:hover::before,
+    &:active::before {
+      left: -32px;
+    }
+  }
+
+  .next-project-button {
+    margin-right: 80px;
+
+    &::after {
+      content: url("/assets/img/projects/next-arrow-icon.svg");
+      right: -24px;
+      transform: translateY(-50%);
+    }
+
+    &:hover::after,
+    &:active::after {
+      right: -32px;
     }
   }
 }
@@ -1070,8 +1093,16 @@ $preview-lift: 20px;
   .project-modal-footer {
     padding: 4px;
 
+    .prev-project-button,
     .next-project-button {
       font-size: 16px;
+    }
+
+    .prev-project-button {
+      margin-left: 40px;
+    }
+
+    .next-project-button {
       margin-right: 40px;
     }
   }
@@ -1138,9 +1169,19 @@ $preview-lift: 20px;
     }
   }
 
-  .project-modal-footer .next-project-button {
-    margin-right: 30px;
-    font-size: 16px;
+  .project-modal-footer {
+    .prev-project-button,
+    .next-project-button {
+      font-size: 16px;
+    }
+
+    .prev-project-button {
+      margin-left: 30px;
+    }
+
+    .next-project-button {
+      margin-right: 30px;
+    }
   }
 
   .link-button2 {

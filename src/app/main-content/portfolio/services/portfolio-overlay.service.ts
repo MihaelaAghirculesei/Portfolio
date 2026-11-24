@@ -48,7 +48,16 @@ export class PortfolioOverlayService {
   }
 
   next(projects: Projects[], descriptionEl?: ElementRef<HTMLParagraphElement>): void {
-    this.selectedIndex = (this.selectedIndex + 1) % projects.length;
+    this.step(1, projects, descriptionEl);
+  }
+
+  previous(projects: Projects[], descriptionEl?: ElementRef<HTMLParagraphElement>): void {
+    this.step(-1, projects, descriptionEl);
+  }
+
+  private step(delta: number, projects: Projects[], descriptionEl?: ElementRef<HTMLParagraphElement>): void {
+    const count = projects.length;
+    this.selectedIndex = (this.selectedIndex + delta + count) % count;
     this.selectedProject = projects[this.selectedIndex];
     if (descriptionEl) {
       descriptionEl.nativeElement.scrollTop = 0;
