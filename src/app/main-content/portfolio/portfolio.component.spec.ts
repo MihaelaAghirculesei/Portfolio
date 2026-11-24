@@ -214,6 +214,27 @@ describe('PortfolioComponent', () => {
 
       expect(fakeEl.nativeElement.scrollTop).toBe(0);
     });
+
+    it('should navigate to previous project', () => {
+      component.selectedIndex = 1;
+      component.selectedProject = component.projects[1];
+
+      component.previousProject();
+
+      expect(component.selectedIndex).toBe(0);
+      expect(component.selectedProject).toBe(component.projects[0]);
+    });
+
+    it('should wrap to last project when at start', () => {
+      const lastIndex = component.projects.length - 1;
+      component.selectedIndex = 0;
+      component.selectedProject = component.projects[0];
+
+      component.previousProject();
+
+      expect(component.selectedIndex).toBe(lastIndex);
+      expect(component.selectedProject).toBe(component.projects[lastIndex]);
+    });
   });
 
   describe('goToFeaturedProjects', () => {
