@@ -186,6 +186,38 @@ describe('PortfolioOverlayService', () => {
       expect(() => service.next(mockProjects)).not.toThrow();
     });
   });
+
+  describe('previous', () => {
+    it('should go back to the previous project and update the selected project', () => {
+      service.selectedIndex = 2;
+
+      service.previous(mockProjects);
+
+      expect(service.selectedIndex).toBe(1);
+      expect(service.selectedProject).toBe(mockProjects[1]);
+    });
+
+    it('should wrap around to the last project at the start of the list', () => {
+      service.selectedIndex = 0;
+
+      service.previous(mockProjects);
+
+      expect(service.selectedIndex).toBe(mockProjects.length - 1);
+      expect(service.selectedProject).toBe(mockProjects[mockProjects.length - 1]);
+    });
+
+    it('should reset descriptionEl scrollTop when provided', () => {
+      const descriptionEl = { nativeElement: { scrollTop: 150 } } as any;
+
+      service.previous(mockProjects, descriptionEl);
+
+      expect(descriptionEl.nativeElement.scrollTop).toBe(0);
+    });
+
+    it('should not throw when descriptionEl is not provided', () => {
+      expect(() => service.previous(mockProjects)).not.toThrow();
+    });
+  });
 });
 
 describe('PortfolioOverlayService - SSR (server platform)', () => {
