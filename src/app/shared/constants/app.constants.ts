@@ -67,8 +67,7 @@ export const CONTACT_INFO = {
   name: 'Mihaela Melania Aghirculesei',
   firstName: 'Mihaela Melania',
   lastName: 'Aghirculesei',
-  email: 'aghirculesei@gmail.com',
-  phone: '+49 174 9627899',
+  email: 'kontakt@aghirculesei.de',
   address: {
     street: 'Springwiesen, 29',
     postalCode: '38446',

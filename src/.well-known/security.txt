@@ -1,4 +1,4 @@
-Contact: mailto:aghirculesei@gmail.com
+Contact: mailto:kontakt@aghirculesei.de
 Contact: https://github.com/MihaelaAghirculesei/Portfolio/security/advisories/new
 Expires: 2027-10-28T00:00:00.000Z
 Preferred-Languages: en, de, it
