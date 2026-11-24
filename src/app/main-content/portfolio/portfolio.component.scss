@@ -1,5 +1,6 @@
 @use "../../../styles/variables";
 @use "../../../styles/mixins";
+@use "sass:math";
 
 @mixin responsive-font($desktop, $tablet: null, $mobile: null, $small: null) {
   font-size: $desktop;
@@ -23,10 +24,22 @@
   }
 }
 
-@mixin modal-sizing($width, $padding, $max-height: 90vh, $margin: auto, $border-radius: 0) {
+// Emits a viewport-relative length with a dynamic-viewport (dvh) override,
+// so mobile browser toolbars never cover the bottom of the modal.
+@mixin viewport-height($prop, $value) {
+  #{$prop}: $value;
+  @if math.unit($value) == "vh" {
+    #{$prop}: math.div($value, 1vh) * 1dvh;
+  }
+}
+
+// The modal has a fixed height (not just a max-height) so the footer
+// navigation stays in the same place regardless of the project's content.
+@mixin modal-sizing($width, $padding, $height: 90vh, $margin: auto, $border-radius: 0) {
   width: $width;
   padding: $padding;
-  max-height: $max-height;
+  @include viewport-height(height, $height);
+  @include viewport-height(max-height, $height);
   margin: $margin;
   border-radius: $border-radius;
 }
@@ -431,11 +444,12 @@ $preview-lift: 20px;
   background: linear-gradient(45deg, variables.$gradient-start 40%, variables.$gradient-end 100%);
   max-width: 1440px;
   width: 90%;
-  max-height: 90vh;
+  @include viewport-height(height, 90vh);
+  @include viewport-height(max-height, 90vh);
   margin: auto 5px;
   padding: 40px;
   z-index: variables.$z-modal-content;
-  overflow-y: auto;
+  overflow: hidden;
   animation: modalFadeIn 0.3s ease-in-out;
   @include mixins.dFlex(flex-start, stretch);
   flex-direction: column;
@@ -456,6 +470,11 @@ $preview-lift: 20px;
   @include mixins.dFlex(flex-start, stretch);
   flex-direction: row;
   padding: 24px;
+  // Fill the space above the footer and scroll internally, so the footer
+  // is always pinned to the bottom of the fixed-height modal.
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .project-info {
@@ -654,6 +673,7 @@ $preview-lift: 20px;
 
 .project-modal-footer {
   padding: 16px;
+  flex-shrink: 0;
   @include mixins.dFlex(space-between, center);
 
   .prev-project-button,
@@ -867,7 +887,7 @@ $preview-lift: 20px;
 }
 
 @media (max-width: variables.$tablet-max) and (orientation: landscape) {
-  @include modal-with-content(100%, 16px, 12px, 100vh, auto, row, (height: auto, overflow-y: auto));
+  @include modal-with-content(100%, 16px, 12px, 100vh, auto, row);
 
   @include landscape-layout;
 
@@ -1018,7 +1038,7 @@ $preview-lift: 20px;
 }
 
 @media (max-width: 1070px) and (orientation: portrait) {
-  @include modal-with-content(100%, 16px, 0, 100vh, auto, column, (height: auto, min-height: 100vh, overflow-y: auto));
+  @include modal-with-content(100%, 16px, 0, 100vh, auto, column);
 
   .project-modal-content.project-modal-content {
     justify-content: flex-start;
@@ -1063,7 +1083,7 @@ $preview-lift: 20px;
 }
 
 @media (max-width: 1070px) and (orientation: landscape) {
-  @include modal-with-content(100%, 12px, 8px, 100vh, auto, column, (height: auto, overflow-y: auto));
+  @include modal-with-content(100%, 12px, 8px, 100vh, auto, column);
 
   .project-info.project-info {
     width: 100%;
