@@ -78,6 +78,7 @@
     "title": "Featured Projects",
     "description": "Explore a selection of my work here. Interact with projects to see my skills in action.",
     "nextProject": "Next Project",
+    "previousProject": "Previous Project",
     "github": "GitHub",
     "liveTest": "Live Test",
     "aboutProject": "What is this project about?",
